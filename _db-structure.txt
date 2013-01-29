@@ -1,0 +1,144 @@
+-- Create syntax for TABLE 'sp_plasma_ecrans_groupes_tb'
+CREATE TABLE `sp_plasma_ecrans_groupes_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `id_slideshow` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_ecrans_tb'
+CREATE TABLE `sp_plasma_ecrans_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `id_etablissement` int(11) DEFAULT NULL,
+  `id_groupe` int(11) DEFAULT NULL,
+  `id_last_slide` int(11) DEFAULT '0',
+  `id_last_slideshow` int(11) DEFAULT NULL,
+  `order_last_slide` int(11) DEFAULT '0',
+  `id_default_slideshow` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_etablissements_tb'
+CREATE TABLE `sp_plasma_etablissements_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT '',
+  `ville` varchar(255) DEFAULT NULL,
+  `code_meteo` varchar(40) DEFAULT NULL,
+  `code_postal` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_meteo'
+CREATE TABLE `sp_plasma_meteo` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `datecrea` int(20) DEFAULT NULL,
+  `postal_id` varchar(40) DEFAULT 'EUR|FR|FR012|PARIS|',
+  `json` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_organisme_tb'
+CREATE TABLE `sp_plasma_organisme_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `type` varchar(20) DEFAULT 'admin',
+  `google_analytics_id` varchar(40) DEFAULT 'UA-20942014-1',
+  `last_modif` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_playlist_tb'
+CREATE TABLE `sp_plasma_playlist_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT '0000-00-00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_rel_slide_tb'
+CREATE TABLE `sp_plasma_rel_slide_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_slide` int(11) DEFAULT NULL,
+  `id_target` int(11) DEFAULT NULL,
+  `type_target` varchar(10) DEFAULT 'ecran',
+  `date` datetime DEFAULT '0000-00-00 00:00:00',
+  `duree` time DEFAULT '00:00:00',
+  `freq` varchar(50) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `type` varchar(4) DEFAULT 'date',
+  `ordre` int(11) DEFAULT NULL,
+  `alerte` varchar(5) DEFAULT 'false',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=302 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_rel_user_groupe_tb'
+CREATE TABLE `sp_plasma_rel_user_groupe_tb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_groupe` int(11) DEFAULT NULL,
+  `last_modif` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_slides_tb'
+CREATE TABLE `sp_plasma_slides_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `template` varchar(255) DEFAULT NULL,
+  `json` text,
+  `date` date DEFAULT '0000-00-00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_slideshows_tb'
+CREATE TABLE `sp_plasma_slideshows_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id_ecran` int(11) DEFAULT NULL,
+  `json_data` text,
+  `date_publication` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_slideshows_tb_BCK'
+CREATE TABLE `sp_plasma_slideshows_tb_BCK` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `nom` varchar(255) DEFAULT NULL,
+  `next` varchar(10) DEFAULT NULL,
+  `id_next` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_user_groupes_tb'
+CREATE TABLE `sp_plasma_user_groupes_tb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(255) DEFAULT NULL,
+  `cache` tinyint(2) DEFAULT '0',
+  `type` varchar(20) NOT NULL DEFAULT 'admin',
+  `id_organisme` int(11) DEFAULT NULL,
+  `last_modif` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_user_level_tb'
+CREATE TABLE `sp_plasma_user_level_tb` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Create syntax for TABLE 'sp_plasma_user_tb'
+CREATE TABLE `sp_plasma_user_tb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(20) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `type` varchar(20) NOT NULL DEFAULT 'user',
+  `nom` varchar(255) DEFAULT 'sans nom',
+  `prenom` varchar(255) DEFAULT 'sans prenom',
+  `email` varchar(255) DEFAULT NULL,
+  `groupe` varchar(20) DEFAULT NULL,
+  `account_type` varchar(10) NOT NULL DEFAULT 'ldap',
+  `last_modif` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
