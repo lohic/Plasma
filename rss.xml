@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Le blog de Sÿclo</title>
+	<atom:link href="http://localhost/Site%20SYCLO/blog/?feed=rss2" rel="self" type="application/rss+xml" />
+	<link>http://localhost:8888/Site%20SYCLO/blog</link>
+	<description>Un site utilisant WordPress</description>
+	<lastBuildDate>Thu, 29 Jul 2010 15:03:57 +0000</lastBuildDate>
+
+	<language>en</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.0</generator>
+		<item>
+		<title>Bonjour tout le monde&#160;!</title>
+
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=1</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=1#comments</comments>
+		<pubDate>Mon, 19 Jul 2010 10:31:09 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Non classé]]></category>
+
+		<guid isPermaLink="false">http://localhost:8888/Site%20SYCLO/blog/?p=1</guid>
+
+		<description><![CDATA[Bienvenue dans WordPress. Ceci est votre premier article. Modifiez-le ou supprimez-le, puis lancez-vous&#160;!]]></description>
+			<content:encoded><![CDATA[<p>Bienvenue dans WordPress. Ceci est votre premier article. Modifiez-le ou supprimez-le, puis lancez-vous&nbsp;!</p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=1</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+		</item>
+		<item>
+		<title>Euphausia 0.1</title>
+
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=258</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=258#comments</comments>
+		<pubDate>Fri, 04 Jun 2010 10:33:25 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Interactif]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=258</guid>
+
+		<description><![CDATA[Bonjour à tous, Ce soir, nous projetons l&#8217;installation Euphausia réalisée avec Djeff Regottaz sur la façade de la poste d&#8217;Aix en Provence. Il s&#8217;agit d&#8217;un dispositif interactif où les gens pourront envoyer des SMS. Ces SMS seront affichés sur le mur et tomberons lentement pour y être mangés par des petits créatures marines. Chaque mot [...]]]></description>
+			<content:encoded><![CDATA[<p>Bonjour à tous,</p>
+<p>Ce soir, nous projetons l&#8217;installation Euphausia réalisée avec <a href="http://www.djeff.net/" target="_blank">Djeff Regottaz</a> sur la façade de la poste d&#8217;Aix en Provence. Il s&#8217;agit d&#8217;un dispositif interactif où les gens pourront envoyer des SMS. Ces SMS seront affichés sur le mur et tomberons lentement pour y être mangés par des petits créatures marines. Chaque mot pourra contenir un comportement qui fera changer de couleur, ou génèrera de nouvelles créatures.</p>
+<p><img class="alignnone size-medium wp-image-259" title="euphausia" src="http://www.syclo.fr/blog/wp-content/uploads/2010/06/euphausia-500x281.png" alt="euphausia" width="500" height="281" /></p>
+<p>Ce travail est le résultat d&#8217;une résidence de 10 jours à la <a href="http://www.maison-numerique.net/" target="_blank">Maison Numérique</a> du <a href="http://www.m2fcreations.fr/" target="_blank">collectif M2F</a>, en partenariat avec la <a href="http://www.fondationvasarely.fr/" target="_blank">fondation Vasarely</a> qui nous a hébergé et  le <a href="http://www.secondenature.org/-Festival-.html" target="_blank">festival Seconde Nature</a> qui présente le projet.</p>
+<p>La résidence nous aura permis de développer le moteur du programme, et de réaliser l&#8217;animation de fond. Plus d&#8217;infos après la diffusion.
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=259' title='euphausia'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/06/euphausia-150x150.png" class="attachment-thumbnail" alt="euphausia" title="euphausia" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=260' title='Mobile Photo 4 juin 2010 12 26 02'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/06/Mobile-Photo-4-juin-2010-12-26-02-150x150.jpg" class="attachment-thumbnail" alt="Mobile Photo 4 juin 2010 12 26 02" title="Mobile Photo 4 juin 2010 12 26 02" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=271' title='Mobile Photo 4 juin 2010 13 11 28'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/06/Mobile-Photo-4-juin-2010-13-11-28-150x150.jpg" class="attachment-thumbnail" alt="Mobile Photo 4 juin 2010 13 11 28" title="Mobile Photo 4 juin 2010 13 11 28" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=274' title='Mobile Photo 4 juin 2010 13 26 23'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/06/Mobile-Photo-4-juin-2010-13-26-23-150x150.jpg" class="attachment-thumbnail" alt="Mobile Photo 4 juin 2010 13 26 23" title="Mobile Photo 4 juin 2010 13 26 23" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=272' title='Mobile Photo 4 juin 2010 13 18 42'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/06/Mobile-Photo-4-juin-2010-13-18-42-150x150.jpg" class="attachment-thumbnail" alt="Mobile Photo 4 juin 2010 13 18 42" title="Mobile Photo 4 juin 2010 13 18 42" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=266' title='poste'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/06/poste-150x150.png" class="attachment-thumbnail" alt="poste" title="poste" /></a>
+</p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=258</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+		</item>
+		<item>
+		<title>Frozen River</title>
+
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=254</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=254#comments</comments>
+		<pubDate>Thu, 29 Apr 2010 19:06:09 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Clip]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=254</guid>
+
+		<description><![CDATA[Et hop dans la foulée, un clip dont nous venons de finir les effets. Réalisé par Pauline Goasmat(merci) pour une musique de As The Stars Falls, avec Vincent Zacharias en directeur de la photographie.]]></description>
+			<content:encoded><![CDATA[<p>Et hop dans la foulée, un clip dont nous venons de finir les effets. Réalisé par <a href="http://www.paulinegoasmat.fr/" target="_blank">Pauline Goasmat</a>(merci) pour une musique de <a href="http://www.asthestarsfall.com/" target="_blank">As The Stars Falls</a>, avec <a href="http://www.vincentzacharias.com/" target="_blank">Vincent Zacharias</a> en directeur de la photographie.</p>
+<p><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="500" height="281" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://vimeo.com/moogaloop.swf?clip_id=11322705&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00adef&amp;fullscreen=1" /><embed type="application/x-shockwave-flash" width="500" height="281" src="http://vimeo.com/moogaloop.swf?clip_id=11322705&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00adef&amp;fullscreen=1" allowscriptaccess="always" allowfullscreen="true"></embed></object></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=254</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Motion Reel 2010</title>
+
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=251</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=251#comments</comments>
+		<pubDate>Tue, 27 Apr 2010 21:04:07 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Animation]]></category>
+		<category><![CDATA[Motion Design]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=251</guid>
+		<description><![CDATA[Bonjour à tous, voici notre bande démo pour l&#8217;année 2010, la semaine prochaine sans doute le nouveau thème du blog en attendant la refonte complète du site flash (il va y avoir du changement !!!!!)]]></description>
+			<content:encoded><![CDATA[<p>Bonjour à tous, voici notre bande démo pour l&#8217;année 2010, la semaine prochaine sans doute le nouveau thème du blog en attendant la refonte complète du site flash (il va y avoir du changement !!!!!)</p>
+<p><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="500" height="281" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://vimeo.com/moogaloop.swf?clip_id=10892283&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00adef&amp;fullscreen=1" /><embed type="application/x-shockwave-flash" width="500" height="281" src="http://vimeo.com/moogaloop.swf?clip_id=10892283&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=0&amp;show_portrait=0&amp;color=00adef&amp;fullscreen=1" allowscriptaccess="always" allowfullscreen="true"></embed></object></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=251</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+		</item>
+		<item>
+
+		<title>Dark side of the moon</title>
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=248</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=248#comments</comments>
+		<pubDate>Mon, 05 Apr 2010 12:30:23 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Blog]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=248</guid>
+		<description><![CDATA[Bonjour à tous, très vite le nouveau showreel, la nouvelle version du blog, en attendant la refonte du site, d&#8217;ailleurs à ce propos, si quelqu&#8217;un connaît un crooner&#8230;. on est prenneurs !]]></description>
+			<content:encoded><![CDATA[<p>Bonjour à tous, très vite le nouveau showreel, la nouvelle version du blog, en attendant la refonte du site, d&#8217;ailleurs à ce propos, si quelqu&#8217;un connaît un crooner&#8230;. on est prenneurs !</p>
+<p><img class="alignnone size-medium wp-image-249" title="syclo_darkside" src="http://www.syclo.fr/blog/wp-content/uploads/2010/04/syclo_darkside-500x375.jpg" alt="syclo_darkside" width="500" height="375" /></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=248</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+
+		<item>
+		<title>Bonne année 2010 &#8211; Sÿclorama</title>
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=241</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=241#comments</comments>
+		<pubDate>Sun, 31 Jan 2010 21:41:54 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+
+				<category><![CDATA[Animation]]></category>
+		<category><![CDATA[Motion Design]]></category>
+		<category><![CDATA[Sÿclop]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=241</guid>
+		<description><![CDATA[En ce dernier jour de mois de janvier, nous sommes heureux de vous souhaiter une très bonne année 2010, et plein de bonheur pour la décennie à venir ! Merci à Claudia Imbert de nous avoir prêté son Canon 5D pour la partie vidéo.]]></description>
+			<content:encoded><![CDATA[<p>En ce dernier jour de mois de janvier, nous sommes heureux de vous souhaiter une très bonne année 2010, et plein de bonheur pour la décennie à venir !</p>
+<p><object width="500" height="281"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=9111798&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=b5b5b5&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=9111798&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=b5b5b5&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="500" height="281"></embed></object></p>
+<p>Merci à <a href="http://www.claudiaimbert.com/" target="_blank">Claudia Imbert</a> de nous avoir prêté son Canon 5D pour la partie vidéo.</p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=241</wfw:commentRss>
+
+		<slash:comments>10</slash:comments>
+		</item>
+		<item>
+		<title>La Moustache</title>
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=233</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=233#comments</comments>
+		<pubDate>Tue, 26 Jan 2010 23:58:22 +0000</pubDate>
+
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Graphisme]]></category>
+		<category><![CDATA[Site]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=233</guid>
+		<description><![CDATA[Nous venons d&#8217;achever le site internet de la société de production photo La Moustache. Un site tout en flash administrable avec un espace client. Vous pouvez redimentionner votre fenêtre de navigateur pour jouer un peu&#8230;. ou aller faire un tour sur la mappemonde !]]></description>
+			<content:encoded><![CDATA[<p><a href="http://www.lamoustache.fr" target="_blank"><img class="alignnone size-medium wp-image-234" title="moustache1" src="http://www.syclo.fr/blog/wp-content/uploads/2010/01/moustache1-500x331.png" alt="moustache1" width="500" height="331" /></a></p>
+<p>Nous venons d&#8217;achever le site internet de la société de production photo <a href="http://www.lamoustache.fr" target="_blank">La Moustache</a>. Un site tout en flash administrable avec un espace client. Vous pouvez redimentionner votre fenêtre de navigateur pour jouer un peu&#8230;. ou aller faire un tour sur la mappemonde !</p>
+
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=234' title='moustache1'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/01/moustache1-150x150.png" class="attachment-thumbnail" alt="moustache1" title="moustache1" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=235' title='moustache2'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/01/moustache2-150x150.png" class="attachment-thumbnail" alt="moustache2" title="moustache2" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=236' title='moustache3'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2010/01/moustache3-150x150.png" class="attachment-thumbnail" alt="moustache3" title="moustache3" /></a>
+
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=233</wfw:commentRss>
+
+		<slash:comments>2</slash:comments>
+		</item>
+		<item>
+		<title>LaceHead</title>
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=222</link>
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=222#comments</comments>
+		<pubDate>Mon, 09 Nov 2009 14:43:13 +0000</pubDate>
+
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Graphisme]]></category>
+		<category><![CDATA[Illustration]]></category>
+		<category><![CDATA[Photo]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=222</guid>
+		<description><![CDATA[Et hop des images pour le prochain Shoes-Up (en kiosque le 15 novembre 2009) À la photo toujours Frédérick Carnet. Nous avons pris en charge la direction artistique et la retouche. Stylisme by Zab+Max. Merci à Frédéric Deleersnyder qui a posé, Benoît Bescond pour l&#8217;appartement et à Mr Lacy France pour tous les lacets (Loïs a passé [...]]]></description>
+			<content:encoded><![CDATA[<p><img class="alignnone size-large wp-image-227" title="titreportrait" src="http://www.syclo.fr/blog/wp-content/uploads/2009/11/titreportrait-1024x679.jpg" alt="titreportrait" width="500" /></p>
+<p>Et hop des images pour le prochain <a onclick="javascript:pageTracker._trackPageview ('/outbound/www.shoes-up.com');" href="http://www.shoes-up.com/" target="_blank">Shoes-Up</a> (en kiosque le 15 novembre 2009)</p>
+<p>À la photo toujours <a onclick="javascript:pageTracker._trackPageview ('/outbound/www.frederickcarnet.com');" href="http://www.frederickcarnet.com/" target="_blank">Frédérick Carne</a>t. Nous avons pris en charge la direction artistique et la retouche. Stylisme by <a href="http://www.closet.fr" target="_blank">Zab+Max</a>. Merci à Frédéric Deleersnyder qui a posé, Benoît Bescond pour l&#8217;appartement et à Mr Lacy France pour tous les lacets (Loïs a passé une semaine à coller du fil de fer au pistolet à colle sur une bonne centaine de lacets !!!).</p>
+
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=227' title='titreportrait'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2009/11/titreportrait-150x150.jpg" class="attachment-thumbnail" alt="titreportrait" title="titreportrait" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=223' title='03machinealaver'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2009/11/03machinealaver-150x150.jpg" class="attachment-thumbnail" alt="03machinealaver" title="03machinealaver" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=224' title='04salon'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2009/11/04salon-150x150.jpg" class="attachment-thumbnail" alt="04salon" title="04salon" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=225' title='05cuisine'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2009/11/05cuisine-150x150.jpg" class="attachment-thumbnail" alt="05cuisine" title="05cuisine" /></a>
+<a href='http://localhost:8888/Site%20SYCLO/blog/?attachment_id=226' title='06chambre'><img width="150" height="150" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2009/11/06chambre-150x150.jpg" class="attachment-thumbnail" alt="06chambre" title="06chambre" /></a>
+
+]]></content:encoded>
+
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=222</wfw:commentRss>
+		<slash:comments>10</slash:comments>
+		</item>
+		<item>
+		<title>La Paranoïa</title>
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=215</link>
+
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=215#comments</comments>
+		<pubDate>Tue, 13 Oct 2009 19:15:47 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Animation]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=215</guid>
+		<description><![CDATA[Nous venons de terminer une série de vidéos qui seront projetés lors d&#8217;un spectacle mis en scène par Marcial Di Fonzo Bo et Élise Vigier : La Paranoïa. Le spectacle est visible au théâtre national de Chaillot jusqu&#8217;au 24 octobre 2009. Les images ont été tournées par Bruno Geslin avec la collaboration de Romain Tanguy. La [...]]]></description>
+
+			<content:encoded><![CDATA[<p>Nous venons de terminer une série de vidéos qui seront projetés lors d&#8217;un spectacle mis en scène par Marcial Di Fonzo Bo et Élise Vigier : <a href="http://www.theatre-chaillot.fr/spectacle.php?id=112" target="_blank">La Paranoïa</a>. Le spectacle est visible au théâtre national de Chaillot jusqu&#8217;au 24 octobre 2009. Les images ont été tournées par Bruno Geslin avec la collaboration de Romain Tanguy. La pièce est une création du <a href="http://www.theatre-des-lucioles.net/la-paranoia-de-rafael-spregelburd" target="_blank">Théâtre des Lucioles</a>.</p>
+<p>En voici un aperçu en attendant un montage final incluant des captations de la scénographie.</p>
+<p><object width="500" height="275" data="http://vimeo.com/moogaloop.swf?clip_id=7046969&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" type="application/x-shockwave-flash"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="src" value="http://vimeo.com/moogaloop.swf?clip_id=7046969&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=00ADEF&amp;fullscreen=1" /></object></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=215</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+		</item>
+		<item>
+		<title>En cours</title>
+		<link>http://localhost:8888/Site%20SYCLO/blog/?p=212</link>
+
+		<comments>http://localhost:8888/Site%20SYCLO/blog/?p=212#comments</comments>
+		<pubDate>Fri, 09 Oct 2009 14:50:03 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+				<category><![CDATA[Graphisme]]></category>
+		<category><![CDATA[Illustration]]></category>
+		<category><![CDATA[Photo]]></category>
+
+		<guid isPermaLink="false">http://www.syclo.fr/blog/?p=212</guid>
+
+		<description><![CDATA[Sÿclo repart dans les projets un peu foufou !!! Plus d&#8217;infos d&#8217;ici quelques jours !]]></description>
+			<content:encoded><![CDATA[<p>Sÿclo repart dans les projets un peu foufou !!! Plus d&#8217;infos d&#8217;ici quelques jours !</p>
+<p><img class="alignnone size-full wp-image-364" src="http://localhost:8888/Site%20SYCLO/blog/wp-content/uploads/2009/10/l-2048-1536-c8fcd958-443a-4467-9898-cc1ea3816572.jpeg" alt="" width="500" /></p>
+]]></content:encoded>
+			<wfw:commentRss>http://localhost:8888/Site%20SYCLO/blog/?feed=rss2&amp;p=212</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss>

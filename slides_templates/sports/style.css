@@ -1,0 +1,451 @@
+/* CSS Document */
+@charset "UTF-8";
+/*
+version improvisée pour les tests...
+*/
+@font-face { 
+    font-family: 'GoetheGothicBold'; 
+    src: local('GoetheGothicBold'), local('GoetheGothicBold'), url('fonts/GoetheGothicBold.ttf') format('truetype'); 
+}  
+
+*{
+	border:none;
+	padding:0px;
+	margin:0px; 
+}
+
+body,td,th {
+	font-family: "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
+	font-size: 10px;
+	
+}
+
+body, th, td, .header, .texte, .footer, .texte2, .sport, .classement, .detail_classement{
+	background:rgb(247,207,50);
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1, h2, p{
+	color:#000;
+}
+
+#template{
+	width:768px;
+	height:1210px;
+	padding:35px 0px;
+	overflow: hidden;
+	display:block;
+	position:relative;
+}
+
+/* 
+classes réservées pour le traitement JS : 
+.edit, .textfield, .textarea, .checkbox, .image, ...
+*/
+
+.header {
+	height: 30px;
+	width: 87.8%;
+	padding:0px 6.1%;
+	float:left;
+	padding-bottom:30px;
+	position:relative;
+	box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+	-webkit-animation: moveHeader 0.9s ease-in-out;
+	-moz-animation: moveHeader 0.9s ease-in-out;
+	-ms-animation: moveHeader 0.9s ease-in-out;
+	animation: moveHeader 0.9s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+@-webkit-keyframes moveHeader{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
+
+}
+@-moz-keyframes moveHeader{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
+	}
+}
+@keyframes moveHeader{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+	100%{
+		transform: translate(0px, 0px);
+	}
+}
+
+.header h1{
+	font-size:26.5px;
+	line-height:26.5px;
+	margin:0;
+	text-transform: uppercase;
+	margin-top:-3px;
+	color:#000;
+}
+
+.texte, .texte2, .sport, .classement, .detail_classement{
+	float:left;
+	width: 87.8%;
+	padding:30px 6.1%;
+	position:relative;
+	z-index:2;
+	margin-top:1px;
+	box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+	-webkit-animation: moveTexte 1.4s ease-in-out;
+	-moz-animation: moveTexte 1.4s ease-in-out;
+	-ms-animation: moveTexte 1.4s ease-in-out;
+	animation: moveTexte 1.4s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+.sport{
+	z-index:1;
+	-webkit-animation: moveTexte 1.2s ease-in-out;
+	-moz-animation: moveTexte 1.2s ease-in-out;
+	-ms-animation: moveTexte 1.2s ease-in-out;
+	animation: moveTexte 1.2s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+.sport .le_sport{
+	position:absolute;
+	width:256px;
+	height:161px;
+	right:44px;
+	top:0px;
+}
+
+.texte2{
+	z-index:3;
+	-webkit-animation: moveTexte 1.6s ease-in-out;
+	-moz-animation: moveTexte 1.6s ease-in-out;
+	-ms-animation: moveTexte 1.6s ease-in-out;
+	animation: moveTexte 1.6s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+.texte h3{
+	font-size:21px;
+	line-height:21px;	
+}
+
+.texte2 h3, .sport h2, .classement h3{
+	font-size:48px;
+	line-height:48px;
+}
+
+.sport h2{
+	padding-top:60px;
+}
+
+.detail_classement p{
+	font-size:21px;
+	line-height:28px;
+}
+
+@-webkit-keyframes moveTexte{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveTexte{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveTexte{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.classement {
+	z-index:4;
+	-webkit-animation: moveFooter 1.8s ease-in-out;
+	-moz-animation: moveFooter 1.8s ease-in-out;
+	-ms-animation: moveFooter 1.8s ease-in-out;
+	animation: moveFooter 1.8s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+@-webkit-keyframes moveFooter{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveFooter{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveFooter{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.detail_classement {
+	z-index:5;
+	border-bottom:1px solid #000;
+	-webkit-animation: moveFooter 2s ease-in-out;
+	-moz-animation: moveFooter 2s ease-in-out;
+	-ms-animation: moveFooter 2s ease-in-out;
+	animation: moveFooter 2s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+	box-shadow:none;
+}
+
+@-webkit-keyframes moveFooter{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveFooter{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveFooter{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.exit .header{
+	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;	
+}
+
+@-webkit-keyframes moveHeaderExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -170px);
+	}
+}
+@-moz-keyframes moveHeaderExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -170px);
+	}
+}
+@keyframes moveHeaderExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -170px);
+	}
+}
+
+.exit .texte{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+	animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.4s;
+	-moz-animation-delay: 0.4s;
+	-ms-animation-delay: 0.4s;
+	animation-delay: 0.4s;	
+}
+
+.exit .texte2{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+	animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.6s;
+	-moz-animation-delay: 0.6s;
+	-ms-animation-delay: 0.6s;
+	animation-delay: 0.6s;	
+}
+
+.exit .sport{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+	animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.2s;
+	-moz-animation-delay: 0.2s;
+	-ms-animation-delay: 0.2s;
+	animation-delay: 0.2s;	
+}
+
+@-webkit-keyframes moveTexteExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveTexteExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveTexteExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+.exit .classement{
+	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
+	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+	animation: moveFooterExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	-moz-animation-delay: 1s;
+	-ms-animation-delay: 1s;
+	animation-delay: 1s;	
+}
+
+.exit .detail_classement{
+	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
+	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+	animation: moveFooterExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 1.2s;
+	-moz-animation-delay: 1.2s;
+	-ms-animation-delay: 1.2s;
+	animation-delay: 1.2s;	
+}
+
+@-webkit-keyframes moveFooterExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveFooterExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveFooterExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+@media screen and (orientation:landscape){
+	.colonne_gauche{
+		width:516px;
+		float:left;
+	}
+
+	#template{
+		width:1270px;
+		height:768px;
+		padding:0px 0px;
+	}
+
+	.classement{
+		padding:40px 44px 40px 64px;
+		float:left;
+		width: 646px;
+		box-shadow:none;
+		border-bottom:1px solid #000;
+	}
+
+	.detail_classement{
+		padding:40px 44px 40px 64px;
+		float:left;
+		width: 646px;
+		border-bottom:none;
+	}
+
+	.colonne_droite{
+		height:100%;
+		width:754px;
+		box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+		float:left;
+		position:relative;
+		z-index:6;
+	}	
+
+	.header{
+		border: none;
+	    height: 25px;
+	    padding: 40px 0 30px 44px;
+	    width: 472px;
+	}
+
+	.texte, .texte2{
+		padding-top:60px;
+		padding-bottom:60px;
+	}
+
+	.sport{
+		padding-bottom:60px;
+	}
+
+	.texte2{
+		box-shadow:none;
+	}
+
+	.sport .le_sport {
+	    height: 155px;
+	    position: absolute;
+	    right: 0px;
+	    top: 0;
+	    width: 196px;
+	}
+}
+

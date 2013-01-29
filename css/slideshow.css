@@ -1,0 +1,22 @@
+/* CSS Document SLIDESHOW*/
+
+#debug{
+	position:fixed;
+	width:300px;
+	top:30px;
+	right:30px;
+	background:rgba(255,255,0,0.5);
+	padding:10px;
+	font-size:14px;
+	text-transform:uppercase;
+	z-index:900;
+}
+
+
+body{
+	cursor:none;
+}
+
+body.preview{
+	cursor:auto;
+}

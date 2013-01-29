@@ -1,0 +1,653 @@
+/* CSS Document */
+@charset "UTF-8";
+/*
+version improvisée pour les tests...
+*/
+@font-face { 
+    font-family: 'GoetheGothicBold'; 
+    src: local('GoetheGothicBold'), local('GoetheGothicBold'), url('fonts/GoetheGothicBold.ttf') format('truetype'); 
+}  
+
+*{
+	border:none;
+	padding:0px;
+	margin:0px;  
+}
+
+body,td,th {
+	font-family: "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
+	font-size: 10px;
+}
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1, p{
+	color:#fff;
+}
+
+body.basse{
+	background:rgb(89,216,220);
+}
+
+body.moyen_basse{
+	background:rgb(190,220,45);
+}
+
+body.moyen_haute{
+	background:rgb(242,158,37);
+}
+
+body.haute{
+	background:rgb(242,95,36);
+}
+
+
+#template{
+	width:768px;
+	height:1210px;
+	padding:35px 0px;
+	overflow: hidden;
+	display:block;
+	position:relative;
+}
+
+#meteo2 {
+	display:none;
+}
+
+/* 
+classes réservées pour le traitement JS : 
+.edit, .textfield, .textarea, .checkbox, .image, ...
+*/
+
+.header {
+	width: 87.8%;
+	padding:0px 6.1%;
+	float:left;
+	position:relative;
+	margin-bottom:30px;
+	-webkit-animation: moveHeader 0.9s ease-in-out;
+	-moz-animation: moveHeader 0.9s ease-in-out;
+	-ms-animation: moveHeader 0.9s ease-in-out;
+	animation: moveHeader 0.9s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+.ville{
+	width:50%;
+	display:inline-block;
+}
+
+.ville h2{
+	color:#fff;
+	font-size:48px;
+	line-height:55px;
+	margin-top:40px;
+}
+
+.picto_principal{
+	bottom: 0;
+    height: 256px;
+    position: absolute;
+    right: 0px;
+    width: 310px;
+}
+
+.picto_principal.peu_nuageux{
+	background:url("images/weather/meteo-V-grand-peu_nuageux.png") no-repeat 0 93px;
+}
+
+.picto_principal.brume{
+	background:url("images/weather/meteo-V-grand-brume.png") no-repeat 0 93px;
+}
+
+.picto_principal.couvert{
+	background:url("images/weather/meteo-V-grand-couvert.png") no-repeat 0 93px;
+}
+
+.picto_principal.neige{
+	background:url("images/weather/meteo-V-grand-neige.png") no-repeat 0 93px;
+}
+
+.picto_principal.nuit{
+	background:url("images/weather/meteo-V-grand-nuit.png") no-repeat 0 93px;
+}
+
+.picto_principal.orage{
+	background:url("images/weather/meteo-V-grand-orage.png") no-repeat 0 93px;
+}
+
+.picto_principal.pluvieux{
+	background:url("images/weather/meteo-V-grand-pluvieux.png") no-repeat 0 93px;
+}
+
+.picto_principal.soleil{
+	background:url("images/weather/meteo-V-grand-soleil.png") no-repeat 0 93px;
+}
+
+.picto_principal.variable{
+	background:url("images/weather/meteo-V-grand-variable.png") no-repeat 0 93px;
+}
+
+.thermometre{
+	width:40px;
+	height:174px;
+	float:left;
+}
+
+.thermometre.froid{
+	background:url("images/temperatures/meteo-V-petit-temp_froid.png") no-repeat;	
+}
+
+.thermometre.moyen{
+	background:url("images/temperatures/meteo-V-petit-temp_moyen.png") no-repeat -4px 0px;	
+}
+
+.thermometre.chaud{
+	background:url("images/temperatures/meteo-V-petit-temp_chaud.png") no-repeat;	
+}
+
+
+
+.vent.fort{
+	background:url("images/wind/meteo-V-petit-vent_fort.png") no-repeat;	
+}
+
+.vent.faible{
+	background:url("images/wind/meteo-V-petit-vent_faible.png") no-repeat;	
+}
+
+.temps{
+	width:95px;
+	height:118px;
+}
+
+
+.temps.peu_nuageux{
+	background:url("images/weather/meteo-V-petit-peu_nuageux.png") no-repeat;
+}
+
+.temps.brume{
+	background:url("images/weather/meteo-V-petit-brume.png") no-repeat;
+}
+
+.temps.couvert{
+	background:url("images/weather/meteo-V-petit-couvert.png") no-repeat;
+}
+
+.temps.neige{
+	background:url("images/weather/meteo-V-petit-neige.png") no-repeat;
+}
+
+.temps.nuit{
+	background:url("images/weather/meteo-V-petit-nuit.png") no-repeat;
+}
+
+.temps.orage{
+	background:url("images/weather/meteo-V-petit-orage.png") no-repeat;
+}
+
+.temps.pluvieux{
+	background:url("images/weather/meteo-V-petit-pluvieux.png") no-repeat;
+}
+
+.temps.soleil{
+	background:url("images/weather/meteo-V-petit-soleil.png") no-repeat;
+}
+
+.temps.variable{
+	background:url("images/weather/meteo-V-petit-variable.png") no-repeat;
+}
+
+
+@-webkit-keyframes moveHeader{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
+
+}
+@-moz-keyframes moveHeader{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
+	}
+}
+@keyframes moveHeader{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+	100%{
+		transform: translate(0px, 0px);
+	}
+}
+
+.header h1{
+	font-size:25.5px;
+	line-height:25.5px;
+	margin:0;
+	text-transform: uppercase;
+	margin-top:-3px;
+}
+
+.texte {
+	float:left;
+	width: 87.8%;
+	padding:0px 6.1%;
+	margin-top:30px;
+	-webkit-animation: moveTexte 1.2s ease-in-out;
+	-moz-animation: moveTexte 1.2s ease-in-out;
+	-ms-animation: moveTexte 1.2s ease-in-out;
+	animation: moveTexte 1.2s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+	padding-bottom:0px;
+	border-bottom:1px solid #000;
+}
+
+.temperature, .temperature_min, .temperature_max{
+	float:left;
+}
+
+.temperature{
+	padding-top:85px;
+	padding-right:30px;
+}
+
+.temperature_min, .temperature_max{
+	padding-top:111px;
+	font-size:20px;
+	padding-right:20px;
+}
+
+.vent{
+	float:right;
+	width:95px;
+	height:52px;
+	margin-top:79px;
+	margin-right:-13px;
+}
+
+.temperature p{
+	font-size: 48px;
+	line-height:55px;
+}
+
+@-webkit-keyframes moveTexte{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveTexte{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveTexte{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.footer {
+	width: 100%;
+	float:left;
+	margin-top:30px;
+	-webkit-animation: moveFooter 1.5s ease-in-out;
+	-moz-animation: moveFooter 1.5s ease-in-out;
+	-ms-animation: moveFooter 1.5s ease-in-out;
+	animation: moveFooter 1.5s ease-in-out;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+@-webkit-keyframes moveFooter{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
+}
+@-moz-keyframes moveFooter{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
+	}
+}
+@keyframes moveFooter{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+	100%{
+		transform: translate(0px, 0px);
+	}
+}
+
+.exit .header{
+	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	-ms-animation-delay: 0s;
+	animation-delay: 0s;	
+}
+
+@-webkit-keyframes moveHeaderExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -170px);
+	}
+}
+@-moz-keyframes moveHeaderExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -170px);
+	}
+}
+@keyframes moveHeaderExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -170px);
+	}
+}
+
+.exit .texte{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+	animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.4s;
+	-moz-animation-delay: 0.4s;
+	-ms-animation-delay: 0.4s;
+	animation-delay: 0.4s;	
+}
+
+@-webkit-keyframes moveTexteExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveTexteExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveTexteExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+.exit .footer{
+	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
+	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+	animation: moveFooterExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	-moz-animation-delay: 0.8s;
+	-ms-animation-delay: 0.8s;
+	animation-delay: 0.8s;	
+}
+
+@-webkit-keyframes moveFooterExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveFooterExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveFooterExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+.autre_jour{
+	float:left;
+	width:100%;
+	border-bottom:1px solid #000;
+	width: 87.8%;
+	padding:30px 6.1%;
+	position:relative;
+}
+
+.autre_jour .jour p{
+	font-size: 25.5px;
+    line-height: 25.5px;
+}
+
+.autre_jour .temps{
+	height: 118px;
+    position: absolute;
+    right: 110px;
+    top: 7px;
+    width: 95px;
+}
+
+.autre_jour .temperature_min, .autre_jour .temperature_max{
+	padding-top:5px;
+}
+
+@media screen and (orientation:landscape){
+	#template{
+		width:1280px;
+		height:768px;
+		padding:0px 0px;
+	}
+
+	.texte{
+		float:left;
+		width: 500px;
+		height:282px;
+		margin-top:55px;
+	}	
+
+	.texte p:first-child{
+		padding-top:0px;
+	}
+
+	.header, .texte{
+		padding:40px 0px 0px 44px;
+		border:none;
+	}
+
+	.colonne_gauche{
+		width:544px;
+		float:left;
+	}
+
+	.header{
+		width:500px;
+	}
+
+	.header h1 {
+		margin-bottom:60px;
+	}
+
+	.footer {
+	    box-shadow: 0 -30px 30px rgba(0, 0, 0, 0.5);
+	    float: left;
+	    height: 100%;
+	    margin-top: -3px;
+	    padding: 40px 0;
+	    width: 736px;
+	}
+
+
+	.footer .autre_jour:first-child{
+		padding-top:0px;
+	}
+
+	.footer .autre_jour:first-child .temps{
+		top:0px;
+	}
+
+	.footer .autre_jour:last-child{
+		border-bottom:none;
+	}
+
+	.picto_principal {
+		right:15px;
+		height:301px;
+		width:345px;
+		bottom:-14px;
+	}
+
+	.picto_principal.peu_nuageux{
+		background:url("images/weather/meteo-H-grand-peu_nuageux.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.brume{
+		background:url("images/weather/meteo-H-grand-brume.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.couvert{
+		background:url("images/weather/meteo-H-grand-couvert.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.neige{
+		background:url("images/weather/meteo-H-grand-neige.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.nuit{
+		background:url("images/weather/meteo-H-grand-nuit.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.orage{
+		background:url("images/weather/meteo-H-grand-orage.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.pluvieux{
+		background:url("images/weather/meteo-H-grand-pluvieux.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.soleil{
+		background:url("images/weather/meteo-H-grand-soleil.png") no-repeat 0 93px;
+	}
+
+	.picto_principal.variable{
+		background:url("images/weather/meteo-H-grand-variable.png") no-repeat 0 93px;
+	}
+
+	.thermometre.froid{
+		background:url("images/temperatures/meteo-H-petit-temp_froid.png") no-repeat;	
+	}
+
+	.thermometre.moyen{
+		background:url("images/temperatures/meteo-H-petit-temp_moyen.png") no-repeat -4px 0px;	
+	}
+
+	.thermometre.chaud{
+		background:url("images/temperatures/meteo-H-petit-temp_chaud.png") no-repeat;	
+	}
+
+	.vent.fort{
+		background:url("images/wind/meteo-H-petit-vent_fort.png") no-repeat;	
+	}
+
+	.vent.faible{
+		background:url("images/wind/meteo-H-petit-vent_faible.png") no-repeat;	
+	}
+
+	.temps.peu_nuageux{
+		background:url("images/weather/meteo-H-petit-peu_nuageux.png") no-repeat center;
+	}
+
+	.temps.brume{
+		background:url("images/weather/meteo-H-petit-brume.png") no-repeat center;
+	}
+
+	.temps.couvert{
+		background:url("images/weather/meteo-H-petit-couvert.png") no-repeat center;
+	}
+
+	.temps.neige{
+		background:url("images/weather/meteo-H-petit-neige.png") no-repeat center;
+	}
+
+	.temps.nuit{
+		background:url("images/weather/meteo-H-petit-nuit.png") no-repeat center;
+	}
+
+	.temps.orage{
+		background:url("images/weather/meteo-H-petit-orage.png") no-repeat center;
+	}
+
+	.temps.pluvieux{
+		background:url("images/weather/meteo-H-petit-pluvieux.png") no-repeat center;
+	}
+
+	.temps.soleil{
+		background:url("images/weather/meteo-H-petit-soleil.png") no-repeat center;
+	}
+
+	.temps.variable{
+		background:url("images/weather/meteo-H-petit-variable.png") no-repeat center;
+	}
+
+	.vent{
+		position:absolute;
+		left:44px;
+		bottom:40px;
+	}
+
+	.temperature{
+		padding-top:75px;
+	}
+
+	.temperature_min, .temperature_max {
+	    padding-top: 101px;
+	}
+
+	.autre_jour .temps{
+		width:144px;
+		height:87px;
+		top:29px;
+	}
+}
+
