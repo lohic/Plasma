@@ -10,8 +10,10 @@ $ispreview = isset($_GET['preview'])?true:false;
 /* */
 if(isset($_GET['plasma_id']) || isset($_GET['slide_id'])){
 /* */	
-		
-	$id_ecran = $_GET['plasma_id'];
+
+	if(isset($_GET['plasma_id'])){ $id_ecran = $_GET['plasma_id']; }
+	if(isset($_GET['slide_id'])){ $id_ecran = $_GET['slide_id']; }
+
 	$slideshow = new slideshow($id_ecran,'show');	
 	
 	echo $slideshow->run($ispreview,$isdebug);
