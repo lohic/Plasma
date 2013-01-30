@@ -11,3 +11,8 @@ Gildas, j'ai créé une branche (slideshow-glidas désolé pour la faute) pour q
 
 
 http://alainericgauthier.com/git/aide_memoire_git
+https://help.github.com
+https://help.github.com/articles/ignoring-files
+https://help.github.com/articles/using-sublime-text-2-as-your-default-editor
+
+http://scottchacon.com/2011/08/31/github-flow.html
