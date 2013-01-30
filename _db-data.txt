@@ -1,0 +1,109 @@
+VOICI DES REQUETES D'INSERTION DANS LA BASE
+
+
+#################
+
+INSERT INTO `sp_plasma_user_tb` (`id`, `login`, `password`, `type`, `nom`, `prenom`, `email`, `groupe`, `account_type`, `last_modif`)
+VALUES
+	(1, 'admin', 'admin', '1', 'Horellou', 'LoÃ¯c', 'lohic79@gmail.com', NULL, 'mail', '2011-11-04 18:38:24'),
+	(4, 'emile.boutmy', NULL, '', 'Boutmy', 'Ãmile', 'emile.boutmy@sciences-po.fr', NULL, 'ldap', '2011-12-03 16:20:00'),
+	(10, 'test', 'test2', '3', 'test4', 'test3', 'test@test.com5', NULL, 'mail', '2013-01-30 02:40:53');
+
+
+#################
+
+INSERT INTO `sp_plasma_user_tb` (`id`, `login`, `password`, `type`, `nom`, `prenom`, `email`, `groupe`, `account_type`, `last_modif`)
+VALUES
+	(1, 'admin', 'admin', '1', 'Horellou', 'LoÃ¯c', 'lohic79@gmail.com', NULL, 'mail', '2011-11-04 18:38:24'),
+	(4, 'emile.boutmy', NULL, '', 'Boutmy', 'Ãmile', 'emile.boutmy@sciences-po.fr', NULL, 'ldap', '2011-12-03 16:20:00'),
+	(10, 'test', 'test2', '3', 'test4', 'test3', 'test@test.com5', NULL, 'mail', '2013-01-30 02:40:53');
+
+
+#################
+
+INSERT INTO `sp_plasma_user_groupes_tb` (`id`, `libelle`, `cache`, `type`, `id_organisme`, `last_modif`)
+VALUES
+	(6, 'test groupe', 0, 'admin', 1, '0000-00-00 00:00:00');
+
+
+#################
+
+INSERT INTO `sp_plasma_slides_tb` (`id`, `nom`, `template`, `json`, `date`)
+VALUES
+	(3, 'test verbatim', 'verbatim', '{\\\"B\\\":\\\"<p>64 des 82 admissibles Ã  l\'ENA sont diplÃ´mÃ©s de Sciences Po</p><br /><p>Le nombre Ã©tait de 53 sur 82 l\'an passÃ©</p><br /><p>Mille bravos et beaucoup de courage Ã  elles et Ã  eux!</p>\\\"}', '2012-06-15'),
+	(4, 'test verbatim 2', 'verbatim', '{\\\"B\\\":\\\"<p>Encore un autre slide!</p><p>Et ca fonctionne correctement</p><p>Mille bravos et beaucoup de courage a elles et a eux!</p>\\\"}', '2012-06-17'),
+	(9, 'test meteo', 'meteo', '{}', '2012-08-23'),
+	(10, 'test Ã©vÃ©nements', 'evenements', '{\\\"A\\\":\\\"ConfÃ©rence, Recherche et dÃ©bat\\\", \\\"C\\\":\\\"Le 30 aoÃ»t Ã  11h00\\\", \\\"E\\\":\\\"Sciences po\\\", \\\"F\\\":\\\"BÃ¢t. -1\\\", \\\"B\\\":\\\"FR\\\", \\\"G\\\":\\\"RentrÃ©e solennelle du CollÃ¨ge universitaire - Campus europÃ©en franco-allemand Ã  Nancy\\\", \\\"H\\\":\\\"Sciences Po\\\", \\\"H2\\\":\\\"\\\", \\\"I\\\":\\\"<img src=\\\\\"http://www.sciencespo.fr/evenements/admin/upload/photos/evenement_1195/image.jpg\\\\\" />\\\", \\\"J\\\":\\\"\\\", \\\"L\\\":\\\"Logo Sciences Po.\\\", \\\"M\\\":\\\"Ecole de communication\\\"}', '2012-08-24'),
+	(11, 'test video', 'video', '{}', '2012-08-24'),
+	(13, 'event list 1 avec un titre beaucoup plus long', 'evenements', '{\\\"A\\\":\\\"\\\", \\\"C\\\":\\\"2012-10-15 - 2012-10-15 / 09:30:00 - 18:30:00\\\", \\\"E\\\":\\\"Salle des confÃ©rences\\\", \\\"F\\\":\\\"BÃ¢t. -1\\\", \\\"B\\\":\\\"\\\", \\\"G\\\":\\\"Les sciences sociales de l\'international : penser les articulations entre thÃÂ©orie, mÃÂ©thode et terrain\\\", \\\"H\\\":\\\"CERI\\\", \\\"H2\\\":\\\"\\\", \\\"I\\\":\\\"<img src=\\\\\"slides_images/2012/08/13/CarteEurope.png\\\\\" />\\\", \\\"J\\\":\\\"\\\", \\\"M\\\":\\\"\\\"}', '2012-08-02'),
+	(14, 'event list 2', 'evenements', '{\\\"A\\\":\\\"\\\", \\\"C\\\":\\\"2012-06-28 - 2012-06-28 / 14:00:00 - 18:15:00\\\", \\\"E\\\":\\\"AmphithÃ©Ã¢tre Albert Caquot\\\", \\\"F\\\":\\\"BÃ¢t. 7\\\", \\\"B\\\":\\\"\\\", \\\"G\\\":\\\"NÃ©gociations environnementales internationales :  quelles innovations issues de la pratique, de la recherche et de la simulation ?\\\", \\\"H\\\":\\\"Iddri-Sciences Po\\\", \\\"H2\\\":\\\"\\\", \\\"I\\\":\\\"<img src=\\\\\"http://www.sciencespo.fr/evenements/admin/upload/photos/evenement_1173/image.jpg\\\\\" />\\\", \\\"J\\\":\\\"Inscription obligatoire: www.iddri.org\\\", \\\"M\\\":\\\"\\\"}', '2012-08-02'),
+	(15, 'event list 3', 'evenements', '{\\\"A\\\":\\\"\\\", \\\"C\\\":\\\"2012-04-12 - 2012-04-12 / 17:00:00 - 19:00:00\\\", \\\"E\\\":\\\"Salle des confÃ©rences\\\", \\\"F\\\":\\\"BÃ¢t. 8\\\", \\\"B\\\":\\\"\\\", \\\"G\\\":\\\"Faut-il, ou non, parler de race ? : leÃÂ§ons des Etats-Unis, de Grande-Bretagne et de France\\\", \\\"H\\\":\\\"CERI-Sciences Po\\\", \\\"H2\\\":\\\"\\\", \\\"I\\\":\\\"<img src=\\\\\"http://www.sciencespo.fr/evenements/admin/upload/photos/evenement_1041/\\\\\" />\\\", \\\"J\\\":\\\"\\\", \\\"M\\\":\\\"\\\"}', '2012-08-02'),
+	(17, 'test', 'compte_a_rebours', '{}', '2012-09-16'),
+	(18, 'test2', 'sports', '{}', '2012-09-14'),
+	(19, 'test3', 'compte_a_rebours', NULL, '2012-09-18'),
+	(20, 'GQS', 'meteo', NULL, '2012-09-20'),
+	(21, 'Foot', 'sports', NULL, '2012-09-24'),
+	(22, 'Admissions', 'verbatim', '{\\\"B\\\":\\\"We are the best !\\\"}', '2012-09-24'),
+	(23, 'Bestof', 'video', NULL, '2012-09-24'),
+	(24, 'test', 'evenements', '{\\\"A\\\":\\\"\\\", \\\"C\\\":\\\"2012-10-29 - 2012-11-02 / 10:00:00 - 18:00:00\\\", \\\"E\\\":\\\"\\\", \\\"F\\\":\\\"BÃ¢t. -1\\\", \\\"B\\\":\\\"\\\", \\\"G\\\":\\\"CliMates International Summit\\\", \\\"H\\\":\\\"CliMates International Summit\\\", \\\"H2\\\":\\\"\\\", \\\"I\\\":\\\"<img src=\\\\\"http://www.sciencespo.fr/evenements/admin/upload/photos/evenement_1237/image.jpg\\\\\" />\\\", \\\"J\\\":\\\"\\\", \\\"L\\\":\\\"Logo Sciences Po.\\\", \\\"M\\\":\\\"\\\"}', '2012-10-10'),
+	(25, 'Test compte Ã  rebours', 'compte_a_rebours', '{}', '2012-10-12'),
+	(35, 'test video', 'video', '{\\\"A\\\":\\\"entretien2\\\", \\\"B\\\":\\\"La crise analysÃ©e !\\\", \\\"C\\\":\\\"Sir Howard Davies\\\", \\\"D\\\":\\\"directeur de la London School of Economics and Political Science (LSE)...\\\", \\\"E\\\":\\\"slides_images/2012/10/35/video.mp4\\\"}', '2012-10-11'),
+	(39, 'dÃ©mo upload', 'video', NULL, '2012-12-03');
+
+
+#################
+
+INSERT INTO `sp_plasma_rel_user_groupe_tb` (`id`, `id_user`, `id_groupe`, `last_modif`)
+VALUES
+	(45, 10, 6, NULL);
+
+
+#################
+
+INSERT INTO `sp_plasma_playlist_tb` (`id`, `nom`, `date`)
+VALUES
+	(1, 'test', '2012-12-18'),
+	(2, 'autre playlist', '2012-01-19'),
+	(3, 'test2', '2012-12-23'),
+	(10, 'Playlist du 10/01/2013', '2013-01-11');
+
+
+#################
+
+INSERT INTO `sp_plasma_organisme_tb` (`id`, `nom`, `type`, `google_analytics_id`, `last_modif`)
+VALUES
+	(1, 'test organisme', 'admin', 'UA-20942014-1', '0000-00-00 00:00:00');
+
+#################
+
+
+INSERT INTO `sp_plasma_etablissements_tb` (`id`, `nom`, `ville`, `code_meteo`, `code_postal`)
+VALUES
+	(1, 'Sciences Po Paris', 'Paris', 'EUR|FR|FR012|PARIS|', '75000'),
+	(2, 'Sciences Po Dijon', 'Dijon', 'EUR|FR|FR003|DIJON|', '21000'),
+	(3, 'Sciences Po Le Havre', 'Le Havre', 'EUR|FR|FR011|LE HAVRE|', '76600'),
+	(4, 'Sciences Po Menton', 'Menton', 'EUR|FR|FR021|MENTON|', '06500'),
+	(5, 'Sciences Po Nancy', 'Nancy', 'EUR|FR|FR015|NANCY|', '54000'),
+	(6, 'Sciences Po Poitiers', 'Poitiers', 'EUR|FR|FR020|POITIERS|', '86000'),
+	(7, 'Sciences Po Reims', 'Reims', 'EUR|FR|FR008|REIMS|', '51100');
+
+#################
+
+INSERT INTO `sp_plasma_ecrans_tb` (`id`, `nom`, `id_etablissement`, `id_groupe`, `id_last_slide`, `id_last_slideshow`, `order_last_slide`, `id_default_slideshow`)
+VALUES
+	(1, 'bibliotheque 1', 1, 1, 0, 1, 1, 3),
+	(2, 'amphitheatre boutmy', 1, 1, 11, 2, 1, 6),
+	(3, 'Groupe bibliotheque modif', NULL, NULL, 0, NULL, 0, 1),
+	(4, 'Groupe bibliotheque modif', NULL, NULL, 0, NULL, 0, 1),
+	(5, 'Groupe bibliotheque modif', NULL, NULL, 0, NULL, 0, 1),
+	(6, 'Groupe bibliotheque modif', NULL, NULL, 0, NULL, 0, 1),
+	(7, 'EntrÃ©e 1', 1, 3, 9, 1, 2, 1);
+
+#################
+
+INSERT INTO `sp_plasma_ecrans_groupes_tb` (`id`, `nom`, `id_slideshow`)
+VALUES
+	(1, 'Groupe bibliotheque', 2),
+	(2, 'Groupe Boutmy', 1),
+	(3, 'Groupe Hall d\'entree', 2);
+
