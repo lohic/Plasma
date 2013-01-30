@@ -1,7 +1,7 @@
 # fichiers de paramèters du système #
 #####################################
-vars/constantes_vars.php
-classe/connexion_vars.php
+constantes_vars.php
+connexion_vars.php
 
 
 
