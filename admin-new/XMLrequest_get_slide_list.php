@@ -17,13 +17,11 @@ if(isset($_GET['id_slide'])){
 	$slide = new Slide();
 }
 
-
 $annee = isset($_GET['annee'])?$_GET['annee']:date('Y');
 $mois = isset($_GET['mois']) ? $_GET['mois'] : date('m');
 $id_template	= !empty($_GET['id_template'])?$_GET['id_template']:-1;
 
 ?>
-
 <div>
 	<?php 
 	echo $slide->get_slide_popup_liste($id_template, $annee, $mois);

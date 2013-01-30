@@ -1,7 +1,7 @@
 <li<?php if(empty($info['id'])){ ?> class="new" id="'+timestamp+'"<?php } ?>>
 <a href="#" class="del"><img src="../graphisme/round_minus.png" alt="supprimer un slide" height="16"/></a>
-<img src="<?php echo $iconeURL; ?>" width="28" height="18" class="icone" />
-<input type="hidden" name="id_rel[]" value="<?php echo !empty($info['id'])?$info['id']:''; ?>" class="id_rel" />
+<img <?php echo !empty($iconeURL) ? 'src="'.$iconeURL.'" ':''; ?> width="28" height="18" class="icone" />
+<input type="hidden" name="id_rel[]" value="<?php echo isset($info['id']) ? $info['id'] : ''; ?>" class="id_rel" />
 <input type="hidden" name="timestamp[]" value="<?php if(empty($info['id'])){ ?>'+timestamp+'<?php } ?>" />
 <span> durée : <input name="duree[]" type="text" value="<?php echo !empty($duree) ? $duree : '00:30:00'; ?>" class="dureeslide"/></span>
 <?php if(!empty($is_freq)){ ?>
@@ -10,7 +10,7 @@
 <input type="hidden" name="date[]" value="" />
 <input type="hidden" name="time[]" value="" />
 <span><?php echo $MSelect.$JSelect.$jSelect; ?></span>
-<span>horaire : <input name="H[]" type="text" value="<?php echo !empty($json)?$json->H:''; ?>" class="timeslide"/></span>
+<span>horaire : <input name="H[]" type="text" value="<?php echo !empty($json)?$json->H:'12:00:00'; ?>" class="timeslide"/></span>
 <?php } else if(!empty($is_date)){ ?>
 <!-- DATE LISTE -->
 <input type="hidden" name="typerel[]"	value="date" />

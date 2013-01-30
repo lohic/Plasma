@@ -12,15 +12,16 @@ $core = new core();
 
 if($core->isAdmin){ 
 
-	$playlist = new Playlist(NULL,$_POST['id_target']);
+	$id_playlist = !empty($_POST['id_target'])? $_POST['id_target'] : NULL;
 
+	$playlist = new Playlist($id_playlist);
 	
 	//echo $_POST['id_ecran']." ".substr($_POST['suppr_id_rel_slide'],1).' |||| ';
 	
 	$new_id = array();
 	
 	//$i = 0;
-	
+		
 	$playlist->del_rel_slide(substr($_POST['suppr_id_rel_slide'],1));
 		
 		
@@ -35,6 +36,18 @@ if($core->isAdmin){
 		if(isset($_POST['typerel'][$key])){
 			
 			$_array_val = array();
+			
+			
+			if($_POST['j'][$key] != NULL){
+				$jour = '"j":"'.$_POST['j'][$key].'"';
+			}else if($_POST['J'][$key] != NULL){
+				$jour = '"J":"'.$_POST['J'][$key].'"';
+			}		
+			
+			$json = !empty($jour) ? '{"M":"'.$_POST['M'][$key].'",'.$jour.',"H":"'.$_POST['H'][$key].'"}' : NULL;
+							
+			$_array_val['freq']			= $json; 
+			
 						
 			$_array_val['ordre']		= $_POST['ordre'][$key];
 			$_array_val['duree'] 		= $_POST['duree'][$key];

@@ -29,8 +29,10 @@ class Playlist {
 		}
 		
 		$this->debugger = "";
-				
+		
+		if((!empty($_POST['create']) && $_POST['create'] == 'playlist') || (!empty($_POST['update']) && $_POST['update'] == 'playlist')){
 		$this->updater();
+		}
 	}
 	
 	
@@ -40,12 +42,12 @@ class Playlist {
 	* @since v0.5 29/12/2012
 	*/
 	function updater(){
-		
 		// on normalise les données
 		// si elles sont présentes tant mieux, sinon on aura un NULL
 		$id							= isset($_POST['id_playlist'])?		func::GetSQLValueString($_POST['id_playlist'],'int'):NULL;
 		$_array_val['nom']			= isset($_POST['nom'])?				func::GetSQLValueString($_POST['nom'],'text'):NULL;
 		$_array_val['date']			= isset($_POST['date'])?			func::GetSQLValueString($_POST['date'],'date'):NULL;
+	
 		
 		if(!empty($_POST['create']) && $_POST['create'] == 'playlist'){
 			$this->create_playlist($_array_val);
@@ -313,31 +315,29 @@ class Playlist {
 			$alerte		= 0;
 			
 			if(!empty($id_rel)){
-				$sql		= sprintf("UPDATE ".TB."rel_slide_tb SET id_slide=%s, id_target=%s, type_target=%s, date=%s, duree=%s, freq=%s, status=%s, type=%s, ordre=%s, alerte=%s   WHERE id=%s",
-																																					func::GetSQLValueString($id_slide,'int'),
-																																					func::GetSQLValueString($id_target,'int'),
-																																					func::GetSQLValueString($type_target,'text'),
-																																					func::GetSQLValueString($date,'text'),
-																																					func::GetSQLValueString($duree,'text'),
-																																					func::GetSQLValueString($freq,'text'),
-																																					func::GetSQLValueString($status,'text'),
-																																					func::GetSQLValueString($type,'text'),
-																																					func::GetSQLValueString($ordre,'int'),
-																																					func::GetSQLValueString($alerte,'int'),
-																																					func::GetSQLValueString($id_rel,'int'));
+				$sql		= sprintf("UPDATE ".TB."rel_slide_tb SET id_slide=%s, id_target=%s, type_target=%s, date=%s, duree=%s, freq=%s, status=%s, type=%s, ordre=%s, alerte=%s   WHERE id=%s", 	func::GetSQLValueString($id_slide,'int'),
+															func::GetSQLValueString($id_target,'int'),
+															func::GetSQLValueString($type_target,'text'),
+															func::GetSQLValueString($date,'text'),
+															func::GetSQLValueString($duree,'text'),
+															func::GetSQLValueString($freq,'text'),
+															func::GetSQLValueString($status,'text'),
+															func::GetSQLValueString($type,'text'),
+															func::GetSQLValueString($ordre,'int'),
+															func::GetSQLValueString($alerte,'int'),
+															func::GetSQLValueString($id_rel,'int'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 			}else{
-				$sql		= sprintf("INSERT INTO ".TB."rel_slide_tb (id_slide, id_target, type_target, date, duree, freq, status, type,ordre, alerte) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-																																					func::GetSQLValueString($id_slide,'int'),
-																																					func::GetSQLValueString($id_target,'int'),
-																																					func::GetSQLValueString($type_target,'text'),
-																																					func::GetSQLValueString($date,'text'),
-																																					func::GetSQLValueString($duree,'text'),
-																																					func::GetSQLValueString($freq,'text'),
-																																					func::GetSQLValueString($status,'text'),
-																																					func::GetSQLValueString($type,'text'),
-																																					func::GetSQLValueString($ordre,'int'),
-																																					func::GetSQLValueString($alerte,'int'));
+				$sql		= sprintf("INSERT INTO ".TB."rel_slide_tb (id_slide, id_target, type_target, date, duree, freq, status, type,ordre, alerte) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",			func::GetSQLValueString($id_slide,'int'),
+															func::GetSQLValueString($id_target,'int'),
+															func::GetSQLValueString($type_target,'text'),
+															func::GetSQLValueString($date,'text'),
+															func::GetSQLValueString($duree,'text'),
+															func::GetSQLValueString($freq,'text'),
+															func::GetSQLValueString($status,'text'),
+															func::GetSQLValueString($type,'text'),
+															func::GetSQLValueString($ordre,'int'),
+															func::GetSQLValueString($alerte,'int'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 				
 				return mysql_insert_id();
