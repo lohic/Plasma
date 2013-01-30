@@ -1,2 +1,17 @@
+# fichiers de paramèters du système #
+#####################################
 vars/constantes_vars.php
 classe/connexion_vars.php
+
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
