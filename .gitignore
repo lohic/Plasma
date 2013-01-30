@@ -2,6 +2,8 @@
 #####################################
 vars/constantes_vars.php
 classe/connexion_vars.php
+vars\constantes_vars.php
+classe\connexion_vars.php
 
 
 
