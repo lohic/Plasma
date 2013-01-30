@@ -266,11 +266,13 @@ class Slide {
 		
 	}
 	
-	/*
-	@ listage des slides existants pour la selection dans la gestion ecran
-	@ LOIC
-	@ 
-	@ 02/08/2012
+	/**
+	* get_slide_popup_liste listage des slides existants pour la selection dans la gestion ecran
+	* @author Loïc Horellou
+	* @param $template
+	* @param $annee
+	* @param $mois
+	* @param $id_selected
 	*/
 	function get_slide_popup_liste($template=NULL,$annee=NULL,$mois=NULL,$id_selected=NULL){
 		
