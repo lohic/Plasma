@@ -12,11 +12,11 @@ VALUES
 
 #################
 
-INSERT INTO `sp_plasma_user_tb` (`id`, `login`, `password`, `type`, `nom`, `prenom`, `email`, `groupe`, `account_type`, `last_modif`)
+INSERT INTO `sp_plasma_user_level_tb` (`id`, `libelle`, `level`)
 VALUES
-	(1, 'admin', 'admin', '1', 'Horellou', 'LoÃ¯c', 'lohic79@gmail.com', NULL, 'mail', '2011-11-04 18:38:24'),
-	(4, 'emile.boutmy', NULL, '', 'Boutmy', 'Ãmile', 'emile.boutmy@sciences-po.fr', NULL, 'ldap', '2011-12-03 16:20:00'),
-	(10, 'test', 'test2', '3', 'test4', 'test3', 'test@test.com5', NULL, 'mail', '2013-01-30 02:40:53');
+	(1, 'Super admin', 1),
+	(2, 'Admin', 3),
+	(3, 'Contributeur', 7);
 
 
 #################
