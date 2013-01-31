@@ -2,11 +2,9 @@
 #####################################
 constantes_vars.php
 connexion_vars.php
-config.php
 
-test-gitignore1.php
-vars/test-gitignore1.php
-test-gitignore2.php
+config.php
+config-sample.php
 
 # OS generated files #
 ######################
