@@ -6,6 +6,7 @@ config.php
 
 test-gitignore1.php
 vars/test-gitignore1.php
+test-gitignore2.php
 
 # OS generated files #
 ######################
