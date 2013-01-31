@@ -23,8 +23,8 @@
 <?php //include('../template/'.$templateFolder.'/style.css');?>
 </style>*/ ?>
 
-<script language="javascript" src="<?php echo ABSOLUTE_URL; ?>js/jquery-1.7.2.min.js"></script>
-<script language="javascript" src="<?php echo ABSOLUTE_URL; ?>js/slideshow.js"></script>
+<script language="javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script language="javascript" src="../js/slideshow.js"></script>
 
 </head>
 
