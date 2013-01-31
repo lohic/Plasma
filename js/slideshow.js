@@ -1,17 +1,39 @@
+nextSlideData = '';
 
-function get_next_slide(plasma_id){
-	// requête ajax
-	//alert('next slide : plasma_id='+plasma_id);
+function get_next_slide(plasma_id, doNow){
 	
-	$.get("XMLrequest_get_slide.php?plasma_id=".plasma_id, function(data) {
-																	
-		/* transition éventuelle */
-		/*$('#template').fadeOut('slow', function(){
-			$('#template').html(data);
-			$('#template').fadeIn('slow');
-		});*/
-		$('#template').removeClass('exit');
-		$('#template').html(data);
+	saved_doNow = doNow;
+	
+	$.get("XMLrequest_get_slide.php?plasma_id="+plasma_id, function(data){
+		//alert(data);
+		// stock pour plus tard
+		nextSlideData = data;
 		
+		// sortie de secours
+		if(saved_doNow){
+			exit_slideshow();	
+		}
 	});
-};
+}
+
+nextId = false;
+
+function get_next_id(plasma_id){
+	
+	saved_plasma_id = plasma_id;
+	
+	$.get('XMLrequest_get_slideid.php?plasma_id='+plasma_id, function(data){
+		//alert(data);
+		if(!nextId){
+			nextId = parseInt(data);
+			//alert(nextId);
+		} else {
+			if(nextId != parseInt(data)){
+				nextId = parseInt(data);
+				
+				// changement de programme !
+				get_next_slide(saved_plasma_id, true); // maj dès le chargement effectué
+			}
+		}
+	});
+}

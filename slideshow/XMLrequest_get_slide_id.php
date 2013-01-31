@@ -13,7 +13,8 @@ $id_ecran = $_GET['plasma_id'];
 
 $slideshow = new slideshow($id_ecran,'show');
 
-echo $slideshow->generate_slide();
+$next_slide_id = $slideshow->get_next_slide_id(true)->id_slide; 
+echo $next_slide_id;
 
 
 /* */
