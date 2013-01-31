@@ -21,6 +21,7 @@ if($core->isAdmin){
 		$month				= $_POST['month'];
 		$id_organisme		= $_POST['id_organisme'];
 		$lang				= $_POST['lang'];
+		$event				= NULL;
 		
 		//echo $year.' / '.$month.' / '.$id_organisme.' / '.$lang;
 		

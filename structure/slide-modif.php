@@ -1,3 +1,11 @@
+<?php
+
+$org 			= NULL;
+$annee 			= isset($_GET['annee'])?$_GET['annee']:date('Y');
+$mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
+
+?>
+
 <div class="form_container">
 
 <?php if(empty($_GET['id_slide'])){ 

@@ -8,7 +8,7 @@
     
         <div class="titre_heure">
             <p class="titre"><a href="#" title="modifier"><?php echo $nom; ?></a></p>
-            <p><?php echo $mail; ?></p>
+            <p><?php //echo $mail; ?></p>
         </div>
     </div>
     
@@ -20,7 +20,7 @@
     </div>
     
     <div class="poubelle">
-        <a href="#" onclick="supprGroup(<?php echo $id; ?>,'<?php echo $nom; ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
+        <a href="#" onClick="supprGroup(<?php echo $id; ?>,'<?php echo $nom; ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
     </div>
 </div>
 
