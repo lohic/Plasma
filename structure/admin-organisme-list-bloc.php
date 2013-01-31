@@ -1,5 +1,5 @@
-<div class="<?php echo $class; ?>">
-    <div class="infos">
+<div class="<?php echo $class; ?>">	
+	<div class="infos">
         <p class="jour"></p>
         <div class="image">
         	<img src="../graphisme/user.png" width="32" height="32" alt="modifier"/>
@@ -20,13 +20,21 @@
     </div>
     
     <div class="poubelle">
-        <a href="#" onclick="supprOrganisme(<?php echo $id; ?>,'<?php echo addslashes($nom); ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
+        <a href="#" onClick="supprOrganisme(<?php echo $id; ?>,'<?php echo addslashes($nom); ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
     </div>
 </div>
 <div class="<?php echo $class; ?> edit" id="form-edit-organisme-<?php echo $id; ?>">
 	<form action="" method="post" id="modif_organisme_form_<?php echo $id; ?>">
-        <fieldset>
-        <p class="legend">Informations :</p>
+	    <fieldset>
+        
+		<div class="options">
+        <a href="?page=etablissements&id_organisme=<?php echo $id; ?>&publish=true">
+            Publier l'organisme
+        </a>
+    </div>
+    
+		
+		<p class="legend">Informations :</p>
         	<input type="hidden" name="modif_organisme" value="ok" />
             <input type="hidden" name="id" value="<?php echo $id; ?>" />
     

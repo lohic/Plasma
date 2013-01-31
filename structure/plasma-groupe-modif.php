@@ -32,10 +32,15 @@ $id_template = !empty($id_template)?$id_template:0;
 
 </style>
 
-
 <div class="form_container">
-    <p class="intro_modif">Modification du groupe d'écrans: <a href="../slideshow/?plasma_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/></a></p>
+    <p class="intro_modif">Modification du groupe d'écrans:<!-- <a href="../slideshow/?plasma_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/>--></a></p>
     <h3><?php echo $data->nom;?></h3>
+	
+	<div class="options">
+        <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=true">
+            Publier le groupe
+        </a>
+    </div>
     
     <form action="" method="post" id="modif_ecran_info_form">
         <input type="hidden" name="<?php echo isset($id_groupe)?'update':'create';?>" value="groupe"/>

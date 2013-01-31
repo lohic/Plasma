@@ -38,6 +38,12 @@ if(empty($data->id_groupe)){
 <div class="form_container">
     <p class="intro_modif">Modification de l'écran : <a href="../slideshow/?plasma_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/></a></p>
     <h3><?php echo $data->nom; ?></h3>
+	
+	<div class="options">
+        <a href="?page=ecrans_modif&id_plasma=<?php echo $data->id; ?>&publish=true">
+            Publier l'écran
+        </a>
+    </div>
     
     <form action="" method="post" id="modif_ecran_info_form">
         <input type="hidden" name="<?php echo isset($id_plasma)?'update':'create';?>" value="ecran"/>

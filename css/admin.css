@@ -822,7 +822,34 @@ div.options {
     width: 120px;
 	margin-bottom:10px;
 }
-.liens, .infos, .options, .infos_large, .formulaire_large {
+
+div.publish {
+	float:right;
+    background: #C00;
+    right: 0;
+    top: 25px;
+    width: 60px;
+	height: 60px;
+	padding:5px;
+	margin:20px;
+	border-radius:35px;
+	text-align:center;
+	text-transform:uppercase;
+	font-style:italic;
+}
+
+div.publish a{
+	color:#FFF;
+	display:inline-block;
+	margin-top:20px;
+	font-size:10px;
+}
+
+div.publish a:hover{
+	color:#000;
+}
+
+.liens, .infos, .options, .publish, .infos_large, .formulaire_large {
     float: left;
 }
 p.intro_modif {
