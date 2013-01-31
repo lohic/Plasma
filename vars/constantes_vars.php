@@ -3,7 +3,7 @@
 //echo getcwd().'/../';
 
 define ('SUB_FOLDER',			'Site_SCIENCESPO_PLASMA/');
-define ('ABSOLUTE_URL',			'http://localhost:8888/'.SUB_FOLDER);
+define ('ABSOLUTE_URL',			'http://127.0.0.1:8080/Mercenariat/2012-04-02 Syclo - ScPo Plasma/GitHub/plasma/'.SUB_FOLDER);
 define ('LOCAL_PATH',			getcwd().'/../');
 
 define ('IS_LDAP_SERVER',		false);
