@@ -3,7 +3,7 @@
 if($core->isAdmin){
 	
 include_once('../classe/classe_spuser.php');
-include_once('../vars/statics_vars.php');
+//include_once('../vars/statics_vars.php');
 
 $user = new spuser($core->plasma_db);
 

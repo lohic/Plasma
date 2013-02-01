@@ -1,11 +1,12 @@
 <?php
 
-include_once('connexion_vars.php');
+include_once('../vars/config.php');
 include_once('classe_connexion.php');
 include_once('classe_slide.php');
 include_once('classe_fonctions.php');
 include_once('fonctions.php');
-include_once('../vars/statics_vars.php');
+//include_once('connexion_vars.php');
+//include_once('../vars/statics_vars.php');
 
 
 class Playlist {
@@ -20,9 +21,9 @@ class Playlist {
 	*/
 	function playlist($_id_playlist=NULL){
 		
-		global $plasma_cInfo;
+		global $connexion_info;
 		date_default_timezone_set('Europe/Paris');
-		$this->slide_db		= new connexion($plasma_cInfo['server'],$plasma_cInfo['user'],$plasma_cInfo['password'],$plasma_cInfo['db']);
+		$this->slide_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 		
 		if(!empty($_id_playlist)){
 			$this->id_playlist = $_id_playlist;	

@@ -1,6 +1,6 @@
 <?php 
 
-include_once("constantes_vars.php");
+//include_once("constantes_vars.php");
 
 date_default_timezone_set('UTC');
 

@@ -1,10 +1,11 @@
 <?php
 
-include_once('connexion_vars.php');
+include_once('../vars/config.php');
 include_once('classe_connexion.php');
 include_once('classe_fonctions.php');
 include_once('fonctions.php');
-include_once('../vars/statics_vars.php');
+//include_once('connexion_vars.php');
+//include_once('../vars/statics_vars.php');
 
 class Slide {
 	
@@ -18,8 +19,8 @@ class Slide {
 	@ 18/07/2012
 	*/
 	function slide($_id=NULL){
-		global $plasma_cInfo;
-		$this->slide_db		= new connexion($plasma_cInfo['server'],$plasma_cInfo['user'],$plasma_cInfo['password'],$plasma_cInfo['db']);
+		global $connexion_info;
+		$this->slide_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 		
 		if(!empty($_id)){
 			

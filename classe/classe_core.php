@@ -1,10 +1,12 @@
 <?php
 
+include_once('../vars/config.php');
 include_once('classe_connexion.php');
-//include_once('classe_user.php');
 include_once('classe_spuser.php');
-include_once('fonctions.php');
-include_once('connexion_vars.php');
+include_once('classe_fonctions.php');
+//include_once('fonctions.php');
+//include_once('classe_user.php');
+//include_once('connexion_vars.php');
 
 class Core {
 
@@ -26,11 +28,12 @@ class Core {
 
 		global $evenement_cInfo;
 		global $news_cInfo;
-		global $plasma_cInfo;
+		
+		global $connexion_info;
 		
 		
 
-		$this->plasma_db = new connexion($plasma_cInfo['server'],$plasma_cInfo['user'],$plasma_cInfo['password'],$plasma_cInfo['db']);
+		$this->plasma_db = new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 		//$this->news_db		= new connexion($news_cInfo['server'],$news_cInfo['user'],$news_cInfo['password'],$news_cInfo['db']);
 
 

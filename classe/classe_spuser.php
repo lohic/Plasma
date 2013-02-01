@@ -11,10 +11,13 @@ login
 password
 */
 
+
+include_once('../vars/config.php');
 include_once('classe_connexion.php');
-include_once('fonctions.php');
-include_once('../vars/constantes_vars.php');
-include_once('../vars/statics_vars.php');
+include_once('classe_fonctions.php');
+//include_once('fonctions.php');
+//include_once('../vars/constantes_vars.php');
+//include_once('../vars/statics_vars.php');
 
 class Spuser {
 

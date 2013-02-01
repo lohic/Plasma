@@ -3,7 +3,7 @@
 if($core->isAdmin){
 	
 include_once('../classe/classe_organisme.php');
-include_once('../vars/statics_vars.php');
+//include_once('../vars/statics_vars.php');
 
 global $typeTab;
 

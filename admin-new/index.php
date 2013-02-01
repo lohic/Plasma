@@ -7,6 +7,7 @@ include_once('../classe/classe_playlist.php');
 include_once('../classe/classe_slide.php');
 include_once('../classe/classe_slideshow.php');
 include_once('../classe/classe_ecran.php');
+include_once('../classe/classe_fonctions.php');
 include_once('../classe/fonctions.php');
 
 $core = new core();

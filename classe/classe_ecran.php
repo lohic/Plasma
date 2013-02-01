@@ -1,11 +1,12 @@
 <?php
 
+include_once('../vars/config.php');
 include_once('classe_connexion.php');
-//include_once('fonctions.php');
 include_once('classe_fonctions.php');
 include_once('classe_slideshow.php');
-include_once('connexion_vars.php');
-include_once('../vars/statics_vars.php');
+//include_once('connexion_vars.php');
+//include_once('../vars/statics_vars.php');
+//include_once('fonctions.php');
 
 
 class Ecran {
@@ -19,9 +20,9 @@ class Ecran {
 	@
 	*/
 	function ecran($_id=NULL){
-		global $plasma_cInfo;
+		global $connexion_info;
 		date_default_timezone_set('UTC');
-		$this->slide_db		= new connexion($plasma_cInfo['server'],$plasma_cInfo['user'],$plasma_cInfo['password'],$plasma_cInfo['db']);
+		$this->slide_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 		
 		if(!empty($_id)) $this->id = $_id;
 		
