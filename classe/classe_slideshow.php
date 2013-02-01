@@ -236,26 +236,61 @@ class Slideshow {
 		
 			function clear_slideshow(){
 				clearTimeout(exit);
+				clearTimeout(verif);
 				$("#compteur").stop();
 			}
-			
+
 			function exit_slideshow(){
+				
+				clearTimeout(exit);				
+				
+				// sortie CSS
 				$("#template").addClass("exit"); 
 				$("#debug").append("<p>exit</p>");
-				clearTimeout(exit);
 				
+				// sortie dans 2 sec
 				end = setTimeout(function(){ 
+
 					clearTimeout(end);
-					get_next_slide('.($this->ecran->id).'); 
+					
+					// écriture du slide
+					$("#template").removeClass("exit");
+					$("#template").html(nextSlideData);
+					
+					// preload du suivant
+					get_next_slide('.($info->id).', false);
+
 				}, 2000);
+
 			}
 			
+			verif = setTimeout(function(){});
+			
+			function secure_loop(){
+				get_next_id('.($info->id).');
+				
+				clearTimeout(verif);
+				verif = setTimeout(secure_loop, 20000);
+			}
+
 			function play_slideshow(slide_duree){
-				exit = setTimeout(exit_slideshow, slide_duree-2000);				
+				
+				// sortie programmée
+				exit = setTimeout(exit_slideshow, slide_duree-2000);
+				
+				// debug bar
 				$("#compteur").animate({width:"0px"}, slide_duree, "linear");
+				
+				// preload du suivant
+				get_next_slide('.($info->id).', false);
+				
+				// verif
+				secure_loop();
+
 			}
-			
+
 			play_slideshow('.$duree.');
+
 		</script>';
 		
 		/*

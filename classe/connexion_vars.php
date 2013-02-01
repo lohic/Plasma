@@ -7,8 +7,8 @@
 */
 $plasma_cInfo['server'] 	= 'localhost';
 $plasma_cInfo['user'] 		= 'root';
-$plasma_cInfo['password'] 	= 'z6po';
-$plasma_cInfo['db']		 	= 'sciences_po_plasma_db';
+$plasma_cInfo['password'] 	= '';
+$plasma_cInfo['db']		 	= 'plasma';
 
 
 ?>
