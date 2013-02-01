@@ -10,20 +10,20 @@ class Organisme {
 	var $news_db		= NULL;
 	var $id				= NULL;
 	
-	/*
-	@ GESTION DES TEMPLATE
-	@
-	@
+	/**
+	* GESTION DES ORGANISMES
+	*
+	*
 	*/
 	function organisme($_id=NULL){
 		global $plasma_cInfo;
 		$this->news_db		= new connexion($plasma_cInfo['server'],$plasma_cInfo['user'],$plasma_cInfo['password'],$plasma_cInfo['db']);
 	}
 	
-	/*
-	@ creation ou modification d'un organisme
-	@
-	@
+	/**
+	* create_organisme creation ou modification d'un organisme
+	* @param $_array_val
+	* @param $_id
 	*/
 	function create_organisme($_array_val,$_id=NULL){
 		$this->news_db->connect_db();

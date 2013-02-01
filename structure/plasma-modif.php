@@ -40,7 +40,7 @@ if(empty($data->id_groupe)){
     <h3><?php echo $data->nom; ?></h3>
 	
 	<div class="options">
-        <a href="?page=ecrans_modif&id_plasma=<?php echo $data->id; ?>&publish=true">
+        <a href="?page=ecrans_modif&id_plasma=<?php echo $data->id; ?>&publish=ecran">
             Publier l'écran
         </a>
     </div>

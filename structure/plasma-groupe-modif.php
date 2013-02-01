@@ -37,7 +37,7 @@ $id_template = !empty($id_template)?$id_template:0;
     <h3><?php echo $data->nom;?></h3>
 	
 	<div class="options">
-        <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=true">
+        <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe">
             Publier le groupe
         </a>
     </div>

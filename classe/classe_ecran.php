@@ -3,6 +3,7 @@
 include_once('classe_connexion.php');
 //include_once('fonctions.php');
 include_once('classe_fonctions.php');
+include_once('classe_slideshow.php');
 include_once('connexion_vars.php');
 include_once('../vars/statics_vars.php');
 
@@ -75,6 +76,18 @@ class Ecran {
 		
 		if(isset($_POST['update']) && $_POST['update'] == 'groupe'){
 			$this->update_groupe_ecran($_array_val,$id_groupe);
+		}
+		
+		
+		// PUBLICATION
+		if(isset($_POST['publish']) && $_POST['publish'] == 'ecran'){
+			$slideshow = new Slideshow();
+			$slideshow->publish_slideshow($_POST['id_plasma'],NULL,NULL,NULL);
+			
+		}
+		if(isset($_POST['publish']) && $_POST['publish'] == 'groupe'){
+			$slideshow = new Slideshow();
+			$slideshow->publish_slideshow(NULL,$_POST['id_groupe'],NULL,NULL);
 		}
 		
 	}
