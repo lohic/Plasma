@@ -35,11 +35,11 @@
             
             <p><label for="user_type-<?php echo $id; ?>">type : </label>
             <!--input type="text" id="user_type-<?php echo $id; ?>" name="type" value="<?php echo $type; ?>" class="inputField" />-->
-            <?php echo createCombobox($user_level, 'type', 'user_type-'.$id	, $type, '', false);?></p>
+            <?php echo func::createCombobox($user_level, 'type', 'user_type-'.$id	, $type, '', false);?></p>
             
             <p><label for="user_account_type-<?php echo $id; ?>">organisme : </label>
             <!--<input type="text" id="user_account_type-<?php echo $id; ?>" name="account_type" value="<?php echo $account_type; ?>" class="inputField" />-->
-            <?php echo createCombobox($organismes, 'id_organisme', 'user_account_type-'.$id 	, $id_organisme, '', false);?></p>
+            <?php echo func::createCombobox($organismes, 'id_organisme', 'user_account_type-'.$id 	, $id_organisme, '', false);?></p>
             
         </fieldset>
         <input type="submit" name="edit_user_groupe" class="buttonenregistrer" id="edit_user_groupe" value="Modifier" />

@@ -32,7 +32,7 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
                 <p><label>Choix du template :</label>
                 <?php
                 global $templateListe;
-                echo createSelect($templateListe, 'template_slide');
+                echo func::createSelect($templateListe, 'template_slide');
                 ?></p>
                 
                 
@@ -91,13 +91,13 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 				<label>Chercher un événement</label>
 				<?php //createSelect($array, $name='', $id = NULL, $additionnal=NULL, $isnull=true) ?>
 				<?php 
-				echo createSelect(	$anneeListe, 
+				echo func::createSelect(	$anneeListe, 
 									'year', 
 									$annee, 
 									"onchange=\"get_events();\"", 
 									true ); ?>
 				<?php 
-				echo createSelect(	$moisListe, 
+				echo func::createSelect(	$moisListe, 
 									'month', 
 									$mois, 
 									"onchange=\"get_events();\"",
@@ -113,7 +113,7 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 					$orgListe[$value->{"id"}] = ($value->{"nom"});
 				}
 				
-				echo createSelect(	$orgListe, 
+				echo func::createSelect(	$orgListe, 
 									'id_organisme', 
 									$org, 
 									"onchange=\"get_events();\"", 
@@ -122,7 +122,7 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 				$langListe = array();
 				$langListe['fr'] = "fr";
 				$langListe['en'] = "en";
-				echo createSelect(	$langListe, 
+				echo func::createSelect(	$langListe, 
 									'lang', 
 									$org, 
 									"onchange=\"get_events();\"",

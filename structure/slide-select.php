@@ -18,9 +18,9 @@ $mois			= !empty($_GET['mois'])?$_GET['mois']:date('m');
     <form id="slide_select_form" action="" method="get">
         <input type="hidden" name="page" value="slides_select" />
         <?php //createSelect($array, $name='', $id = NULL, $additionnal=NULL, $isnull=true) ?>
-        <?php echo createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'		, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?>
-        <?php echo createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
-        <?php echo createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
+        <?php echo func::createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'		, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?>
+        <?php echo func::createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
+        <?php echo func::createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
     </form>
 </div>
 

@@ -46,7 +46,7 @@
             <input type="text" id="organisme_GA-<?php echo $id; ?>" name="google_analytics_id" value="<?php echo $google_analytics_id; ?>" class="inputField" /></p>
             
             <p><label for="organisme_type-<?php echo $id; ?>">type : </label>
-            <?php echo createCombobox($user_level, 'type', 'organisme_type-'.$id	, $type, '', false);?></p>
+            <?php echo func::createCombobox($user_level, 'type', 'organisme_type-'.$id	, $type, '', false);?></p>
            
             
         </fieldset>

@@ -9,7 +9,7 @@
     </form>
     <!--<form id="select_group" action="" method="post">
     	<label for="id_actual_group">Vous utilisez le groupe : </label>        
-        <?php echo createSelect($core->user_info->groups,	'id_actual_group', 	$_SESSION['id_actual_group'], 	"onchange=\"$('#select_group').submit();\"", false ); ?>    	
+        <?php echo func::createSelect($core->user_info->groups,	'id_actual_group', 	$_SESSION['id_actual_group'], 	"onchange=\"$('#select_group').submit();\"", false ); ?>    	
     </form>-->
     <?php } ?>
 </div>

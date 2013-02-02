@@ -18,7 +18,7 @@ $code_postal	= !empty($_GET['code_postal'])?$_GET['code_postal']:-1;
         <?php //createSelect($array, $name='', $id = NULL, $additionnal=NULL, $isnull=true) ?>
         <?php //echo createSelect($slideshow::get_slideshow_category_list($core->groups_id)	, 'id_template'		, $id_template	, "onchange=\"$('#news_select_form').submit();\"",false);?>
         <?php //echo createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
-        <?php echo createSelect($villeListe, 'code_postal', $code_postal, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
+        <?php echo func::createSelect($villeListe, 'code_postal', $code_postal, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
     </form>
 </div>
 

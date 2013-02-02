@@ -20,7 +20,7 @@
     </div>
     
     <div class="poubelle">
-        <a href="#" onclick="supprUser(<?php echo $id; ?>,'<?php echo $nom; ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
+        <a href="#" onClick="supprUser(<?php echo $id; ?>,'<?php echo $nom; ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
     </div>
 </div>
 <div class="<?php echo $class; ?> edit" id="form-edit-<?php echo $id; ?>">
@@ -48,11 +48,11 @@
             
             <p><label for="user_type-<?php echo $id; ?>">type : </label>
             <!--input type="text" id="user_type-<?php echo $id; ?>" name="type" value="<?php echo $type; ?>" class="inputField" />-->
-            <?php echo createCombobox($typeTab, 'type', 'user_type-'.$id	, $type, '', false);?></p>
+            <?php echo func::createCombobox($typeTab, 'type', 'user_type-'.$id	, $type, '', false);?></p>
             
             <p><label for="user_account_type-<?php echo $id; ?>">type de compte: </label>
             <!--<input type="text" id="user_account_type-<?php echo $id; ?>" name="account_type" value="<?php echo $account_type; ?>" class="inputField" />-->
-            <?php echo createCombobox($accountTypeTab, 'account_type', 'user_account_type-'.$id 	, $account_type, '', false);?></p>
+            <?php echo func::createCombobox($accountTypeTab, 'account_type', 'user_account_type-'.$id 	, $account_type, '', false);?></p>
             <?php //createCombobox($array, $name='', $id = NULL, $selectValue=NULL, $additionnal=NULL, $isnull=true);?>
             
         </fieldset>

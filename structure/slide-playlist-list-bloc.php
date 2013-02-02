@@ -36,7 +36,7 @@
 </span>
 <input type="hidden" name="ordre[]"		value="<?php echo !empty($info['ordre'])?$info['ordre']:''; ?>" />
 <!-- SELECTEUR DE SLIDES -->
-<input type="hidden" value="<?php echo !empty($info['id_slide'])?$info['id_slide']:$ecran->get_form_select()->default; ?>" name="id_slide[]" class="id_slide"/>
- <a class="slidelistselect<?php echo !empty($info['nom'])?'':' empty';?>"><?php echo !empty($info['nom'])? ''.$info['nom']:'&nbsp;choisir&nbsp;'; ?></a>
+<input type="hidden" value="<?php echo !empty($info['id_slide']) ? $info['id_slide'] : $ecran->get_form_select()->default; ?>" name="id_slide[]" class="id_slide"/>
+ <a class="slidelistselect<?php echo !empty($info['nom']) ? '' : ' empty' ;?>"><?php echo !empty($info['nom'])? ''.$info['nom']:'&nbsp;choisir&nbsp;'; ?></a>
  <?php //echo $info['id_slide'];?>
 </li>
