@@ -147,6 +147,37 @@ class Func {
 		return $selectItem ;
 	}
 	
+	/*
+	@ CREER UN ELEMENT DE FORMULAIRE SELECT
+	@ avec id différent de l'attribut name
+	@
+	*/
+	static function createCombobox($array, $name='', $id = NULL, $selectValue=NULL, $additionnal=NULL, $isnull=true){
+		
+		if(isset($additionnal)){$add = $additionnal; }else{ $add = '';}
+	
+		$selectItem = "<select name=\"$name\" id=\"$id\" $add>\n";
+	
+		if($isnull){ $selectItem .= "\t<option value=\"\" >Aucun</option>\n"; }
+	
+		foreach($array as $key => $value){
+			$sep = explode('_',$key);
+			
+			if($sep[0]=='separateur'){
+				$selectItem .= "\t<optgroup label=\"$value\"></optgroup>\n";
+			}else{
+				if($selectValue && $selectValue.'' == $key.''){ $sel = "selected=\"selected\""; }else {$sel="";}
+				$selectItem .= "\t<option value=\"$key\" $sel>$value</option>\n";
+			}
+		}
+		
+		$selectItem .= "</select>";
+		
+		return $selectItem;
+	}
+
+	
+	
 	
 	// TRANSFORMER UNE CHAINE EN IDENTIFIANT : PAS D'ACCENTS, PAS D'ESPACES
 	static function makeIdentifier($valeur){

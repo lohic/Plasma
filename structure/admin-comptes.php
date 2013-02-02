@@ -3,7 +3,7 @@
 if($core->isAdmin){
 	
 include_once('../classe/classe_spuser.php');
-//include_once('../vars/statics_vars.php');
+include_once('../classe/classe_fonctions.php');
 
 $user = new spuser($core->plasma_db);
 
@@ -81,10 +81,10 @@ if(isset($_POST['add_user'])){
             <input type="text" id="user_email" name="email" value="" class="inputField" /></p>
             
             <p><label for="user_type">type : </label>
-            <?php echo createCombobox($typeTab, 'type', 'user_type'	, $type, '', false);?></p>
+            <?php echo func::createCombobox($typeTab, 'type', 'user_type'	, $type, '', false);?></p>
             
             <p><label for="user_account_type">type de compte: </label>
-            <?php echo createCombobox($accountTypeTab, 'account_type', 'user_account_type' 	, $account_type, '', false);?></p>
+            <?php echo func::createCombobox($accountTypeTab, 'account_type', 'user_account_type' 	, $account_type, '', false);?></p>
             
         </fieldset>
         <fieldset>

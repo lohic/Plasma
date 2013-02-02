@@ -13,10 +13,11 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 $ecran 	= new Ecran($id_plasma);
 $data	= $ecran->get_info();
 
+
 if(empty($data->id_groupe)){
-	$id_groupe = $_GET['id_groupe'];
+	$id_groupe = !empty($_GET['id_groupe'])?$_GET['id_groupe']:NULL;
 }else{
-	$id_groupe = $data->id_groupe;	
+	$id_groupe = !empty($data->id_groupe)?$data->id_groupe:NULL;	
 }
 
 ?>

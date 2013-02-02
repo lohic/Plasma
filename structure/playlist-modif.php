@@ -13,6 +13,7 @@ $data			= $playlist->get_playlist_info();
 
 $id_template	= !empty($id_template)?$id_template:'';
 
+
 ?>
 <style>
 

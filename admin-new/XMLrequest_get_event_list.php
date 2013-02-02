@@ -2,11 +2,9 @@
 header('Content-type: text/html; charset=UTF-8');
 
 include_once('../vars/config.php');
-//include_once('../vars/constantes_vars.php');
 include_once('../vars/statics_vars.php');
 include_once('../classe/classe_core.php');
 include_once('../classe/classe_slide.php');
-//include_once("../classe/fonctions.php");
 include_once("../classe/classe_fonctions.php");
 
 $core = new core();
@@ -39,7 +37,7 @@ if($core->isAdmin){
 			$eventListe[$value->{"id"}] = ($value->{"date"}).' / '.($value->{"titre"});
 		}
 		echo "<fieldset><label>Choix de l'&eacute;v&eacute;nement</label>";
-		echo createSelect(	$eventListe, 
+		echo func::createSelect(	$eventListe, 
 							'event', 
 							$event, 
 							"onchange=\"event_fill_editor();\"", 
@@ -48,27 +46,3 @@ if($core->isAdmin){
 		
 	}
 }
-
-/*if(!empty($_POST['id']) && $_POST['is_archive']==0){
-	
-	$id_newsletter = $_POST['id'];
-
-	if(!isset($news)){
-		$news = new newsletter($id_newsletter);
-	}
-	
-	$news->create_archive($id_newsletter);
-	
-	echo '<img src="../graphisme/padlock_closed.png" alt="archive" />';
-}else{
-	$id_newsletter = $_POST['id'];
-	
-	if(!isset($news)){
-		$news = new newsletter($id_newsletter);
-	}
-	
-	$news->unarchive($id_newsletter);
-	
-	echo '<img src="../graphisme/padlock_open.png" alt="archive" title="archiver la newsletter" />';
-}*/
-?>

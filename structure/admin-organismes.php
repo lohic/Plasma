@@ -8,6 +8,7 @@ include_once('../classe/classe_organisme.php');
 global $typeTab;
 
 $organisme = new organisme();
+$id_organisme = NULL;
 
 if(!isset($type))
 	$type = NULL;

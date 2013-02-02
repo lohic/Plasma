@@ -15,8 +15,6 @@ password
 include_once('../vars/config.php');
 include_once('classe_connexion.php');
 include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('../vars/constantes_vars.php');
 //include_once('../vars/statics_vars.php');
 
 class Spuser {
@@ -267,8 +265,8 @@ class Spuser {
 		//$this->connexion->connect_db();
 		
 		$login__query	= sprintf("SELECT * FROM ".TB."user_tb WHERE login=%s AND password=%s",
-																GetSQLValueString($login, "text"),
-																GetSQLValueString($password, "text")); 
+																func::GetSQLValueString($login, "text"),
+																func::GetSQLValueString($password, "text")); 
 	
 		$login_info		= mysql_query($login__query) or die(mysql_error());
 		$infoUser		= mysql_fetch_assoc($login_info);
@@ -393,14 +391,14 @@ class Spuser {
 															email=%s,
 															account_type=%s
 															WHERE id=%s",
-													GetSQLValueString($_array_val['login'], "text"),
-									   				GetSQLValueString($_array_val['password'], "text"),
-									   				GetSQLValueString($_array_val['type'], "text"),
-									   				GetSQLValueString($_array_val['nom'], "text"),
-									   				GetSQLValueString($_array_val['prenom'], "text"),
-									   				GetSQLValueString($_array_val['email'], "text"),
-									   				GetSQLValueString($_array_val['account_type'], "text"),
-									   				GetSQLValueString($_array_val['id'], "int"));
+													func::GetSQLValueString($_array_val['login'], "text"),
+									   				func::GetSQLValueString($_array_val['password'], "text"),
+									   				func::GetSQLValueString($_array_val['type'], "text"),
+									   				func::GetSQLValueString($_array_val['nom'], "text"),
+									   				func::GetSQLValueString($_array_val['prenom'], "text"),
+									   				func::GetSQLValueString($_array_val['email'], "text"),
+									   				func::GetSQLValueString($_array_val['account_type'], "text"),
+									   				func::GetSQLValueString($_array_val['id'], "int"));
 			$insert_query	= mysql_query($updateSQL) or die(mysql_error());
 		
 		
@@ -419,13 +417,13 @@ class Spuser {
 					
 			$this->connexion->connect_db();
 			$updateSQL 		= sprintf("INSERT INTO ".TB."user_tb	(login,password,type,nom,prenom,email,account_type) VALUES (%s,%s,%s,%s,%s,%s,%s)",
-													GetSQLValueString($_array_val['login'], "text"),
-									   				GetSQLValueString($_array_val['password'], "text"),
-									   				GetSQLValueString($_array_val['type'], "text"),
-									   				GetSQLValueString($_array_val['nom'], "text"),
-									   				GetSQLValueString($_array_val['prenom'], "text"),
-									   				GetSQLValueString($_array_val['email'], "text"),
-									   				GetSQLValueString($_array_val['account_type'], "text"));
+													func::GetSQLValueString($_array_val['login'], "text"),
+									   				func::GetSQLValueString($_array_val['password'], "text"),
+									   				func::GetSQLValueString($_array_val['type'], "text"),
+									   				func::GetSQLValueString($_array_val['nom'], "text"),
+									   				func::GetSQLValueString($_array_val['prenom'], "text"),
+									   				func::GetSQLValueString($_array_val['email'], "text"),
+									   				func::GetSQLValueString($_array_val['account_type'], "text"));
 			$insert_query	= mysql_query($updateSQL) or die(mysql_error());
 			
 			$id_user = mysql_insert_id();
@@ -448,8 +446,8 @@ class Spuser {
 			$this->connexion->connect_db();
 			foreach($_array_groupe as $_id_groupe){
 				$insertSQL 		= sprintf("INSERT INTO ".TB."rel_user_groupe_tb (id_user,id_groupe) VALUES (%s,%s)",
-														GetSQLValueString($_id_user, "int"),
-														GetSQLValueString($_id_groupe, "int"));
+														func::GetSQLValueString($_id_user, "int"),
+														func::GetSQLValueString($_id_groupe, "int"));
 				$insert_query	= mysql_query($insertSQL) or die(mysql_error());
 			}
 		}
@@ -464,7 +462,7 @@ class Spuser {
 		if(!empty($_id_user)){
 			$this->connexion->connect_db();
 
-			$supprSQL		= sprintf("DELETE FROM ".TB."rel_user_groupe_tb WHERE id_user=%s", GetSQLValueString($_id_user,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."rel_user_groupe_tb WHERE id_user=%s", func::GetSQLValueString($_id_user,'int'));
 			
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
@@ -482,7 +480,7 @@ class Spuser {
 			$this->connexion->connect_db();
 			
 			$this->clean_groupe($_id_user);
-			$supprSQL		= sprintf("DELETE FROM ".TB."user_tb WHERE id=%s", GetSQLValueString($_id_user,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."user_tb WHERE id=%s", func::GetSQLValueString($_id_user,'int'));
 			
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
@@ -506,7 +504,7 @@ class Spuser {
 		foreach($tab as $key => $value){
 			for($i=0;$i<$nbr_colonnes;$i++){
 				if($key==$titre_item_attendu[$i]){
-					$tab[$key] = GetSQLValueString($value,$type_item_attendu[$i]);
+					$tab[$key] = func::GetSQLValueString($value,$type_item_attendu[$i]);
 					break;
 				}
 			}
@@ -525,7 +523,7 @@ class Spuser {
 							FROM ".TB."user_groupes_tb g, ".TB."user_tb u, ".TB."rel_user_groupe_tb r
 							WHERE r.id_user = u.id
 							AND r.id_groupe = g.id
-							AND u.id = %s", GetSQLValueString($this->id, "int")); 
+							AND u.id = %s", func::GetSQLValueString($this->id, "int")); 
 	
 		$result	= mysql_query($query) or die(mysql_error());
 		
@@ -642,7 +640,7 @@ class Spuser {
 		}
 		
 		if(isset($groupes))
-			return createCheckBox($groupes,'groupe_user[]',$id);
+			return func::createCheckBox($groupes,'groupe_user[]',$id);
 	}
 
 
@@ -675,11 +673,11 @@ class Spuser {
 		if($this->LDAP){
 			$query	= sprintf("SELECT COUNT(email) AS nbr
 								FROM ".TB."user_tb
-								WHERE email= %s", GetSQLValueString($this->email, "text")); 
+								WHERE email= %s", func::GetSQLValueString($this->email, "text")); 
 		}else{
 			$query	= sprintf("SELECT COUNT(login) AS nbr
 								FROM ".TB."user_tb
-								WHERE login= %s", GetSQLValueString($this->login, "text")); 	
+								WHERE login= %s", func::GetSQLValueString($this->login, "text")); 	
 		}
 	
 		$result	= mysql_query($query) or die(mysql_error());
