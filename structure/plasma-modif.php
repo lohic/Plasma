@@ -73,6 +73,15 @@ if(empty($data->id_groupe)){
                 <label for="id_default_slideshow">slideshow par defaut :</label>
                 <?php echo func::createSelect($ecran->get_slideshow_list(), 'id_default_slideshow', $data->id_default_slideshow, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
             </p>
+			<p>
+                <label for="id_playlist_locale">playlist locale :</label>
+                <?php echo func::createSelect($ecran->get_slideshow_list(), 'id_playlist_locale', $data->id_playlist_locale, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
+            </p>
+			<p>
+                <label for="id_playlist_nationale">playlist nationale :</label>
+                <?php echo func::createSelect($ecran->get_slideshow_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
+            </p>
+
         </fieldset>
         <input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
     </form>
