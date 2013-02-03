@@ -1,3 +1,6 @@
+<div id="ombre">
+
+	</div>
 <div class="colonne">
 	<div class="header">
 		<h2>

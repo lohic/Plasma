@@ -4,9 +4,10 @@
 
 $(document).ready(function(){
 	
-	var videoURL = '../'+$('.video').html();
+	var videoURL = '../'+$('.video').html().replace(/\s/g, '').replace(/(\r\n|\n|\r)/gm,"");
+	//alert('#'+videoURL+'#');
 		
-	$('.video').html('<video id="video" autoplay="true"><source src="'+videoURL+'" type="video/mp4" /><p>La vidéo ne fonctionne pas</p></video>');
+	$('.video').html('<video id="video" autoplay="true" src="'+videoURL+'"><p>La vidÃ©o ne fonctionne pas</p></video>');
 	
 	$("video")
 	.bind("ended", function(e) {
@@ -18,10 +19,10 @@ $(document).ready(function(){
 		e.preventDefault();
 		var width = this.videoWidth;
         var height = this.videoHeight;
-        var duration = this.duration; // durée en ms
+        var duration = this.duration; // durÃ©e en ms
 		
-		// on stoppe le compte à rebour...
+		// on stoppe le compte Ã  rebour...
 		clear_slideshow();
-	});	
+	});
 	
 });

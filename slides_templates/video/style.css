@@ -49,11 +49,10 @@ classes réservées pour le traitement JS :
 .header {
 	height: 30px;
 	width: 87.8%;
-	padding:0px 6.1%;
+	padding:0px 6.1% 25px;
 	float:left;
-	padding-bottom:30px;
 	position:relative;
-	box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveHeader 0.9s ease-in-out;
 	-moz-animation: moveHeader 0.9s ease-in-out;
 	-ms-animation: moveHeader 0.9s ease-in-out;
@@ -94,8 +93,8 @@ classes réservées pour le traitement JS :
 
 
 .header h2{
-	font-size:26.5px;
-	line-height:38.5px;
+	font-size:24.5px;
+	line-height:34.5px;
 	margin:0;
 	text-transform: uppercase;
 	margin-top:-3px;
@@ -106,21 +105,21 @@ classes réservées pour le traitement JS :
 .header p.langue{
 	position:absolute;
 	color:rgba(255,255,255,0.6);
-	font-size:26.5px;
+	font-size:24.5px;
 	right:5px;
 	top:0px;
 	text-transform:uppercase;
-	line-height:26.5px;
+	line-height:24.5px;
 }
 
 .texte, .texte2 {
 	float:left;
 	width: 87.8%;
-	padding:30px 6.1%;
+	padding: 17px 6.1% 21px;
 	position:relative;
 	z-index:1;
-	margin-top:1px;
-	box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+	margin-top:2px;
+	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveTexte 1.2s ease-in-out;
 	-moz-animation: moveTexte 1.2s ease-in-out;
 	-ms-animation: moveTexte 1.2s ease-in-out;
@@ -133,6 +132,7 @@ classes réservées pour le traitement JS :
 
 .texte2{
 	z-index:2;
+	padding: 20px 6.1% 22px;
 	-webkit-animation: moveTexte 1.4s ease-in-out;
 	-moz-animation: moveTexte 1.4s ease-in-out;
 	-ms-animation: moveTexte 1.4s ease-in-out;
@@ -160,18 +160,21 @@ video{
 }
 
 .texte h1, .texte h2, .texte2 h1, .texte2 h2{
-	font-size:53px;
+	font-size:55px;
 	line-height:63px;	
 }
 
-.texte h2 span, .texte2 h2 span.small{
-	font-size:25px;
-	line-height:38px;
+.texte h2 span, .texte2 h2 span, .texte2 p{
+	font-size:23px;
+	line-height:36px;
 }
 
 .texte p, .texte2 p{
-	font-size: 56px;
 	padding:30px 0px;
+}
+
+.texte p{
+	font-size: 55px;
 	line-height:60px;
 }
 
@@ -217,7 +220,7 @@ video{
 	padding:30px 6.1% 0px;
 	float:left;
 	z-index:2;
-	box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
+	box-shadow:rgba(0,0,0,0.2) 0px -15px 15px;
 	-webkit-animation: moveFooter 2s ease-in-out;
 	-moz-animation: moveFooter 2s ease-in-out;
 	-ms-animation: moveFooter 2s ease-in-out;
@@ -439,36 +442,42 @@ video{
 		width: 512px;
 		height:100%;
 		margin-left:768px;
-		box-shadow:rgba(0,0,0,0.5) 0px -15px 15px;
 	}	
+
+	#ombre{
+		position:absolute;
+		left:768px;
+		box-shadow:rgba(0,0,0,0.5) 0px -15px 15px;
+		z-index:100;
+		height:100%;
+		width:512px;
+	}
 
 	.texte, .texte2, .header, .footer{
 		padding:0px 44px 0px 52px;
 		width:416px;
-		box-shadow:none;
 	}
 
 	.header{
-		padding-bottom:30px;
-		border-bottom:1px solid #000;
+		padding-bottom:24px;
 	}
 
 	.texte{
 		padding-bottom:30px;
-		padding-top:30px;
-		border-bottom:1px solid #000;
+		padding-top:16px;
 	}
 
 	.texte2{
-		padding-top:30px;
+		padding-top:19px;
+		height:384px;
 	}
 
 	.footer{
 		padding-top:30px;
-		border-top:1px solid #000;
 		position:absolute;
 		bottom:0px;
 		left:768px;
+		box-shadow:none;
 	}
 }
 
