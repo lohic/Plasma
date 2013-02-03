@@ -11,7 +11,7 @@ main_zip = "<?php echo $meteo->zipcode; ?>";
 </script>
 
 <div id="meteo1" class="meteo1">
-
+	<div id="ombre"></div>
 	<div class="colonne_gauche">
 		<div class="header">
 			<h1>Lundi 5 septembre 2011</h1>
@@ -140,7 +140,7 @@ main_zip = "<?php echo $meteo->zipcode; ?>";
 
 
 <div id="meteo2" class="meteo2">
-
+	<div id="ombre2"></div>
 	<div class="colonne_gauche">
 		<div class="header">
 			<h1>Dans les autres campus</h1>
