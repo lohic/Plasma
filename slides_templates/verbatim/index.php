@@ -1,4 +1,4 @@
-
+<div id="ombre"></div>
 <div class="header" id="A" title="A - titre du template verbatim  :)" max="22">
 	<h1>Le Saviez-vous?</h1>
 </div>
