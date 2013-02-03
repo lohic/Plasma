@@ -269,6 +269,16 @@ class Ecran {
 	}
 	
 	
+	/**
+	* get_slide_alerte_list récupère la liste des alertes d'un groupe ou d'un écran
+	* @param $_type_target ecran ou groupe
+	* @param $_id_groupe id du groupe si groupe
+	* @param $type_alerte locale ou nationale
+	*/
+	function get_slide_alerte_list($_type_target = 'ecran',$type_alerte='locale',$_id_groupe = NULL){
+		
+	}
+	
 	/*
 	@ RECUPERE LA LISTE DES SLIDES EN MODE DATE
 	@

@@ -32,5 +32,3 @@ if(isset($_GET['plasma_id']) || isset($_GET['slide_id'])){
 
 }
 /* */
-
-?>
