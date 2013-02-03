@@ -1,4 +1,7 @@
-	<div class="colonne_gauche"> 
+	<div id="ombre">
+
+	</div>
+    <div class="colonne_gauche"> 
 		<div class="header">
 			<h1>Sports</h1>
 		</div>

@@ -49,11 +49,10 @@ classes réservées pour le traitement JS :
 .header {
 	height: 30px;
 	width: 87.8%;
-	padding:0px 6.1%;
+	padding:0px 6.1% 19px;
 	float:left;
-	padding-bottom:30px;
 	position:relative;
-	box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveHeader 0.9s ease-in-out;
 	-moz-animation: moveHeader 0.9s ease-in-out;
 	-ms-animation: moveHeader 0.9s ease-in-out;
@@ -92,8 +91,8 @@ classes réservées pour le traitement JS :
 }
 
 .header h1{
-	font-size:26.5px;
-	line-height:26.5px;
+	font-size:24.5px;
+	line-height:24.5px;
 	margin:0;
 	text-transform: uppercase;
 	margin-top:-3px;
@@ -103,11 +102,11 @@ classes réservées pour le traitement JS :
 .texte, .texte2, .sport, .classement, .detail_classement{
 	float:left;
 	width: 87.8%;
-	padding:30px 6.1%;
+	padding:30px 6.1% 24px;
 	position:relative;
 	z-index:2;
-	margin-top:1px;
-	box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
+	margin-top:2px;
+	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveTexte 1.4s ease-in-out;
 	-moz-animation: moveTexte 1.4s ease-in-out;
 	-ms-animation: moveTexte 1.4s ease-in-out;
@@ -116,6 +115,16 @@ classes réservées pour le traitement JS :
 	-moz-animation-delay: 0s;
 	-ms-animation-delay: 0s;
 	animation-delay: 0s;
+}
+
+.texte{
+	padding-bottom:27px;
+	padding-top:26px;
+}
+
+.texte2{
+	padding-top:26px;
+	padding-bottom:34px;
 }
 
 .sport{
@@ -151,13 +160,13 @@ classes réservées pour le traitement JS :
 }
 
 .texte h3{
-	font-size:21px;
-	line-height:21px;	
+	font-size:28px;
+	line-height:28px;	
 }
 
 .texte2 h3, .sport h2, .classement h3{
-	font-size:48px;
-	line-height:48px;
+	font-size:55px;
+	line-height:55px;
 }
 
 .sport h2{
@@ -165,8 +174,8 @@ classes réservées pour le traitement JS :
 }
 
 .detail_classement p{
-	font-size:21px;
-	line-height:28px;
+	font-size:28px;
+	line-height:35px;
 }
 
 @-webkit-keyframes moveTexte{
@@ -187,6 +196,8 @@ classes réservées pour le traitement JS :
 
 .classement {
 	z-index:4;
+	padding-top:22px;
+	padding-bottom:35px;
 	-webkit-animation: moveFooter 1.8s ease-in-out;
 	-moz-animation: moveFooter 1.8s ease-in-out;
 	-ms-animation: moveFooter 1.8s ease-in-out;
@@ -215,7 +226,7 @@ classes réservées pour le traitement JS :
 
 .detail_classement {
 	z-index:5;
-	border-bottom:1px solid #000;
+	padding-top:22px;
 	-webkit-animation: moveFooter 2s ease-in-out;
 	-moz-animation: moveFooter 2s ease-in-out;
 	-ms-animation: moveFooter 2s ease-in-out;
@@ -224,7 +235,6 @@ classes réservées pour le traitement JS :
 	-moz-animation-delay: 0s;
 	-ms-animation-delay: 0s;
 	animation-delay: 0s;
-	box-shadow:none;
 }
 
 @-webkit-keyframes moveFooter{
@@ -397,47 +407,55 @@ classes réservées pour le traitement JS :
 	}
 
 	.classement{
-		padding:40px 44px 40px 64px;
+		padding:40px 44px 35px 64px;
 		float:left;
 		width: 646px;
-		box-shadow:none;
-		border-bottom:1px solid #000;
+		box-shadow: none;
 	}
 
 	.detail_classement{
-		padding:40px 44px 40px 64px;
+		padding:31px 44px 40px 64px;
 		float:left;
 		width: 646px;
-		border-bottom:none;
+		box-shadow: none;
 	}
 
 	.colonne_droite{
 		height:100%;
 		width:754px;
-		box-shadow:rgba(0,0,0,0.3) 0px 15px 15px;
 		float:left;
 		position:relative;
 		z-index:6;
 	}	
 
+	#ombre{
+		position:absolute;
+		left:516px;
+		box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
+		z-index:100;
+		height:100%;
+		width:754px;
+	}
+
 	.header{
 		border: none;
 	    height: 25px;
-	    padding: 40px 0 30px 44px;
+	    padding: 40px 0 24px 44px;
 	    width: 472px;
 	}
 
-	.texte, .texte2{
-		padding-top:60px;
+	.texte{
+		padding-top:56px;
+		padding-bottom:57px;
+	}
+
+	.texte2{
+		padding-top:51px;
 		padding-bottom:60px;
 	}
 
 	.sport{
 		padding-bottom:60px;
-	}
-
-	.texte2{
-		box-shadow:none;
 	}
 
 	.sport .le_sport {
@@ -446,6 +464,10 @@ classes réservées pour le traitement JS :
 	    right: 0px;
 	    top: 0;
 	    width: 196px;
+	}
+
+	.texte, .texte2, .sport, .header{
+    	box-shadow: -7px 15px 15px rgba(0, 0, 0, 0.2);
 	}
 }
 
