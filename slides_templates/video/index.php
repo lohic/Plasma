@@ -28,7 +28,7 @@
 	</span>
 	<div class="footer">
 		<div class="logo">
-			<img src="../slides_templates/video/logo.png" alt="Sciences Po"/>
+			<img src="<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'video/'; ?>logo.png" alt="Sciences Po"/>
 		</div>
 	</div>
 </div>

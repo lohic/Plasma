@@ -31,7 +31,7 @@
             <p><span class="edit textfield" id="J" title="J - entrée libre ou inscription" max="25"></span></p>
         </div>
         <div class="logo edit checkbox" alt="Logo Sciences Po." id="L" title="L - logo Sciences Po.">
-            <img src="logo.png" alt="Sciences Po"/>
+            <img src="<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'evenements/'; ?>logo.png" alt="Sciences Po"/>
         </div>
         <div class="coorganisateur">
             <p class="edit listmenu" alt="Ecole de finance#Ecole 3#Ecole de communication#Ecole 4" id="M" title="M - co-organisateur"></p>

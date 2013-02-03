@@ -6,7 +6,7 @@
 
 </div>
 <div class="footer" id="C" title="C - Footer">
-	<img src="../slides_templates/verbatim/logo.png" alt="Sciences Po"/>
+	<img src="<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'verbatim/'; ?>logo.png" alt="Sciences Po"/>
 </div>
 
 

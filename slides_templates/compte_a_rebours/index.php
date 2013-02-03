@@ -15,7 +15,7 @@
 
     <div class="footer">
         <div class="logo">
-            <img src="logo.png" alt="Sciences Po" />
+            <img src="<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'compte_a_rebours/'; ?>logo.png" alt="Sciences Po" />
         </div>
     </div>
 </div>
