@@ -37,7 +37,7 @@ if(empty($data->id_groupe)){
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_plasma)?'update':'create';?>" value="ecran"/>
 		
-		<p>info user : </p>
+		<p>info user : <?php echo $core->userLevel ?></p>
 		
 		<fieldset>
 			<p class="legend"> Informations :</p>
@@ -74,16 +74,21 @@ if(empty($data->id_groupe)){
 		<input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />
 		<fieldset>
 			<p class="legend"> <a href="javascript:" id="add_alerte_locale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte locale </p>
-			<ul id="addslidealertloc">
-				<?php echo $ecran->get_slide_alerte_list('ecran','locale'); ?>
+			<ul id="addslidealertelocale">
+				<?php echo $ecran->get_slide_alerte_list('ecran',75000); ?>
 			</ul>
 		</fieldset>
+		
+		<?php if ($core->userLevel <=1 ){ ?>
+		
 		<fieldset>
 			<p class="legend"> <a href="javascript:" id="add_alerte_nationale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte nationale </p>
-			<ul id="addslidealertnat">
-				<?php echo $ecran->get_slide_alerte_list('ecran','nationale',NULL); ?>
+			<ul id="addslidealertnationale">
+				<?php echo $ecran->get_slide_alerte_list('ecran','all',NULL); ?>
 			</ul>
 		</fieldset>
+		
+		<?php } ?>
 		<input type="hidden" value="" name="suppr_id_rel_slide" id="suppr_id_rel_slide">
 	</form>
 	<div class="reset"></div>

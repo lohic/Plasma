@@ -55,10 +55,13 @@ $isGroup = true;
 				<label for="id_playlist_locale">playlist locale :</label>
 				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?>
 			</p>
+			
+			<?php if ($core->userLevel <=1 ){ ?>
 			<p>
 				<label for="id_playlist_nationale">playlist nationale :</label>
 				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?>
 			</p>
+			<?php } ?>
 			
 		</fieldset>
 		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
@@ -71,14 +74,14 @@ $isGroup = true;
 		<input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />
 		<fieldset>
 			<p class="legend"> <a href="javascript:" id="add_alerte_locale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte locale </p>
-			<ul id="addslidealertloc">
-				<?php echo $ecran->get_slide_alerte_list('groupe','locale',$data->id); ?>
+			<ul id="addslidealertelocale">
+				<?php echo $ecran->get_slide_alerte_list('groupe',75000,$data->id); ?>
 			</ul>
 		</fieldset>
 		<fieldset>
 			<p class="legend"> <a href="javascript:" id="add_alerte_nationale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte nationale </p>
-			<ul id="addslidealertnat">
-				<?php echo $ecran->get_slide_alerte_list('groupe','nationale',$data->id); ?>
+			<ul id="addslidealertnationale">
+				<?php echo $ecran->get_slide_alerte_list('groupe','all',$data->id); ?>
 			</ul>
 		</fieldset>
 		<input type="hidden" value="" name="suppr_id_rel_slide" id="suppr_id_rel_slide">

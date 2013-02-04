@@ -289,10 +289,78 @@ class Ecran {
 	* get_slide_alerte_list récupère la liste des alertes d'un groupe ou d'un écran
 	* @param $_type_target ecran ou groupe
 	* @param $_id_groupe id du groupe si groupe
-	* @param $type_alerte locale ou nationale
+	* @param $_type_alerte all (nationale ou 75000 code postal)
 	*/
-	function get_slide_alerte_list($_type_target = 'ecran',$type_alerte='locale',$_id_groupe = NULL){
+	function get_slide_alerte_list($_type_target = 'ecran',$_type_alerte='all',$_id_groupe = NULL){
+		$this->slide_db->connect_db();
 		
+		$retour = '';
+		
+		if(!empty($this->id) || !empty($_id_groupe)){
+			
+			if($_type_target == 'groupe'){
+				$id = $_id_groupe;
+			}else{
+				$id = $this->id;	
+			}
+			
+			$sql			= sprintf("SELECT R.id AS id,
+										R.id_slide AS id_slide,
+										R.id_target AS id_target,
+										R.date AS date,
+										R.duree AS duree,
+										R.freq AS freq,								
+										S.nom AS nom,
+										S.template AS template
+										FROM ".TB."rel_slide_tb AS R
+										LEFT JOIN ".TB."slides_tb AS S
+										ON R.id_slide = S.id
+										WHERE R.id_target=%s
+										AND R.type_target = %s
+										AND R.type = 'date'
+										AND R.alerte = %s
+										ORDER BY date ASC, duree ASC", 	func::GetSQLValueString($id,'int'),
+																func::GetSQLValueString($_type_target,'text'),
+																func::GetSQLValueString($_type_alerte,'text'));
+										
+										
+			$sql_query		= mysql_query($sql) or die(mysql_error());							
+			$nbr			= mysql_num_rows($sql_query);
+			
+			
+			
+			while($info = mysql_fetch_assoc($sql_query)){
+				
+				$duree = $info['duree'];
+				$json = json_decode($info['freq']);
+				
+				$remove = '<a href="#" class="del"><img src="../graphisme/round_minus.png" alt="supprimer un slide" height="16"/></a>';
+		
+				$temp	= explode(' ',$info['date']);
+				$date	= $temp[0];
+				$time	= $temp[1];
+				$nom	= !empty($info['nom'])?$info['nom']:'choisir';
+				$empty 	= !empty($info['nom'])?'':' empty';
+		
+				$slides	 = '<input type="hidden" value="'.$info['id_slide'].'" name="id_slide[]" class="id_slide"/><a class="slidelistselect'.$empty.'">'.$nom.'</a>';
+				$iconeURL= !empty($info['nom'])? ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info['template'].'/vignette.gif' :'';
+				
+				
+				//$retour .= '<li><input class="id_rel" type="hidden" name="id_rel[]" value="'.$info['id'].'" /><input type="hidden" name="timestamp[]" value="" /><input type="hidden" name="typerel[]" value="date" /><input type="hidden" name="M[]" value="" /><input type="hidden" name="J[]" value="" /><input type="hidden" name="j[]" value="" /><input type="hidden" name="H[]" value="" />'.$remove.'<img src="'.$iconeURL.'" width="28" height="18" class="icone" /><span> <span>date : <input name="date[]" type="text" value="'.$date.'" class="dateslide"/></span></span> <span>horaire : <input type="text" name="time[]" value="'.$time.'" class="timeslide" /> <span>durée : <input name="duree[]" type="text" value="'.$duree.'" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id='.$info['id_slide'].'&preview" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '.$slides.'	</li>';
+				
+				ob_start();
+				include('../structure/slide-playlist-list-bloc.php');
+				$slideForm = ob_get_contents();
+				ob_end_clean();
+			
+
+				$slideForm = str_replace("\r",'',$slideForm);
+				$retour .= str_replace("\n",'',$slideForm)."\n";
+				
+			}
+		}
+		
+		return $retour;
 	}
 	
 	/*
@@ -413,7 +481,7 @@ class Ecran {
 		$retour->id_groupe				= NULL;
 		$retour->id_default_slideshow	= NULL;
 		$retour->id_playlist_locale		= NULL;
-		$retour->id_playlist_nationale	= NULL;	
+		$retour->id_playlist_nationale	= NULL;
 				
 		if(!empty($this->id)){
 			

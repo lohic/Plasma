@@ -18,13 +18,12 @@ $(document).ready(function(){
 	var selectJ			= '<?php echo $JSelect = $ecran->get_form_select()->J; ?>';
 	var selectj			= '<?php echo $jSelect = $ecran->get_form_select()->j; ?>';
 	var selectSlides	= '<input type="hidden" value="<?php echo $ecran->get_form_select()->default; ?>" name="id_slide[]" class="id_slide"/><a class="slidelistselect empty">choisir</a>'
-		
+	
+	// AJOUT DE DATE
 	$('#add_date').click(function(){
 		
 		var now = new Date();
 		var timestamp = now.getTime();
-		
-		/*$('#addslidedatelist').append( '<li class="new" id="'+timestamp+'"><input class="id_rel" type="hidden" name="id_rel[]" value="" /><input type="hidden" name="typerel[]" value="date" /><input type="hidden" name="timestamp[]" value="'+timestamp+'" /><input type="hidden" name="M[]" value="" /><input type="hidden" name="J[]" value="" /><input type="hidden" name="j[]" value="" /><input type="hidden" name="H[]" value="" />'+remove+'<img src="" width="28" height="18" class="icone" /><span></span> <span>date : <input name="date[]" type="text" value="<?php echo date("Y-m-d");?>" class="dateslide"/></span> <span>horaire : <input name="time[]" type="text" value="12:00:00" class="timeslide"/></span> <span>durée : <input name="duree[]" type="text" value="00:30:00" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id=&preview&debug" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '+selectSlides+'</li>' );*/
 		
 		$('#addslidedatelist').append( '<?php
 		$is_date = true;
@@ -46,12 +45,12 @@ $(document).ready(function(){
 		return false;
 	});
 	
+	// AJOUT DE FREQUENCE
 	$('#add_freq').click(function(){	
 		
 		var now = new Date();
 		var timestamp = now.getTime();
 		
-		/*$('#addslidefreqlist').append( '<li class="new" id="'+timestamp+'"><input class="id_rel" type="hidden" name="id_rel[]" value="" /><input type="hidden" name="typerel[]" value="freq" /><input type="hidden" name="timestamp[]" value="'+timestamp+'" /><input type="hidden" name="date[]" value="" /><input type="hidden" name="time[]" value="" />'+remove+'<img src="" width="28" height="18" class="icone" /><span>'+selectM+selectJ+selectj+'</span> <span>horaire : <input name="H[]" type="text" value="12:00:00" class="timeslide"/></span> <span>durée : <input name="duree[]" type="text" value="00:30:00" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id=&preview&debug" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '+selectSlides+'</li>' );*/
 		
 		$('#addslidefreqlist').append( '<?php
 		$is_date = false;
@@ -74,17 +73,69 @@ $(document).ready(function(){
 	});
 	
 	
+	// AJOUT DE FLUX
 	$('#add_flux').click(function(){	
 		
 		var now = new Date();
 		var timestamp = now.getTime();
 		
-		/*$('#addslidefluxlist').append( '<li class="new" id="'+timestamp+'"><input class="id_rel" type="hidden" name="id_rel[]" value="" /><input type="hidden" name="typerel[]" value="freq" /><input type="hidden" name="timestamp[]" value="'+timestamp+'" /><input type="hidden" name="date[]" value="" /><input type="hidden" name="time[]" value="" />'+remove+'<img src="" width="28" height="18" class="icone" /><span>'+selectM+selectJ+selectj+'</span> <span>horaire : <input name="H[]" type="text" value="12:00:00" class="timeslide"/></span> <span>durée : <input name="duree[]" type="text" value="00:30:00" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id=&preview&debug" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '+selectSlides+'</li>' );*/
 		
 		$('#addslidefluxlist').append( '<?php
 		$is_date = false;
 		$is_freq = false;
 		$is_flux = true;
+		ob_start();
+		include('../structure/slide-playlist-list-bloc.php');
+		$js = ob_get_contents();
+		ob_end_clean();
+		
+		$js = str_replace("\r",'',$js);
+		echo $js = str_replace("\n",'',$js);
+		
+		?>');
+		
+		addSlidefunction();
+		updateData();
+		
+		return false;
+	});
+	
+	// AJOUT D'ALERTE LOCALE (DATE)
+	$('#add_alerte_locale').click(function(){
+			
+		var now = new Date();
+		var timestamp = now.getTime();
+		
+		$('#addslidealertelocale').append( '<?php
+		$is_date = true;
+		$is_freq = false;
+		$is_flux = false;
+		ob_start();
+		include('../structure/slide-playlist-list-bloc.php');
+		$js = ob_get_contents();
+		ob_end_clean();
+		
+		$js = str_replace("\r",'',$js);
+		echo $js = str_replace("\n",'',$js);
+		
+		?>');
+		
+		addSlidefunction();
+		updateData();
+		
+		return false;
+	});
+	
+	// AJOUT D'ALERTE NATIONALE (DATE)
+	$('#add_alerte_nationale').click(function(){
+			
+		var now = new Date();
+		var timestamp = now.getTime();
+		
+		$('#addslidealertnationale').append( '<?php
+		$is_date = true;
+		$is_freq = false;
+		$is_flux = false;
 		ob_start();
 		include('../structure/slide-playlist-list-bloc.php');
 		$js = ob_get_contents();
