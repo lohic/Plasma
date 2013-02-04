@@ -45,9 +45,9 @@ class Ecran {
 		$id_groupe							= !empty($_POST['id_groupe'])?				func::GetSQLValueString($_POST['id_groupe'],'int'):NULL;
 		$_array_val['nom']					= !empty($_POST['nom'])?					func::GetSQLValueString($_POST['nom'],'text'):NULL;
 		$_array_val['id_etablissement']		= !empty($_POST['id_etablissement'])?		func::GetSQLValueString($_POST['id_etablissement'],'int'):NULL;
-		$_array_val['id_default_slideshow']	= !empty($_POST['id_default_slideshow'])?	func::GetSQLValueString($_POST['id_default_slideshow'],'text'):NULL;
-		$_array_val['id_playlist_locale']	= !empty($_POST['id_playlist_locale'])?		func::GetSQLValueString($_POST['id_playlist_locale'],'int'):NULL;
-		$_array_val['id_playlist_nationale']= !empty($_POST['id_playlist_nationale'])?	func::GetSQLValueString($_POST['id_playlist_nationale'],'text'):NULL;
+		$_array_val['id_default_slideshow']	= !empty($_POST['id_default_slideshow'])?	func::GetSQLValueString($_POST['id_default_slideshow'],'text'):0;
+		$_array_val['id_playlist_locale']	= !empty($_POST['id_playlist_locale'])?		func::GetSQLValueString($_POST['id_playlist_locale'],'text'):0;
+		$_array_val['id_playlist_nationale']= !empty($_POST['id_playlist_nationale'])?	func::GetSQLValueString($_POST['id_playlist_nationale'],'text'):0;
 		$_array_val['id_groupe']			= !empty($_POST['id_groupe'])?				func::GetSQLValueString($_POST['id_groupe'],'int'):NULL;
 		
 		// dans les formulaires de slide, il faudra
@@ -106,13 +106,18 @@ class Ecran {
 		
 		if(!empty($this->id)){
 			
-			$sql_slide			= sprintf("UPDATE ".TB."ecrans_tb SET nom=%s, id_etablissement=%s, id_default_slideshow=%s, id_playlist_locale=%s, id_playlist_nationale=%s, id_groupe=%s  WHERE id=%s", $_array_val['nom'],
-																																						$_array_val['id_etablissement'],
-																																						$_array_val['id_default_slideshow'],
-																																						$_array_val['id_playlist_locale'],
-																																						$_array_val['id_playlist_nationale'],
-																																						$_array_val['id_groupe'],
-																																						$id);
+			$sql_slide			= sprintf("UPDATE ".TB."ecrans_tb SET nom=%s,
+																		id_etablissement=%s,
+																		id_default_slideshow=%s,
+																		id_playlist_locale=%s,
+																		id_playlist_nationale=%s,
+																		id_groupe=%s  WHERE id=%s", $_array_val['nom'],
+																									$_array_val['id_etablissement'],
+																									$_array_val['id_default_slideshow'],
+																									$_array_val['id_playlist_locale'],
+																									$_array_val['id_playlist_nationale'],
+																									$_array_val['id_groupe'],
+																									$id);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 			
 		}
@@ -127,12 +132,17 @@ class Ecran {
 	function create_ecran($_array_val){
 		$this->slide_db->connect_db();
 					
-		$sql_slide			= sprintf("INSERT INTO ".TB."ecrans_tb (nom, id_etablissement, id_default_slideshow, id_playlist_locale,id_playlist_nationale, id_groupe) VALUES(%s,%s,(%s,%s,%s,%s)", $_array_val['nom'],
-																																					$_array_val['id_etablissement'],
-																																					$_array_val['id_default_slideshow'],
-																																					$_array_val['id_playlist_locale'],
-																																					$_array_val['id_playlist_nationale'],
-																																					$_array_val['id_groupe']);
+		$sql_slide			= sprintf("INSERT INTO ".TB."ecrans_tb (nom,
+																	id_etablissement,
+																	id_default_slideshow,
+																	id_playlist_locale,
+																	id_playlist_nationale,	
+																	id_groupe) VALUES(%s,%s,(%s,%s,%s,%s)", $_array_val['nom'],
+																											$_array_val['id_etablissement'],
+																											$_array_val['id_default_slideshow'],
+																											$_array_val['id_playlist_locale'],
+																											$_array_val['id_playlist_nationale'],
+																											$_array_val['id_groupe']);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
 		$id_last_ecran = mysql_insert_id();
@@ -153,7 +163,10 @@ class Ecran {
 		
 		if(!empty($_id_groupe)){
 			
-			$sql_slide			= sprintf("UPDATE ".TB."ecrans_groupes_tb SET nom=%s, id_slideshow=%s, id_playlist_locale=%s, id_playlist_nationale=%s WHERE id=%s", $_array_val['nom'],
+			$sql_slide			= sprintf("UPDATE ".TB."ecrans_groupes_tb SET nom=%s,
+																			id_slideshow=%s,
+																			id_playlist_locale=%s,
+																			id_playlist_nationale=%s WHERE id=%s", 	$_array_val['nom'],
 																													$_array_val['id_default_slideshow'],
 																													$_array_val['id_playlist_locale'],
 																													$_array_val['id_playlist_nationale'],
@@ -172,10 +185,13 @@ class Ecran {
 	function create_groupe_ecran($_array_val){
 		$this->slide_db->connect_db();
 					
-		$sql_slide			= sprintf("INSERT INTO ".TB."ecrans_groupes_tb (nom, id_slideshow, id_playlist_locale, id_playlist_nationale) VALUES(%s,%s,%s,%s)", $_array_val['nom'],
-																												$_array_val['id_default_slideshow'],
-																													$_array_val['id_playlist_locale'],
-																													$_array_val['id_playlist_nationale']);
+		$sql_slide			= sprintf("INSERT INTO ".TB."ecrans_groupes_tb (nom,
+																			id_slideshow,	
+																			id_playlist_locale,
+																			id_playlist_nationale) VALUES(%s,%s,%s,%s)",	$_array_val['nom'],
+																															$_array_val['id_default_slideshow'],
+																															$_array_val['id_playlist_locale'],
+																															$_array_val['id_playlist_nationale']);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
 		$id_last_groupe = mysql_insert_id();
@@ -520,7 +536,7 @@ class Ecran {
 	@ 24/07/2012
 	@
 	*/
-	function get_slideshow_list(){		
+	function get_playlist_list(){		
 			
 			$this->slide_db->connect_db();
 		

@@ -52,15 +52,31 @@ if(empty($data->id_groupe)){
 				<?php echo func::createSelect($ecran->get_ecran_groupe_list(), 'id_groupe', $id_groupe, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
 		</fieldset>
 		<fieldset>
-			<p>
+			<!--<p>
 				<label for="id_default_slideshow">slideshow par defaut :</label>
-				<?php echo func::createSelect($ecran->get_slideshow_list(), 'id_default_slideshow', $data->id_default_slideshow, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_default_slideshow', $data->id_default_slideshow, "", true ); ?> </p>
 			<p>
 				<label for="id_playlist_locale">playlist locale :</label>
-				<?php echo func::createSelect($ecran->get_slideshow_list(), 'id_playlist_locale', $data->id_playlist_locale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?> </p>
 			<p>
 				<label for="id_playlist_nationale">playlist nationale :</label>
-				<?php echo func::createSelect($ecran->get_slideshow_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?> </p>-->
+				
+			<p id="playlist_selector_locale">
+			<?php
+			
+				$type_playlist = 'locale';
+				include('../admin-new/XMLrequest_get_playlist.php');
+			?>
+			</p>
+			
+			<p id="playlist_selector_nationale">
+			<?php
+				$type_playlist = 'nationale';
+				include('../admin-new/XMLrequest_get_playlist.php');
+			?>
+			</p>
+				
 		</fieldset>
 		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
 	</form>
@@ -97,3 +113,31 @@ if(empty($data->id_groupe)){
 	</div>
 </div>
 <?php include_once('../structure/javascript-add-slide.php'); ?>
+
+<script type="text/javascript" language="javascript">
+/*
+$(document).ready(function(){
+	$('#annee_locale').change(function(){
+		$('#playlist_selector_locale').load('../admin-new/XMLrequest_get_playlist.php',{idselect: <?php echo $data->id_playlist_locale; ?>, annee:$('#annee_locale').val(),mois:$('#mois_locale').val(),type_playlist:'locale'}, function(){
+			
+			alert('ok');
+		});
+		
+		//$('#playlist_selector_locale').text($(this).val());
+	});
+	
+	$('#mois_locale').change(function(){
+		$('#playlist_selector_locale').load('../admin-new/XMLrequest_get_playlist.php',{annee:$('#annee_locale').val(),mois:$('#mois_locale').val(),type_playlist:'locale'} );
+		//$('#playlist_selector_locale').text($(this).val());
+	});
+	
+	$('#annee_nationale').change(function(){
+		//$('#playlist_selector_locale').text($(this).val());
+	});
+	
+	$('#mois_nationale').change(function(){
+		//('#playlist_selector_locale').text($(this).val());
+	});
+});
+*/
+</script>

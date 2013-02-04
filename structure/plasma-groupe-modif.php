@@ -44,15 +44,30 @@ $id_template = !empty($id_template)?$id_template:0;
 			<p><?php echo $child_creen->nombre>1?"($child_creen->nombre) écrans ":"($child_creen->nombre) écran "?></p>
 		</fieldset>
 		<fieldset>
-			<p>
+			<!--<p>
 				<label for="id_default_slideshow">slideshow par defaut :</label>
-				<?php echo func::createSelect($ecran->get_slideshow_list(), 'id_default_slideshow', $data->id_default_slideshow, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_default_slideshow', $data->id_default_slideshow, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
 			<p>
 				<label for="id_playlist_locale">playlist locale :</label>
-				<?php echo func::createSelect($ecran->get_slideshow_list(), 'id_playlist_locale', $data->id_playlist_locale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
 			<p>
 				<label for="id_playlist_nationale">playlist nationale :</label>
-				<?php echo func::createSelect($ecran->get_slideshow_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+			-->
+			<p id="playlist_selector_locale">
+			<?php
+			
+				$type_playlist = 'locale';
+				include('../admin-new/XMLrequest_get_playlist.php');
+			?>
+			</p>
+			
+			<p id="playlist_selector_nationale">
+			<?php
+				$type_playlist = 'nationale';
+				include('../admin-new/XMLrequest_get_playlist.php');
+			?>
+			</p>
 		</fieldset>
 		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
 	</form>
