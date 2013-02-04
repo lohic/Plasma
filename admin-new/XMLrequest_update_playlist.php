@@ -56,6 +56,7 @@ if($core->isAdmin){
 			$_array_val['id_slide']		= $_POST['id_slide'][$key];
 			$_array_val['type']			= $_POST['typerel'][$key];
 			$_array_val['ordre']		= $_POST['ordre'][$key];
+			$_array_val['alerte']		= $_POST['alerte'][$key];
 			$_array_val['id_target']	= $_POST['id_target'];
 			$_array_val['type_target']	= 'playlist';
 	

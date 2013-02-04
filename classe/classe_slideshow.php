@@ -348,9 +348,11 @@ class Slideshow {
 			$slides = array();
 
 			// SI ON UTILISE LE MODE JSON
+			
+			
+			////////// SLIDE EN MODE DATE !!!!!!
 			if($type == 'date'){
 				
-				////////// SLIDE EN MODE DATE !!!!!!
 				$ladate			= date("Y-m-d G:i:s");
 				$timestamp		= func::makeTime($ladate);
 			
@@ -402,9 +404,12 @@ class Slideshow {
 					return false;	
 				}
 					
-			}else if ($type == 'freq'){
+			}
+			
+			////////// SLIDE EN MODE FREQ !!!!!!	
+			else if ($type == 'freq'){
 				
-				////////// SLIDE EN MODE FREQ !!!!!!				
+							
 				foreach($json_data->data as $data){
 					if($data->type_target		== 'playlist'
 						&& $data->type			== 'freq'
@@ -479,9 +484,12 @@ class Slideshow {
 				
 			
 				
-			}else if ($type == 'flux'){
+			}
+			
+			////////// SLIDE EN MODE SEQUENTIEL!!!!!!
+			else if ($type == 'flux'){
 				
-				////////// SLIDE EN MODE SEQUENTIEL!!!!!!
+				
 				
 				$ladate			= date("Y-m-d G:i:s");
 				$timestamp		= func::makeTime($ladate);

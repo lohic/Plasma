@@ -7,6 +7,7 @@
 <?php if(!empty($is_freq)){ ?>
 <!-- FREQ LISTE -->
 <input type="hidden" name="typerel[]" value="freq" />
+<input type="hidden" name="alerte[]" value="false" />
 <input type="hidden" name="date[]" value="" />
 <input type="hidden" name="time[]" value="" />
 <span><?php echo $MSelect.$JSelect.$jSelect; ?></span>
@@ -14,6 +15,7 @@
 <?php } else if(!empty($is_date)){ ?>
 <!-- DATE LISTE -->
 <input type="hidden" name="typerel[]"	value="date" />
+<input type="hidden" name="alerte[]" value="<?php echo !empty($alerte) ? $alerte : 'false'; ?>" />
 <input type="hidden" name="M[]" value="" />
 <input type="hidden" name="J[]" value="" />
 <input type="hidden" name="j[]" value="" />
@@ -23,6 +25,7 @@
 <?php } else if(!empty($is_flux)){ ?>
 <!-- FLUX LISTE -->
 <input type="hidden" name="typerel[]" value="flux" />
+<input type="hidden" name="alerte[]" value="false" />
 <input type="hidden" name="M[]" value="" />
 <input type="hidden" name="J[]" value="" />
 <input type="hidden" name="j[]" value="" />

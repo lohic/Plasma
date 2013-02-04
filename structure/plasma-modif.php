@@ -9,7 +9,6 @@ $annee 			= isset($_GET['annee'])?$_GET['annee']:date('Y');
 $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 //$code_postal 	= isset($code_postal)?$code_postal:75000;
 
-
 $ecran 	= new Ecran($id_plasma);
 $data	= $ecran->get_info();
 
@@ -37,6 +36,9 @@ if(empty($data->id_groupe)){
 	<div class="options"> <a href="?page=ecrans_modif&id_plasma=<?php echo $data->id; ?>&publish=ecran"> Publier l'écran </a> </div>
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_plasma)?'update':'create';?>" value="ecran"/>
+		
+		<p>info user : </p>
+		
 		<fieldset>
 			<p class="legend"> Informations :</p>
 			<input type="hidden" name="id_ecran" value="<?php echo $data->id; ?>" />
@@ -52,34 +54,21 @@ if(empty($data->id_groupe)){
 				<?php echo func::createSelect($ecran->get_ecran_groupe_list(), 'id_groupe', $id_groupe, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
 		</fieldset>
 		<fieldset>
-			<!--<p>
-				<label for="id_default_slideshow">slideshow par defaut :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_default_slideshow', $data->id_default_slideshow, "", true ); ?> </p>
 			<p>
 				<label for="id_playlist_locale">playlist locale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?>
+			</p>
 			<p>
 				<label for="id_playlist_nationale">playlist nationale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?> </p>-->
-				
-			<p id="playlist_selector_locale">
-			<?php
-			
-				$type_playlist = 'locale';
-				include('../admin-new/XMLrequest_get_playlist.php');
-			?>
-			</p>
-			
-			<p id="playlist_selector_nationale">
-			<?php
-				$type_playlist = 'nationale';
-				include('../admin-new/XMLrequest_get_playlist.php');
-			?>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?>
 			</p>
 				
 		</fieldset>
 		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
 	</form>
+	
+	<?php if( !empty($data->id)){ ?>
+	
 	<div id="return_refresh"></div>
 	<form action="XMLrequest_update_plasma.php" method="post" id="modif_slide_list_form">
 		<input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />
@@ -99,45 +88,27 @@ if(empty($data->id_groupe)){
 	</form>
 	<div class="reset"></div>
 </div>
+
+
+
 <div id="slideselector">
 	<div id="fleche"></div>
 	<div id="liste">
 		<div id="slide_select">
-			<form id="slide_select_form" action="XMLrequest_get_slide_list" method="get">
+			<form id="slide_select_form" action="XMLrequest_get_slide_list.php" method="get">
 				<input type="hidden" name="page" value="slides_select" />
-				<?php echo func::createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'		, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?> <?php echo func::createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?> <?php echo func::createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
+				<?php echo func::createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'	, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?>
+				<?php echo func::createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
+				<?php echo func::createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
 			</form>
 		</div>
 		<div id="id-selected-ecran"></div>
-		<div id="slidelisting"> </div>
+		<div id="slidelisting">
+		</div>
+
 	</div>
 </div>
+
 <?php include_once('../structure/javascript-add-slide.php'); ?>
 
-<script type="text/javascript" language="javascript">
-/*
-$(document).ready(function(){
-	$('#annee_locale').change(function(){
-		$('#playlist_selector_locale').load('../admin-new/XMLrequest_get_playlist.php',{idselect: <?php echo $data->id_playlist_locale; ?>, annee:$('#annee_locale').val(),mois:$('#mois_locale').val(),type_playlist:'locale'}, function(){
-			
-			alert('ok');
-		});
-		
-		//$('#playlist_selector_locale').text($(this).val());
-	});
-	
-	$('#mois_locale').change(function(){
-		$('#playlist_selector_locale').load('../admin-new/XMLrequest_get_playlist.php',{annee:$('#annee_locale').val(),mois:$('#mois_locale').val(),type_playlist:'locale'} );
-		//$('#playlist_selector_locale').text($(this).val());
-	});
-	
-	$('#annee_nationale').change(function(){
-		//$('#playlist_selector_locale').text($(this).val());
-	});
-	
-	$('#mois_nationale').change(function(){
-		//('#playlist_selector_locale').text($(this).val());
-	});
-});
-*/
-</script>
+<?php } ?>

@@ -13,9 +13,11 @@ $id_groupe 			= !empty($_GET['id_groupe']) ? $_GET['id_groupe'] : NULL;
 $ecran 	= new Ecran();
 $data	= $ecran->get_groupe_info($id_groupe);
 
-$child_creen = $ecran->get_admin_ecran_list( $id_groupe);
-
 $id_template = !empty($id_template)?$id_template:0;
+
+$child_screen = $ecran->get_admin_ecran_list( $id_groupe);
+
+$isGroup = true;
 
 ?>
 <style>
@@ -34,43 +36,36 @@ $id_template = !empty($id_template)?$id_template:0;
 	<div class="options"> <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe"> Publier le groupe </a> </div>
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_groupe)?'update':'create';?>" value="groupe"/>
+		
+		<p>info user : <?php echo $core->userLevel ?></p>
+		
 		<fieldset>
 			<p class="legend">Informations :</p>
+			
 			<input type="hidden" name="id_groupe" value="<?php echo $data->id; ?>" />
+			
 			<p>
 				<label for="nom">nom du groupe : </label>
 				<input type="text" id="nom" name="nom" value="<?php echo $data->nom; ?>" class="inputField" />
 			</p>
-			<p><?php echo $child_creen->nombre>1?"($child_creen->nombre) écrans ":"($child_creen->nombre) écran "?></p>
+			<p><?php echo $child_screen->nombre>1?"($child_screen->nombre) écrans ":"($child_screen->nombre) écran "?></p>
 		</fieldset>
 		<fieldset>
-			<!--<p>
-				<label for="id_default_slideshow">slideshow par defaut :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_default_slideshow', $data->id_default_slideshow, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
 			<p>
 				<label for="id_playlist_locale">playlist locale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?>
+			</p>
 			<p>
 				<label for="id_playlist_nationale">playlist nationale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
-			-->
-			<p id="playlist_selector_locale">
-			<?php
-			
-				$type_playlist = 'locale';
-				include('../admin-new/XMLrequest_get_playlist.php');
-			?>
+				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?>
 			</p>
 			
-			<p id="playlist_selector_nationale">
-			<?php
-				$type_playlist = 'nationale';
-				include('../admin-new/XMLrequest_get_playlist.php');
-			?>
-			</p>
 		</fieldset>
 		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
 	</form>
+	
+	<?php if( !empty($data->id)){ ?>
+	
 	<div id="return_refresh"></div>
 	<form action="XMLrequest_update_plasma_groupe.php" method="post" id="modif_slide_list_form">
 		<input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />
@@ -90,20 +85,30 @@ $id_template = !empty($id_template)?$id_template:0;
 	</form>
 	<div class="reset"></div>
 	<div class="child-screen">
-		<?php  echo $child_creen->ecrans;?>
+		<?php  echo $child_screen->ecrans;?>
 	</div>
 </div>
+
+
+
 <div id="slideselector">
 	<div id="fleche"></div>
 	<div id="liste">
 		<div id="slide_select">
-			<form id="slide_select_form" action="XMLrequest_get_slide_list" method="get">
+			<form id="slide_select_form" action="XMLrequest_get_slide_list.php" method="get">
 				<input type="hidden" name="page" value="slides_select" />
-				<?php echo func::createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'		, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?> <?php echo func::createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?> <?php echo func::createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
+				<?php echo func::createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'	, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?>
+				<?php echo func::createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
+				<?php echo func::createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
 			</form>
 		</div>
 		<div id="id-selected-ecran"></div>
-		<div id="slidelisting"> </div>
+		<div id="slidelisting">
+		</div>
+
 	</div>
 </div>
+
 <?php include_once('../structure/javascript-add-slide.php'); ?>
+
+<?php } ?>

@@ -57,8 +57,7 @@ class Playlist {
 		
 		if(!empty($_POST['update']) && $_POST['update'] == 'playlist'){
 			$this->update_playlist($_array_val,$id);	
-		}
-		
+		}		
 	}
 	
 	/**
@@ -183,11 +182,10 @@ class Playlist {
 		}
 	}
 	
-	/*
-	@ RECUPERE LA LISTE DES SLIDES EN MODE FLUX
-	@
-	@
-	@
+	/**
+	* permet de récupérer la liste des slides attavhés à une playlist
+	* @param $type_slide le type de slide attendu (date / freq / flux)
+	* @return la liste sous forme HTML faisant appel à ../structure/slide-playlist-list-bloc.php
 	*/
 	function get_slide_list($type_slide=NULL){
 		global $jListe;
@@ -207,7 +205,8 @@ class Playlist {
 										R.date AS date,
 										R.duree AS duree,
 										R.freq AS freq,
-										R.type AS type,							
+										R.type AS type,
+										R.alerte AS alerte,							
 										S.nom AS nom,
 										S.template AS template
 										FROM ".TB."rel_slide_tb AS R
@@ -238,15 +237,9 @@ class Playlist {
 				//$empty 	= !empty($info['nom'])?'':' empty';
 				
 				$type 	= $type_slide;
+				$alerte = $info['alerte'];
 		
-				//$slides	 = '<input type="hidden" value="'.$info['id_slide'].'" name="id_slide[]" class="id_slide"/><a class="slidelistselect'.$empty.'">'.$nom.'</a>';
-				$iconeURL= !empty($info['nom'])? ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info['template'].'/vignette.gif' :'';
-				
-				
-				//$retour .= '<li><input class="id_rel" type="hidden" name="id_rel[]" value="'.$info['id'].'" /><input type="hidden" name="timestamp[]" value="" /><input type="hidden" name="typerel[]" value="date" /><input type="hidden" name="M[]" value="" /><input type="hidden" name="J[]" value="" /><input type="hidden" name="j[]" value="" /><input type="hidden" name="H[]" value="" />'.$remove.'<img src="'.$iconeURL.'" width="28" height="18" class="icone" /><span> <span>date : <input name="date[]" type="text" value="'.$date.'" class="dateslide"/></span></span> <span>horaire : <input type="text" name="time[]" value="'.$time.'" class="timeslide" /> <span>durée : <input name="duree[]" type="text" value="'.$duree.'" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id='.$info['id_slide'].'&preview" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '.$slides.'	</li>';
-				
-				// ANCIEN
-				//$retour .= '<li><input class="id_rel" type="hidden" name="id_rel[]" value="'.$info['id'].'" /><input type="hidden" name="timestamp[]" value="" /><input type="hidden" name="typerel[]" value="flux" /><input type="hidden" name="M[]" value="" /><input type="hidden" name="J[]" value="" /><input type="hidden" name="j[]" value="" /><input type="hidden" name="H[]" value="" /><input name="date[]" type="hidden" value="" /><input type="hidden" name="time[]" value="" />'.$remove.'<img src="'.$iconeURL.'" width="28" height="18" class="icone" /> <span>durée : <input name="duree[]" type="text" value="'.$duree.'" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id='.$info['id_slide'].'&preview" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '.$slides.'	</li>';
+				$iconeURL= !empty($info['nom'])? ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info['template'].'/vignette.gif' :'';		
 				
 				$is_date = $type_slide == 'date' ? true : false;
 				$is_freq = $type_slide == 'freq' ? true : false;
@@ -290,7 +283,7 @@ class Playlist {
 	}
 	
 	/**
-	* update_rel_slide METTRE A JOUR OU CREER UNE LIAISON SLIDE->ECRAN en mode freq ou date
+	* METTRE A JOUR OU CREER UNE LIAISON SLIDE->ECRAN en mode freq ou date
 	* cf classe SLIDESHOW pour LIAISON SLIDE->SLIDESHOW
 	* @author Loïc Horellou
 	* @since v0.5 10/01/2012
@@ -313,7 +306,7 @@ class Playlist {
 			$status		= NULL;
 			$type		= !empty($_array_val['type'])?			$_array_val['type'] :			'date';
 			$ordre		= !empty($_array_val['ordre'])?			$_array_val['ordre'] :			NULL;
-			$alerte		= 0;
+			$alerte		= !empty($_array_val['alerte'])?		$_array_val['alerte'] :			false;
 			
 			if(!empty($id_rel)){
 				$sql		= sprintf("UPDATE ".TB."rel_slide_tb SET id_slide=%s, id_target=%s, type_target=%s, date=%s, duree=%s, freq=%s, status=%s, type=%s, ordre=%s, alerte=%s   WHERE id=%s", 	func::GetSQLValueString($id_slide,'int'),
@@ -325,7 +318,7 @@ class Playlist {
 															func::GetSQLValueString($status,'text'),
 															func::GetSQLValueString($type,'text'),
 															func::GetSQLValueString($ordre,'int'),
-															func::GetSQLValueString($alerte,'int'),
+															func::GetSQLValueString($alerte,'text'),
 															func::GetSQLValueString($id_rel,'int'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 			}else{
@@ -338,7 +331,7 @@ class Playlist {
 															func::GetSQLValueString($status,'text'),
 															func::GetSQLValueString($type,'text'),
 															func::GetSQLValueString($ordre,'int'),
-															func::GetSQLValueString($alerte,'int'));
+															func::GetSQLValueString($alerte,'text'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 				
 				return mysql_insert_id();
@@ -349,7 +342,7 @@ class Playlist {
 	}
 	
 	/**
-	* del_rel_slide permet de supprimer un slide relié à une playlist
+	* permet de supprimer un slide relié à une playlist
 	# @author Loïc Horellou
 	* @since v0.5 23/01/2012
 	* @param $id_rel identifiant de la ligne sp_plasma_rel_slide_tb à supprimer

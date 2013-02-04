@@ -153,10 +153,10 @@ class Ecran {
 	}
 	
 	
-	/*
-	@ mise à jour d'un groupe d'ecrans
-	@
-	@
+	/**
+	* mise à jour d'un groupe d'ecrans
+	* @param $_array_val liste des valeurs
+	* @param $_id_groupe id du groupe concerné
 	*/
 	function update_groupe_ecran($_array_val,$_id_groupe){
 		$this->slide_db->connect_db();

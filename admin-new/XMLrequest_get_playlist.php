@@ -10,18 +10,21 @@ $id_plasma 		= !empty($_GET['id_plasma'])?$_GET['id_plasma']:NULL;
 $annee 			= isset($_GET['annee'])?$_GET['annee'] : date('Y');
 $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 //$code_postal 	= isset($code_postal)?$code_postal:75000;
+$id_groupe 		= !empty($_GET['id_groupe']) ? $_GET['id_groupe'] : !empty($id_groupe) ? $id_groupe : NULL;
 
 
 $ecran 	= new Ecran($id_plasma);
-$data	= $ecran->get_info();
+$data	= !empty($id_groupe)? $ecran->get_info() : $data	= $ecran->get_groupe_info($id_groupe);
 
 
-if(empty($data->id_groupe)){
+$data	= $ecran->get_groupe_info($id_groupe);
+
+
+/*if(empty($data->id_groupe)){
 	$id_groupe = !empty($_GET['id_groupe'])?$_GET['id_groupe']:NULL;
 }else{
 	$id_groupe = !empty($data->id_groupe)?$data->id_groupe:NULL;	
-}
-
+}*/
 
 
 if(isset ( $_GET['type_playlist'] )){
@@ -40,7 +43,6 @@ $anneeSELECT	= $type_playlist == 'locale' ? 'annee_locale'	: 'annee_nationale';
 $moisSELECT		= $type_playlist == 'locale' ? 'mois_locale'	: 'mois_nationale';
 
 ?>
-
 
 <label for="<?php echo $id_SELECT; ?>"><?php echo $titre_SELECT; ?> :</label>
 <?php echo func::createSelect($ecran->get_playlist_list(), $id_SELECT, $data_SELECT, "", true ); ?>
