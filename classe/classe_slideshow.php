@@ -1017,6 +1017,7 @@ class Slideshow {
 	function publish_slideshow($update_ecran_id=NULL, $update_groupe_id=NULL, $update_etablissement_id=NULL, $update_all=NULL){
 		
 		if(!empty($update_ecran_id) && $update_all != true){
+			// on arvhive l'écran dont l'id est spécifié
 			$this->archive_ecran($update_ecran_id);
 		}
 		
@@ -1026,6 +1027,7 @@ class Slideshow {
 							WHERE id_groupe=%s", func::GetSQLValueString($update_groupe_id,'int'));
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			
+			// on archive tous les écrans du groupe d'écrans
 			while($info = mysql_fetch_assoc($sql_query)){
 				$this->archive_ecran($info['id']);
 			}
@@ -1039,6 +1041,7 @@ class Slideshow {
 							WHERE id_etablissement=%s", func::GetSQLValueString($update_etablissement_id,'int'));
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			
+			// on archive tous mes écrans de l'établissement
 			while($info = mysql_fetch_assoc($sql_query)){
 				$this->archive_ecran($info['id']);
 			}
@@ -1051,6 +1054,7 @@ class Slideshow {
 							FROM ".TB."ecrans_tb");
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			
+			// on archive tous les écrans
 			while($info = mysql_fetch_assoc($sql_query)){
 				
 				$this->archive_ecran($info['id']);

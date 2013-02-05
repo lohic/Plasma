@@ -1,107 +1,127 @@
 <?php
 
+if($core->isAdmin){
+	
+include_once('../classe/classe_organisme.php');
 
+global $typeTab;
+
+$organisme = new organisme();
+$id_organisme = NULL;
+
+if(!isset($type))
+	$type = NULL;
+
+
+
+if(isset($_POST['suppr_user_groupe']) && $_POST['suppr_user_groupe'] == 'ok'){
+	
+	$organisme->suppr_user_groupe($_POST['id_suppr_user_groupe']);	
+}
+
+
+if(isset($_POST['create_user_groupe']) && $_POST['create_user_groupe'] == 'ok'){
+	$val['nom']					= $_POST['nom'];
+	$val['type']				= $_POST['type'];
+	$val['id_organisme']		= $_POST['id_organisme'];
+	
+
+	$organisme->create_user_groupe($val);	
+}
+
+
+
+if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
+	$val['id']					= $_POST['id'];
+	$val['nom']					= $_POST['nom'];
+	$val['type']				= $_POST['type'];
+	$val['id_organisme']		= $_POST['id_organisme'];
+	
+
+	$organisme->create_user_groupe($val,$val['id']);	
+}
 
 ?>
 
 <div class="form_container">
+<div id="options">
+	<p class="intro_modif">Gestion des</p>
 
-<div class="options">
-        <a href="#" id="add_cat_rss">
-            <img src="../graphisme/round_plus.png" alt="ajouter une catégorie ou un flux RSS" title="ajouter une catégorie ou un flux RSS"/>
+	<div class="options">
+        <a href="#" id="add_user_groupe">
+            <img src="../graphisme/round_plus.png" alt="ajouter"/>
         </a>
     </div>
 
-	<div class="reset"></div>
-    <form id="suppr_cat_form" action="" method="post">
-            <input type="hidden" name="suppr_cat" id="suppr_cat" value="ok" />
-            <input type="hidden" name="id_suppr_cat" id="id_suppr_cat" value="" />
-    </form>
-
-    <form id="suppr_rss_form" action="" method="post">
-            <input type="hidden" name="suppr_rss" id="suppr_rss" value="ok" />
-            <input type="hidden" name="id_suppr_rss" id="id_suppr_rss" value="" />
-    </form>
-
-    <form id="add_cat_form" action="" method="post" >
-        <fieldset>
-        	<p class="legend">Ajouter une catégorie :</p>
-        	<input type="hidden" name="add_actu_cat" value="ok" />
-   			<label for="cat_libelle">titre : </label><input type="text" name="libelle" id="cat_libelle" />
-        </fieldset>
-        <input type="submit" name="add_cat" class="buttonenregistrer" id="add_cat" value="Ajouter une catégorie" />
-    </form>
-	<div class="reset"></div>
-
-	<form id="add_rss_form" action="" method="post" >
-    	<fieldset>
-        	<p class="legend">Ajouter un flux RSS :</p>
-        	<input type="hidden" name="create_rss" value="ok" />
-        	<p><label for="rss_nom">titre : </label><input type="text" name="rss" id="rss_nom" /></p>
-        	<p><label for="rss_url">url : </label><input type="text" name="URL" id="rss_url" class="inputField" /></p>
-        </fieldset>
-        <input type="submit" name="add_rss" class="buttonenregistrer"  id="add_rss" value="Ajouter un flux" />
-    </form>
-    <div class="reset"></div>
-
-
-    <h3>Options</h3>
-    <div id="cat-list">
-
-    </div>
     
+    <div class="reset"></div>
+    
+    <form action="" method="post" id="add_user_groupe_form">
+        <fieldset>
+        <p class="legend">Création d'un groupe d'utilisateurs :</p>
+        	<input type="hidden" name="create_user_groupe" value="ok" />
+            
+            <p><label for="user_nom">nom : </label>
+            <input type="text" id="user_nom" name="nom" value="" class="inputField" /></p>
+            
+            <p><label for="user_type">type : </label>
+            <?php echo func::createCombobox($typeTab, 'type', 'user_type', $type, '', false);?></p>
+            
+            <p><label for="user_account_type">organisme : </label>
+            <?php echo func::createCombobox($organisme->get_organisme_liste(), 'id_organisme', 'user_account_type' 	, $id_organisme, '', false);?></p>
+            
+        </fieldset>
+        <input type="submit" name="edit_user_groupe" class="buttonenregistrer" id="edit_user_groupe" value="Créer" />
+	</form>
+ 
 </div>
 
 
 
+<h3>Liste des Groupes d'écrans</h3>
+<div id="user-groupe-list">
+<?php echo $organisme->get_user_groupe_edit_liste(); ?>
+</div>
+
+
+<form id="suppr_user_groupe_form" action="" method="post">
+        <input type="hidden" name="suppr_user_groupe" id="suppr_user_groupe" value="ok" />
+        <input type="hidden" name="id_suppr_user_groupe" id="id_suppr_user_groupe" value="" />
+</form>
+
+
+
+</div>
 <script type="text/javascript" language="javascript">
 $(document).ready(function(){
-	$('#add_cat_form').hide();
-	$('#add_rss_form').hide();
-
-	$('#add_cat_rss').click(function(){
-		$('#add_cat_form').slideToggle();
-		$('#add_rss_form').slideToggle();
+	
+	$('#add_user_groupe_form').hide();
+	
+	$('#add_user_groupe').click(function(){
+		$('#add_user_groupe_form').slideToggle();
 		$('.edit').slideUp();
 	});
-	
-	
 
-	
 	$('.edit').hide();
 	
-	$('.modif_cat').click(function(){
-		$('#add_cat_form').slideUp();
-		$('#add_rss_form').slideUp();
+	$('.modif_user_groupe').click(function(){
+		$('#add_user_groupe_form').slideUp();
 		$('.edit').removeClass('open');
 		$('#form-'+$(this).attr('id')).addClass('open');
 		$('.edit').not('.open').slideUp();
 		$('.open').slideToggle();
 	});
 	
-	
-	$('.modif_rss').click(function(){
-		$('#add_cat_form').slideUp();
-		$('#add_rss_form').slideUp();
-		$('.edit').removeClass('open');
-		$('#form-'+$(this).attr('id')).addClass('open');
-		$('.edit').not('.open').slideUp();
-		$('.open').slideToggle();
-	});
 });
-	
-	function supprCat(id, nom){
-		if(confirm('Voulez vous supprimer la catégorie \''+nom+'\' ? Cette action est irréversible.')){
-			$('#id_suppr_cat').val(id);
-			$('#suppr_cat_form').submit();
-		}
+
+function supprUserGroupe(id, nom){
+	if(confirm('Voulez vous supprimer le groupe d\'utilisateurs '+nom+' ? Cette action est irréversible, et supprimera toutes les liaisons vers les gabarits, groupes de destinataires ou catégories d\'actualités.')){
+		$('#id_suppr_user_groupe').val(id);
+		$('#suppr_user_groupe_form').submit();
 	}
-	
-	function supprRSS(id, nom){
-		if(confirm('Voulez vous supprimer le flux \''+nom+'\' ? Cette action est irréversible.')){
-			$('#id_suppr_rss').val(id);
-			$('#suppr_rss_form').submit();
-		}
-	}
+}
 </script>
 
+<?php }else{ ?>
+<p>Vous n'êtes pas administrateur</p>
+<?php } ?>

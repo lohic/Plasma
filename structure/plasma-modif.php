@@ -12,6 +12,7 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 $ecran 	= new Ecran($id_plasma);
 $data	= $ecran->get_info();
 
+$id_template = !empty($id_template)?$id_template:0;
 
 if(empty($data->id_groupe)){
 	$id_groupe = !empty($_GET['id_groupe'])?$_GET['id_groupe']:NULL;

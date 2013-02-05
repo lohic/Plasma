@@ -2,66 +2,18 @@
 
 if($core->isAdmin){
 	
-include_once('../classe/classe_organisme.php');
-//include_once('../vars/statics_vars.php');
+include_once('../classe/classe_etablissement.php');
 
 global $typeTab;
 
-$organisme = new organisme();
-$id_organisme = NULL;
+$etablissement = new etablissement();
+$id_etablissement = NULL;
 
 if(!isset($type))
 	$type = NULL;
 
 
-if(isset($_POST['suppr_organisme']) && $_POST['suppr_organisme'] == 'ok'){
-	
-	$organisme->suppr_organisme($_POST['id_suppr_organisme']);	
-}
 
-if(isset($_POST['suppr_user_groupe']) && $_POST['suppr_user_groupe'] == 'ok'){
-	
-	$organisme->suppr_user_groupe($_POST['id_suppr_user_groupe']);	
-}
-
-if(isset($_POST['create_organisme']) && $_POST['create_organisme'] == 'ok'){
-	$val['nom']					= $_POST['nom'];
-	$val['type']				= $_POST['type'];
-	$val['google_analytics_id']	= $_POST['google_analytics_id'];
-	
-
-	$organisme->create_organisme($val);	
-}
-
-if(isset($_POST['create_user_groupe']) && $_POST['create_user_groupe'] == 'ok'){
-	$val['nom']					= $_POST['nom'];
-	$val['type']				= $_POST['type'];
-	$val['id_organisme']		= $_POST['id_organisme'];
-	
-
-	$organisme->create_user_groupe($val);	
-}
-
-
-if(isset($_POST['modif_organisme']) && $_POST['modif_organisme'] == 'ok'){
-	$val['id']					= $_POST['id'];
-	$val['nom']					= $_POST['nom'];
-	$val['type']				= $_POST['type'];
-	$val['google_analytics_id']	= $_POST['google_analytics_id'];
-	
-
-	$organisme->create_organisme($val,$val['id']);	
-}
-
-if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
-	$val['id']					= $_POST['id'];
-	$val['nom']					= $_POST['nom'];
-	$val['type']				= $_POST['type'];
-	$val['id_organisme']		= $_POST['id_organisme'];
-	
-
-	$organisme->create_user_groupe($val,$val['id']);	
-}
 
 ?>
 
@@ -70,74 +22,55 @@ if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
 	<p class="intro_modif">Gestion des</p>
 
 	<div class="options">
-        <a href="#" id="add_organisme">
+        <a href="#" id="add_etablissement">
             <img src="../graphisme/round_plus.png" alt="ajouter"/>
         </a>
     </div>
 
 	<div class="reset"></div>
-    <form action="" method="post" id="add_organisme_form">
+    <form action="" method="post" id="add_etablissement_form">
         <fieldset>
-        <p class="legend">Création d'un organisme :</p>
-        	<input type="hidden" name="create_organisme" value="ok" />
+        <p class="legend">Création d'un établissement :</p>
+        	<input type="hidden" name="create_etablissement" value="ok" />
             <input type="hidden" name="id" value="" />
     
             
-            <p><label for="organisme_nom">nom : </label>
-            <input type="text" id="organisme_nom" name="nom" value="" class="inputField" /></p>
+            <p><label for="etablissement_nom">nom : </label>
+            <input type="text" id="etablissement_nom" name="nom" value="" class="inputField" /></p>
             
-            <p><label for="organisme_GA-<?php echo $id; ?>">ID google analytics : </label>
-            <input type="text" id="organisme_GA" name="google_analytics_id" value="" class="inputField" /></p>
+            <p><label for="etablissement_ville-<?php echo $id; ?>">ville : </label>
+			<input type="text" id="etablissement_ville-<?php echo $id; ?>" name="ville" value="" class="inputField" /></p>
+			
+			<p><label for="etablissement_code_meteo-<?php echo $id; ?>">code meteo : </label>
+			<input type="text" id="etablissement_code_meteo-<?php echo $id; ?>" name="code_meteo" value="" class="inputField" /></p>
+			
+			<p><label for="etablissement_code_postal-<?php echo $id; ?>">code postal : </label>
+			<input type="text" id="etablissement_code_postal-<?php echo $id; ?>" name="code_postal" value="" class="inputField" /></p>
+
             
-            <p><label for="organisme_type">type : </label>
-            <?php echo func::createCombobox($typeTab, 'type', 'organisme_type'	, $type, '', false);?></p>
            
             
         </fieldset>
-        <input type="submit" name="edit_organisme" class="buttonenregistrer" id="edit_organisme" value="Créer" />
+        <input type="submit" name="edit_etablissement" class="buttonenregistrer" id="edit_etablissement" value="Créer" />
 	</form>
     
     <div class="reset"></div>
-    
-    <form action="" method="post" id="add_user_groupe_form">
-        <fieldset>
-        <p class="legend">Création d'un groupe d'utilisateurs :</p>
-        	<input type="hidden" name="create_user_groupe" value="ok" />
-            
-            <p><label for="user_nom">nom : </label>
-            <input type="text" id="user_nom" name="nom" value="" class="inputField" /></p>
-            
-            <p><label for="user_type">type : </label>
-            <?php echo func::createCombobox($typeTab, 'type', 'user_type', $type, '', false);?></p>
-            
-            <p><label for="user_account_type">organisme : </label>
-            <?php echo func::createCombobox($organisme->get_organisme_liste(), 'id_organisme', 'user_account_type' 	, $id_organisme, '', false);?></p>
-            
-        </fieldset>
-        <input type="submit" name="edit_user_groupe" class="buttonenregistrer" id="edit_user_groupe" value="Créer" />
-	</form>
- 
 </div>
 
 
 <?php if($core->isAdmin && $core->userLevel<=1){ ?>
 <h3>Établissements</h3>
 
-<div id="organisme-list">
-<?php echo $organisme->get_organisme_edit_liste(); ?>
+<div id="etablissement-list">
+<?php echo $etablissement->get_etablissement_edit_liste(); ?>
 </div>
 
 <?php } ?>
 
 
-<h3>Liste des Groupes d'utilisateurs</h3>
-<div id="user-groupe-list">
-<?php echo $organisme->get_user_groupe_edit_liste(); ?>
-</div>
-
-<form id="suppr_organisme_form" action="" method="post">
-        <input type="hidden" name="suppr_organisme" id="suppr_organisme" value="ok" />
-        <input type="hidden" name="id_suppr_organisme" id="id_suppr_organisme" value="" />
+<form id="suppr_etablissement_form" action="" method="post">
+        <input type="hidden" name="suppr_etablissement" id="suppr_etablissement" value="ok" />
+        <input type="hidden" name="id_suppr_etablissement" id="id_suppr_etablissement" value="" />
 </form>
 
 
@@ -151,50 +84,38 @@ if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
 </div>
 <script type="text/javascript" language="javascript">
 $(document).ready(function(){
-	$('#add_organisme_form').hide();
-	$('#add_user_groupe_form').hide();
 	
+	$('#add_etablissement_form').hide();
 
-	$('#add_organisme').click(function(){
-		$('#add_organisme_form').slideToggle();
-		$('#add_user_groupe_form').slideToggle();
+	$('#add_etablissement').click(function(){
+		$('#add_etablissement_form').slideToggle();
 		$('.edit').slideUp();
 	});
 	
 	$('.edit').hide();
 	
-	$('.modif_organisme').click(function(){		
-		$('#add_organisme_form').slideUp();
+	$('.modif_etablissement').click(function(e){	
+	
+		$('#add_etablissement_form').slideUp();
 		$('.edit').removeClass('open');
 		$('#form-'+$(this).attr('id')).addClass('open');
 		$('.edit').not('.open').slideUp();
 		$('.open').slideToggle();
+		
+		e.preventDefault();
 	});
 	
-	$('.modif_user_groupe').click(function(){
-		$('#add_user_groupe_form').slideUp();
-		$('.edit').removeClass('open');
-		$('#form-'+$(this).attr('id')).addClass('open');
-		$('.edit').not('.open').slideUp();
-		$('.open').slideToggle();
-	});
+
 	
 });
 	
 function supprOrganisme(id, nom){
-	if(confirm('Voulez vous supprimer l\'organisme '+nom+' ? Cette action est irréversible et supprimera tous les groupes et leurs liaisons associés.')){
-		$('#id_suppr_organisme').val(id);
-		$('#suppr_organisme_form').submit();
+	if(confirm('Voulez vous supprimer l\'établissement '+nom+' ?')){
+		$('#id_suppr_etablissement').val(id);
+		$('#suppr_etablissement_form').submit();
 	}
 }
 
-
-function supprUserGroupe(id, nom){
-	if(confirm('Voulez vous supprimer le groupe d\'utilisateurs '+nom+' ? Cette action est irréversible, et supprimera toutes les liaisons vers les gabarits, groupes de destinataires ou catégories d\'actualités.')){
-		$('#id_suppr_user_groupe').val(id);
-		$('#suppr_user_groupe_form').submit();
-	}
-}
 </script>
 
 <?php }else{ ?>

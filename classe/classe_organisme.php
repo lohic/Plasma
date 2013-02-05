@@ -33,10 +33,10 @@ class Organisme {
 		if(isset($_id)){
 			//MODIFICATION
 			$updateSQL 		= sprintf("UPDATE ".TB."organisme_tb SET nom=%s, type=%s, google_analytics_id=%s WHERE id=%s",
-													GetSQLValueString($_array_val['nom'],					"text"),
-													GetSQLValueString($_array_val['type'],					"text"),
-													GetSQLValueString($_array_val['google_analytics_id'],	"text"),
-													GetSQLValueString($_id,"int"));
+													func::GetSQLValueString($_array_val['nom'],					"text"),
+													func::GetSQLValueString($_array_val['type'],					"text"),
+													func::GetSQLValueString($_array_val['google_analytics_id'],	"text"),
+													func::GetSQLValueString($_id,"int"));
 																										
 			$update_query	= mysql_query($updateSQL) or die(mysql_error());
 			
@@ -44,9 +44,9 @@ class Organisme {
 		}else{
 			//CREATION
 			$insertSQL 		= sprintf("INSERT INTO ".TB."organisme_tb (nom, type, google_analytics_id) VALUES (%s,%s,%s)",
-													GetSQLValueString($_array_val['nom'],					"text"),
-													GetSQLValueString($_array_val['type'],					"text"),
-													GetSQLValueString($_array_val['google_analytics_id'], 	"text"));
+													func::GetSQLValueString($_array_val['nom'],					"text"),
+													func::GetSQLValueString($_array_val['type'],					"text"),
+													func::GetSQLValueString($_array_val['google_analytics_id'], 	"text"));
 			$insert_query	= mysql_query($insertSQL) or die(mysql_error());
 			
 			$_id = mysql_insert_id();
@@ -67,10 +67,10 @@ class Organisme {
 		if(isset($_id)){
 			//MODIFICATION
 			$updateSQL 		= sprintf("UPDATE ".TB."user_groupes_tb SET libelle=%s, type=%s, id_organisme=%s WHERE id=%s",
-													GetSQLValueString($_array_val['nom'],					"text"),
-													GetSQLValueString($_array_val['type'],					"text"),
-													GetSQLValueString($_array_val['id_organisme'],	"text"),
-													GetSQLValueString($_id,"int"));
+													func::GetSQLValueString($_array_val['nom'],					"text"),
+													func::GetSQLValueString($_array_val['type'],					"text"),
+													func::GetSQLValueString($_array_val['id_organisme'],	"text"),
+													func::GetSQLValueString($_id,"int"));
 																										
 			$update_query	= mysql_query($updateSQL) or die(mysql_error());
 			
@@ -78,9 +78,9 @@ class Organisme {
 		}else{
 			//CREATION
 			$insertSQL 		= sprintf("INSERT INTO ".TB."user_groupes_tb (libelle, type, id_organisme) VALUES (%s,%s,%s)",
-													GetSQLValueString($_array_val['nom'],					"text"),
-													GetSQLValueString($_array_val['type'],					"text"),
-													GetSQLValueString($_array_val['id_organisme'], 	"text"));
+													func::GetSQLValueString($_array_val['nom'],					"text"),
+													func::GetSQLValueString($_array_val['type'],					"text"),
+													func::GetSQLValueString($_array_val['id_organisme'], 	"text"));
 			$insert_query	= mysql_query($insertSQL) or die(mysql_error());
 			
 			$_id = mysql_insert_id();
@@ -185,11 +185,11 @@ class Organisme {
 		if(isset($id)){
 			$this->news_db->connect_db();
 
-			$supprSQL		= sprintf("DELETE FROM ".TB."organisme_tb WHERE id=%s", GetSQLValueString($id,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."organisme_tb WHERE id=%s", func::GetSQLValueString($id,'int'));
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
 			
-			$sql_user_groupe		= sprintf("SELECT * FROM ".TB."user_groupes_tb WHERE id_organisme=%s", GetSQLValueString($id,'int'));
+			$sql_user_groupe		= sprintf("SELECT * FROM ".TB."user_groupes_tb WHERE id_organisme=%s", func::GetSQLValueString($id,'int'));
 			$sql_user_groupe_query = mysql_query($sql_user_groupe) or die(mysql_error());
 
 	
@@ -211,19 +211,19 @@ class Organisme {
 		if(isset($id)){
 			$this->news_db->connect_db();
 
-			$supprSQL		= sprintf("DELETE FROM ".TB."user_groupes_tb WHERE id=%s", GetSQLValueString($id,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."user_groupes_tb WHERE id=%s", func::GetSQLValueString($id,'int'));
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
-			$supprSQL		= sprintf("DELETE FROM ".TB."rel_user_groupe_tb WHERE id_groupe=%s", GetSQLValueString($id,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."rel_user_groupe_tb WHERE id_groupe=%s", func::GetSQLValueString($id,'int'));
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
-			$supprSQL		= sprintf("DELETE FROM ".TB."rel_user_groupe_groupe_tb WHERE id_groupe=%s", GetSQLValueString($id,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."rel_user_groupe_groupe_tb WHERE id_groupe=%s", func::GetSQLValueString($id,'int'));
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
-			$supprSQL		= sprintf("DELETE FROM ".TB."rel_template_groupe_tb WHERE id_groupe=%s", GetSQLValueString($id,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."rel_template_groupe_tb WHERE id_groupe=%s", func::GetSQLValueString($id,'int'));
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 			
-			$supprSQL		= sprintf("DELETE FROM ".TB."rel_cat_actu_groupe_tb WHERE id_groupe=%s", GetSQLValueString($id,'int'));
+			$supprSQL		= sprintf("DELETE FROM ".TB."rel_cat_actu_groupe_tb WHERE id_groupe=%s", func::GetSQLValueString($id,'int'));
 			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
 		}
 	}

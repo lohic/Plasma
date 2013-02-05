@@ -48,7 +48,7 @@
             
             <p><label for="user_type-<?php echo $id; ?>">type : </label>
             <!--input type="text" id="user_type-<?php echo $id; ?>" name="type" value="<?php echo $type; ?>" class="inputField" />-->
-            <?php echo createCombobox($levelTab, 'type', 'user_type-'.$id	, $type, '', false);?></p>
+            <?php echo func::createCombobox($levelTab, 'type', 'user_type-'.$id	, $type, '', false);?></p>
             
             <p><label for="user_account_type-<?php echo $id; ?>">type de compte: </label>
             <!--<input type="text" id="user_account_type-<?php echo $id; ?>" name="account_type" value="<?php echo $account_type; ?>" class="inputField" />-->
