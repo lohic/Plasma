@@ -364,7 +364,9 @@ class Slideshow {
 					if($data->type_target		== $type_target
 						&& $data->date			<= $ladate
 						&& $data->type			== 'date'
-						&& $data->id_target		== $id_target){
+						&& $data->id_target		== $id_target
+						&& $data->alerte		== $alerte)
+					{		
 						$key = 'slide-'.$data->id;	
 						$slides[$key] = $data;
 					}
@@ -835,70 +837,140 @@ class Slideshow {
 				$this->ecran = $this->get_ecran_info();
 				$slide_info = false;
 				
-				if(! $slide_info){
-					// 1 => type_target : ecran / type : date / alerte : code-postal OK
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id,'ecran','date',$this->ecran->code_postal);
-				}
+				// A TERME IL FAUDRA FAIRE UNE FONCTION QUI PARCOURT UN TABLEAU !
+				//		id_target												type_target			type_slide			alerte
+				
+				//1 	$this->ecran->id										'ecran'				'date'				$this->ecran->code_postal
+				//2		$this->ecran->id_groupe 								'groupe'			'date'				$this->ecran->code_postal
+				
+				//3		$this->ecran->id										'ecran'				'date'				'all'
+				//4		$this->ecran->id_groupe									'groupe'			'date'				'all'
+				
+				//5		$this->ecran->id_ecran_playlist_locale					'playlist'			'date'				false
+				//6		$this->ecran->id_ecran_playlist_nationale				'playlist'			'date'				false
+				//7		$this->ecran->id_groupe_playlist_locale					'playlist'			'date'				false
+				//8		$this->ecran->id_groupe_playlist_nationale				'playlist'			'date'				false
+				
+				//9		$this->ecran->id_ecran_playlist_locale					'playlist'			'freq'				false
+				//10	$this->ecran->id_ecran_playlist_nationale				'playlist'			'freq'				false
+				//11	$this->ecran->id_groupe_playlist_locale					'playlist'			'freq'				false
+				//12	$this->ecran->id_groupe_playlist_nationale				'playlist'			'freq'				false
+				
+				//13	$this->ecran->id_ecran_playlist_locale					'playlist'			'flux'				false
+				//14	$this->ecran->id_ecran_playlist_nationale				'playlist'			'flux'				false
+				//15	$this->ecran->id_groupe_playlist_locale					'playlist'			'flux'				false
+				//16	$this->ecran->id_groupe_playlist_nationale				'playlist'			'flux'				false
+				
+				
+				
+					//		id_target												type_target			type_slide			alerte
 				
 				if(! $slide_info){
-					// 2 => type_target : groupe / type : date / alerte : code-postal OK
+					//1 	$this->ecran->id										'ecran'				'date'				$this->ecran->code_postal
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id,'ecran','date',$this->ecran->code_postal);
+				}
+					
+				if(! $slide_info){
+					//2		$this->ecran->id_groupe 								'groupe'			'date'				$this->ecran->code_postal
 					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe,'groupe','date',$this->ecran->code_postal);
 				}else{
 					return $slide_info;
 				}
-				
+					
 				if(! $slide_info){
-					// 3 => type_target : ecran / type : date / alerte : all OK
+					//3		$this->ecran->id										'ecran'				'date'				'all'
 					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id,'ecran','date','all');
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 4 => type_target : groupe / type : date / alerte : all OK
+					//4		$this->ecran->id_groupe									'groupe'			'date'				'all'
 					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe,'groupe','date','all');
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 5 => type_target : playlist / type : date (playlist ecran)
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist,'playlist','date',false);
+					//5		$this->ecran->id_ecran_playlist_locale					'playlist'			'date'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist_locale,'playlist','date',false);
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 6 => type_target : playlist / type : date (playlist groupe)
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist,'playlist','date',false);
+					//6		$this->ecran->id_ecran_playlist_nationale				'playlist'			'date'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist_nationale,'playlist','date',false);
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 7 => type_target : playlist / type : freq (playlist ecran)
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist,'playlist','freq',false);
+					//7		$this->ecran->id_groupe_playlist_locale					'playlist'			'date'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_locale,'playlist','date',false);
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 8 => type_target : playlist / type : freq (playlist groupe)
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist,'playlist','freq',false);
+					//8		$this->ecran->id_groupe_playlist_nationale				'playlist'			'date'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_nationale,'playlist','date',false);
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 9 => type_target : playlist / type : seql (playlist ecran)
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist,'playlist','flux',false);
+					//9		$this->ecran->id_ecran_playlist_locale					'playlist'			'freq'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist_locale,'playlist','freq',false);
 				}else{
 					return $slide_info;
 				}
 				
 				if(! $slide_info){			
-					// 0 => type_target : playlist / type : seql (playlist groupe)
-					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist,'playlist','flux',false);
+					//10	$this->ecran->id_ecran_playlist_nationale				'playlist'			'freq'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist_nationale,'playlist','freq',false);
+				}else{
+					return $slide_info;
+				}
+				
+				if(! $slide_info){			
+					//11	$this->ecran->id_groupe_playlist_locale					'playlist'			'freq'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_locale,'playlist','freq',false);
+				}else{
+					return $slide_info;
+				}
+				
+				if(! $slide_info){			
+					//12	$this->ecran->id_groupe_playlist_nationale				'playlist'			'freq'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_nationale,'playlist','freq',false);
+				}else{
+					return $slide_info;
+				}
+				
+				if(! $slide_info){			
+					//13	$this->ecran->id_ecran_playlist_locale					'playlist'			'flux'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist_locale,'playlist','flux',false);
+				}else{
+					return $slide_info;
+				}
+				
+				if(! $slide_info){			
+					//14	$this->ecran->id_ecran_playlist_nationale				'playlist'			'flux'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_ecran_playlist_nationale,'playlist','flux',false);
+				}else{
+					return $slide_info;
+				}
+				
+				if(! $slide_info){			
+					//15	$this->ecran->id_groupe_playlist_locale					'playlist'			'flux'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_locale,'playlist','flux',false);
+				}else{
+					return $slide_info;
+				}
+
+				if(! $slide_info){			
+					//16	$this->ecran->id_groupe_playlist_nationale				'playlist'			'flux'				false
+					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_nationale,'playlist','flux',false);
 				}else{
 					return $slide_info;
 				}
