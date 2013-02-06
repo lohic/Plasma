@@ -46,7 +46,7 @@ class Ecran {
 		$id									= !empty($_POST['id_ecran'])?				func::GetSQLValueString($_POST['id_ecran'],'int'):NULL;
 		$id_groupe							= !empty($_POST['id_groupe'])?				func::GetSQLValueString($_POST['id_groupe'],'int'):NULL;
 		$_array_val['nom']					= !empty($_POST['nom'])?					func::GetSQLValueString($_POST['nom'],'text'):NULL;
-		$_array_val['id_etablissement']		= !empty($_POST['id_etablissement'])?		func::GetSQLValueString($_POST['id_etablissement'],'int'):NULL;
+		$_array_val['id_etablissement']		= !empty($_POST['id_etablissement'])?		func::GetSQLValueString($_POST['id_etablissement'],'int'):0;
 		$_array_val['id_default_slideshow']	= !empty($_POST['id_default_slideshow'])?	func::GetSQLValueString($_POST['id_default_slideshow'],'text'):0;
 		$_array_val['id_playlist_locale']	= !empty($_POST['id_playlist_locale'])?		func::GetSQLValueString($_POST['id_playlist_locale'],'text'):0;
 		$_array_val['id_playlist_nationale']= !empty($_POST['id_playlist_nationale'])?	func::GetSQLValueString($_POST['id_playlist_nationale'],'text'):0;
@@ -167,10 +167,10 @@ class Ecran {
 		if(!empty($_id_groupe)){
 			
 			$sql_slide			= sprintf("UPDATE ".TB."ecrans_groupes_tb SET nom=%s,
-																			id_slideshow=%s,
+																			id_etablissement=%s,
 																			id_playlist_locale=%s,
 																			id_playlist_nationale=%s WHERE id=%s", 	$_array_val['nom'],
-																													$_array_val['id_default_slideshow'],
+																													$_array_val['id_etablissement'],
 																													$_array_val['id_playlist_locale'],
 																													$_array_val['id_playlist_nationale'],
 																													$_id_groupe);
@@ -189,10 +189,10 @@ class Ecran {
 		$this->slide_db->connect_db();
 					
 		$sql_slide			= sprintf("INSERT INTO ".TB."ecrans_groupes_tb (nom,
-																			id_slideshow,	
+																			id_etablissement,	
 																			id_playlist_locale,
 																			id_playlist_nationale) VALUES(%s,%s,%s,%s)",	$_array_val['nom'],
-																															$_array_val['id_default_slideshow'],
+																															$_array_val['id_etablissement'],
 																															$_array_val['id_playlist_locale'],
 																															$_array_val['id_playlist_nationale']);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
@@ -525,7 +525,7 @@ class Ecran {
 		// on initialise pour éviter les valeurs non déclarées dans les formulaires
 		$retour->id						= NULL;
 		$retour->nom					= NULL;
-		$retour->id_default_slideshow	= NULL;
+		$retour->id_etablissement		= NULL;
 		$retour->id_playlist_locale		= NULL;
 		$retour->id_playlist_nationale	= NULL;	
 				
@@ -542,7 +542,7 @@ class Ecran {
 			
 			$retour->id						= $item['id'];
 			$retour->nom					= $item['nom'];
-			$retour->id_default_slideshow	= $item['id_slideshow'];	
+			$retour->id_etablissement		= $item['id_etablissement'];	
 			$retour->id_playlist_locale		= $item['id_playlist_locale'];	
 			$retour->id_playlist_nationale	= $item['id_playlist_nationale'];			
 		}
@@ -603,6 +603,43 @@ class Ecran {
 					
 			return $retour;
 	}
+	
+	/**
+	* liste des groupes d'écrans pour les éditer
+	*/
+	function get_ecran_groupe_edit_liste(){		
+			
+			$this->slide_db->connect_db();
+		
+			$sql		= sprintf("SELECT *	FROM ".TB."ecrans_groupes_tb");
+			$sql_query	= mysql_query($sql) or die(mysql_error());
+			
+			//$item = mysql_fetch_assoc($sql_query);
+			
+			$i = 0;
+			
+			while($item = mysql_fetch_assoc($sql_query)){
+				
+							
+				$class						= 'listItemRubrique'.($i+1);
+											
+				$data->id					= $item['id'];
+				$data->nom					= $item['nom'];
+				$data->id_etablissement		= $item['id_etablissement'];
+				$data->id_playlist_locale	= $item['id_playlist_locale'];
+				$data->id_playlist_nationale= $item['id_playlist_nationale'];
+				
+				$data->etablissement_list	= $this->get_etablissement_list();
+				$data->playlist_list		= $this->get_playlist_list();
+																
+				include('../structure/ecran-groupe-edit-list-bloc.php');
+				
+				$i = ($i+1)%2;
+				
+			}
+					
+	}
+	
 	
 	
 	/*
@@ -729,6 +766,8 @@ class Ecran {
 			include('../structure/ecran-list-add-bloc.php');
 			
 			while($item = mysql_fetch_assoc($sql_query)){
+				
+				
 				$id = $item['id'];
 				$nom = $item['nom'];
 				$ville = $item['ville'];

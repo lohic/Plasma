@@ -15,7 +15,7 @@ $data	= $ecran->get_groupe_info($id_groupe);
 
 $id_template = !empty($id_template)?$id_template:0;
 
-$child_screen = $ecran->get_admin_ecran_list( $id_groupe);
+$child_screen = !empty($id_groupe) ? $ecran->get_admin_ecran_list( $id_groupe) : 0;
 
 $isGroup = true;
 
@@ -48,7 +48,11 @@ $isGroup = true;
 				<label for="nom">nom du groupe : </label>
 				<input type="text" id="nom" name="nom" value="<?php echo $data->nom; ?>" class="inputField" />
 			</p>
-			<p><?php echo $child_screen->nombre>1?"($child_screen->nombre) écrans ":"($child_screen->nombre) écran "?></p>
+			<p>
+				<label for="id_etablissement">établissement de l'écran : </label>
+				<?php echo func::createSelect($ecran->get_etablissement_list(), 'id_etablissement', $data->id_etablissement, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
+			</p>
+			<p><?php if(isset($child_screen->nombre)) echo $child_screen->nombre>1?"($child_screen->nombre) écrans ":"($child_screen->nombre) écran "?></p>
 		</fieldset>
 		<fieldset>
 			<p>
