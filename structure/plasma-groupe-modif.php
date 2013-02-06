@@ -31,13 +31,13 @@ $isGroup = true;
 </style>
 
 <div class="form_container">
-	<p class="intro_modif">Modification du groupe d'écrans:<!-- <a href="../slideshow/?plasma_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/>--></a></p>
+	<p class="intro_modif"><?php echo isset($id_groupe) ? 'Modification' : 'Création'; ?> du groupe d'écrans :</p>
 	<h3><?php echo $data->nom;?></h3>
-	<div class="options"> <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe"> Publier le groupe </a> </div>
+	<?php if ( isset($id_groupe) ){ ?><div class="options"> <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe"> Publier le groupe </a> </div><?php } ?>
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_groupe)?'update':'create';?>" value="groupe"/>
 		
-		<p>info user : <?php echo $core->userLevel ?></p>
+		<!--<p>info user : <?php echo $core->userLevel ?></p>-->
 		
 		<fieldset>
 			<p class="legend">Informations :</p>
@@ -68,7 +68,7 @@ $isGroup = true;
 			<?php } ?>
 			
 		</fieldset>
-		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
+		<input type="submit" name="edit_groupe" class="buttonenregistrer" id="edit_groupe" value="<?php echo isset($id_groupe) ? 'Modifier' : 'Créer' ; ?>" />
 	</form>
 	
 	<?php if( !empty($data->id)){ ?>

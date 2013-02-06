@@ -32,13 +32,13 @@ if(empty($data->id_groupe)){
 </style>
 
 <div class="form_container">
-	<p class="intro_modif">Modification de l'écran : <a href="../slideshow/?plasma_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/></a></p>
+	<p class="intro_modif"><?php echo isset($id_plasma) ? 'Modification' : 'Création'; ?> de l'écran : <a href="../slideshow/?plasma_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/></a></p>
 	<h3><?php echo $data->nom; ?></h3>
 	<div class="options"> <a href="?page=ecrans_modif&id_plasma=<?php echo $data->id; ?>&publish=ecran"> Publier l'écran </a> </div>
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_plasma)?'update':'create';?>" value="ecran"/>
 		
-		<p>info user : <?php echo $core->userLevel ?></p>
+		<!--<p>info user : <?php echo $core->userLevel ?></p>-->
 		
 		<fieldset>
 			<p class="legend"> Informations :</p>
@@ -65,7 +65,7 @@ if(empty($data->id_groupe)){
 			</p>
 				
 		</fieldset>
-		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="Modifier" />
+		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="<?php echo isset($id_plasma) ? 'Modifier' : 'Créer'; ?>" />
 	</form>
 	
 	<?php if( !empty($data->id)){ ?>

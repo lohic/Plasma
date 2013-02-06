@@ -1,16 +1,7 @@
 <?php
 
 if($core->isAdmin){
-	
-include_once('../classe/classe_ecran.php');
 
-global $typeTab;
-
-$ecran = new ecran();
-$id_ecran = NULL;
-
-if(!isset($type))
-	$type = NULL;
 
 
 ?>
@@ -30,36 +21,17 @@ if(!isset($type))
     
     <form action="" method="post" id="add_ecran_groupe_form">
         <fieldset>
-        <p class="legend">Création d'un groupe d'écrans :</p>
-        	<input type="hidden" name="create" value="groupe_ecran" />
-            
-            <p><label for="ecran_nom">nom : </label>
-            <input type="text" id="ecran_nom" name="nom" value="" class="inputField" /></p>
-			<p>
-				<label for="id_etablissement">établissement de l'écran : </label>
-				<?php echo func::createSelect($ecran->get_etablissement_list(), 'id_etablissement', NULL, "onchange=\"$('#news_select_form').submit();\"", false ); ?>
-			</p>	
+        
 		</fieldset>
-		<fieldset>
-			<p>
-				<label for="id_playlist_locale">playlist locale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', NULL, "", true ); ?>
-			</p>
-			<p>
-				<label for="id_playlist_nationale">playlist nationale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', NULL, "", true ); ?>
-			</p>
-		</fieldset>
-        <input type="submit" name="edit_ecran_groupe" class="buttonenregistrer" id="edit_ecran_groupe" value="Créer" />
+        <input type="submit" name="" class="buttonenregistrer" id="" value="Créer" />
 	</form>
  
 </div>
 
 
 
-<h3>Liste des Groupes d'écrans</h3>
+<h3>???</h3>
 <div id="user-groupe-list">
-<?php echo $ecran->get_ecran_groupe_edit_liste(); ?>
 </div>
 
 
