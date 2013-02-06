@@ -1077,7 +1077,7 @@ class Slideshow {
 	* @param $id_ecran	id de l'écran à archiver
 	*/
 	function archive_ecran($_id_archive_ecran){
-		$sql = sprintf("SELECT P.id, P.nom, P.id_etablissement, P.id_groupe, P.id_last_slide, P.order_last_slide, P.id_default_slideshow, E.code_postal, G.id_slideshow
+		$sql = sprintf("SELECT P.id, P.nom, P.id_etablissement, P.id_groupe, P.id_last_slide, P.order_last_slide, P.id_playlist_locale AS ecran_playlist_locale, P.id_playlist_nationale AS ecran_playlist_nationale, E.code_postal, G.id_playlist_locale AS groupe_playlist_locale, G.id_playlist_nationale AS groupe_playlist_nationale
 							FROM ".TB."ecrans_tb AS P,
 							".TB."etablissements_tb AS E,
 							".TB."ecrans_groupes_tb AS G
@@ -1087,10 +1087,12 @@ class Slideshow {
 		$sql_query		= mysql_query($sql) or die(mysql_error());							
 		$info 			= mysql_fetch_assoc($sql_query);
 		
-		$temp_ecran->id_ecran			= $info['id'];
-		$temp_ecran->id_groupe			= $info['id_groupe'];
-		$temp_ecran->id_ecran_playlist	= $info['id_default_slideshow'];
-		$temp_ecran->id_groupe_playlist	= $info['id_slideshow'];
+		$temp_ecran->id_ecran					= $info['id'];
+		$temp_ecran->id_groupe					= $info['id_groupe'];
+		$temp_ecran->ecran_playlist_locale		= $info['ecran_playlist_locale'];
+		$temp_ecran->ecran_playlist_nationale	= $info['ecran_playlist_nationale'];
+		$temp_ecran->groupe_playlist_locale		= $info['groupe_playlist_locale'];
+		$temp_ecran->groupe_playlist_nationale	= $info['groupe_playlist_nationale'];
 		
 		$json = NULL;
 		
@@ -1147,12 +1149,12 @@ class Slideshow {
 			}
 		}
 			
-		if(!empty($temp_ecran->id_ecran_playlist)){			
+		if(!empty($temp_ecran->ecran_playlist_locale)){			
 			// les slides attachés à la playlist de l'écran
 			$sql = sprintf("SELECT *
 							FROM ".TB."rel_slide_tb
 							WHERE id_target=%s
-							AND type_target='playlist'",func::GetSQLValueString($temp_ecran->id_ecran_playlist,'int'));
+							AND type_target='playlist'",func::GetSQLValueString($temp_ecran->ecran_playlist_locale,'int'));
 			$sql_query		= mysql_query($sql) or die(mysql_error());		
 			while($info = mysql_fetch_assoc($sql_query)){
 				$data->id 			= $info['id'];
@@ -1173,12 +1175,64 @@ class Slideshow {
 			}	
 		}
 		
-		if(!empty($temp_ecran->id_groupe_playlist)){								
+		if(!empty($temp_ecran->ecran_playlist_nationale)){			
+			// les slides attachés à la playlist de l'écran
+			$sql = sprintf("SELECT *
+							FROM ".TB."rel_slide_tb
+							WHERE id_target=%s
+							AND type_target='playlist'",func::GetSQLValueString($temp_ecran->ecran_playlist_nationale,'int'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());		
+			while($info = mysql_fetch_assoc($sql_query)){
+				$data->id 			= $info['id'];
+				$data->id_slide 	= $info['id_slide'];
+				$data->id_target	= $info['id_target'];
+				$data->type_target	= $info['type_target'];
+				$data->date			= $info['date'];
+				$data->duree		= $info['duree'];
+				$data->freq			= json_decode($info['freq']);
+				$data->type			= $info['type'];
+				$data->ordre		= $info['ordre'];
+				$data->alerte		= $info['alerte'];
+				
+				$json->data[]		= $data;
+				//$json->data_ecran_playlist[] = $data;
+				
+				$data = NULL;
+			}	
+		}
+		
+		if(!empty($temp_ecran->groupe_playlist_locale)){								
 			// les slides attachés à la playlist du groupe
 			$sql = sprintf("SELECT *
 							FROM ".TB."rel_slide_tb
 							WHERE id_target=%s
-							AND type_target='playlist'",func::GetSQLValueString($temp_ecran->id_groupe_playlist,'int'));
+							AND type_target='playlist'",func::GetSQLValueString($temp_ecran->groupe_playlist_locale,'int'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());		
+			while($info = mysql_fetch_assoc($sql_query)){
+				$data->id 			= $info['id'];
+				$data->id_slide 	= $info['id_slide'];
+				$data->id_target	= $info['id_target'];
+				$data->type_target	= $info['type_target'];
+				$data->date			= $info['date'];
+				$data->duree		= $info['duree'];
+				$data->freq			= json_decode($info['freq']);
+				$data->type			= $info['type'];
+				$data->ordre		= $info['ordre'];
+				$data->alerte		= $info['alerte'];
+				
+				$json->data[]		= $data;
+				//$json->data_groupe_playlist[] = $data;
+				
+				$data = NULL;
+			}
+		}
+		
+		if(!empty($temp_ecran->groupe_playlist_nationale)){								
+			// les slides attachés à la playlist du groupe
+			$sql = sprintf("SELECT *
+							FROM ".TB."rel_slide_tb
+							WHERE id_target=%s
+							AND type_target='playlist'",func::GetSQLValueString($temp_ecran->groupe_playlist_nationale,'int'));
 			$sql_query		= mysql_query($sql) or die(mysql_error());		
 			while($info = mysql_fetch_assoc($sql_query)){
 				$data->id 			= $info['id'];
