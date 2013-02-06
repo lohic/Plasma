@@ -99,7 +99,7 @@ class Slide {
 				} else {
 					// encodage normal
 					$data = nl2br($_POST[$fields_list[$i]]);
-					$data = nonl($data); // dans fonctions.php, supprime les sauts de ligne
+					$data = func::nonl($data); // dans fonctions.php, supprime les sauts de ligne
 					$data = str_replace('"', '\\\\\\\\"', $data);
 				}
 				
@@ -410,6 +410,7 @@ class Slide {
 		$champs = array();
 		
 		// pour chaque champ
+		// !!!!! BASCULER SUR UN BOUCLE foreach (Loïc)
 		for($i=0; $i<count($champs_bruts); $i++){
 			//echo $champs_bruts[$i].'<br />';
 			// isoler l'id du champ
@@ -431,7 +432,7 @@ class Slide {
 				$max = ' max="'.$max.'"';
 			}
 			// chopper la valeur correspondante du json
-			$value = $json->{$idchamp};
+			$value = !empty($json) ? $json->{$idchamp} : '';
 			
 			// isoler le type de champ et l'écrire
 			$classes = preg_replace('#^(.*)class="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
@@ -440,7 +441,7 @@ class Slide {
 			
 			if(strpos($classes, 'textarea')>0){
 				$type = "textarea";
-				$value = br2nl($value); // br2nl dans fonctions.php
+				$value = func::br2nl($value); // br2nl dans fonctions.php
 				$html_champ .= '<textarea name="'.$idchamp.'" cols="25" rows="10"'.$max.' class="textareaField">'.$value.'</textarea>';
 				
 			} else if(strpos($classes, 'textfield')>0){

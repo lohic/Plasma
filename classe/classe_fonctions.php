@@ -338,6 +338,88 @@ class Func {
 			
 		}
 	}
+	
+	
+	
+	//// virer les sauts de ligne
+	// GILDAS 19/07/2012
+	static function nonl($str){
+		$str = str_replace("\n", "", $str);
+		$str = str_replace("\r\n", "", $str);
+		$str = str_replace("\r", "", $str);
+		return $str;
+	}
+	
+	//// <br /> -> newline
+	// GILDAS 19/07/2012
+	static function br2nl($str){
+		$str = preg_replace("#\<br\s*\/?\>#isU", '
+	', $str);
+		return $str;
+	}
+	
+	static function encodeAccentHTML($data = NULL){
+		if(isset($data)){
+			$trans = array(	'À'=>'&Agrave;',
+							'Á'=>'&Aacute;',
+							'Â'=>'&Acirc;',
+							'Ã'=>'&Atilde;',
+							'Ä'=>'&Auml;',
+							'Å'=>'&Aring;',
+							'Ç'=>'&Ccedil;',
+							'È'=>'&Egrave;',
+							'É'=>'&Eacute;',
+							'Ê'=>'&Ecirc;',
+							'Ë'=>'&Euml;',
+							'Ì'=>'&Igrave;',
+							'Í'=>'&Iacute;',
+							'Î'=>'&Icirc;',
+							'Ï'=>'&Iuml;',
+							'Ò'=>'&Ograve;',
+							'Ó'=>'&Oacute;',
+							'Ô'=>'&Ocirc;',
+							'Õ'=>'&Otilde;',
+							'Ö'=>'&Ouml;',
+							'Ù'=>'&Ugrave;',
+							'Ú'=>'&Uacute;',
+							'Û'=>'&Ucirc;',
+							'Ü'=>'&Uuml;',
+							'Ý'=>'&Yacute;',
+							'Ÿ'=>'&Yuml;',
+							'à'=>'&agrave;',
+							'á'=>'&aacute;',
+							'â'=>'&acirc;',
+							'ã'=>'&atilde;',
+							'ä'=>'&auml;',
+							'å'=>'&aring;',
+							'ç'=>'&ccedil;',
+							'è'=>'&egrave;',
+							'é'=>'&eacute;',
+							'ê'=>'&ecirc;',
+							'ë'=>'&euml;',
+							'ì'=>'&igrave;',
+							'í'=>'&iacute;',
+							'î'=>'&icirc;',
+							'ï'=>'&iuml;',
+							'ð'=>'&eth;',
+							'ò'=>'&ograve;',
+							'ó'=>'&oacute;',
+							'ô'=>'&ocirc;',
+							'õ'=>'&otilde;',
+							'ö'=>'&ouml;',
+							'ù'=>'&ugrave;',
+							'ú'=>'&uacute;',
+							'û'=>'&ucirc;',
+							'ü'=>'&uuml;',
+							'ý'=>'&yacute;',
+							'ÿ'=>'&yuml;');
+									
+			return strtr($data,$trans);
+		}else{
+			return false;	
+		}
+	}
+
 }
 
 ?>
