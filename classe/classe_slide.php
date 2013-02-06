@@ -432,7 +432,7 @@ class Slide {
 				$max = ' max="'.$max.'"';
 			}
 			// chopper la valeur correspondante du json
-			$value = !empty($json) ? $json->{$idchamp} : '';
+			$value = !empty($json) ? $json->{$idchamp} : NULL;
 			
 			// isoler le type de champ et l'écrire
 			$classes = preg_replace('#^(.*)class="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
