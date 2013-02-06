@@ -439,7 +439,11 @@ class Slide {
 			
 			$html_champ = '<p><label>'.$title.'</label>';
 			
-			if(strpos($classes, 'textarea')>0){
+			if(strpos($classes, 'date')>0){
+				$type = "textfield";
+				$html_champ .= '<input name="'.$idchamp.'" type="text" value="'.$value.'" '.$max.' class="inputField date" />';
+				
+			} elseif(strpos($classes, 'textarea')>0){
 				$type = "textarea";
 				$value = func::br2nl($value); // br2nl dans fonctions.php
 				$html_champ .= '<textarea name="'.$idchamp.'" cols="25" rows="10"'.$max.' class="textareaField">'.$value.'</textarea>';
@@ -464,7 +468,7 @@ class Slide {
 				for($j=0; $j<count($valueSet); $j++){
 					$selected = ($valueSet[$j] == $value)?' selected="selected"':'';	
 					$tmp .= '<option value="'.$valueSet[$j].'"'.$selected.'>'.$valueSet[$j].'</option>';
-				}			
+				}		
 				$tmp .= '</select>';
 				$html_champ .= $tmp;
 				
@@ -473,9 +477,9 @@ class Slide {
 				$type = "image";
 				$src = preg_replace('#<img src="(.*)"(.*)$#isU', '$1', $value);
 				
-				$html_champ .= '<input name="'.$idchamp.'" type="hidden" value="'.$src.'" class="inputField"/>';
+				$html_champ .= '<input name="'.$idchamp.'" type="hidden" value="'.ABSOLUTE_URL.$src.'" class="inputField"/>';
 				$html_champ .= '<input name="file" id="file1" type="file" subfolder="'.($info->uploads).'" fieldname="'.$idchamp.'"/>';
-				$html_champ .= '<img src="../'.$src.'" width="150" class="mini" name="'.$idchamp.'"/>';
+				$html_champ .= '<img src="'.$src.'" width="150" class="mini" name="'.$idchamp.'"/>';
 				
 			} else if(strpos($classes, 'video')>0){
 			

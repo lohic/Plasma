@@ -97,7 +97,7 @@ class Slideshow {
 	
 	
 	/**
-	* run permet le lancement d'un slideshow
+	* permet le lancement d'un slideshow
 	* @author Loïc Horellou
 	* @since v0.1
 	* @see Slideshow::generate_slide_page
@@ -120,7 +120,7 @@ class Slideshow {
 	
 	
 	/**
-	* generate_slide_page récupère le code HTML provenant du prochain slide (récupère en cahce le résultat de generate_slide)
+	* récupère le code HTML provenant du prochain slide (récupère en cahce le résultat de generate_slide)
 	* @author Loïc Horellou
 	* @since v0.1
 	* @see Slideshow::generate_slide
@@ -348,7 +348,7 @@ class Slideshow {
 						
 		
 		if($JSON){
-			$json_data = json_decode($this->ecran->json);
+			$json_data = !empty($this->ecran->json) ? json_decode($this->ecran->json) : '';
 			$slides = array();
 
 			// SI ON UTILISE LE MODE JSON

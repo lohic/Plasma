@@ -147,7 +147,6 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 		<?php echo $slide->create_slide_editor(); ?>
 		</form>
 		
-		<?php /*<input name="file" id="file1" type="file" style="display:none;">*/ ?>
 	</div>
 	
 	<div class="form_container">

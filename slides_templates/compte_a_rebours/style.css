@@ -64,6 +64,10 @@ classes réservées pour le traitement JS :
 	z-index:2;
 }
 
+.invisible{
+		display:none;
+	}
+
 @-webkit-keyframes moveHeader{
 	0%{
 		-webkit-transform: translate(0px, 1270px);
@@ -339,10 +343,6 @@ classes réservées pour le traitement JS :
 		position:absolute;
 		left:0px;
 		top:0px;
-	}
-	
-	.invisible{
-		display:none;
 	}
 }
 
