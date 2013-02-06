@@ -51,6 +51,7 @@ class Ecran {
 		$_array_val['id_playlist_locale']	= !empty($_POST['id_playlist_locale'])?		func::GetSQLValueString($_POST['id_playlist_locale'],'text'):0;
 		$_array_val['id_playlist_nationale']= !empty($_POST['id_playlist_nationale'])?	func::GetSQLValueString($_POST['id_playlist_nationale'],'text'):0;
 		$_array_val['id_groupe']			= !empty($_POST['id_groupe'])?				func::GetSQLValueString($_POST['id_groupe'],'int'):NULL;
+		$_array_val['id_groupe_user']		= !empty($_SESSION['id_actual_group'])?		func::GetSQLValueString($_SESSION['id_actual_group'], "int"):NULL;
 		
 		// dans les formulaires de slide, il faudra
 		// prévoir un champ caché update, creat ou suppr suivant le cas de figure
@@ -140,12 +141,14 @@ class Ecran {
 																	id_default_slideshow,
 																	id_playlist_locale,
 																	id_playlist_nationale,	
-																	id_groupe) VALUES(%s,%s,(%s,%s,%s,%s)", $_array_val['nom'],
-																											$_array_val['id_etablissement'],
-																											$_array_val['id_default_slideshow'],
-																											$_array_val['id_playlist_locale'],
-																											$_array_val['id_playlist_nationale'],
-																											$_array_val['id_groupe']);
+																	id_groupe,
+																	id_groupe_user) VALUES(%s,%s,%s,%s,%s,%s,%s)",	$_array_val['nom'],
+																													$_array_val['id_etablissement'],
+																													$_array_val['id_default_slideshow'],
+																													$_array_val['id_playlist_locale'],
+																													$_array_val['id_playlist_nationale'],
+																													$_array_val['id_groupe'],
+																													$_array_val['id_groupe_user']);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
 		$id_last_ecran = mysql_insert_id();
@@ -191,10 +194,12 @@ class Ecran {
 		$sql_slide			= sprintf("INSERT INTO ".TB."ecrans_groupes_tb (nom,
 																			id_etablissement,	
 																			id_playlist_locale,
-																			id_playlist_nationale) VALUES(%s,%s,%s,%s)",	$_array_val['nom'],
-																															$_array_val['id_etablissement'],
-																															$_array_val['id_playlist_locale'],
-																															$_array_val['id_playlist_nationale']);
+																			id_playlist_nationale,
+																			id_groupe_user) VALUES(%s,%s,%s,%s,%s)",	$_array_val['nom'],
+																														$_array_val['id_etablissement'],
+																														$_array_val['id_playlist_locale'],
+																														$_array_val['id_playlist_nationale'],
+																														$_array_val['id_groupe_user']);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
 		$id_last_groupe = mysql_insert_id();
@@ -205,87 +210,6 @@ class Ecran {
 	
 	
 	
-	/*
-	@ RECUPERE LA LISTE DES SLIDES EN MODE FREQUENCE
-	@
-	@
-	@
-	*/
-	function get_slide_freq_list($_type_target='ecran',$_id_groupe = NULL){
-		$this->slide_db->connect_db();
-				
-		global $jListe;
-		global $JListe;
-		global $moisListe;
-		
-		$retour = '';
-		
-		if(!empty($this->id) || !empty($_id_groupe)){
-			
-			if($_type_target == 'groupe'){
-				$id = $_id_groupe;
-			}else{
-				$id = $this->id;	
-			}
-			$sql			= sprintf("SELECT R.id AS id,
-										R.id_slide AS id_slide,
-										R.id_target AS id_target,
-										R.duree AS duree,
-										R.freq AS freq,
-										S.nom AS nom,
-										S.template AS template
-										FROM ".TB."rel_slide_tb AS R
-										LEFT JOIN ".TB."slides_tb AS S
-										ON R.id_slide = S.id
-										WHERE R.id_target=%s
-										AND R.type_target = %s
-										AND R.type = 'freq'
-										ORDER BY freq ASC, duree ASC", 	func::GetSQLValueString($id,'int'),
-																func::GetSQLValueString($_type_target,'text'));
-										
-			$sql_query		= mysql_query($sql) or die(mysql_error());							
-			$nbr			= mysql_num_rows($sql_query);
-			
-			
-			while($info = mysql_fetch_assoc($sql_query)){
-				
-				$duree = $info['duree'];
-				$json = json_decode($info['freq']);
-				
-				$remove = '<a href="#" class="del"><img src="../graphisme/round_minus.png" alt="supprimer un slide" height="16"/></a>';
-				$M = isset($json->M)?$json->M:NULL;
-				$J = isset($json->J)?$json->J:NULL;
-				$j = isset($json->j)?$json->j:NULL;
-				
-				$jListe2[''] = '-';
-				$jListe2['*'] = '*';
-				$jListe2 = $jListe2+$jListe;
-				
-				$JListe2[''] = '-';
-				$JListe2['*'] = '*';
-				$JListe2 = $JListe2+$JListe;
-				
-				$MListe2['*'] = '*';
-				$MListe2 = $MListe2+$moisListe;
-				
-				$MSelect = func::createSelect($MListe2, 'M[]', $M, "", false );
-				$jSelect = func::createSelect($jListe2, 'j[]', $j, "", false );
-				$JSelect = func::createSelect($JListe2, 'J[]', $J, "", false );
-				
-				
-				$nom	= !empty($info['nom'])?$info['nom']:'choisir';
-				$empty 	= !empty($info['nom'])?'':' empty';
-				$slides	 = '<input type="hidden" value="'.$info['id_slide'].'" name="id_slide[]" class="id_slide"/><a class="slidelistselect'.$empty.'">'.$nom.'</a>';
-				$iconeURL= !empty($info['nom'])? ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info['template'].'/vignette.gif' : '';
-				
-				$retour .= '<li><input class="id_rel" type="hidden" name="id_rel[]" value="'.$info['id'].'" /><input type="hidden" name="timestamp[]" value="" /><input type="hidden" name="typerel[]" value="freq" /><input type="hidden" name="date[]" value="" /><input type="hidden" name="time[]" value="" />'.$remove.'<img src="'.$iconeURL.'" width="28" height="18" class="icone" /><span>'.$MSelect.$JSelect.$jSelect.'</span> <span>horaire : <input name="H[]" type="text" value="'.$json->H.'" class="timeslide"/></span> <span>durée : <input name="duree[]" type="text" value="'.$duree.'" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id='.$info['id_slide'].'&preview" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '.$slides.'	</li>';
-				
-			}
-		}
-		
-		
-		return $retour;
-	}
 	
 	
 	/**
@@ -363,73 +287,6 @@ class Ecran {
 
 				$slideForm = str_replace("\r",'',$slideForm);
 				$retour .= str_replace("\n",'',$slideForm)."\n";
-				
-			}
-		}
-		
-		return $retour;
-	}
-	
-	/*
-	@ RECUPERE LA LISTE DES SLIDES EN MODE DATE
-	@
-	@
-	@
-	*/
-	function get_slide_date_list($_type_target = 'ecran',$_id_groupe = NULL){
-		$this->slide_db->connect_db();
-		
-		$retour = '';
-		
-		if(!empty($this->id) || !empty($_id_groupe)){
-			
-			if($_type_target == 'groupe'){
-				$id = $_id_groupe;
-			}else{
-				$id = $this->id;	
-			}
-			
-			$sql			= sprintf("SELECT R.id AS id,
-										R.id_slide AS id_slide,
-										R.id_target AS id_target,
-										R.date AS date,
-										R.duree AS duree,
-										R.freq AS freq,								
-										S.nom AS nom,
-										S.template AS template
-										FROM ".TB."rel_slide_tb AS R
-										LEFT JOIN ".TB."slides_tb AS S
-										ON R.id_slide = S.id
-										WHERE R.id_target=%s
-										AND R.type_target = %s
-										AND R.type = 'date'
-										ORDER BY date ASC, duree ASC", 	func::GetSQLValueString($id,'int'),
-																func::GetSQLValueString($_type_target,'text'));
-										
-										
-			$sql_query		= mysql_query($sql) or die(mysql_error());							
-			$nbr			= mysql_num_rows($sql_query);
-			
-			
-			
-			while($info = mysql_fetch_assoc($sql_query)){
-				
-				$duree = $info['duree'];
-				$json = json_decode($info['freq']);
-				
-				$remove = '<a href="#" class="del"><img src="../graphisme/round_minus.png" alt="supprimer un slide" height="16"/></a>';
-		
-				$temp	= explode(' ',$info['date']);
-				$date	= $temp[0];
-				$time	= $temp[1];
-				$nom	= !empty($info['nom'])?$info['nom']:'choisir';
-				$empty 	= !empty($info['nom'])?'':' empty';
-		
-				$slides	 = '<input type="hidden" value="'.$info['id_slide'].'" name="id_slide[]" class="id_slide"/><a class="slidelistselect'.$empty.'">'.$nom.'</a>';
-				$iconeURL= !empty($info['nom'])? ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info['template'].'/vignette.gif' :'';
-				
-				
-				$retour .= '<li><input class="id_rel" type="hidden" name="id_rel[]" value="'.$info['id'].'" /><input type="hidden" name="timestamp[]" value="" /><input type="hidden" name="typerel[]" value="date" /><input type="hidden" name="M[]" value="" /><input type="hidden" name="J[]" value="" /><input type="hidden" name="j[]" value="" /><input type="hidden" name="H[]" value="" />'.$remove.'<img src="'.$iconeURL.'" width="28" height="18" class="icone" /><span> <span>date : <input name="date[]" type="text" value="'.$date.'" class="dateslide"/></span></span> <span>horaire : <input type="text" name="time[]" value="'.$time.'" class="timeslide" /> <span>durée : <input name="duree[]" type="text" value="'.$duree.'" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id='.$info['id_slide'].'&preview" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '.$slides.'	</li>';
 				
 			}
 		}
@@ -604,43 +461,6 @@ class Ecran {
 			return $retour;
 	}
 	
-	/**
-	* liste des groupes d'écrans pour les éditer
-	*/
-	function get_ecran_groupe_edit_liste(){		
-			
-			$this->slide_db->connect_db();
-		
-			$sql		= sprintf("SELECT *	FROM ".TB."ecrans_groupes_tb");
-			$sql_query	= mysql_query($sql) or die(mysql_error());
-			
-			//$item = mysql_fetch_assoc($sql_query);
-			
-			$i = 0;
-			
-			while($item = mysql_fetch_assoc($sql_query)){
-				
-							
-				$class						= 'listItemRubrique'.($i+1);
-											
-				$data->id					= $item['id'];
-				$data->nom					= $item['nom'];
-				$data->id_etablissement		= $item['id_etablissement'];
-				$data->id_playlist_locale	= $item['id_playlist_locale'];
-				$data->id_playlist_nationale= $item['id_playlist_nationale'];
-				
-				$data->etablissement_list	= $this->get_etablissement_list();
-				$data->playlist_list		= $this->get_playlist_list();
-																
-				include('../structure/ecran-groupe-edit-list-bloc.php');
-				
-				$i = ($i+1)%2;
-				
-			}
-					
-	}
-	
-	
 	
 	/*
 	@ liste des slideshows
@@ -736,11 +556,11 @@ class Ecran {
 			}
 	}
 	
-	/*
-	@ liste des écrans pour administration (par groupe d'écran)
-	@ LOIC
-	@ 24/07/2012
-	@
+	/**
+	* liste des écrans pour administration (par groupe d'écran)
+	* @author Loïc Horellou
+	* @param $id_groupe
+	* @return HTML de la liste des écrans
 	*/
 	function get_admin_ecran_list($id_groupe=NULL){		
 		$retour = "";
