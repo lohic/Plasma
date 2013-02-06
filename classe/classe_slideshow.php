@@ -295,15 +295,19 @@ class Slideshow {
 
 		</script>';
 		
-		/*
-		maj de l'index de la playlist, puisqu'on vient de sauter au slide suivant
-		*/	
-		$send = array();
-		$send['id_last_slide'] 			= $info->id;
-		$send['id_last_slideshow']		= $next_slide_info->id_playlist;
-		$send['order_last_slide']		= $next_slide_info->ordre;
 		
-		$this->update_ecran_info($send);
+		// on vérifie qu'on est pas en mode test d'un slide sinon
+		// maj de l'index de la playlist, puisqu'on vient de sauter au slide suivant
+		if(isset($next_slide_info->test) && $next_slide_info->test != true){
+		
+			$send = array();
+			$send['id_last_slide'] 			= $info->id;
+			$send['id_last_slideshow']		= $next_slide_info->id_playlist;
+			$send['order_last_slide']		= $next_slide_info->ordre;
+			
+			$this->update_ecran_info($send);
+		
+		}
 		
 		$debug = $this->debugger;
 		//
@@ -817,6 +821,7 @@ class Slideshow {
 			$retour->id_slideshow	= false;
 			$retour->ordre			= false;
 			$retour->duree			= 120; // sec
+			$retour->test			= true;
 			
 			return $retour;
 			
@@ -1028,7 +1033,7 @@ class Slideshow {
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			
 			// on archive tous les écrans du groupe d'écrans
-			while($info = mysql_fetch_assoc($sql_query)){
+			while($info = mysql_fetch_assoc($sql_query)){				
 				$this->archive_ecran($info['id']);
 			}
 			

@@ -13,6 +13,7 @@ class Ecran {
 	
 	var $slide_db		= NULL;
 	var $id				= NULL;
+	static $updated		= false;
 	
 	/*
 	@ GESTION DES TEMPLATE
@@ -26,8 +27,9 @@ class Ecran {
 		
 		if(!empty($_id)) $this->id = $_id;
 		
-		
-		$this->ecran_update_data();
+		if( self::$updated == false){
+			$this->ecran_update_data();
+		}
 	}
 	
 	/*
@@ -83,16 +85,17 @@ class Ecran {
 		
 		
 		// PUBLICATION
-		if(isset($_POST['publish']) && $_POST['publish'] == 'ecran'){
+		if(isset($_GET['publish']) && $_GET['publish'] == 'ecran'){
 			$slideshow = new Slideshow();
-			$slideshow->publish_slideshow($_POST['id_plasma'],NULL,NULL,NULL);
+			$slideshow->publish_slideshow($_GET['id_plasma'],NULL,NULL,NULL);
 			
 		}
-		if(isset($_POST['publish']) && $_POST['publish'] == 'groupe'){
+		if(isset($_GET['publish']) && $_GET['publish'] == 'groupe'){
 			$slideshow = new Slideshow();
-			$slideshow->publish_slideshow(NULL,$_POST['id_groupe'],NULL,NULL);
+			$slideshow->publish_slideshow(NULL,$_GET['id_groupe'],NULL,NULL);
 		}
 		
+		self::$updated = true;
 	}
 	
 	
@@ -286,7 +289,7 @@ class Ecran {
 	
 	
 	/**
-	* get_slide_alerte_list récupère la liste des alertes d'un groupe ou d'un écran
+	* récupère la liste des alertes d'un groupe ou d'un écran
 	* @param $_type_target ecran ou groupe
 	* @param $_id_groupe id du groupe si groupe
 	* @param $_type_alerte all (nationale ou 75000 code postal)
@@ -309,7 +312,8 @@ class Ecran {
 										R.id_target AS id_target,
 										R.date AS date,
 										R.duree AS duree,
-										R.freq AS freq,								
+										R.freq AS freq,
+										R.alerte AS alerte,								
 										S.nom AS nom,
 										S.template AS template
 										FROM ".TB."rel_slide_tb AS R
@@ -341,12 +345,15 @@ class Ecran {
 				$time	= $temp[1];
 				$nom	= !empty($info['nom'])?$info['nom']:'choisir';
 				$empty 	= !empty($info['nom'])?'':' empty';
+				$alerte = $info['alerte'];
 		
-				$slides	 = '<input type="hidden" value="'.$info['id_slide'].'" name="id_slide[]" class="id_slide"/><a class="slidelistselect'.$empty.'">'.$nom.'</a>';
 				$iconeURL= !empty($info['nom'])? ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info['template'].'/vignette.gif' :'';
 				
+				$type_slide = 'date';
 				
-				//$retour .= '<li><input class="id_rel" type="hidden" name="id_rel[]" value="'.$info['id'].'" /><input type="hidden" name="timestamp[]" value="" /><input type="hidden" name="typerel[]" value="date" /><input type="hidden" name="M[]" value="" /><input type="hidden" name="J[]" value="" /><input type="hidden" name="j[]" value="" /><input type="hidden" name="H[]" value="" />'.$remove.'<img src="'.$iconeURL.'" width="28" height="18" class="icone" /><span> <span>date : <input name="date[]" type="text" value="'.$date.'" class="dateslide"/></span></span> <span>horaire : <input type="text" name="time[]" value="'.$time.'" class="timeslide" /> <span>durée : <input name="duree[]" type="text" value="'.$duree.'" class="dureeslide"/></span> <span><a href="../slideshow/?slide_id='.$info['id_slide'].'&preview" target="_blank" class="preview"><img src="../graphisme/eye.png" alt="voir"/></a></span> '.$slides.'	</li>';
+				$is_date = true ;
+				$is_freq = false;
+				$is_flux = false;
 				
 				ob_start();
 				include('../structure/slide-playlist-list-bloc.php');
@@ -826,6 +833,3 @@ class Ecran {
 	
 }
 	
-	
-
-?>

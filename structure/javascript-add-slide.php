@@ -107,9 +107,10 @@ $(document).ready(function(){
 		var timestamp = now.getTime();
 		
 		$('#addslidealertelocale').append( '<?php
-		$is_date = true;
-		$is_freq = false;
-		$is_flux = false;
+		$is_date	= true;
+		$is_freq	= false;
+		$is_flux	= false;
+		$alerte		= '75000';
 		ob_start();
 		include('../structure/slide-playlist-list-bloc.php');
 		$js = ob_get_contents();
@@ -123,6 +124,8 @@ $(document).ready(function(){
 		addSlidefunction();
 		updateData();
 		
+		
+		
 		return false;
 	});
 	
@@ -133,9 +136,10 @@ $(document).ready(function(){
 		var timestamp = now.getTime();
 		
 		$('#addslidealertnationale').append( '<?php
-		$is_date = true;
-		$is_freq = false;
-		$is_flux = false;
+		$is_date	= true;
+		$is_freq	= false;
+		$is_flux	= false;
+		$alerte		= 'all';
 		ob_start();
 		include('../structure/slide-playlist-list-bloc.php');
 		$js = ob_get_contents();
