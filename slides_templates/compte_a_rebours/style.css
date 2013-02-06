@@ -340,5 +340,9 @@ classes réservées pour le traitement JS :
 		left:0px;
 		top:0px;
 	}
+	
+	.invisible{
+		display:none;
+	}
 }
 
