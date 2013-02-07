@@ -678,6 +678,11 @@ class Ecran {
 		//}
 	}
 	
+	/**
+	* supprime les slides relieés à un écran ou à un groupe
+	* !!! il faudra passer toutes ces fonctions dans la classe slide ou alors faire une classe rel_slide
+	* pour uniformiser la gestion des relations des playlist, des écrans et des groupes d'écrans
+	*/
 	function del_rel_slide($id_rel=NULL){
 		if(!empty($id_rel)){
 			

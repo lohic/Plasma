@@ -220,7 +220,7 @@ $('#modif_slide_list_form').ajaxForm({
 		  $('li#'+k).find('input[name*="id_rel"]').val(myJsonObj[k]);
 		}
 				
-		$('#return_refresh').html('<p>valeurs sauvegardées<p>');
+		$('#return_refresh').html('<p>valeurs sauvegardées<p>'+data);
 		$('#return_refresh').fadeIn('slow').delay(500).fadeOut('slow');
 	}
 });

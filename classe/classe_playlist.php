@@ -13,6 +13,7 @@ class Playlist {
 	
 	var $slide_db		= NULL;
 	var $id_playlist	= NULL;
+	static $is_updated	= false;
 	
 	/**
 	* playlist constructeur de la classe playlist, pour gérer les playlists de slides
@@ -32,7 +33,7 @@ class Playlist {
 		$this->debugger = "";
 		
 		if((!empty($_POST['create']) && $_POST['create'] == 'playlist') || (!empty($_POST['update']) && $_POST['update'] == 'playlist')){
-		$this->updater();
+			if(! $is_updated) $this->updater();
 		}
 	}
 	
@@ -57,7 +58,9 @@ class Playlist {
 		
 		if(!empty($_POST['update']) && $_POST['update'] == 'playlist'){
 			$this->update_playlist($_array_val,$id);	
-		}		
+		}
+		
+		$is_updated = true;
 	}
 	
 	/**
@@ -321,6 +324,8 @@ class Playlist {
 															func::GetSQLValueString($alerte,'text'),
 															func::GetSQLValueString($id_rel,'int'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
+				
+				if($alerte != false) $this->alert_by_mail($id_target, $type_target, 'modifiée');
 			}else{
 				$sql		= sprintf("INSERT INTO ".TB."rel_slide_tb (id_slide, id_target, type_target, date, duree, freq, status, type,ordre, alerte) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",			func::GetSQLValueString($id_slide,'int'),
 															func::GetSQLValueString($id_target,'int'),
@@ -334,12 +339,47 @@ class Playlist {
 															func::GetSQLValueString($alerte,'text'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 				
-				return mysql_insert_id();
-
+				$val = mysql_insert_id();
+				
+				if($alerte != false) $this->alert_by_mail($id_target, $type_target);
+				
+				return $val;
 			}
 			
 		//}
 	}
+	
+	/**
+	* envoi un message par mail quand une alerte a été publiée
+	*/
+	function alert_by_mail($id_target,$type_target,$action = 'créée'){
+		$niveau = 1;
+		
+		$sql			= sprintf("SELECT *
+									FROM ".TB."user_tb
+									WHERE type = %s", 	func::GetSQLValueString($niveau,'int'));
+																		
+		$sql_query		= mysql_query($sql) or die(mysql_error());							
+		$nbr			= mysql_num_rows($sql_query);
+				
+		$headers  	= 'MIME-Version: 1.0'."\r\n";
+		$headers	.= 'Content-type: text/html; charset=UTF-8'."\r\n";
+		$headers	.= "From:noreply-plasma@sciencespo.fr\r\n";
+		//$headers	.= "Reply-To:".$mail_header->reply_to."\r\n";
+		
+		$url = ($type_target == 'ecran') ? ABSOLUTE_URL.'admin-new/?page=ecrans_modif&id_plasma='.$id_target : ABSOLUTE_URL.'admin-new/?page=ecrans_groupe_modif&id_groupe='.$id_target ;
+	
+		$message 	= 'Une alerte a été '.$action.' sur '.($type_target == 'ecran' ? 'un écran' : 'un groupe').'! <br/>Vous pouvez le consulter <a href="'.$url.'">en cliquand ici</a>' ;
+		$objet		= 'PLASMA - Alerte sur '.($type_target == 'ecran' ? 'un écran' : 'un groupe').'!';
+		
+		while($info = mysql_fetch_assoc($sql_query)){
+		
+			$sentOk = mail($info['email'],$objet,$message,$headers);
+			
+		}
+		
+	}
+	
 	
 	/**
 	* permet de supprimer un slide relié à une playlist
