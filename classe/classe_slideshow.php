@@ -236,7 +236,7 @@ class Slideshow {
 
 		// js général pour tout slideshow 
 		ob_start();
-			include_once('../js/slideshow.php');
+			include_once('../structure/slideshow-javascript.php');
 			$contents .= ob_get_contents();
 		ob_end_clean();	
 		
