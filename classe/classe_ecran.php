@@ -378,6 +378,9 @@ class Ecran {
 	@
 	*/
 	function get_groupe_info($_id_groupe = NULL){
+
+		// instanciation de l'objet
+		$retour = (object)array();
 		
 		// on initialise pour éviter les valeurs non déclarées dans les formulaires
 		$retour->id						= NULL;

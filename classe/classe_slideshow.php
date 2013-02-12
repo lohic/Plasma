@@ -31,6 +31,7 @@ class Slideshow {
 	* @param $_id_ecran id de l'écran que l'on souhaite afficher
 	*/
 	function slideshow($_id_ecran=NULL){
+
 		global $connexion_info;
 		date_default_timezone_set('Europe/Paris');
 		$this->slide_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
@@ -39,7 +40,10 @@ class Slideshow {
 		if(!empty($_id_ecran)){
 			
 			//$this->id_ecran = $_id_ecran;
-			
+
+			// instanciation des objets
+			if(empty($this->ecran)){ $this-> ecran = (object)array(); }
+
 			$this->ecran->id = $_id_ecran;
 			
 			/*$sql = sprintf("SELECT	P.nom,
@@ -764,6 +768,10 @@ class Slideshow {
 			@ GILDAS
 			@ 20/07/2012
 			*/
+
+			// instanciation des objets
+			$retour = (object)array();
+
 			$retour->id_slide		= func::GetSQLValueString($_GET['slide_id'],'int');
 			$retour->id_slideshow	= false;
 			$retour->ordre			= false;
@@ -990,6 +998,10 @@ class Slideshow {
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			$info 			= mysql_fetch_assoc($sql_query);
 			
+			// instanciation des objets
+			if(empty($this->ecran)){ $this-> ecran = (object)array(); }
+			$retour = (object)array();
+
 			$retour->id					= $this->ecran->id;
 			$retour->nom				= $info['nom'];
 			$retour->id_etablissement	= $info['id_etablissement'];

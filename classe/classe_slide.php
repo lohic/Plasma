@@ -332,6 +332,9 @@ class Slide {
 		$sql_slide_query = mysql_query($sql_slide) or die(mysql_error());
 		
 		$slide_item = mysql_fetch_assoc($sql_slide_query);
+		
+		// instanciation des objets
+		$retour = (object)array();
 				
 		$retour->id					= $slide_item['id'];
 		$retour->nom				= $slide_item['nom'];

@@ -169,6 +169,9 @@ class Playlist {
 			$sql_playlist_query = mysql_query($sql_playlist) or die(mysql_error());
 			
 			$slideshow_item = mysql_fetch_assoc($sql_playlist_query);
+
+			// instanciation
+			$retour = (object)array();
 					
 			$retour->id					= $slideshow_item['id'];
 			$retour->nom				= $slideshow_item['nom'];

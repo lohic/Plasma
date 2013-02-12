@@ -353,6 +353,9 @@ class Spuser {
 		if($this->isAdmin){
 			$retour = NULL;
 
+			// instanciation de l'objet
+			$retour = (object)array();
+
 			$retour->id				= $this->id;
 			$retour->login			= $this->login;
 			$retour->password		= $this->password;
@@ -613,6 +616,10 @@ class Spuser {
 		
 
 		while ($groupe = mysql_fetch_assoc($sql_liste_groupe_query)){
+
+			// instanciation
+			$temp = (object)array();
+			
 			$temp->label	= $groupe['libelle'];
 			$temp->select	= '';
 			$temp->value	= $groupe['id'];

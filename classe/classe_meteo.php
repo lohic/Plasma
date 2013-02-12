@@ -61,7 +61,7 @@ class Meteo {
 			//echo ("Time : ".mktime().' - '.filemtime($file).' = '.(mktime()-filemtime($file)).' > '.$meteo_refresh_delay.' ? ');
 		}
 		 
-		if(!file_exists($file) || mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
+		if(!file_exists($file) || @mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
 			
 			if(isset($_GET['debug'])){ echo ' Refresh from accuweather'; }
 		
