@@ -65,4 +65,7 @@
 
 	play_slideshow(<?php echo $duree; ?>);
 
+	// transmission JS de la durée du slide, ça peut servir ailleurs (ex: météo)
+	slide_duree = <?php echo $duree; ?>;
+
 </script>

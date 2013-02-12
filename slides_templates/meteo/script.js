@@ -61,10 +61,15 @@ $(document).ready(function(){
 	
 	
 	// timeout pour passer au 2ème slide
+	// slide_duree est transmis par structure/slideshow-javascript.php
+
+	nextMeteoDelay = Math.round((slide_duree-2000)/2);
+
 	setTimeout(function(){
 		$('#meteo1').hide();
 		$('#meteo2').show();
-	}, slide_duree/2);
+		alert('!');
+	}, nextMeteoDelay);
 	
 	
 });
