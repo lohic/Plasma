@@ -10,7 +10,6 @@ http://apple.accuweather.com/adcbin/apple/Apple_Weather_Data.asp?zipcode=EUR|FR|
 où Paris a pour zipcode "EUR|FR|FR012|PARIS|"
 */
 
-//test
 
 include_once('../vars/config.php');
 include_once('../vars/statics_vars.php');
