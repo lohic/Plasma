@@ -294,7 +294,8 @@ class Slideshow {
 	* @return retourne un objet avec contenant les variables id_slide,id_playlist,ordre,duree ou false si aucun slide n'a été trouvé
 	*/
 	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false, $JSON = true){
-						
+		
+		$retour->duree = 0;				
 		
 		if($JSON){
 			$json_data = !empty($this->ecran->json) ? json_decode($this->ecran->json) : '';
@@ -392,10 +393,11 @@ class Slideshow {
 				foreach($slides as $slide){
 					$id = $slide->id_slide;
 					$val = $slide->freq;
-										
+															
 					$frequences[] = $val;
 								
-					if($val->M == '*' || $val->M == $M ){
+					// bien vérifier			
+					if(isset($val->M) && ($val->M == '*' || $val->M == $M) ){
 						if(isset($val->J) && $val->J == $J ){				
 							$reste = $this->verif_time_slide($val->H,$slide->duree);
 							
@@ -437,7 +439,7 @@ class Slideshow {
 					return false;
 				}
 				
-			
+				
 				
 			}
 			
@@ -984,7 +986,10 @@ class Slideshow {
 									P.id_groupe,
 									P.id_last_slide,
 									P.order_last_slide,
-									P.id_default_slideshow,
+									P.id_playlist_locale AS id_ecran_playlist_locale,
+									P.id_playlist_nationale AS id_ecran_playlist_nationale,
+									G.id_playlist_locale AS id_groupe_playlist_locale,
+									G.id_playlist_nationale AS id_groupe_playlist_nationale,
 									E.code_postal,
 									G.id_slideshow,
 									(SELECT json_data FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS json
@@ -1002,16 +1007,19 @@ class Slideshow {
 			if(empty($this->ecran)){ $this-> ecran = (object)array(); }
 			$retour = (object)array();
 
-			$retour->id					= $this->ecran->id;
-			$retour->nom				= $info['nom'];
-			$retour->id_etablissement	= $info['id_etablissement'];
-			$retour->id_groupe			= $info['id_groupe'];
-			$retour->id_last_slide		= $info['id_last_slide'];
-			$retour->order_last_slide	= $info['order_last_slide'];
-			$retour->code_postal		= $info['code_postal'];
-			$retour->id_ecran_playlist	= $info['id_default_slideshow'];
-			$retour->id_groupe_playlist = $info['id_slideshow'];
-			$retour->json				= $info['json'];
+			$retour->id								= $this->ecran->id;
+			$retour->nom							= $info['nom'];
+			$retour->id_etablissement				= $info['id_etablissement'];
+			$retour->id_groupe						= $info['id_groupe'];
+			$retour->id_last_slide					= $info['id_last_slide'];
+			$retour->order_last_slide				= $info['order_last_slide'];
+			$retour->code_postal					= $info['code_postal'];
+			$retour->id_ecran_playlist_locale		= $info['id_ecran_playlist_locale'];
+			$retour->id_ecran_playlist_nationale	= $info['id_ecran_playlist_nationale'];
+			$retour->id_groupe_playlist_locale		= $info['id_groupe_playlist_locale'];
+			$retour->id_groupe_playlist_nationale	= $info['id_groupe_playlist_nationale'];
+			$retour->id_groupe_playlist 			= $info['id_slideshow'];
+			$retour->json							= $info['json'];
 			
 			return $retour;
 		}
