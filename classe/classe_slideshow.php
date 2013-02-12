@@ -218,7 +218,7 @@ class Slideshow {
 		$contents = str_replace('url(\'fonts/','url(\''.$font_url,$contents);
 		
 		
-		// js (après)
+		// js du template (après)
 		ob_start();
 		// euh pourquoi empty ??? LOIC
 		//if(!empty($info->json))
@@ -233,67 +233,12 @@ class Slideshow {
 		
 		// on créé un timer pour la durée du slide moins 2 sec
 		// à 2 sec de la fin on ajoute une classe .exit au div #template 
-		$contents .= '
-		<script language="javascript">
-		
-			function clear_slideshow(){
-				clearTimeout(exit);
-				clearTimeout(verif);
-				$("#compteur").stop();
-			}
 
-			function exit_slideshow(){
-				
-				clearTimeout(exit);				
-				
-				// sortie CSS
-				$("#template").addClass("exit"); 
-				$("#debug").append("<p>exit</p>");
-				
-				// sortie dans 2 sec
-				end = setTimeout(function(){ 
-
-					clearTimeout(end);
-					
-					// écriture du slide
-					$("#template").removeClass("exit");
-					$("#template").html(nextSlideData);
-					
-					// preload du suivant
-					get_next_slide('.($info->id).', false);
-
-				}, 2000);
-
-			}
-			
-			verif = setTimeout(function(){});
-			
-			function secure_loop(){
-				get_next_id('.($info->id).');
-				
-				clearTimeout(verif);
-				verif = setTimeout(secure_loop, 20000);
-			}
-
-			function play_slideshow(slide_duree){
-				
-				// sortie programmée
-				exit = setTimeout(exit_slideshow, slide_duree-2000);
-				
-				// debug bar
-				$("#compteur").animate({width:"0px"}, slide_duree, "linear");
-				
-				// preload du suivant
-				get_next_slide('.($info->id).', false);
-				
-				// verif
-				secure_loop();
-
-			}
-
-			play_slideshow('.$duree.');
-
-		</script>';
+		// js général pour tout slideshow 
+		ob_start();
+			include_once('../js/slideshow.php');
+			$contents .= ob_get_contents();
+		ob_end_clean();	
 		
 		
 		// on vérifie qu'on est pas en mode test d'un slide sinon
