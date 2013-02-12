@@ -5,12 +5,7 @@ include_once('../vars/config.php');
 include_once('classe_connexion.php');
 include_once('classe_slide.php');
 include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('connexion_vars.php');
 //include_once('../vars/statics_vars.php');
-
-//$temp = new Slideshow($_GET['id']);
-
 		
 
 class Slideshow {
@@ -45,36 +40,6 @@ class Slideshow {
 			if(empty($this->ecran)){ $this-> ecran = (object)array(); }
 
 			$this->ecran->id = $_id_ecran;
-			
-			/*$sql = sprintf("SELECT	P.nom,
-									P.id_etablissement,
-									P.id_groupe,
-									P.id_last_slide,
-									P.order_last_slide,
-									P.id_default_slideshow,
-									E.code_postal,
-									G.id_slideshow,
-									(SELECT json_data FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS json
-							FROM ".TB."ecrans_tb AS P,
-							".TB."etablissements_tb AS E,
-							".TB."ecrans_groupes_tb AS G
-							WHERE P.id=%s
-							AND P.id_etablissement = E.id
-							AND P.id_groupe = G.id", func::GetSQLValueString($_id_ecran,'int'),
-													 func::GetSQLValueString($_id_ecran,'int'));
-			$sql_query		= mysql_query($sql) or die(mysql_error());							
-			$info 			= mysql_fetch_assoc($sql_query);
-			
-			$this->ecran->id				= $_id_ecran;
-			$this->ecran->nom				= $info['nom'];
-			$this->ecran->id_etablissement	= $info['id_etablissement'];
-			$this->ecran->id_groupe			= $info['id_groupe'];
-			$this->ecran->id_last_slide		= $info['id_last_slide'];
-			$this->ecran->order_last_slide	= $info['order_last_slide'];
-			$this->ecran->code_postal		= $info['code_postal'];
-			$this->ecran->id_ecran_playlist	= $info['id_default_slideshow'];
-			$this->ecran->id_groupe_playlist= $info['id_slideshow'];
-			$this->ecran->json				= $info['json'];*/
 			
 			$this->ecran = $this->get_ecran_info();
 			
@@ -141,9 +106,6 @@ class Slideshow {
 	function generate_slide_page($ispreview=false,$isdebug=false){
 		//$this->slide_db->connect_db();
 
-		//$confirm = LOCAL_PATH.'structure/slide_generate.php';
-		
-		
 		$le_slide = $this->generate_slide($isdebug);
 		
 		$plasma_id = $this->ecran->id;
@@ -1014,26 +976,6 @@ class Slideshow {
 	function get_ecran_info(){
 		
 		if(!empty($this->ecran->id)){
-			/*$this->slide_db->connect_db();
-			$sql = sprintf("SELECT 	P.id_groupe,P.id_last_slide,
-									P.id_last_slideshow,
-									P.order_last_slide,
-									E.code_meteo,
-									P.id_default_slideshow
-							FROM ".TB."ecrans_tb AS P, ".TB."etablissements_tb AS E
-							WHERE P.id=%s
-							AND P.id_etablissement = E.id",func::GetSQLValueString($this->ecran->id,'int'));
-			$sql_query = mysql_query($sql) or die(mysql_error());
-			
-			$ecran_item = mysql_fetch_assoc($sql_query);
-		
-			$retour->id_groupe			= $ecran_item['id_groupe'];
-			$retour->id_last_slide		= !empty($ecran_item['id_last_slide']) ? $ecran_item['id_last_slide'] : 0;
-			$retour->id_last_slideshow	= !empty($ecran_item['id_last_slideshow']) ? $ecran_item['id_last_slideshow'] : $ecran_item['id_default_slideshow'];
-			$retour->order_last_slide	= !empty($ecran_item['order_last_slide']) ? $ecran_item['order_last_slide'] : 0;
-			$retour->code_meteo			= $ecran_item['code_meteo'];
-			
-			return $retour;*/
 			
 			$sql = sprintf("SELECT	P.nom,
 									P.id_etablissement,
