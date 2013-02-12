@@ -33,7 +33,7 @@ $id_template	= !empty($id_template)?$id_template:'';
 </style>
 
 <div class="form_container">
-	<p class="intro_modif"><?php echo empty($data->id)?'Création':'Modification'?> d'une playlist : <a href="../slideshow/?playlist_id=<?php echo $data->id; ?>&preview&debug" target="_blank"><img src="../graphisme/eye.png" alt="voir"/></a></p>
+	<p class="intro_modif"><?php echo empty($data->id)?'Création':'Modification'?> d'une playlist :</p>
     <h3><?php echo $data->nom;?></h3>
     
     <form action="" method="post" id="modif_ecran_info_form">
