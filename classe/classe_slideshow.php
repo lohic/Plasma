@@ -99,6 +99,13 @@ class Slideshow {
 		<br />';
 	}
 	
+	/**
+	* sert à réiniitlaliser le debug
+	*/
+	function debug_reset(){
+		$this->debugger = '';
+	}
+	
 	
 	/**
 	* permet le lancement d'un slideshow
@@ -160,110 +167,117 @@ class Slideshow {
 	* @return HTML pour le mode debug si activé
 	*/
 	function generate_slide($isdebug=false){
-		//$this->slide_db->connect_db();
+
 		$this->debug("ecran / id:".$this->ecran->id);
 		
 		$next_slide_info = $this->get_next_slide_id(); // ressert en fin de fonction
-		//echo $next_slide_info->id_slide;
-					
-		$slide = new Slide($next_slide_info->id_slide);
-		
-		$info = $slide->get_slide_info();
-		
-		//var_dump($info);
-		
-		/*
-		$retour->id					= $slide_item['id'];
-		$retour->nom				= $slide_item['nom'];
-		$retour->template			= $slide_item['template'];
-		$retour->json				= $slide_item['json'];
-		$retour->icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/vignette.gif';
-		$retour->chemin				= LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/index.php';
-		*/
-				
-		$contents = "";
-		
-		// html
-		ob_start();
-		// euh pourquoi empty ??? LOIC
-		if(!empty($info->json))
-			include_once($info->chemin);
-		$contents .= ob_get_contents();
-		ob_end_clean();
-		
-		// nettoyage du code pour un affichage publique
-		$contents = preg_replace('# max="(.*)"#isU', '', $contents);
-		$contents = preg_replace('# alt="(.*)"#isU', '', $contents);
-		$contents = preg_replace('# title="(.*)"#isU', '', $contents);	
-		$contents = preg_replace('#( ?)(textarea|textfield|checkbox|hidden|image|edit|listmenu|radiobutton|date)( ?)#isU', '', $contents);
-		
-		// remplissage de la template
-		$json = $info->json;
-		$json = stripslashes($json);
-		$json = json_decode($json);
-		
-		$images_url = addslashes(ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info->template.'/images/');
-		$font_url	= addslashes(ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info->template.'/fonts/');
-		
-		if(!empty($info->json))
-			foreach ($json as $name => $value) {
-				$contents = preg_replace('#id="'.$name.'">(.*)<\/#isU', 'id="'.$name.'">'.$value.'</', $contents);
-			} // c'est rempli !
-		
-		// css (avant)
-		ob_start();
-		// euh pourquoi empty ??? LOIC
-		//if(!empty($info->json))
-			include_once($info->css);
-		$contents = '<style type="text/css">'.ob_get_contents().'</style>'.$contents;
-		ob_end_clean();
-		// pour mettre à jour les liens des images en CSS
-		$contents = str_replace('url("images/','url("'.$images_url,$contents);
-		$contents = str_replace('url(\'fonts/','url(\''.$font_url,$contents);
+		// si on n'a pas de slide $next_slide_info vaudra false
 		
 		
-		// js du template (après)
-		ob_start();
-		// euh pourquoi empty ??? LOIC
-		//if(!empty($info->json))
-			include_once($info->script);
-		$contents .= '<script language="javascript">'.ob_get_contents().'</script>';
-		ob_end_clean();	
-		
-		// slide suivant dans X milisecondes	
-		$duree = ($next_slide_info->duree);	
-		$this->debug('durée: '.$duree.' sec <span id="compteur" style="display:block; width:300px; height:10px; background-color:#000; margin-top:10px;"></span>');
-		$duree *= 1000;
-		
-		// on créé un timer pour la durée du slide moins 2 sec
-		// à 2 sec de la fin on ajoute une classe .exit au div #template 
-
-		// js général pour tout slideshow 
-		ob_start();
-			include_once('../structure/slideshow-javascript.php');
-			$contents .= ob_get_contents();
-		ob_end_clean();	
-		
-		
-		// on vérifie qu'on est pas en mode test d'un slide sinon
-		// maj de l'index de la playlist, puisqu'on vient de sauter au slide suivant
-		if(isset($next_slide_info->test) && $next_slide_info->test != true){
-		
-			$send = array();
-			$send['id_last_slide'] 			= $info->id;
-			$send['id_last_slideshow']		= $next_slide_info->id_playlist;
-			$send['order_last_slide']		= $next_slide_info->ordre;
+		if($next_slide_info != false){
+			$slide = new Slide($next_slide_info->id_slide);
 			
-			$this->update_ecran_info($send);
-		
-		}
-		
-		$debug = $this->debugger;
-		//
-		if($isdebug){
-			return '<div id="debug">'.$debug.'</div>'.$contents;	
+			$info = $slide->get_slide_info();
+			
+			//var_dump($info);
+			
+			/*
+			$retour->id					= $slide_item['id'];
+			$retour->nom				= $slide_item['nom'];
+			$retour->template			= $slide_item['template'];
+			$retour->json				= $slide_item['json'];
+			$retour->icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/vignette.gif';
+			$retour->chemin				= LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/index.php';
+			*/
+					
+			$contents = "";
+			
+			// html
+			ob_start();
+			// euh pourquoi empty ??? LOIC
+			if(!empty($info->json))
+				include_once($info->chemin);
+			$contents .= ob_get_contents();
+			ob_end_clean();
+			
+			// nettoyage du code pour un affichage publique
+			$contents = preg_replace('# max="(.*)"#isU', '', $contents);
+			$contents = preg_replace('# alt="(.*)"#isU', '', $contents);
+			$contents = preg_replace('# title="(.*)"#isU', '', $contents);	
+			$contents = preg_replace('#( ?)(textarea|textfield|checkbox|hidden|image|edit|listmenu|radiobutton|date)( ?)#isU', '', $contents);
+			
+			// remplissage de la template
+			$json = $info->json;
+			$json = stripslashes($json);
+			$json = json_decode($json);
+			
+			$images_url = addslashes(ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info->template.'/images/');
+			$font_url	= addslashes(ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$info->template.'/fonts/');
+			
+			if(!empty($info->json))
+				foreach ($json as $name => $value) {
+					$contents = preg_replace('#id="'.$name.'">(.*)<\/#isU', 'id="'.$name.'">'.$value.'</', $contents);
+				} // c'est rempli !
+			
+			// css (avant)
+			ob_start();
+			// euh pourquoi empty ??? LOIC
+			//if(!empty($info->json))
+				include_once($info->css);
+			$contents = '<style type="text/css">'.ob_get_contents().'</style>'.$contents;
+			ob_end_clean();
+			// pour mettre à jour les liens des images en CSS
+			$contents = str_replace('url("images/','url("'.$images_url,$contents);
+			$contents = str_replace('url(\'fonts/','url(\''.$font_url,$contents);
+			
+			
+			// js du template (après)
+			ob_start();
+			// euh pourquoi empty ??? LOIC
+			//if(!empty($info->json))
+				include_once($info->script);
+			$contents .= '<script language="javascript">'.ob_get_contents().'</script>';
+			ob_end_clean();	
+			
+			// slide suivant dans X milisecondes	
+			$duree = ($next_slide_info->duree);	
+			$this->debug('durée: '.$duree.' sec <span id="compteur" style="display:block; width:300px; height:10px; background-color:#000; margin-top:10px;"></span>');
+			$duree *= 1000;
+			
+			// on créé un timer pour la durée du slide moins 2 sec
+			// à 2 sec de la fin on ajoute une classe .exit au div #template 
+	
+			// js général pour tout slideshow 
+			ob_start();
+				include_once('../structure/slideshow-javascript.php');
+				$contents .= ob_get_contents();
+			ob_end_clean();	
+			
+			
+			// on vérifie qu'on est pas en mode test d'un slide sinon
+			// maj de l'index de la playlist, puisqu'on vient de sauter au slide suivant
+			if(isset($next_slide_info->test) && $next_slide_info->test != true){
+			
+				$send = array();
+				$send['id_last_slide'] 			= $info->id;
+				$send['id_last_slideshow']		= $next_slide_info->id_playlist;
+				$send['order_last_slide']		= $next_slide_info->ordre;
+				
+				$this->update_ecran_info($send);
+			
+			}
+			
+			$debug = $this->debugger;
+			//
+			if($isdebug){
+				return '<div id="debug">'.$debug.'</div>'.$contents;	
+			}else{
+				return $contents;
+			}
 		}else{
-			return $contents;
+			echo 'pas de slide';	
+			
+			// dans ce cas on affiche le nom de l'écran et on continue à scanner
 		}
 	}
 	
@@ -342,18 +356,24 @@ class Slideshow {
 						$retour->duree			= $reste; //func::time2sec($info['duree']); // sec
 						
 						
+						$this->debug_reset();
+						
 						$this->debug('on change de slide / id:'.($retour->id_slide).' - durée:'.($retour->duree));
 						$this->debug('mode : date');
 						$this->debug('alerte : '.$alerte);
 						
 						return $retour;
 					}else{
+						$this->debug_reset();
+						
 						$this->debug('PAS DE SLIDE TROUVÉ');
 						$this->debug('id écran : '.($this->ecran->id));
 						
 						return false;	
 					}
 				}else{
+					$this->debug_reset();
+					
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					
@@ -377,6 +397,8 @@ class Slideshow {
 				
 				
 				if(count($slides) <= 0){
+					$this->debug_reset();
+					
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					return false;
@@ -427,12 +449,16 @@ class Slideshow {
 					$retour->ordre			= false;
 					$retour->duree			= current($horaires)->duree; // sec
 					
+					$this->debug_reset();
+					
 					$this->debug('on change de slide / id:'.($retour->id_slide));
 					$this->debug('durée : '.($retour->duree));
 					$this->debug('mode : fréquence');
 					
 					return $retour;
 				}else{
+					$this->debug_reset();
+					
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					
@@ -505,6 +531,8 @@ class Slideshow {
 					}	
 					$retour->id_playlist	= $slide->id_target;
 					
+					$this->debug_reset();
+					
 					$this->debug('on change de slide / id:'.($retour->id_slide));
 					$this->debug('durée : '.($retour->duree));
 					$this->debug('ordre : '.($retour->ordre).'/'.$ordre_max_slide);
@@ -513,6 +541,8 @@ class Slideshow {
 					
 					return $retour;
 				}else{	
+					$this->debug_reset();
+				
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 							
@@ -520,6 +550,8 @@ class Slideshow {
 				}
 				
 			}else{
+				$this->debug_reset();
+				
 				$this->debug('PAS DE SLIDE TROUVÉ');
 				$this->debug('id écran : '.($this->ecran->id));
 				
@@ -564,6 +596,7 @@ class Slideshow {
 						$retour->ordre			= false;
 						$retour->duree			= $reste; //func::time2sec($info['duree']); // sec
 						
+						$this->debug_reset();
 						
 						$this->debug('on change de slide / id:'.($retour->id_slide).' - durée:'.($retour->duree));
 						$this->debug('mode : date');
@@ -571,12 +604,16 @@ class Slideshow {
 						
 						return $retour;
 					}else{
+						$this->debug_reset();
+						
 						$this->debug('PAS DE SLIDE TROUVÉ');
 						$this->debug('id écran : '.($this->ecran->id));
 						
 						return false;	
 					}
 				}else{	
+					$this->debug_reset();
+				
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));			
 					
@@ -598,6 +635,8 @@ class Slideshow {
 				$nbr			= mysql_num_rows($sql_query);
 				
 				if($nbr <= 0){
+					$this->debug_reset();
+					
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					return false;
@@ -645,12 +684,16 @@ class Slideshow {
 					$retour->ordre			= false;
 					$retour->duree			= current($horaires)->duree; // sec
 					
+					$this->debug_reset();
+					
 					$this->debug('on change de slide / id:'.($retour->id_slide));
 					$this->debug('durée : '.($retour->duree));
 					$this->debug('mode : fréquence');
 					
 					return $retour;
 				}else{
+					$this->debug_reset();
+					
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					
@@ -703,6 +746,8 @@ class Slideshow {
 					}	
 					$retour->id_playlist	= $info['id_target'];
 					
+					$this->debug_reset();
+					
 					$this->debug('on change de slide / id:'.($retour->id_slide));
 					$this->debug('durée : '.($retour->duree));
 					$this->debug('ordre : '.($retour->ordre).'/'.$info['ordre_max_slide']);
@@ -711,6 +756,8 @@ class Slideshow {
 					
 					return $retour;
 				}else{	
+					$this->debug_reset();
+				
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 							
@@ -718,6 +765,9 @@ class Slideshow {
 				}
 				
 			}else{
+				
+				$this->debug_reset();
+				
 				$this->debug('PAS DE SLIDE TROUVÉ');
 				$this->debug('id écran : '.($this->ecran->id));
 				
@@ -932,6 +982,8 @@ class Slideshow {
 
 				
 				if(! $slide_info){
+					$this->debug_reset();
+					
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					
@@ -942,6 +994,8 @@ class Slideshow {
 				
 				
 			}else{
+				$this->debug_reset();
+				
 				$this->debug('PAS DE SLIDE TROUVÉ');
 				$this->debug('PAS D\'ID ÉCRAN');
 				//$this->debug('id écran : '.($this->ecran->id));
