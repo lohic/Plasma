@@ -5,6 +5,8 @@ connexion_vars.php
 
 config.php
 
+*.sublime-project
+
 # OS generated files #
 ######################
 .DS_Store
