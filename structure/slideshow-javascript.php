@@ -1,8 +1,8 @@
 <?php 
-/*
-@ Gildas
-@ Le 12/02/2013
-@ Du Javascript avec du Php dedans, c'est le JS général de tous les slideshows
+/**
+* Gildas
+* Le 12/02/2013
+* Du Javascript avec du Php dedans, c'est le JS général de tous les slideshows
 */
 ?>
 

@@ -237,7 +237,9 @@ class Slideshow {
 				return $contents;
 			}
 		}else{
-			echo 'pas de slide';	
+			//echo 'pas de slide';
+			include_once ('../structure/slideshow-javascript.php');
+			include_once ('../structure/default-slide.php');
 			
 			// dans ce cas on affiche le nom de l'écran et on continue à scanner
 		}
