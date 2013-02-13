@@ -185,7 +185,7 @@ classes réservées pour le traitement JS :
 
 
 
-.image{
+.visuel{
 	min-height:465px;
 	z-index:1;
 	position:relative;
@@ -201,6 +201,8 @@ classes réservées pour le traitement JS :
 	-moz-animation-delay: 0s;
 	-ms-animation-delay: 0s;
 	animation-delay: 0s;
+	/* ajout Gildas 13/02/2013 */
+	background-repeat: no-repeat;
 }
 
 @-webkit-keyframes moveImage{
@@ -360,7 +362,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-.exit .image{
+.exit .visuel{
 	-webkit-animation: moveImageExit 0.9s ease-in-out forwards;
 	-moz-animation: moveImageExit 0.9s ease-in-out forwards;
 	-ms-animation: moveImageExit 0.9s ease-in-out forwards;
@@ -440,7 +442,7 @@ classes réservées pour le traitement JS :
 		position:relative;
 	}
 
-	.image{
+	.visuel{
 		position:absolute;
 		left:0px;
 		top:0px;
