@@ -218,16 +218,14 @@ class Slideshow {
 			
 			// on vérifie qu'on est pas en mode test d'un slide sinon
 			// maj de l'index de la playlist, puisqu'on vient de sauter au slide suivant
-			if(isset($next_slide_info->test) && $next_slide_info->test != true){
 			
-				$send = array();
-				$send['id_last_slide'] 			= $info->id;
-				$send['id_last_slideshow']		= $next_slide_info->id_playlist;
-				$send['order_last_slide']		= $next_slide_info->ordre;
-				
-				$this->update_ecran_info($send);
+			$send = array();
+			$send['id_last_slide'] 			= $info->id;
+			$send['id_last_slideshow']		= $next_slide_info->id_playlist;
+			$send['order_last_slide']		= $next_slide_info->ordre;
 			
-			}
+			$this->update_ecran_info($send);
+			
 			
 			$debug = $this->debugger;
 			//
@@ -442,88 +440,117 @@ class Slideshow {
 			$ladate			= date("Y-m-d G:i:s");
 			$timestamp		= func::makeTime($ladate);
 			
+			$ordre_first_slide = 0;
 			
+			// on parcours le JSON
+			// pour initaliser les variables suivantes :
+			// $ordre_first_slide	(ordre de tri du 1er slide)
+			// $id_first_slide		(ID du 1er slide)
+			// $duree_first_slide	(durée du 1er slide)
+			// $ordre_max_slide		(ordre de tri du dernier slide)
 			foreach($json_data->data as $data){
-				if(empty($ordre_first_slide)) {
-					$ordre_first_slide	= $data->ordre;
-					$id_first_slide		= $data->id_slide;
-					$duree_first_slide	= $data->duree;
-				}else{
-					if( $data->ordre <= $ordre_first_slide ){
+				
+				if($data->type_target == $type_target && $data->type == 'flux' && $data->id_target == $id_target){
+					// si $ordre_first_slide n'existe pas, on le crée avec $id_first_slide et $duree_first_slide
+					if(empty($ordre_first_slide)) {
 						$ordre_first_slide	= $data->ordre;
 						$id_first_slide		= $data->id_slide;
 						$duree_first_slide	= $data->duree;
 					}
-				}
-				
-				if(empty($ordre_max_slide)) {
-					$ordre_max_slide = $data->ordre;
-				}else{
-					if( $data->ordre >= $ordre_max_slide ){
-						$ordre_max_slide	= $data->ordre;
+					// sinon on vérifie que l'ordre du slide analysé n'est pas inférieur à $ordre_first_slide
+					else{
+						if( $data->ordre <= $ordre_first_slide ){
+							$ordre_first_slide	= $data->ordre;
+							$id_first_slide		= $data->id_slide;
+							$duree_first_slide	= $data->duree;
+						}
 					}
-				}
 					
-				
+					// si $ordre_max_slide n'existe pas on le crée
+					if(empty($ordre_max_slide)) {
+						$ordre_max_slide = $data->ordre;
+					}
+					// sinon on vérifie que l'ordre du slide analysé n'est pas supérieur à $ordre_max_slide
+					else{
+						if( $data->ordre >= $ordre_max_slide ){
+							$ordre_max_slide	= $data->ordre;
+						}
+					}	
+				}
 			}
 			
+			
+			// si $ordre_first_slide n'existe pas alors $ordre_first_slide = $ordre_max_slide
 			if(empty($ordre_first_slide )){
 				$ordre_first_slide = $ordre_max_slide;
 			}
 			
+			// ordre de tri du dernier slide séquentiel joué
 			$last = $this->ecran->order_last_slide;
 			
 			//echo " first : $ordre_first_slide ";
 			//echo " max : $ordre_max_slide ";
-			//echo " last : $last ";	
+			//echo " last : $last ";
 			
-		
+			$qte = 0;
+			
+			// pour chaque slide séquentiel (flux) correspondant à id_target
 			foreach($json_data->data as $data){
 				if($data->type_target		== $type_target
-					&& $data->ordre			>= $this->ecran->order_last_slide
 					&& $data->type			== 'flux'
 					&& $data->id_target		== $id_target){
-					$key = 'slide-'.$data->id;	
-					$slides[$key] = $data;
+						
+						// on l'ajoute dans un tableau
+						// quand son ID est supérieur au dernier slide joué
+						if($data->ordre			> $this->ecran->order_last_slide){
+							$key = 'slide-'.$data->id;	
+							$slides[$key] = $data;
+						}
+						
+						$qte ++;
 					
 					//echo " key : $key ";
 				}
 			}
-			
+	
+			// on trie le tableau créé dans l'ordre de tri		
 			self::$order_slide_by	= 'ordre';
 			self::$order_ASC		= true;
-			
-			$qte = count($slides);
-			//echo "QTE $qte ";
-			
 			uasort($slides, array('slideshow','order_slideshow_json'));
 							
+			//$qte = count($slides);
+			//echo "QTE $qte ";
 			
-						
-			if(count($slides)>0){
-				
-				
+			// si on a un nombre de slide > 0 dans le tableau			
+			//if(count($slides)>0){
+			if( $qte > 0 ){			
 				//echo "plus de 1 ";
-				
-				$slide = array_shift($slides);
-				
-				if($ordre_max_slide< $this->ecran->order_last_slide){
+								
+				// si le dernier slide joué égal au slide avec l'ordre le plus grand
+				// alors on renvoi le premier
+				if($ordre_max_slide <= $this->ecran->order_last_slide){
 					$retour->id_slide		= $id_first_slide;
 					$retour->ordre			= $ordre_first_slide;
 					$retour->duree			= func::time2sec($duree_first_slide); // sec
-				}else{
+				}
+				// sinon on renvoi le premier slide du tableau
+				else{
+					// on récupère le premier élément du tableau
+					$slide = array_shift($slides);
+					
 					$retour->id_slide		= $slide->id_slide;
 					$retour->ordre			= $slide->ordre;
 					$retour->duree			= func::time2sec($slide->duree); // sec
-				}	
-				$retour->id_playlist	= $slide->id_target;
+				}
+				
+				$retour->id_playlist	= $id_target;
 				
 				$this->debug_reset();
 				
 				$this->debug('on change de slide / id:'.($retour->id_slide));
 				$this->debug('durée : '.($retour->duree));
 				$this->debug('ordre : '.($retour->ordre).'/'.$ordre_max_slide);
-				$this->debug('id_playlist : '.($slide->id_target));
+				$this->debug('id_playlist : '.($id_target));
 				$this->debug('mode : séquentiel');
 				
 				return $retour;
@@ -546,8 +573,9 @@ class Slideshow {
 		}
 	}
 	
+	
 	/**
-	* verif_time_slide sert à vérifier si un slide corrspond à l'horaire actuel et renvoie la durée restante si nécessaire
+	* vérifie si un slide correspond à l'horaire actuel et renvoie la durée restante si nécessaire
 	* @author Loïc Horellou
 	* @since 0.5 18/12/2012
 	* @param $start_time heure de commencement du slide hh:mm:ss
@@ -571,7 +599,7 @@ class Slideshow {
 	}
 	
 	/**
-	* get_next_slide_id récupération de l'id du prochain slide d'un écran C'EST LE COEUR DU SYSTÈME - C'EST POUR ÇA QUE LA FONCTION EST UN PEU LONGUE
+	* récupère l'id du prochain slide d'un écran C'EST LE COEUR DU SYSTÈME - C'EST POUR ÇA QUE LA FONCTION EST UN PEU LONGUE
 	* @author Loïc Horellou
 	* @since 0.5 21/12/2012
 	* @param $test pour savoir si on teste l'id ou pas, dans ce cas ou mets ou pas à jour les informations de l'écran
@@ -595,7 +623,7 @@ class Slideshow {
 			$retour = (object)array();
 
 			$retour->id_slide		= func::GetSQLValueString($_GET['slide_id'],'int');
-			$retour->id_slideshow	= false;
+			$retour->id_playlist	= false;
 			$retour->ordre			= false;
 			$retour->duree			= 120; // sec
 			$retour->test			= true;
@@ -831,7 +859,8 @@ class Slideshow {
 	}
 	
 	/**
-	* update_ecran_info mets à jour les informations d'un écran, met à jour les informations de l'écran après une lecture, sauvegarde les id du dernier slide, slideshow et ordre
+	* mets à jour les informations d'un écran, met à jour les informations de l'écran après une lecture, sauvegarde les id du dernier slide, slideshow et ordre
+	* attention dasn ce cas le concept de slideshow a été remplacé par playlist (on met à jour la dernière playlist ayant été jouée)
 	* @author Loïc Horellou
 	* @since 0.1	
 	* $param un tableau contenant id_last_slide, id_last_slideshow, ordre_last_slide
