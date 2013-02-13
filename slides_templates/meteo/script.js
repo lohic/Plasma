@@ -66,10 +66,12 @@ $(document).ready(function(){
 	nextMeteoDelay = Math.round((slide_duree-2000)/2);
 
 	setTimeout(function(){
-		$('#meteo1').hide();
+		$('#meteo1').slideUp(600);
 		$('#meteo2').show();
-		alert('!');
+		/*$('#meteo1').addClass('exit');*/
 	}, nextMeteoDelay);
+
+	$('#meteo2').hide();
 	
 	
 });

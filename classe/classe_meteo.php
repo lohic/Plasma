@@ -146,8 +146,8 @@ class Meteo {
 	*/
 	function parse_meteo_accuweather($xml, $zip=NULL){
 		
-		global $cold_treshold;
-		global $hot_treshold;
+		global $meteo_cold_treshold;
+		global $meteo_hot_treshold;
 		global $wind_teshold;
 		
 	
@@ -171,9 +171,9 @@ class Meteo {
 		$fahrenheit = intval(preg_replace("#(.*)<Temperature>(.*)</Temperature>(.*)#isU", '$2', $current));
 		$temperature = $this->toCelsius($fahrenheit);
 
-		if ($temperature<$cold_treshold) {
+		if ($temperature < $meteo_cold_treshold) {
 			$temp_icon = "froid";
-		} else if ($temperature>$hot_treshold) {
+		} else if ($temperature >= $meteo_hot_treshold) {
 			$temp_icon = "chaud";
 		} else {
 			$temp_icon = "moyen";

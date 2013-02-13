@@ -420,7 +420,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo1 .exit .header{
+#meteo1.exit .header{
 	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
 	-moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
 	-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
@@ -456,7 +456,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo1 .exit .texte{
+#meteo1.exit .texte{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
 	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
 	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
@@ -492,7 +492,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo1 .exit .footer{
+#meteo1.exit .footer{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
 	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
 	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
