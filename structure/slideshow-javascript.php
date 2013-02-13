@@ -4,7 +4,13 @@
 * Le 12/02/2013
 * Du Javascript avec du Php dedans, c'est le JS général de tous les slideshows
 */
-?>
+
+// boucle sur le même slide ssi GET slide_id existe...
+if(isset($_GET['slide_id'])){
+	echo "boucle sur slide_id : ".$info->id;
+	$info->id = $_GET['slide_id'];
+	$duree = 20000;
+} ?>
 
 <script language="javascript">
 
