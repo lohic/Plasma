@@ -86,24 +86,24 @@ class Slide {
 		// on reçoit la liste des champs dans un POST dédié
 		$fields_list = explode(" ", $_POST['champs_list']);
 		
-		for($i=0; $i<count($fields_list); $i++){
-			if(isset($_POST[$fields_list[$i]])){
-				if($fields_list[$i] == 'I'){
+		foreach($fields_list as $field){
+			if(isset($_POST[$field])){
+				if($field == 'I'){
 					// image
-					$data = '<img src=\\\\\\\\"'.$_POST[$fields_list[$i]].'\\\\\\\\" />';
+					$data = '<img src=\\\\\\\\"'.$_POST[$field].'\\\\\\\\" />';
 				
-				/*} else if($fields_list[$i] == 'K'){
+				/*} else if($field == 'K'){
 					// checkbox
 					*/
 				
 				} else {
 					// encodage normal
-					$data = nl2br($_POST[$fields_list[$i]]);
+					$data = nl2br($_POST[$field]);
 					$data = func::nonl($data); // dans fonctions.php, supprime les sauts de ligne
 					$data = str_replace('"', '\\\\\\\\"', $data);
 				}
 				
-				$json .= '\\\\"'.$fields_list[$i].'\\\\":\\\\"'.$data.'\\\\", ';
+				$json .= '\\\\"'.$field.'\\\\":\\\\"'.$data.'\\\\", ';
 			}
 		}
 		if(strlen($json)>2){
@@ -403,9 +403,9 @@ class Slide {
 		$chaine = preg_replace('#(.*)class="(.*)>#isU', 'class="$2||', $template);
 		$blocs = explode('||', $chaine);
 		$champs_bruts = array();
-		for($i=0; $i<count($blocs); $i++){
-			if(strpos($blocs[$i], 'edit')===false){} else {
-				array_push($champs_bruts, $blocs[$i]);
+		foreach($blocs as $bloc){
+			if(strpos($bloc, 'edit')===false){} else {
+				array_push($champs_bruts, $bloc);
 			}
 		}
 		// $champs_bruts contient tout ce qu'il nous faut pour chaque champ, non-traité
@@ -413,32 +413,31 @@ class Slide {
 		$champs = array();
 		
 		// pour chaque champ
-		// !!!!! BASCULER SUR UN BOUCLE foreach (Loïc)
-		for($i=0; $i<count($champs_bruts); $i++){
-			//echo $champs_bruts[$i].'<br />';
+		foreach($champs_bruts as $champ){
+			//echo $champ.'<br />';
 			// isoler l'id du champ
-			$idchamp = preg_replace('#^(.*)id="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
+			$idchamp = preg_replace('#^(.*)id="(.*)"(.*)$#isU', '$2', $champ);
 			array_push($champs, $idchamp);
 			// isoler le titre
-			$title = preg_replace('#^(.*)title="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
+			$title = preg_replace('#^(.*)title="(.*)"(.*)$#isU', '$2', $champ);
 			// isoler le alt s'il existe
-			if(strpos($champs_bruts[$i], 'alt="')===false){
+			if(strpos($champ, 'alt="')===false){
 				$alt = "";
 			} else {
-				$alt = preg_replace('#^(.*)alt="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
+				$alt = preg_replace('#^(.*)alt="(.*)"(.*)$#isU', '$2', $champ);
 			}
 			// isoler le max s'il existe (nb de chars max)
-			if(strpos($champs_bruts[$i], 'max="')===false){
+			if(strpos($champ, 'max="')===false){
 				$max = "";
 			} else {
-				$max = preg_replace('#^(.*)max="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
+				$max = preg_replace('#^(.*)max="(.*)"(.*)$#isU', '$2', $champ);
 				$max = ' max="'.$max.'"';
 			}
 			// chopper la valeur correspondante du json
 			$value = !empty($json) ? $json->{$idchamp} : NULL;
 			
 			// isoler le type de champ et l'écrire
-			$classes = preg_replace('#^(.*)class="(.*)"(.*)$#isU', '$2', $champs_bruts[$i]);
+			$classes = preg_replace('#^(.*)class="(.*)"(.*)$#isU', '$2', $champ);
 			
 			$html_champ = '<p><label>'.$title.'</label>';
 			
@@ -468,9 +467,9 @@ class Slide {
 				$type = "listmenu";	
 				$valueSet = explode('#', $alt);	
 				$tmp = '<select name="'.$idchamp.'"><option value="">Aucun</option>';
-				for($j=0; $j<count($valueSet); $j++){
-					$selected = ($valueSet[$j] == $value)?' selected="selected"':'';	
-					$tmp .= '<option value="'.$valueSet[$j].'"'.$selected.'>'.$valueSet[$j].'</option>';
+				foreach($valueSet as $val){
+					$selected = ($val == $value)?' selected="selected"':'';	
+					$tmp .= '<option value="'.$val.'"'.$selected.'>'.$val.'</option>';
 				}		
 				$tmp .= '</select>';
 				$html_champ .= $tmp;
