@@ -7,35 +7,26 @@
 		</div>
 		
 		<div class="sport">
-			<h2>Football</h2>
-			<div class="le_sport football">
-			</div>
+			<h2><span class="edit textfield" max="30" id="B" title="B - Catégorie de sport"></span></h2>
+			<div class="le_sport football"></div>
 		</div>
 
 		<div class="texte">
-			<h3>Championnat X</h3>
+			<h3><span class="edit textfield" max="44" id="D" title="D - Nom du championnat ou tournoi"></span></h3>
 		</div>
 
 		<div class="texte2">
-			<h3>Equipe 1</h3>
+			<h3><span class="edit textfield" max="25" id="E" title="E - Nom de l'équipe ou du sportif"></span></h3>
 		</div>
 	</div>
 
 
 	<div class="colonne_droite">
 		<div class="classement">
-			<h3>Classement général:</h3>
+			<h3><span class="edit textfield" max="30" id="F" title="F - Type de résultat"></span></h3>
 		</div>
 
 		<div class="detail_classement">
-			<p>1. Paris (1255 points)</p>
-			<p>2. Bordeaux (915 points)</p>
-			<p>3. Grenoble (815 points)</p>
-			<p>4. Aix (685 points)</p>
-			<p>5. Lyon (645 points)</p>
-			<p>6. Toulouse (520 points)</p>
-			<p>7. Lille (510 points)</p>
-			<p>8. Strasbourg (485 points)</p>
-			<p>9. Rennes (320 points)</p>
+			<span class="edit textarea" id="G" title="G - Résultat(s)"></span>
 		</div>
 	</div>

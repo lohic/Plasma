@@ -173,7 +173,7 @@ classes réservées pour le traitement JS :
 	padding-top:60px;
 }
 
-.detail_classement p{
+.detail_classement, .detail_classement p{
 	font-size:28px;
 	line-height:35px;
 }
