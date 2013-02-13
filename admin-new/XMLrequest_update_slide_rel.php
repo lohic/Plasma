@@ -24,6 +24,7 @@ if($core->isAdmin){
 		
 	$playlist->del_rel_slide(substr($_POST['suppr_id_rel_slide'],1));
 		
+	$ordre = 1;
 		
 	foreach($_POST['id_rel'] as $key=>$id){
 		
@@ -46,8 +47,18 @@ if($core->isAdmin){
 			
 			$json = !empty($jour) ? '{"M":"'.$_POST['M'][$key].'",'.$jour.',"H":"'.$_POST['H'][$key].'"}' : NULL;
 							
-			$_array_val['freq']			= $json; 
 			
+			
+			if($_POST['typerel'][$key] == 'flux'){
+				$ordreval = $ordre;
+				$ordre ++;
+				$json = NULL;
+			}else{
+				$ordre = NULL;	
+			}
+			
+			
+			$_array_val['freq']			= $json; 
 						
 			$_array_val['ordre']		= $_POST['ordre'][$key];
 			$_array_val['duree'] 		= $_POST['duree'][$key];
@@ -55,10 +66,10 @@ if($core->isAdmin){
 			$_array_val['time'] 		= $_POST['time'][$key]; 
 			$_array_val['id_slide']		= $_POST['id_slide'][$key];
 			$_array_val['type']			= $_POST['typerel'][$key];
-			$_array_val['ordre']		= $_POST['ordre'][$key];
+			$_array_val['ordre']		= $ordre;
 			$_array_val['alerte']		= $_POST['alerte'][$key];
 			$_array_val['id_target']	= $_POST['id_target'];
-			$_array_val['type_target']	= 'ecran';
+			$_array_val['type_target']	= $_POST['type_target'];
 	
 			$id_created = $playlist->update_rel_slide($_array_val ,$id);
 			

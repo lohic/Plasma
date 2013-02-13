@@ -76,6 +76,7 @@ $isGroup = true;
 	<div id="return_refresh"></div>
 	<form action="XMLrequest_update_slide_rel.php" method="post" id="modif_slide_list_form">
 		<input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />
+			  <input type="hidden" name="type_target" value="groupe" />
 		<fieldset>
 			<p class="legend"> <a href="javascript:" id="add_alerte_locale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte locale </p>
 			<ul id="addslidealertelocale">
