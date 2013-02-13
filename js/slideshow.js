@@ -8,8 +8,6 @@ function get_next_slide(plasma_id, doNow){
 		//alert(data);
 		// stock pour plus tard
 		nextSlideData = data;
-
-		alert(data);
 		
 		// sortie de secours
 		if(saved_doNow){
