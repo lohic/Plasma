@@ -431,10 +431,7 @@ class Slideshow {
 				$this->debug('id écran : '.($this->ecran->id));
 				
 				return false;
-			}
-			
-			
-			
+			}			
 		}
 		
 		////////// SLIDE EN MODE SEQUENTIEL!!!!!!

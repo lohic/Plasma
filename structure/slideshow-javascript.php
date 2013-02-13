@@ -38,7 +38,7 @@ if(isset($_GET['slide_id'])){
 			$("#template").html(nextSlideData);
 			
 			// preload du suivant
-			get_next_slide(<?php echo ($info->id); ?>, false);
+			get_next_slide(<?php echo ($this->ecran->id); ?>, false);
 
 		}, 2000);
 
@@ -47,7 +47,7 @@ if(isset($_GET['slide_id'])){
 	verif = setTimeout(function(){});
 	
 	function secure_loop(){
-		get_next_id(<?php echo ($info->id); ?>);
+		get_next_id(<?php echo ($this->ecran->id); ?>);
 		
 		clearTimeout(verif);
 		verif = setTimeout(secure_loop, 20000);
@@ -62,7 +62,7 @@ if(isset($_GET['slide_id'])){
 		$("#compteur").animate({width:"0px"}, slide_duree, "linear");
 		
 		// preload du suivant
-		get_next_slide(<?php echo ($info->id); ?>, false);
+		get_next_slide(<?php echo ($this->ecran->id); ?>, false);
 		
 		// verif
 		secure_loop();
