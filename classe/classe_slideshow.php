@@ -271,14 +271,14 @@ class Slideshow {
 	* @param $alerte si slide cherché doit être une alerte (false, national, code_postal)
 	* @return retourne un objet avec contenant les variables id_slide,id_playlist,ordre,duree ou false si aucun slide n'a été trouvé
 	*/
-	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false, $JSON = true){
+	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false /*, $JSON = true*/){
 		
 		// instanciation
 		$retour = (object)array();
 		
 		$retour->duree = 0;				
 		
-		if($JSON){
+		//if($JSON){
 			$json_data = !empty($this->ecran->json) ? json_decode($this->ecran->json) : '';
 			$slides = array();
 
@@ -525,6 +525,8 @@ class Slideshow {
 				return false;	
 			}
 			
+		/*
+		
 		}else{
 			// SI ON UTILISE LE MODE SQL ET PAS LE MODE JSON
 			if($type == 'date'){
@@ -740,7 +742,7 @@ class Slideshow {
 				
 				return false;	
 			}
-		}
+		}*/
 	}
 	
 	/**
