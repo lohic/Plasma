@@ -273,6 +273,9 @@ class Slideshow {
 	*/
 	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false, $JSON = true){
 		
+		// instanciation
+		$retour = (object)array();
+		
 		$retour->duree = 0;				
 		
 		if($JSON){
