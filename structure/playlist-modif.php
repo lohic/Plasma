@@ -60,7 +60,7 @@ $id_template	= !empty($id_template)?$id_template:'';
 	<?php if( !empty($data->id)){ ?>
    <div id="return_refresh"></div>
             
-  <form action="XMLrequest_update_playlist.php" method="post" id="modif_slide_list_form">
+  <form action="XMLrequest_update_slide_rel.php" method="post" id="modif_slide_list_form">
       		 <input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />  
 			
 			<fieldset>
