@@ -273,6 +273,8 @@ class Slideshow {
 	*/
 	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false){
 		
+		//echo "<br/>".$type_target . ' : ' . $id_target . ' | type : ' . $type . ' | alerte : '. $alerte;
+		
 		// instanciation
 		$retour = (object)array();
 		
@@ -284,6 +286,8 @@ class Slideshow {
 		
 		////////// SLIDE EN MODE DATE !!!!!!
 		if($type == 'date'){
+			
+			//echo "<br/>DATE";
 			
 			$ladate			= date("Y-m-d G:i:s");
 			$timestamp		= func::makeTime($ladate);
@@ -348,7 +352,7 @@ class Slideshow {
 		
 		////////// SLIDE EN MODE FREQ !!!!!!	
 		else if ($type == 'freq'){
-			
+			//echo "<br/>FREQ";
 						
 			foreach($json_data->data as $data){
 				if($data->type_target		== 'playlist'
@@ -435,7 +439,7 @@ class Slideshow {
 		
 		////////// SLIDE EN MODE SEQUENTIEL!!!!!!
 		else if ($type == 'flux'){
-			
+			//echo "<br/>FLUX";
 			
 			
 			$ladate			= date("Y-m-d G:i:s");
@@ -462,8 +466,20 @@ class Slideshow {
 						$ordre_max_slide	= $data->ordre;
 					}
 				}
+					
 				
 			}
+			
+			if(empty($ordre_first_slide )){
+				$ordre_first_slide = $ordre_max_slide;
+			}
+			
+			$last = $this->ecran->order_last_slide;
+			
+			//echo " first : $ordre_first_slide ";
+			//echo " max : $ordre_max_slide ";
+			//echo " last : $last ";	
+			
 		
 			foreach($json_data->data as $data){
 				if($data->type_target		== $type_target
@@ -472,17 +488,27 @@ class Slideshow {
 					&& $data->id_target		== $id_target){
 					$key = 'slide-'.$data->id;	
 					$slides[$key] = $data;
+					
+					//echo " key : $key ";
 				}
 			}
 			
 			self::$order_slide_by	= 'ordre';
 			self::$order_ASC		= true;
 			
+			$qte = count($slides);
+			//echo "QTE $qte ";
+			
 			uasort($slides, array('slideshow','order_slideshow_json'));
 							
-			$slide = array_shift($slides);		
 			
+						
 			if(count($slides)>0){
+				
+				
+				//echo "plus de 1 ";
+				
+				$slide = array_shift($slides);
 				
 				if($ordre_max_slide< $this->ecran->order_last_slide){
 					$retour->id_slide		= $id_first_slide;
@@ -656,7 +682,7 @@ class Slideshow {
 				}else{
 					return $slide_info;
 				}
-				
+
 				if(! $slide_info){			
 					//7		$this->ecran->id_groupe_playlist_locale					'playlist'			'date'				false
 					$slide_info = $this->request_next_slide_id_by_type($this->ecran->id_groupe_playlist_locale,'playlist','date',false);
