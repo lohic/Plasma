@@ -271,156 +271,60 @@ class Slideshow {
 	* @param $alerte si slide cherché doit être une alerte (false, national, code_postal)
 	* @return retourne un objet avec contenant les variables id_slide,id_playlist,ordre,duree ou false si aucun slide n'a été trouvé
 	*/
-	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false /*, $JSON = true*/){
+	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte=false){
 		
 		// instanciation
 		$retour = (object)array();
 		
 		$retour->duree = 0;				
 		
-		//if($JSON){
-			$json_data = !empty($this->ecran->json) ? json_decode($this->ecran->json) : '';
-			$slides = array();
+		$json_data = !empty($this->ecran->json) ? json_decode($this->ecran->json) : '';
+		$slides = array();
 
-			// SI ON UTILISE LE MODE JSON
+		
+		////////// SLIDE EN MODE DATE !!!!!!
+		if($type == 'date'){
 			
-			
-			////////// SLIDE EN MODE DATE !!!!!!
-			if($type == 'date'){
-				
-				$ladate			= date("Y-m-d G:i:s");
-				$timestamp		= func::makeTime($ladate);
-			
-				foreach($json_data->data as $data){
-					if($data->type_target		== $type_target
-						&& $data->date			<= $ladate
-						&& $data->type			== 'date'
-						&& $data->id_target		== $id_target
-						&& $data->alerte		== $alerte)
-					{		
-						$key = 'slide-'.$data->id;	
-						$slides[$key] = $data;
-					}
+			$ladate			= date("Y-m-d G:i:s");
+			$timestamp		= func::makeTime($ladate);
+		
+			foreach($json_data->data as $data){
+				if($data->type_target		== $type_target
+					&& $data->date			<= $ladate
+					&& $data->type			== 'date'
+					&& $data->id_target		== $id_target
+					&& $data->alerte		== $alerte)
+				{		
+					$key = 'slide-'.$data->id;	
+					$slides[$key] = $data;
 				}
-				
-				self::$order_slide_by	= 'date';
-				self::$order_ASC		= false;
-				
-				uasort($slides, array('slideshow','order_slideshow_json'));
-				
-				if(count($slides)>0){
-					$slide = array_shift($slides);
-															
-					$horaire = explode(' ',$slide->date);
-					$reste = $this->verif_time_slide($horaire[1],$slide->duree);
-					
-					$reste = $this->verif_time_slide($horaire[1],$slide->duree);
-					
-					if($reste){
-						$retour->id_slide		= $slide->id_slide;
-						$retour->id_playlist	= false;
-						$retour->ordre			= false;
-						$retour->duree			= $reste; //func::time2sec($info['duree']); // sec
-						
-						
-						$this->debug_reset();
-						
-						$this->debug('on change de slide / id:'.($retour->id_slide).' - durée:'.($retour->duree));
-						$this->debug('mode : date');
-						$this->debug('alerte : '.$alerte);
-						
-						return $retour;
-					}else{
-						$this->debug_reset();
-						
-						$this->debug('PAS DE SLIDE TROUVÉ');
-						$this->debug('id écran : '.($this->ecran->id));
-						
-						return false;	
-					}
-				}else{
-					$this->debug_reset();
-					
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));
-					
-					return false;	
-				}
-					
 			}
 			
-			////////// SLIDE EN MODE FREQ !!!!!!	
-			else if ($type == 'freq'){
-				
-							
-				foreach($json_data->data as $data){
-					if($data->type_target		== 'playlist'
-						&& $data->type			== 'freq'
-						&& $data->id_target		== $id_target){
-						$key = 'slide-'.$data->id;	
-						$slides[$key] = $data;
-					}
-				}
-				
-				
-				if(count($slides) <= 0){
-					$this->debug_reset();
-					
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));
-					return false;
-				}
-				$frequences = array();
-				$horaires = array();
-				
-				$M = date('m');		// 01 -> 12
-				$J = date('d');		// 01 -> 31
-				$j = date('N');		// 1 	-> 7
-				$H = date('H:i:s');	// 00:00:00
+			self::$order_slide_by	= 'date';
+			self::$order_ASC		= false;
 			
+			uasort($slides, array('slideshow','order_slideshow_json'));
+			
+			if(count($slides)>0){
+				$slide = array_shift($slides);
+														
+				$horaire = explode(' ',$slide->date);
+				$reste = $this->verif_time_slide($horaire[1],$slide->duree);
 				
-				foreach($slides as $slide){
-					$id = $slide->id_slide;
-					$val = $slide->freq;
-															
-					$frequences[] = $val;
-								
-					// bien vérifier			
-					if(isset($val->M) && ($val->M == '*' || $val->M == $M) ){
-						if(isset($val->J) && $val->J == $J ){				
-							$reste = $this->verif_time_slide($val->H,$slide->duree);
-							
-							if($reste){
-									$horaires[$val->H]->id = $id;
-									$horaires[$val->H]->duree = $reste;
-							}
-						}
-						if(isset($val->j) && ($val->j == '*' || $val->j == $j)){
-							$reste = $this->verif_time_slide($val->H,$slide->duree);
-							
-							if($reste){
-									$horaires[$val->H]->id = $id;
-									$horaires[$val->H]->duree = $reste;
-							}
-						}
-					}
-				}
+				$reste = $this->verif_time_slide($horaire[1],$slide->duree);
 				
-				ksort($horaires);
-				
-							
-				if( $horaires && count($horaires) > 0 ){
-					//echo "<p> ID : ".current($horaires)->id.' horaire : '.current(array_keys($horaires))." reste : ".current($horaires)->duree."</p>\n"; 
-					$retour->id_slide		= current($horaires)->id;
+				if($reste){
+					$retour->id_slide		= $slide->id_slide;
 					$retour->id_playlist	= false;
 					$retour->ordre			= false;
-					$retour->duree			= current($horaires)->duree; // sec
+					$retour->duree			= $reste; //func::time2sec($info['duree']); // sec
+					
 					
 					$this->debug_reset();
 					
-					$this->debug('on change de slide / id:'.($retour->id_slide));
-					$this->debug('durée : '.($retour->duree));
-					$this->debug('mode : fréquence');
+					$this->debug('on change de slide / id:'.($retour->id_slide).' - durée:'.($retour->duree));
+					$this->debug('mode : date');
+					$this->debug('alerte : '.$alerte);
 					
 					return $retour;
 				}else{
@@ -429,320 +333,194 @@ class Slideshow {
 					$this->debug('PAS DE SLIDE TROUVÉ');
 					$this->debug('id écran : '.($this->ecran->id));
 					
-					return false;
+					return false;	
 				}
+			}else{
+				$this->debug_reset();
 				
+				$this->debug('PAS DE SLIDE TROUVÉ');
+				$this->debug('id écran : '.($this->ecran->id));
 				
+				return false;	
+			}
 				
+		}
+		
+		////////// SLIDE EN MODE FREQ !!!!!!	
+		else if ($type == 'freq'){
+			
+						
+			foreach($json_data->data as $data){
+				if($data->type_target		== 'playlist'
+					&& $data->type			== 'freq'
+					&& $data->id_target		== $id_target){
+					$key = 'slide-'.$data->id;	
+					$slides[$key] = $data;
+				}
 			}
 			
-			////////// SLIDE EN MODE SEQUENTIEL!!!!!!
-			else if ($type == 'flux'){
+			
+			if(count($slides) <= 0){
+				$this->debug_reset();
 				
+				$this->debug('PAS DE SLIDE TROUVÉ');
+				$this->debug('id écran : '.($this->ecran->id));
+				return false;
+			}
+			$frequences = array();
+			$horaires = array();
+			
+			$M = date('m');		// 01 -> 12
+			$J = date('d');		// 01 -> 31
+			$j = date('N');		// 1 	-> 7
+			$H = date('H:i:s');	// 00:00:00
+		
+			
+			foreach($slides as $slide){
+				$id = $slide->id_slide;
+				$val = $slide->freq;
+														
+				$frequences[] = $val;
+							
+				// bien vérifier			
+				if(isset($val->M) && ($val->M == '*' || $val->M == $M) ){
+					if(isset($val->J) && $val->J == $J ){				
+						$reste = $this->verif_time_slide($val->H,$slide->duree);
+						
+						if($reste){
+								$horaires[$val->H]->id = $id;
+								$horaires[$val->H]->duree = $reste;
+						}
+					}
+					if(isset($val->j) && ($val->j == '*' || $val->j == $j)){
+						$reste = $this->verif_time_slide($val->H,$slide->duree);
+						
+						if($reste){
+								$horaires[$val->H]->id = $id;
+								$horaires[$val->H]->duree = $reste;
+						}
+					}
+				}
+			}
+			
+			ksort($horaires);
+			
+						
+			if( $horaires && count($horaires) > 0 ){
+				//echo "<p> ID : ".current($horaires)->id.' horaire : '.current(array_keys($horaires))." reste : ".current($horaires)->duree."</p>\n"; 
+				$retour->id_slide		= current($horaires)->id;
+				$retour->id_playlist	= false;
+				$retour->ordre			= false;
+				$retour->duree			= current($horaires)->duree; // sec
 				
+				$this->debug_reset();
 				
-				$ladate			= date("Y-m-d G:i:s");
-				$timestamp		= func::makeTime($ladate);
+				$this->debug('on change de slide / id:'.($retour->id_slide));
+				$this->debug('durée : '.($retour->duree));
+				$this->debug('mode : fréquence');
 				
+				return $retour;
+			}else{
+				$this->debug_reset();
 				
-				foreach($json_data->data as $data){
-					if(empty($ordre_first_slide)) {
+				$this->debug('PAS DE SLIDE TROUVÉ');
+				$this->debug('id écran : '.($this->ecran->id));
+				
+				return false;
+			}
+			
+			
+			
+		}
+		
+		////////// SLIDE EN MODE SEQUENTIEL!!!!!!
+		else if ($type == 'flux'){
+			
+			
+			
+			$ladate			= date("Y-m-d G:i:s");
+			$timestamp		= func::makeTime($ladate);
+			
+			
+			foreach($json_data->data as $data){
+				if(empty($ordre_first_slide)) {
+					$ordre_first_slide	= $data->ordre;
+					$id_first_slide		= $data->id_slide;
+					$duree_first_slide	= $data->duree;
+				}else{
+					if( $data->ordre <= $ordre_first_slide ){
 						$ordre_first_slide	= $data->ordre;
 						$id_first_slide		= $data->id_slide;
 						$duree_first_slide	= $data->duree;
-					}else{
-						if( $data->ordre <= $ordre_first_slide ){
-							$ordre_first_slide	= $data->ordre;
-							$id_first_slide		= $data->id_slide;
-							$duree_first_slide	= $data->duree;
-						}
-					}
-					
-					if(empty($ordre_max_slide)) {
-						$ordre_max_slide = $data->ordre;
-					}else{
-						if( $data->ordre >= $ordre_max_slide ){
-							$ordre_max_slide	= $data->ordre;
-						}
-					}
-					
-				}
-			
-				foreach($json_data->data as $data){
-					if($data->type_target		== $type_target
-						&& $data->ordre			>= $this->ecran->order_last_slide
-						&& $data->type			== 'flux'
-						&& $data->id_target		== $id_target){
-						$key = 'slide-'.$data->id;	
-						$slides[$key] = $data;
 					}
 				}
 				
-				self::$order_slide_by	= 'ordre';
-				self::$order_ASC		= true;
-				
-				uasort($slides, array('slideshow','order_slideshow_json'));
-								
-				$slide = array_shift($slides);		
-				
-				if(count($slides)>0){
-					
-					if($ordre_max_slide< $this->ecran->order_last_slide){
-						$retour->id_slide		= $id_first_slide;
-						$retour->ordre			= $ordre_first_slide;
-						$retour->duree			= func::time2sec($duree_first_slide); // sec
-					}else{
-						$retour->id_slide		= $slide->id_slide;
-						$retour->ordre			= $slide->ordre;
-						$retour->duree			= func::time2sec($slide->duree); // sec
-					}	
-					$retour->id_playlist	= $slide->id_target;
-					
-					$this->debug_reset();
-					
-					$this->debug('on change de slide / id:'.($retour->id_slide));
-					$this->debug('durée : '.($retour->duree));
-					$this->debug('ordre : '.($retour->ordre).'/'.$ordre_max_slide);
-					$this->debug('id_playlist : '.($slide->id_target));
-					$this->debug('mode : séquentiel');
-					
-					return $retour;
-				}else{	
-					$this->debug_reset();
-				
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));
-							
-					return false;	
-				}
-				
-			}else{
-				$this->debug_reset();
-				
-				$this->debug('PAS DE SLIDE TROUVÉ');
-				$this->debug('id écran : '.($this->ecran->id));
-				
-				return false;	
-			}
-			
-		/*
-		
-		}else{
-			// SI ON UTILISE LE MODE SQL ET PAS LE MODE JSON
-			if($type == 'date'){
-				
-				////////// SLIDE EN MODE DATE !!!!!!
-				
-				$ladate			= date("Y-m-d G:i:s");
-				$timestamp		= func::makeTime($ladate);
-				
-				$sql			= sprintf("SELECT *
-												FROM ".TB."rel_slide_tb
-												WHERE date<%s
-												AND id_target=%s
-												AND type_target=%s
-												AND alerte=%s
-												AND type = 'date'
-												ORDER BY date DESC
-												LIMIT 0,1",	func::GetSQLValueString($ladate,'text'),
-															func::GetSQLValueString($id_target,'int'),
-															func::GetSQLValueString($type_target,'text'),
-															func::GetSQLValueString($alerte,'text'));
-															
-				$sql_query		= mysql_query($sql) or die(mysql_error());							
-				$info 			= mysql_fetch_assoc($sql_query);
-				$nbr			= mysql_num_rows($sql_query);
-				
-				
-				if($nbr>0){
-					
-					$horaire = explode(' ',$info['date']);
-					$reste = $this->verif_time_slide($horaire[1],$info['duree']);
-				
-					if($reste){
-						$retour->id_slide		= $info['id_slide'];
-						$retour->id_playlist	= false;
-						$retour->ordre			= false;
-						$retour->duree			= $reste; //func::time2sec($info['duree']); // sec
-						
-						$this->debug_reset();
-						
-						$this->debug('on change de slide / id:'.($retour->id_slide).' - durée:'.($retour->duree));
-						$this->debug('mode : date');
-						$this->debug('alerte : '.$alerte);
-						
-						return $retour;
-					}else{
-						$this->debug_reset();
-						
-						$this->debug('PAS DE SLIDE TROUVÉ');
-						$this->debug('id écran : '.($this->ecran->id));
-						
-						return false;	
-					}
-				}else{	
-					$this->debug_reset();
-				
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));			
-					
-					return false;	
-				}
-				
-				
-				
-			}else if ($type == 'freq'){
-					
-				////////// SLIDE EN MODE FREQUENCE !!!!!!
-			
-				$sql			= sprintf("SELECT *
-											FROM ".TB."rel_slide_tb
-											WHERE id_target=%s
-											AND type_target = 'playlist'
-											AND type ='freq'", func::GetSQLValueString($this->ecran->id,'int'));
-				$sql_query		= mysql_query($sql) or die(mysql_error());							
-				$nbr			= mysql_num_rows($sql_query);
-				
-				if($nbr <= 0){
-					$this->debug_reset();
-					
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));
-					return false;
-				}
-				$frequences = array();
-				$horaires = array();
-				
-				$M = date('m');		// 01 -> 12
-				$J = date('d');		// 01 -> 31
-				$j = date('N');		// 1 	-> 7
-				$H = date('H:i:s');	// 00:00:00
-			
-				
-				while($info = mysql_fetch_assoc($sql_query)){
-					$id = $info['id_slide'];
-					$val = json_decode($info['freq']);
-					$frequences[] = $val;
-								
-					if($val->M == '*' || $val->M == $M ){
-						if(isset($val->J) && $val->J == $J ){				
-							$reste = $this->verif_time_slide($val->H,$info['duree']);
-							
-							if($reste){
-									$horaires[$val->H]->id = $id;
-									$horaires[$val->H]->duree = $reste;
-							}
-						}
-						if(isset($val->j) && ($val->j == '*' || $val->j == $j)){
-							$reste = $this->verif_time_slide($val->H,$info['duree']);
-							
-							if($reste){
-									$horaires[$val->H]->id = $id;
-									$horaires[$val->H]->duree = $reste;
-							}
-						}
-					}
-				}
-				
-				ksort($horaires);
-							
-				if( $horaires && count($horaires) > 0 ){
-					//echo "<p> ID : ".current($horaires)->id.' horaire : '.current(array_keys($horaires))." reste : ".current($horaires)->duree."</p>\n"; 
-					$retour->id_slide		= current($horaires)->id;
-					$retour->id_playlist	= false;
-					$retour->ordre			= false;
-					$retour->duree			= current($horaires)->duree; // sec
-					
-					$this->debug_reset();
-					
-					$this->debug('on change de slide / id:'.($retour->id_slide));
-					$this->debug('durée : '.($retour->duree));
-					$this->debug('mode : fréquence');
-					
-					return $retour;
+				if(empty($ordre_max_slide)) {
+					$ordre_max_slide = $data->ordre;
 				}else{
-					$this->debug_reset();
-					
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));
-					
-					return false;
+					if( $data->ordre >= $ordre_max_slide ){
+						$ordre_max_slide	= $data->ordre;
+					}
 				}
 				
-					
-			}else if ($type == 'flux'){
-				
-				////////// SLIDE EN MODE SEQUENTIEL!!!!!!
-				
-				$sql			= sprintf("SELECT id,id_slide,id_target,ordre,duree,
-												(SELECT MAX(ordre)  FROM ".TB."rel_slide_tb WHERE id_target=%s AND type_target=%s ORDER BY ordre ASC) AS ordre_max_slide,
-												(SELECT id_slide	FROM ".TB."rel_slide_tb WHERE id_target=%s AND type_target=%s ORDER BY ordre ASC LIMIT 0,1) AS id_first_slide,
-												(SELECT ordre  		FROM ".TB."rel_slide_tb WHERE id_target=%s AND type_target=%s ORDER BY ordre ASC LIMIT 0,1) AS ordre_first_slide,
-												(SELECT duree 		FROM ".TB."rel_slide_tb WHERE id_target=%s AND type_target=%s ORDER BY ordre ASC LIMIT 0,1) AS duree_first_slide
-												FROM ".TB."rel_slide_tb
-												WHERE id_target=%s
-												AND type_target=%s
-												AND ordre >= %s
-												AND type = 'flux'
-												ORDER BY ordre ASC
-												LIMIT 0,1", func::GetSQLValueString($id_target,'int'),
-															func::GetSQLValueString($type_target,'text'),
-															func::GetSQLValueString($id_target,'int'),
-															func::GetSQLValueString($type_target,'text'),
-															func::GetSQLValueString($id_target,'int'),
-															func::GetSQLValueString($type_target,'text'),
-															func::GetSQLValueString($id_target,'int'),
-															func::GetSQLValueString($type_target,'text'),
-															func::GetSQLValueString($id_target,'int'),
-															func::GetSQLValueString($type_target,'text'),
-															func::GetSQLValueString($this->ecran->order_last_slide,'int')	);
-															
-				$sql_query		= mysql_query($sql) or die(mysql_error());							
-				$info 			= mysql_fetch_assoc($sql_query);
-				$nbr			= mysql_num_rows($sql_query);
-				
-				
-				if($nbr>0){
-					
-					if($info['ordre_max_slide']< $this->ecran->order_last_slide){
-						$retour->id_slide		= $info['id_first_slide'];
-						$retour->ordre			= $info['ordre_first_slide'];
-						$retour->duree			= func::time2sec($info['duree_first_slide']); // sec
-					}else{
-						$retour->id_slide		= $info['id_slide'];
-						$retour->ordre			= $info['ordre'];
-						$retour->duree			= func::time2sec($info['duree']); // sec
-					}	
-					$retour->id_playlist	= $info['id_target'];
-					
-					$this->debug_reset();
-					
-					$this->debug('on change de slide / id:'.($retour->id_slide));
-					$this->debug('durée : '.($retour->duree));
-					$this->debug('ordre : '.($retour->ordre).'/'.$info['ordre_max_slide']);
-					$this->debug('id_playlist : '.($info['id_target']));
-					$this->debug('mode : séquentiel');
-					
-					return $retour;
-				}else{	
-					$this->debug_reset();
-				
-					$this->debug('PAS DE SLIDE TROUVÉ');
-					$this->debug('id écran : '.($this->ecran->id));
+			}
+		
+			foreach($json_data->data as $data){
+				if($data->type_target		== $type_target
+					&& $data->ordre			>= $this->ecran->order_last_slide
+					&& $data->type			== 'flux'
+					&& $data->id_target		== $id_target){
+					$key = 'slide-'.$data->id;	
+					$slides[$key] = $data;
+				}
+			}
+			
+			self::$order_slide_by	= 'ordre';
+			self::$order_ASC		= true;
+			
+			uasort($slides, array('slideshow','order_slideshow_json'));
 							
-					return false;	
-				}
+			$slide = array_shift($slides);		
+			
+			if(count($slides)>0){
 				
-			}else{
+				if($ordre_max_slide< $this->ecran->order_last_slide){
+					$retour->id_slide		= $id_first_slide;
+					$retour->ordre			= $ordre_first_slide;
+					$retour->duree			= func::time2sec($duree_first_slide); // sec
+				}else{
+					$retour->id_slide		= $slide->id_slide;
+					$retour->ordre			= $slide->ordre;
+					$retour->duree			= func::time2sec($slide->duree); // sec
+				}	
+				$retour->id_playlist	= $slide->id_target;
 				
 				$this->debug_reset();
 				
+				$this->debug('on change de slide / id:'.($retour->id_slide));
+				$this->debug('durée : '.($retour->duree));
+				$this->debug('ordre : '.($retour->ordre).'/'.$ordre_max_slide);
+				$this->debug('id_playlist : '.($slide->id_target));
+				$this->debug('mode : séquentiel');
+				
+				return $retour;
+			}else{	
+				$this->debug_reset();
+			
 				$this->debug('PAS DE SLIDE TROUVÉ');
 				$this->debug('id écran : '.($this->ecran->id));
-				
+						
 				return false;	
 			}
-		}*/
+			
+		}else{
+			$this->debug_reset();
+			
+			$this->debug('PAS DE SLIDE TROUVÉ');
+			$this->debug('id écran : '.($this->ecran->id));
+			
+			return false;	
+		}
 	}
 	
 	/**
