@@ -15,7 +15,6 @@ password
 include_once('../vars/config.php');
 include_once('classe_connexion.php');
 include_once('classe_fonctions.php');
-//include_once('../vars/statics_vars.php');
 
 class Spuser {
 
@@ -136,7 +135,7 @@ class Spuser {
 				
 				$this->connexion->connect_db();
 			
-				$login_query	= sprintf("SELECT * FROM ".TB."user_tb WHERE email=%s", GetSQLValueString($LDAPinfo->email, "text")); 
+				$login_query	= sprintf("SELECT * FROM ".TB."user_tb WHERE email=%s", func::GetSQLValueString($LDAPinfo->email, "text")); 
 			
 				$login_info		= mysql_query($login_query) or die(mysql_error());
 				$infoUser		= mysql_fetch_assoc($login_info);
