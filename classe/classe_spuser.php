@@ -127,18 +127,20 @@ class Spuser {
 	@
 	*/
 	function isLDAP($login=NULL,$password=NULL){
-		
+				
 		if(IS_LDAP_SERVER){
 			$LDAPinfo = $this->connectLDAP($login,$password);
-					
+										
 			if(!empty($LDAPinfo->email)){
-				
+								
 				$this->connexion->connect_db();
 			
 				$login_query	= sprintf("SELECT * FROM ".TB."user_tb WHERE email=%s", func::GetSQLValueString($LDAPinfo->email, "text")); 
+				
 			
 				$login_info		= mysql_query($login_query) or die(mysql_error());
 				$infoUser		= mysql_fetch_assoc($login_info);
+				
 				
 				if($infoUser['account_type'] == 'ldap'){
 									
@@ -206,6 +208,7 @@ class Spuser {
 		//$retour->spID	= NULL;
 		//$retour->annee	= NULL;
 	
+	
 		if(isset($login) && isset($password) && $login!="" && $password!=""){
 			$login = strtolower($login);
 			
@@ -218,17 +221,18 @@ class Spuser {
 			
 			if ($ldapconn) {
 				// Authentification au serveur LDAP
+				
 				$ldapbind = ldap_bind($ldapconn, $ldaprdn, $ldappass);
-		
+				
 				// Vérification de l'authentification
 				if ($ldapbind) {
+										
 					$retour->info = "ok";
-			
+													
 					//recuperation des informations
 					$sr=ldap_search($ldapconn,"ou=Users, o=sciences-po, c=fr", "uid=".$login);
 					$info = ldap_get_entries($ldapconn, $sr);
-					
-					
+															
 					for ($i=0; $i<$info["count"]; $i++) 
 					{
 						if ( isset($info[$i]["cn"][0]) ){				$retour->login	= $info[$i]["cn"][0]; }
@@ -238,14 +242,14 @@ class Spuser {
 						if ( isset($info[$i]["employeetype"][0]) ){		$retour->type	= $info[$i]["employeetype"][0]; }
 	
 					}
-										
+														
 					//$retour->raw = $info;
-					
+										
 					ldap_close($ldapconn);
-				} else {
+					
+				}else {
 					$retour->info = "login_error";
 				}
-			
 			}else{
 				$retour->info = "no_connexion";
 			}
@@ -697,5 +701,3 @@ class Spuser {
 		}
 	}
 }
-
-?>

@@ -38,7 +38,7 @@ class Core {
 
 
 		//$this->user 		= new user($this->news_db);
-		$this->user 		= new spuser($this->news_db);
+		$this->user 		= new spuser($this->plasma_db);
 
 
 		$this->user_info	= $this->user->get_user_info();
