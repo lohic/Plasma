@@ -27,15 +27,24 @@ $(document).ready(function(){
 			data: "action=refresh_topic&countusers=" + countusers,
 			url: "tester.php",
 			dataType: 'json',
+			//async:false,
 			success: function(json){
-				var countusers=json.countusers;
+				countusers=json.countusers;
 				$("#retour").text('ok : '+countusers);
 				console.log(countusers);
 			}
 		})
+		.done(function(){
+			countusers=json.countusers;
+		});
 	}
 	
-	setInterval(refresh, 3000);
+	setInterval(refresh, 1000);
+	
+	
+	$("#test").click(function(){
+		alert(countusers);
+	});
 
 });
 
@@ -48,6 +57,8 @@ $(document).ready(function(){
 <body<?php if($ispreview){echo ' class="preview"';} ?>>
 
 <p id="retour"></p>
+
+<p id="test">clique</p>
 
 <div id="template">
 	<?php //echo $le_slide; ?>
