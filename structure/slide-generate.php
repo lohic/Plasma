@@ -13,12 +13,44 @@
 <script language="javascript" src="../js/jquery-1.7.2.min.js"></script>
 <script language="javascript" src="../js/slideshow.js"></script>
 
+<script>
+
+$(document).ready(function(){
+	var countusers='<?php echo 30; ?>';
+	
+	$("#retour").text('ok');
+	
+	function refresh() {
+	
+		$.ajax({
+			type: "POST",
+			data: "action=refresh_topic&countusers=" + countusers,
+			url: "tester.php",
+			dataType: 'json',
+			success: function(json){
+				var countusers=json.countusers;
+				$("#retour").text('ok : '+countusers);
+				console.log(countusers);
+			}
+		})
+	}
+	
+	setInterval(refresh, 3000);
+
+});
+
+</script>
+
+
+
 </head>
 
 <body<?php if($ispreview){echo ' class="preview"';} ?>>
 
+<p id="retour"></p>
+
 <div id="template">
-	<?php echo $le_slide; ?>
+	<?php //echo $le_slide; ?>
 </div>
 
 </body>
