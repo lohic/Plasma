@@ -16,7 +16,8 @@
 <script>
 
 $(document).ready(function(){
-	var countusers='<?php echo 30; ?>';
+	var actual_date_json	='<?php echo $this->ecran->actual_date_json; ?>';
+	var plasma_id			='<?php echo $this->ecran->id; ?>';
 	
 	$("#retour").text('ok');
 	
@@ -24,25 +25,30 @@ $(document).ready(function(){
 	
 		$.ajax({
 			type: "POST",
-			data: "action=refresh_topic&countusers=" + countusers,
+			data: "action=refresh_topic&plasma_id="+ plasma_id +"&actual_date_json=" + actual_date_json,
 			url: "tester.php",
 			dataType: 'json',
 			//async:false,
 			success: function(json){
-				countusers=json.countusers;
-				$("#retour").text('ok : '+countusers);
-				console.log(countusers);
+				//countusers=json.countusers;
+				//$("#retour").text('ok : '+countusers);
+				if(json.update == true){
+					actual_date_json = json.actual_date_json;
+					console.log(json.json);
+					
+					$('.date').text(actual_date_json);
+				}
+				console.log(json);
 			}
 		});
 	}
 	
-	setInterval(refresh, 1000);
+	setInterval(refresh, 5000);
 	
 	
 	$("#test").click(function(){
-		alert(countusers);
+		alert(actual_date_json);
 	});
-
 });
 
 </script>
@@ -56,6 +62,9 @@ $(document).ready(function(){
 <p id="retour"></p>
 
 <p id="test">clique</p>
+
+<h1><?php echo $this->ecran->nom; ?></h1>
+<p class="date"><?php echo $this->ecran->actual_date_json; ?></p>
 
 <div id="template">
 	<?php //echo $le_slide; ?>

@@ -824,13 +824,15 @@ class Slideshow {
 									G.id_playlist_nationale AS id_groupe_playlist_nationale,
 									E.code_postal,
 									G.id_slideshow,
-									(SELECT json_data FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS json
+									(SELECT json_data FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS json,
+									(SELECT date_publication FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS actual_date_json
 							FROM ".TB."ecrans_tb AS P,
 							".TB."etablissements_tb AS E,
 							".TB."ecrans_groupes_tb AS G
 							WHERE P.id=%s
 							AND P.id_etablissement = E.id
 							AND P.id_groupe = G.id", func::GetSQLValueString($this->ecran->id,'int'),
+													 func::GetSQLValueString($this->ecran->id,'int'),
 													 func::GetSQLValueString($this->ecran->id,'int'));
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			$info 			= mysql_fetch_assoc($sql_query);
@@ -852,6 +854,7 @@ class Slideshow {
 			$retour->id_groupe_playlist_nationale	= $info['id_groupe_playlist_nationale'];
 			$retour->id_groupe_playlist 			= $info['id_slideshow'];
 			$retour->json							= $info['json'];
+			$retour->actual_date_json				= $info['actual_date_json'];
 			
 			return $retour;
 		}
@@ -1129,6 +1132,47 @@ class Slideshow {
 																														func::GetSQLValueString($json_data,'text'));
 		$sql_query		= mysql_query($sql) or die(mysql_error());	
 	}	
+	
+	
+	/**
+	* pour récupérer les dernières information d'un écran
+	*/
+	function get_ecran_data($actual_date_json = NULL){
+		
+		
+		if(!empty($this->ecran->id)){
+			
+			$sql = sprintf("		SELECT json_data AS json,
+									date_publication AS date_json
+									FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1",
+									func::GetSQLValueString($this->ecran->id,'int'));
+									
+			$sql_query		= mysql_query($sql) or die(mysql_error());							
+			$info 			= mysql_fetch_assoc($sql_query);
+			
+			
+			$date_json = $info['date_json'];
+			
+			if($date_json>$actual_date_json){
+				// instanciation des objets
+				if(empty($this->ecran)){ $this-> ecran = (object)array(); }
+				$retour = (object)array();
+	
+				//$retour->id								= $this->ecran->id;
+				$retour->json				= $info['json'];
+				$retour->actual_date_json	= $date_json;
+				$retour->update				= true;			
+			}else{
+				$retour->update				= false;
+			}
+			
+			$retour = json_encode($retour);
+			
+			return $retour;
+		}
+		
+		
+	}
 }
 	
 	

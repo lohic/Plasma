@@ -24,4 +24,3 @@ echo "no plasma_id";
 
 }
 /* */
-?>
