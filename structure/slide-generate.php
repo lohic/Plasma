@@ -33,9 +33,6 @@ $(document).ready(function(){
 				$("#retour").text('ok : '+countusers);
 				console.log(countusers);
 			}
-		})
-		.done(function(){
-			countusers=json.countusers;
 		});
 	}
 	
