@@ -19,3 +19,8 @@ https://help.github.com/articles/ignoring-files
 https://help.github.com/articles/using-sublime-text-2-as-your-default-editor
 
 http://scottchacon.com/2011/08/31/github-flow.html
+
+
+Pour un meilleur mode MVC :
+
+http://forum.phpfrance.com/php-debutant/demande-explication-sur-flag-qsa-dans-htaccess-t255298.html
