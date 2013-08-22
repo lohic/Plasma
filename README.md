@@ -1,5 +1,13 @@
 plasma
 ======
+```
+##### #     ##### ##### ##### #####
+#   # #     #   # #     # # # #   #
+##### #     ##### ##### # # # #####
+#     #     #   #     # #   # #   #
+#     ##### #   # ##### #   # #   #
+```
+
 
 Système de gestion des écrans déportés.
 
@@ -19,3 +27,23 @@ https://help.github.com/articles/ignoring-files
 https://help.github.com/articles/using-sublime-text-2-as-your-default-editor
 
 http://scottchacon.com/2011/08/31/github-flow.html
+
+
+Pour un meilleur mode MVC :
+
+http://forum.phpfrance.com/php-debutant/demande-explication-sur-flag-qsa-dans-htaccess-t255298.html
+
+Librairies interface :
+
+iCanHaz
+- http://icanhazjs.com
+- https://github.com/janl/mustache.js
+- https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
+ 
+Timeline :
+- http://almende.github.io/chap-links-library/timeline.html
+- http://almende.github.io/chap-links-library/js/timeline/doc/
+
+Fancybox :
+- https://github.com/fancyapps/fancyBox
+- http://www.fancyapps.com/fancybox/
