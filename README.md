@@ -47,3 +47,8 @@ Timeline :
 Fancybox :
 - https://github.com/fancyapps/fancyBox
 - http://www.fancyapps.com/fancybox/
+
+Dynamic JS:
+- http://www.siteduzero.com/informatique/tutoriels/ajax-et-l-echange-de-donnees-en-javascript/charger-un-objet-json-statique
+- http://headjs.com
+- http://requirejs.org/docs/api.html
