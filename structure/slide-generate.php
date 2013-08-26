@@ -10,7 +10,7 @@
 
 ?>
 
-<script language="javascript" src="../js/jquery-1.7.2.min.js"></script>
+<script language="javascript" src="../js/jquery-1.10.2.min.js"></script>
 <script language="javascript" src="../js/slideshow.js"></script>
 
 <script>
