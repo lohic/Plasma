@@ -1,0 +1,2 @@
+{"B":"<p>64 des 82 admissibles à l'ENA sont diplômés de Sciences Po</p><br /><p>Le nombre était de 53 sur 82 l'an passé</p><br /><p>Mille bravos et beaucoup de courage à elles et à eux!</p>",
+"C":"ok"}
