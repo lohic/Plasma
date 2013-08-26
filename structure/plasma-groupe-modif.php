@@ -56,10 +56,27 @@ $isGroup = true;
 		</fieldset>
 
 		<input type="submit" name="edit_groupe" class="buttonenregistrer" id="edit_groupe" value="<?php echo isset($id_groupe) ? 'Modifier' : 'Créer' ; ?>" />
-	</form>	
+	</form>
+
+	<div class="reset"></div>
+
+	<p>Le début d'un slide est prioritaire sur sa fin.</p>
+        
+	<p>Slides du <span id="json_start_date">date de début</span> au <span id="json_end_date">date de fin</span>.</p>
+	<p>
+		<button id="show_previous">Afficher les 10 jours précédents</button>
+		<button id="show_next">Afficher les 10 jours suivants</button>
+	</p>
+	<p>
+		<input type="text" value="group" id="group" />
+		<button id="add_screen">Ajouter un écran</button>
+	</p>
+
+	<div id="mytimeline"></div>
 </div>
 
-<div id="mytimeline"></div>
+
+
 
 
 <!--
