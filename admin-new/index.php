@@ -40,8 +40,8 @@ $ecran 		= new Ecran($id_plasma);
 	<link href="../css/admin.css" rel="stylesheet" type="text/css" />
 
 	<link href="../css/sciencespo-jquery-ui/jquery-ui-1.8.22.custom.css" rel="stylesheet" type="text/css">
-    <link href="../css/uploadifive.css" rel="Stylesheet" type="text/css" />
     <link href="../css/timeline.css" rel="stylesheet" type="text/css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
     <link href="../css/sciencespo.jquery.fancybox.css" rel="stylesheet" type="text/css" media="screen" />
 
 	<!-- JQUERY -->
@@ -49,8 +49,8 @@ $ecran 		= new Ecran($id_plasma);
     <!-- ICANHAZ -->
     <script type="text/javascript" src="../js/ICanHaz.min.js" ></script>
     <!-- TIMLINE -->
-    <script src="../js/timeline-min.js" type="text/javascript"></script>
-    <script src="../js/timeline-locales.js" type="text/javascript"></script>
+    <script type="text/javascript" src="../js/timeline-min.js"></script>
+    <script type="text/javascript" src="../js/timeline-locales.js"></script>
 	<!-- JQUERY UI -->
 	<script type="text/javascript" src="../js/jquery-ui-1.10.3.custom.min.js"></script>
 	<script type="text/javascript" src="../js/jquery-ui-timepicker-addon.js"></script>
@@ -74,8 +74,6 @@ $ecran 		= new Ecran($id_plasma);
 	<!--<script language="javascript" type="text/javascript" src="../js/slide.setInputs.js"></script>
 	<script language="javascript" type="text/javascript" src="../js/slide.contentParser.js"></script>-->
 	<script type="text/javascript" src="../js/slide.compteur-field.js"></script>
-
-
 
 	<script type="text/javascript" src="../js/script.js"></script>
 
