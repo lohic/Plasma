@@ -54,69 +54,89 @@ $isGroup = true;
 			</p>
 			<p><?php if(isset($child_screen->nombre)) echo $child_screen->nombre>1?"($child_screen->nombre) écrans ":"($child_screen->nombre) écran "?></p>
 		</fieldset>
-		<fieldset>
-			<p>
-				<label for="id_playlist_locale">playlist locale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?>
-			</p>
-			
-			<?php if ($core->userLevel <=1 ){ ?>
-			<p>
-				<label for="id_playlist_nationale">playlist nationale :</label>
-				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?>
-			</p>
-			<?php } ?>
-			
-		</fieldset>
+
 		<input type="submit" name="edit_groupe" class="buttonenregistrer" id="edit_groupe" value="<?php echo isset($id_groupe) ? 'Modifier' : 'Créer' ; ?>" />
-	</form>
-	
-	<?php if( !empty($data->id)){ ?>
-	
-	<div id="return_refresh"></div>
-	<form action="XMLrequest_update_slide_rel.php" method="post" id="modif_slide_list_form">
-		<input type="hidden" name="id_target" value="<?php echo $data->id; ?>" />
-			  <input type="hidden" name="type_target" value="groupe" />
-		<fieldset>
-			<p class="legend"> <a href="javascript:" id="add_alerte_locale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte locale </p>
-			<ul id="addslidealertelocale">
-				<?php echo $ecran->get_slide_alerte_list('groupe',75000,$data->id); ?>
-			</ul>
-		</fieldset>
-		<fieldset>
-			<p class="legend"> <a href="javascript:" id="add_alerte_nationale"> <img src="../graphisme/round_plus.png" alt="ajouter un slide" height="16"/> </a> ajouter une alerte nationale </p>
-			<ul id="addslidealertnationale">
-				<?php echo $ecran->get_slide_alerte_list('groupe','all',$data->id); ?>
-			</ul>
-		</fieldset>
-		<input type="hidden" value="" name="suppr_id_rel_slide" id="suppr_id_rel_slide">
-	</form>
-	<div class="reset"></div>
-	<div class="child-screen">
-		<?php  echo $child_screen->ecrans;?>
-	</div>
+	</form>	
 </div>
 
+<div id="mytimeline"></div>
 
 
-<div id="slideselector">
-	<div id="fleche"></div>
-	<div id="liste">
-		<div id="slide_select">
-			<form id="slide_select_form" action="XMLrequest_get_slide_list.php" method="get">
-				<input type="hidden" name="page" value="slides_select" />
-				<?php echo func::createSelect($slide->get_slide_template_list($core->groups_id)	, 'id_template'	, $id_template	, "onchange=\"$('#slide_select_form').submit();\"",true);?>
-				<?php echo func::createSelect($anneeListe, 'annee', $annee, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
-				<?php echo func::createSelect($moisListe, 'mois', $mois, "onchange=\"$('#slide_select_form').submit();\"", false ); ?>
-			</form>
-		</div>
-		<div id="id-selected-ecran"></div>
-		<div id="slidelisting">
-		</div>
+<!--
+EDITER LES INFORMATIONS D'UN SLIDE
+-->
+<script id="slide_editor" type="text/html">
+    <div style="width:500px">
+        <h1>{{content}}</h1>
+        <form>
+            <p><input type="text" value="{{start}}" /></p>
+            <p><input type="text" value="{{end}}" /></p>
+            <p><input type="text" value="{{content}}" /><p/>
+            <p>
+                <select id="screen_reference">
+                    {{#selector}}
+                    <option value="{{ key }}">{{ value }}</option>
+                    {{/selector}}
+                </select>
+            </p>
+            <div>
+                <p><label for="test"></label><input id="test" name="test" type="text" value="{{test}}"></p>
+                <h3>durée</h3>
+                <p class="duree">durée : {{duree}}</p>
+                <h3>début</h3>
+                <p>année : {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>
+                <h3>fin</h3>
+                <p>année : {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
+            </div>
+            <!--<p><input type="submit" value="Enregistrer" id="save_slide"></p>-->
+        </form>
+        <button id="edit_slide_content">Éditer le contenu</button>
+        <button id="save_slide">Enregistrer</button>
+        <button id="publish_slide">Publier le slide</button>
+    </div>
+</script>
 
-	</div>
-</div>
+<!--
+EDITER LE CONTENU D'UN SLIDE
+-->
+<script id="slide_content_editor" type="text/html">
+    <div style="width:500px">
+        <h1>{{content}} {{id}}</h1>
+        <form>
+            <p><input type="text" value="{{start}}" /></p>
+            <p><input type="text" value="{{end}}" /></p>
+            <p><input type="text" value="{{content}}" /><p/>
+            <p>
+                <select id="screen_reference">
+                    {{#selector}}
+                    <option value="{{ key }}">{{ value }}</option>
+                    {{/selector}}
+                </select>
+            </p>
+            <!--<p><input type="submit" value="Enregistrer" id="save_slide"></p>-->
+        </form>
+        <button id="save_slide_content">Enregistrer le contenu</button>
+    </div>
+</script>
 
-<?php include_once('../structure/javascript-add-slide.php'); ?>
 
-<?php } ?>
+<!--
+EDITER LES INFORMATIONS D'UN ÉCRAN
+-->
+<script id="screen_editor" type="text/html">
+    <div style="width:500px">
+        <h1>{{screen_title}}</h1>
+        <form>
+            <p><input type="text" value="{{screen_name}}" /></p>
+            <p><select id="etablissement_selector">
+                {{#liste_etablissement}}
+                <option value={{ key }}>{{ value }}</option>
+                {{/liste_etablissement}}
+            </select></p>
+            <p><input type="text" value="{{screen_groupe}}" /><p/>
+            
+            <p><button id="publish_screen">Publier l’écran</button></p>
+            <p><button id="save_screen">Enregistrer</button></p>
+        </form>
+    </div>
+</script>
