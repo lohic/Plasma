@@ -8,6 +8,7 @@ plasma
 #     ##### #   # ##### #   # #   #
 ```
 
+dev-Beta-2 : intègre les modifications liées à l'utilisation de la timeline dans le backoffice
 
 Système de gestion des écrans déportés.
 
