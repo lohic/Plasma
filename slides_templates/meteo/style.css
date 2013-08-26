@@ -950,6 +950,7 @@ classes réservées pour le traitement JS :
 	}
 
 	#meteo1 .texte{
+		position: relative;
 		float:left;
 		width: 500px;
 		height:282px;
@@ -1102,7 +1103,8 @@ classes réservées pour le traitement JS :
 	#meteo1 .vent{
 		position:absolute;
 		left:44px;
-		bottom:40px;
+		bottom:-40px;
+		margin-top: 0px;
 	}
 
 	#meteo1 .temperature{
