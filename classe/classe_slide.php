@@ -568,7 +568,6 @@ class Slide {
 	* mise à jour ou création d'un item de la timeline
 	 */
 	function update_timeline_item($id=NULL){
-		echo '{"ok":"super"}';
 
 		if( !isset($id) ){
 			// création
@@ -582,11 +581,58 @@ class Slide {
             $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end) VALUES (%s, %s)",$start,$end);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
-			echo '{"ok":"super"}';
+			$item_id = mysql_insert_id();
+
+			echo '{"id":"'+ $item_id +'"}';
 
 		}else{
 			//mise à jour
 		}
+	}
+
+	function get_timeline_items(){
+
+		$query 				= 'SELECT id,start,end FROM '.TB.'timeline_slide_tb';
+		$sql_slide			= sprintf($query); //echo $sql_slide;	
+		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+		
+		$temp = array();
+
+		while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
+
+			$temp[] = '{
+    "start"	: new Date('. $this->dateMysql2JS( $slide_item['start'] ) .') ,
+    "end"	: new Date('. $this->dateMysql2JS( $slide_item['end'] ) .'),
+    "content": "item-'. $slide_item['id'] .'",
+    "className": "evenement-1",
+    "group":"2 - écran 2",
+    "editable": true,
+    "type" : "slide",
+    "test":"youpi 2",
+    "id":'. $slide_item['id'] .'
+}';
+						
+			/*$class				= 'listItemRubrique'.($i+1);
+			$id					= $slide_item['id'];
+			$nom				= $slide_item['nom'];
+			$template			= $slide_item['template'];
+			$icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$template.'/vignette.gif';
+				
+			include('../structure/slide-list-bloc.php');
+			
+			$i = ($i+1)%2;*/
+		}
+
+		return implode(",\n", $temp);
+	}
+
+	function dateMysql2JS($date){
+		$temp = date('Y,m,d,H,i,s', strtotime($date));
+
+		$temp = explode(',', $temp);
+		$temp[1] ++;
+
+		return implode(',',$temp); 
 	}
 	
 }

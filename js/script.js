@@ -122,9 +122,13 @@ function drawVisualization() {
                 }
             }).done(function ( dataJSON ) {
                 console.log(dataJSON);
+
+                timeline.changeItem(ref, {
+                    'id': dataJSON.id
+                });
             });
 
-            console.log('Ajout : ' + data[row].content + '\nstart : '+ data[row].start + '\nend   : ' + data[row].end + '\n[groupe : ' + data[row].group + ']'+ '\nclass : ' + data[row].className );
+            console.log('Ajout : ' + data[row].content + '\nstart : '+ data[row].start + '\nend   : ' + data[row].end + '\n[groupe : ' + data[row].group + ']'+ '\nclass : ' + data[row].className +'\nid : ' + data[row].id);
         }
     }
     
