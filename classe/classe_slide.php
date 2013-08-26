@@ -630,7 +630,7 @@ class Slide {
 		$temp = date('Y,m,d,H,i,s', strtotime($date));
 
 		$temp = explode(',', $temp);
-		$temp[1] ++;
+		$temp[1] --;
 
 		return implode(',',$temp); 
 	}
