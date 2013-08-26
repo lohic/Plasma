@@ -68,27 +68,32 @@ function drawVisualization() {
         'box' : {'align':'left'},
     };
 
-    // charge en AJAX le contenu du fichier data.js
+    // charge en AJAX le contenu du fichier data-timeline.php
     var timestamp = new Date().getTime();
     $.ajax({
-        url: "../ajax/data.js?cache="+timestamp,
+        url         : "../ajax/data-timeline.php",
+        type        : "GET",
+        data        : {cache : timestamp},
+        dataType    : 'script'
     }).done(function ( dataJSON ) {
         //console.log(dataJSON);
+        
+        // on scanne les données contenues dans data-taimline.php
         eval(dataJSON);
         timeline.draw(data ,options);
 
-        console.log("OK timeline ready");
+        console.log("Timeline ready");
 
+        // on intitialise la position des étiquettes de groupes
         for(var i = 0; i < screens.length ; i ++){
             timeline.changeItem(screens[i], {'start' : todayM3 });
         }
-        timeline.setSelection();
 
+        timeline.setSelection();
     });
-    
-    
-    // SÉLECTION D'UN SLIDE
-    var onselect = function (event) {
+
+    // AJOUT D'UN SLIDE
+    var onadd = function(event){
 
         var row = undefined;
         var sel = timeline.getSelection();
@@ -99,20 +104,33 @@ function drawVisualization() {
         }
 
         if (row != undefined) {
-            console.log("SELECT - id : " + row);
-            console.log("start : "  + data[row].start );
-            console.log("end : "    + data[row].end );
-            console.log("content : "+ data[row].content );
-            console.log("group : "  + data[row].group );
+            data[row].test = 'test : '+Math.random()*20;
+            timeline.changeItem(row, {
+                'className': 'unpublished',
+                'type':'slide'
+            });
 
+            $.ajax({
+                url     :"../ajax/data-timeline-slide.php",
+                type    : "POST",
+                dataType:'json',
+                data    : {
+                    start   : new Date(data[row].start).addHours(2),
+                    end     : new Date(data[row].end).addHours(2),
+                    group   : data[row].group,
+                    action  : 'create-item'
+                }
+            }).done(function ( dataJSON ) {
+                console.log(dataJSON);
+            });
+
+            console.log('Ajout : ' + data[row].content + '\nstart : '+ data[row].start + '\nend   : ' + data[row].end + '\n[groupe : ' + data[row].group + ']'+ '\nclass : ' + data[row].className );
         }
-
-        
-    };
-    links.events.addListener(timeline, 'select', onselect);
+    }
+    
 
     // CHANGEMENT (via un drag) D'UN SLIDE
-    var onchange= function(event){
+    var onchange = function(event){
 
         var row = undefined;
         var sel = timeline.getSelection();
@@ -134,7 +152,45 @@ function drawVisualization() {
             console.log("onChange :\n" + data[row].start + ' >> ' + data[row].end + '\n[groupe : ' + data[row].group + ']');
         }
     }
-    links.events.addListener(timeline, 'change', onchange);
+
+    // SUPPRESSION D'UN SLIDE
+    var ondelete = function(event){
+
+        var row = undefined;
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+            }
+        }
+
+        if (row != undefined) {
+            console.log('Delete : ' + data[row].content + '\n' +  data[row].test);
+        }
+    }
+    
+    
+    // SÉLECTION D'UN SLIDE
+    var onselect = function (event) {
+
+        var row = undefined;
+        var sel = timeline.getSelection();
+        if (sel.length) {
+            if (sel[0].row != undefined) {
+                var row = sel[0].row;
+            }
+        }
+
+        if (row != undefined) {
+            console.log("SELECT - id : " + row);
+            console.log("start : "  + data[row].start );
+            console.log("end : "    + data[row].end );
+            console.log("content : "+ data[row].content );
+            console.log("group : "  + data[row].group );
+
+        }  
+    };
+
 
     // ÉDITION D'UN SLIDE
     var onedit = function(event){
@@ -172,67 +228,26 @@ function drawVisualization() {
                     },
                 });
             }
-
         }
     }
-    links.events.addListener(timeline, 'edit',   onedit);
 
-
-    // SUPPRESSION D'UN SLIDE
-    var ondelete = function(event){
-
-        var row = undefined;
-        var sel = timeline.getSelection();
-        if (sel.length) {
-            if (sel[0].row != undefined) {
-                var row = sel[0].row;
-            }
-        }
-
-        if (row != undefined) {
-            console.log('Delete : ' + data[row].content + '\n' +  data[row].test);
-        }
-    }
-    links.events.addListener(timeline, 'delete', ondelete);
-
-
-    // AJOUT D'UN SLIDE
-    var onadd = function(event){
-
-        var row = undefined;
-        var sel = timeline.getSelection();
-        if (sel.length) {
-            if (sel[0].row != undefined) {
-                var row = sel[0].row;
-            }
-        }
-
-        if (row != undefined) {
-            data[row].test = 'test : '+Math.random()*20;
-            timeline.changeItem(row, {
-	            'className': 'unpublished',
-                'type':'slide'
-	        });
-            console.log('Ajout : ' + data[row].content + '\nstart : '+ data[row].start + '\nend   : ' + data[row].end + '\n[groupe : ' + data[row].group + ']'+ '\nclass : ' + data[row].className );
-        }
-    }
-    links.events.addListener(timeline, 'add', onadd);
 
     // MISE A JOUR LORS D'UN SCROLL OU UN ZOOM
     var onrangechange = function(event){           
-
         for(var i = 0; i < screens.length ; i ++){
             timeline.changeItem(screens[i], {'start' : new Date(event.start) });
             //console.log("start : "+new Date(event.start));
         }
-
         timeline.setSelection();
-
-        //start
     }
-    links.events.addListener(timeline, 'rangechange', onrangechange)
-
     
+
+    links.events.addListener(timeline, 'add', onadd);
+    links.events.addListener(timeline, 'change', onchange);
+    links.events.addListener(timeline, 'delete', ondelete);
+    links.events.addListener(timeline, 'select', onselect);
+    links.events.addListener(timeline, 'edit',   onedit);
+    links.events.addListener(timeline, 'rangechange', onrangechange);
 }
 
 function editSlide(ref){
@@ -364,6 +379,10 @@ function addScreen(){
     //console.log(screens.join(', '));
 }
 
-
+Date.prototype.addHours= function(h){
+    var copiedDate = new Date(this.getTime());
+    copiedDate.setHours(copiedDate.getHours()+h);
+    return copiedDate;
+}
 
 //console.log = function() {};

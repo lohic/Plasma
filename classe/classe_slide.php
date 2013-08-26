@@ -563,9 +563,31 @@ class Slide {
 		return $json;
 		
 	}
+
+	/*
+	* mise à jour ou création d'un item de la timeline
+	 */
+	function update_timeline_item($id=NULL){
+		echo '{"ok":"super"}';
+
+		if( !isset($id) ){
+			// création
+			// 
+			// 
+			$start  = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ),'text');
+            $end    = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ),'text');
+            $group	= func::GetSQLValueString($_POST['group'],'text');
+
+
+            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end) VALUES (%s, %s)",$start,$end);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+
+			echo '{"ok":"super"}';
+
+		}else{
+			//mise à jour
+		}
+	}
 	
 }
-	
-	
 
-?>
