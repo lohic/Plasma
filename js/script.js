@@ -241,7 +241,7 @@ function drawVisualization() {
 
             if(data[row].type == 'slide'){
                 
-                editSlide(row);
+                edit_item(row);
                 
             }else if(data[row].type == 'screen'){
                 screen_info = {
@@ -284,7 +284,7 @@ function drawVisualization() {
     links.events.addListener(timeline, 'rangechange', onrangechange);
 }
 
-function editSlide(ref){
+function edit_item(ref){
     console.log('edit slide');
 
     var date1 = new Date(data[ref].start);
@@ -362,7 +362,7 @@ function editSlideContent(ref){
 
         console.log(">>> EDIT SLIDE CONTENT : "+ ref);
 
-        var slide_content = {'id':ref};
+        /*var slide_content = {'id':ref};
         slide_content_editor = ich.slide_content_editor(slide_content);
 
         $.fancybox( slide_content_editor , {
@@ -373,7 +373,9 @@ function editSlideContent(ref){
                     position: 'top'
                 }
             },
-        });
+        });*/
+
+        edit_slide();
 
         e.preventDefault();
 
@@ -424,6 +426,174 @@ Date.prototype.addHours= function(h){
     var copiedDate = new Date(this.getTime());
     copiedDate.setHours(copiedDate.getHours()+h);
     return copiedDate;
+}
+
+
+/*
+* --------------------------------
+* POUR GERER L'EDITION DES SLIDES
+* --------------------------------
+*/
+
+function edit_slide(){
+    console.log('edit_slide appelé DFORM');
+    // on vide le formulaire
+    $("#myform").empty();
+
+    // on génère un formulaire à partir d'une structure JSON
+    // la structure est la fusion du fichier structure.json correspondant au template
+    // et des données sauvegardées au format JSON en bas de donnée
+    $("#myform").dform('../ajax/import-json.php?template='+ $template +'&slide_id=' + $slide_id,function(data){
+
+        // quand le formulaire est généré, on ouvre une fenêtre fancybox
+        $.fancybox( this , {
+            title : '<h1>Éditeur de slide</h1>',
+            width : 500,
+            helpers : {
+                title: {
+                    type: 'inside',
+                    position: 'top'
+                }
+            },
+        });
+
+        // pour désactiver le clic extérieur sur fancybox
+        $(".fancybox-overlay").unbind();
+
+        // on initialise tinyMCE
+        tinymce.init({
+            selector: "textarea",
+            toolbar: " ",
+            menubar : false,
+            entity_encoding : 'raw',    
+        });
+
+        // activation de uplodifive
+       
+        $(function() {
+            $('input[type="file"]').uploadifive({
+                'checkScript'       : '../js/uploadifive-v1.1.2-standard/check-exists.php',
+                'multi'             : false,
+                'formData'          : {
+                                       'timestamp' : $timestamp,
+                                       'token'     : $token
+                                      },
+                'queueSizeLimit'    : 1,
+                //'queueID'          : 'queue',
+                'removeCompleted'   : true,
+                'uploadScript'      : '../ajax/uploadifive.php',
+                'onInit'            : function(){
+                    
+                    // on affiche une vignette ou un texte si on trouve un média image ou vidéo
+                    $('input[type="file"]').each(function(){
+                        if( $(this).data('file') != undefined ) {
+
+                            var temp = $(this).data('file').split('.');
+                            var ext = temp[temp.length-1].toLowerCase();
+                            
+
+                            $(this).before("<p>"+ $(this).data('file') + "</p>");
+                            $(this).parent().before("<div class='preview'></div>")
+
+                            preview($(this), $(this).data('file'), ext);
+                        }
+                    });
+
+                    var attr = $(this).attr('name');
+                    $(this).attr('name', attr + "-old");
+                    $(this).data('old-name', attr);
+                    $(this).after( "<input type='hidden' name='" + attr + "'/>" );
+
+                },
+                'onUploadComplete'  : function(file,data) {
+
+                    info = JSON.parse(data);
+                    if(!info.error){
+                        $('input[name="'+ $(this).data('old-name') +'"]' ).val( info.file );
+
+                        preview($(this),info.file,info.ext);
+
+                        console.log("upload finished : "+info.file +" / type : "+info.ext);
+                    }else{
+                        alert( info.message );
+                    }
+                }
+            });
+
+        });
+
+        // quand on valide
+        $("#validation").click(function(e){
+            // on attribue bien le contenu de tinyMCE aux champs d'origine
+            tinyMCE.triggerSave();
+            
+            console.log( JSON.stringify( formToJSON( $("#myform").serializeArray() ) ) );
+
+            e.preventDefault();
+        });
+    });
+}
+
+
+/*
+* fonction pour créer la preview (image ou vidéo)
+* au chargement ou au rafraichissement
+* si le media est une vidéo, mets à jour la durée
+*/
+function preview(ref, file, ext){
+    console.log('PREVIEW');
+    delete(ref.parent().prev().find('video'));
+    ref.parent().prev().html("");            
+    ref.parent().prev().empty();
+    $('input[name="'+ref.data('old-name')+'-duration"]').remove();
+
+
+    //console.log(ref.parent().prev());
+
+    if($.inArray(ext, $videoExt) != -1){
+        console.log('video');
+        ref.parent().prev().html("<video style='max-width:100%;height:auto;' onClick='play();' onLoad='dureeVideo();' src='../slides_images/"+ file +"'></video>");
+        dureeVideo(ref);
+    }else{
+        console.log('image');
+        ref.parent().prev().html("<img src='../slides_images/"+ file +"' class='vignette'/>");
+    }
+}
+
+
+/*
+* FONCTION POUR CALCULER LA DUREE D'UNE VIDEO
+*/
+function dureeVideo(ref){
+    //console.log( "durée : " + $(this).parent().prev().find('video').duration );
+    //
+    ref.parent().prev().find('video')
+    .bind("loadedmetadata", function(e){
+        e.preventDefault();
+
+        $(this).after('<p>durée : '+ (Math.round(this.duration*100)/100) +' sec</p>');
+
+        ref.parent().before( '<input type="hidden" name="'+ref.data('old-name')+'-duration" value="'+this.duration+'">' );
+
+        console.log("vidéo chargée : " + this.duration);
+    });
+}
+
+/*
+* fonction de conversion des éléments d'un formuaire en un objet JSON du type
+* { nom : valeur , nom2 : valeur2 }
+* @param data : un tableau d'objets issus d'un formulaire normalisées avec .serializeArray()
+* @return un objet javascript { nom : valeur , nom2 : valeur2 }
+*/
+function formToJSON( data ) {
+    // on crée l'objet retour
+    var retour = {};
+
+    $.each(data, function(i,ligne){
+
+        retour[ligne.name] = ligne.value;
+    });
+    return retour;
 }
 
 //console.log = function() {};

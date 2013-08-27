@@ -46,6 +46,8 @@ $ecran 		= new Ecran($id_plasma);
 
 	<!-- JQUERY -->
 	<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+    <!-- DFORM -->
+    <script type="text/javascript" src="../js/jquery.dform-1.1.0.js" ></script>
     <!-- ICANHAZ -->
     <script type="text/javascript" src="../js/ICanHaz.min.js" ></script>
     <!-- TIMLINE -->
@@ -78,11 +80,14 @@ $ecran 		= new Ecran($id_plasma);
 	<script type="text/javascript" src="../js/script.js"></script>
 
 
-
-
-
 	<script type="text/javascript">
 
+		// VARIABLES POUR L'EDITION DE SLIDES
+		$timestamp  = <?php echo $timestamp = time();?>;
+        $token      = '<?php echo md5('sciences_po_plasma' . $timestamp);?>';
+        $videoExt   = Array('mp4','mov');
+        $template = 'video';
+        $slide_id = 1;
 	    <!--
 
 		//GESTION DE MENU

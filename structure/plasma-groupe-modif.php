@@ -74,7 +74,10 @@ $isGroup = true;
 		<button id="add_screen">Ajouter un écran</button>
 	</p>
 
+
 	<div id="mytimeline"></div>
+
+	<form id="myform" style="width:500px"></form>
 </div>
 
 
