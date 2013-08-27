@@ -89,24 +89,30 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
         <h1>{{content}}</h1>
         <form>
         	<fieldset>
-            <p>
-                <select id="screen_reference">
-                    {{#selector}}
-                    <option value="{{ key }}">{{ value }}</option>
-                    {{/selector}}
-                </select>
-            </p>
-            <div>
-                <h3>Durée : {{duree}}</h3>
-                <p><span class="date">début :</span> {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>
-                <p><span class="date">fin :</span> {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
-            </div>
+	            <p>
+	                <select id="screen_reference">
+	                    {{#selector}}
+	                    <option value="{{ key }}">{{ value }}</option>
+	                    {{/selector}}
+	                </select>
+	            </p>
+	            <div>
+	                <h3>Durée : {{duree}}</h3>
+	                <p><span class="date">début :</span> {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>
+	                <p><span class="date">fin :</span> {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
+	            </div>
+			
+				<button id="save_slide">Enregistrer</button>
+		        <button id="edit_slide_content">Éditer le contenu</button>
+		        <button id="publish_slide">Publier le slide</button>
+
             </fieldset>
+            
         </form>
+
         
-        <button id="save_slide">Enregistrer</button>
-        <button id="edit_slide_content">Éditer le contenu</button>
-        <button id="publish_slide">Publier le slide</button>
+
+        <div class="reset"></div>
     </div>
 </script>
 
