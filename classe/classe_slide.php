@@ -573,10 +573,11 @@ class Slide {
 			// création
 			// 
 			// 
-			$start  = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ),'text');
-            $end    = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ),'text');
-            $group	= func::GetSQLValueString($_POST['group'],'text');
-
+			$start  	= func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ),'text');
+            $end    	= func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ),'text');
+            $group		= func::GetSQLValueString($_POST['group'],'text');
+            $published	= func::GetSQLValueString($_POST['published'],'int');
+            $ordre		= func::GetSQLValueString($_POST['ordre'],'int');
 
             $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end) VALUES (%s, %s)",$start,$end);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
@@ -587,6 +588,9 @@ class Slide {
 
 		}else{
 			//mise à jour
+			$start  = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ),'text');
+            $end    = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ),'text');
+            $group	= func::GetSQLValueString($_POST['group'],'text');
 		}
 	}
 
@@ -626,6 +630,11 @@ class Slide {
 		return implode(",\n", $temp);
 	}
 
+	/*
+	* pour convertir un timstamp mysql en timestamp javascript
+	* @param string date au format yyyy-mm-dd hh:mm:ss
+	* @return string date au format yyyy,mm-1,dd,hh,mm,ss 
+	 */
 	function dateMysql2JS($date){
 		$temp = date('Y,m,d,H,i,s', strtotime($date));
 
