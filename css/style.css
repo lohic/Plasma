@@ -47,7 +47,7 @@ div.timeline-axis-text-major{
 
 
 
-div.timeline-event-box{
+div.timeline-event.timeline-event-box{
     background: #333;
     color: #fff;
     border-color: #000;
@@ -65,7 +65,7 @@ div.timeline-event-line{
     border-left-width: 0px;
 }
 
-div.timeline-event-dot{
+div.timeline-event.timeline-event-dot{
     border-style: solid;
     border-width: 0px;
     border-radius: 0px;
@@ -73,37 +73,39 @@ div.timeline-event-dot{
     -webkit-border-radius: 0px;
 }
 
-div.timeline-event-range{
+div.timeline-event.timeline-event-range{
+    background-image: none;
     background-color: #ff9999;
     border-color:#C00;
+    color:#333;
 }
 
-div.timeline-event-range.unpublished{
+div.timeline-event.timeline-event-range.unpublished{
     background-image: url('../graphisme/unpublished2.png');
     color: #fff;
     font-weight: bold;
 }
 
 
-div.timeline-event-selected{
+div.timeline-event.timeline-event-selected{
     border-color: #C00;
     background-color: #ff6666;
     color: #fff;
     z-index: 999;
 }
 
-div.timeline-event-selected.screen{
+div.timeline-event.timeline-event-selected.screen{
     background: #333;
     color: #fff;
     border-color: #000;
 }
 
-div.readonly {
+div.timeline-event.readonly {
     background-color: #ff4500;
     border-color: red;
     color: white;
 }
-div.readonly.unpublished {
+div.timeline-event.readonly.unpublished {
     background-image: url('../graphisme/unpublished-protected.png');
     background-color: #ff4500;
     border-color: red;

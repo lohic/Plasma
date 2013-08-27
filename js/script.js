@@ -76,6 +76,9 @@ function drawVisualization() {
     }).done(function ( dataJSON ) {
         //console.log(dataJSON);
         
+        timeline.addItemType('screen', links.Timeline.ItemBox);
+        timeline.addItemType('slide', links.Timeline.ItemRange);
+
         // on scanne les données contenues dans data-taimline.php
         eval(dataJSON);
         timeline.draw(data ,options);

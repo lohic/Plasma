@@ -40,7 +40,7 @@ $ecran 		= new Ecran($id_plasma);
 	<link href="../css/admin.css" rel="stylesheet" type="text/css" />
 
 	<link href="../css/sciencespo-jquery-ui/jquery-ui-1.8.22.custom.css" rel="stylesheet" type="text/css">
-    <link href="../css/timeline.css" rel="stylesheet" type="text/css">
+    <link href="../css/timeline-theme.css" rel="stylesheet" type="text/css">
     <link href="../css/style.css" rel="stylesheet" type="text/css">
     <link href="../css/sciencespo.jquery.fancybox.css" rel="stylesheet" type="text/css" media="screen" />
 

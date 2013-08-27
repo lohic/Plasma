@@ -25,7 +25,7 @@ data = [
     {
         "start" : new Date(2012, 0, 1),
         "group" : "1 - écran 1",
-        "editable" : true,
+        "editable" : false,
 		"content":"écran 1",
         "type" : "screen",
         "className" : "screen"
@@ -33,7 +33,7 @@ data = [
     {
         "start" : new Date(2012, 0, 1),
         "group" : "2 - écran 2",
-        "editable" : true,
+        "editable" : false,
 		"content":"écran 2",
         "type" : "screen",
         "className" : "screen"
@@ -41,7 +41,7 @@ data = [
     {
         "start" : new Date(2012, 0, 1),
         "group" : "3 - écran 3",
-        "editable" : true,
+        "editable" : false,
 		"content":"écran 3",
         "type" : "screen",
         "className" : "screen"
