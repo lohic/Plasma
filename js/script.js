@@ -120,9 +120,10 @@ function drawVisualization() {
                     action  : 'create-item'
                 }
             }).done(function ( dataJSON ) {
-                console.log(dataJSON);
+                console.log('ID créé : '+dataJSON +' ');
+                console.log(data[row]); 
 
-                timeline.changeItem(ref, {
+                timeline.changeItem(row, {
                     'id': dataJSON.id
                 });
             });
@@ -161,11 +162,9 @@ function drawVisualization() {
                 }
             }).done(function ( dataJSON ) {
                 console.log(dataJSON);
-                if( typeof(ref)!='undefined' ){
-                    timeline.changeItem(ref, {
-                        'id': dataJSON.id
-                    });
-                }
+                timeline.changeItem(row, {
+                    'id': dataJSON.id
+                });
             });
 
             console.log("onChange :\n" + data[row].start + ' >> ' + data[row].end + '\n[groupe : ' + data[row].group + ']');
@@ -325,6 +324,9 @@ function editSlide(ref){
                 position: 'top'
             }
         },
+        afterLoad : function(){
+            console.log("fancybox OK");
+        }
     });
 
     // on selectionne le groupe quand on affiche le formulaire
@@ -352,6 +354,7 @@ function editSlide(ref){
 * fonction pour gérer l'édition de contenu d'un slide
 */
 function editSlideContent(ref){
+
     $('#edit_slide_content').click(function(e){
 
         console.log(">>> EDIT SLIDE CONTENT : "+ ref);
@@ -368,6 +371,8 @@ function editSlideContent(ref){
                 }
             },
         });
+
+        e.preventDefault();
 
     });
 }
