@@ -1,92 +1,19 @@
 {
     "action" : "index.html",
     "method" : "post",
-    "title" : "super",
+    "title" : "Slide Verbatim",
     "html" :
     [
         {
             "type" : "textarea",
-            "name" : "letexte",
+            "name" : "verbatim",
+            "id" : "verbatim",
             "caption" : "Texte"
         },
         {
-            "type" : "p",
-            "html" : "You must login",
-            "class": "super"
-        },
-        {
-            "type" : "div",
-            "html" : 
-            {
-                "name" : "username",
-                "id" : "txt-username",
-                "caption" : "Username",
-                "type" : "text",
-                "placeholder" : "E.g. user@example.com"
-            }
-        },   
-        {
-            "type" : "select",
-            "caption" : "Pays",
-            "id" : "pays",
-            "name" : "pays",
-            "options" : {
-                "USA" : "USA",
-                "Canada" : "Canada",
-                "Allemagne" : "Allemagne"
-            }
-        },
-        {
-            "type" : "select",
-            "caption" : "Coorganisateur",
-            "name" : "coorganisateur",
-            "options" : {
-                "" : "aucun",
-                "École de finance" : "École de finance",
-                "École de communication" : "École de communication"
-            }
-        },
-        {
-            "name" : "password",
-            "caption" : "Password",
-            "type" : "password"
-        },
-        {
-            "type" : "progressbar",
-            "name" : "progression"
-        },
-        {
-            "type" : "text",
-            "caption" : "Date",
-            "name" : "date_slide",
-            "datepicker" : {
-                "minDate" : "+1",
-                "dateFormat": "yy-mm-dd",
-                "firstDay": 1,
-                "dayNamesMin" : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-                "monthNames" : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]
-            }
-        },
-        {
-            "type" : "file",
-            "caption" : "Fichier"
-        },
-        {
-            "type" : "checkbox",
-            "caption" : "Logo"
-        },
-        {
-            "type" : "reset",
-            "html" : "Réinitialiser"
-        },
-        {
             "type" : "button",
-            "html" : "Login",
+            "html" : "Sauvegarder",
             "id" : "validation"
-        },
-        {
-            "type" : "hellobutton",
-            "alert" : "Hello world!"
         }
     ]
 }

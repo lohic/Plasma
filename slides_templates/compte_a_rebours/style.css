@@ -1,15 +1,8 @@
-/**/
-
 /* CSS Document */
 @charset "UTF-8";
 /*
-version improvisée pour les tests...
+slide « compte a rebours »
 */
-@font-face { 
-    font-family: 'GoetheGothicBold'; 
-    src: local('GoetheGothicBold'), local('GoetheGothicBold'), url('fonts/GoetheGothicBold.ttf') format('truetype'); 
-}  
-
 *{
 	border:none;
 	padding:0px;
@@ -17,7 +10,8 @@ version improvisée pour les tests...
 }
 
 body,td,th {
-	font-family: "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
+	font-weight: bold;
 	font-size: 10px;
 	
 }
@@ -27,7 +21,7 @@ body, th, td, .header, .texte, .footer, .texte2{
 }
 
 h1, h2, h3 {
-	font-weight: normal;
+	font-weight: bold;
 }
 
 h1, h2, p{
@@ -56,13 +50,13 @@ classes réservées pour le traitement JS :
 	position:relative;
 	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveHeader 0.9s ease-in-out;
-	-moz-animation: moveHeader 0.9s ease-in-out;
-	-ms-animation: moveHeader 0.9s ease-in-out;
-	animation: moveHeader 0.9s ease-in-out;
+	   -moz-animation: moveHeader 0.9s ease-in-out;
+		-ms-animation: moveHeader 0.9s ease-in-out;
+			animation: moveHeader 0.9s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 	z-index:2;
 }
 
@@ -117,13 +111,13 @@ classes réservées pour le traitement JS :
 	z-index:1;
 	margin-top:1px;
 	-webkit-animation: moveTexte 1.2s ease-in-out;
-	-moz-animation: moveTexte 1.2s ease-in-out;
-	-ms-animation: moveTexte 1.2s ease-in-out;
-	animation: moveTexte 1.2s ease-in-out;
+	   -moz-animation: moveTexte 1.2s ease-in-out;
+		-ms-animation: moveTexte 1.2s ease-in-out;
+			animation: moveTexte 1.2s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveTexte{
@@ -150,13 +144,13 @@ classes réservées pour le traitement JS :
 	z-index:2;
 	box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
 	-webkit-animation: moveFooter 2s ease-in-out;
-	-moz-animation: moveFooter 2s ease-in-out;
-	-ms-animation: moveFooter 2s ease-in-out;
-	animation: moveFooter 2s ease-in-out;
+	   -moz-animation: moveFooter 2s ease-in-out;
+		-ms-animation: moveFooter 2s ease-in-out;
+			animation: moveFooter 2s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 .footer .logo{
@@ -182,13 +176,13 @@ classes réservées pour le traitement JS :
 
 .exit .header{
 	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	-moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	animation: moveHeaderExit 0.4s ease-in-out forwards;
+	   -moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
+		-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
+			animation: moveHeaderExit 0.4s ease-in-out forwards;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;	
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;	
 }
 
 @-webkit-keyframes moveHeaderExit{
@@ -218,18 +212,18 @@ classes réservées pour le traitement JS :
 
 .exit .image{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
-	animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
-	-moz-animation-delay: 0.4s;
-	-ms-animation-delay: 0.4s;
-	animation-delay: 0.4s;	
+	   -moz-animation-delay: 0.4s;
+		-ms-animation-delay: 0.4s;
+			animation-delay: 0.4s;	
 }
 
 @-webkit-keyframes moveTexteExit{
 	0%{
-		-webkit-transform: translate(0px, 0px);
+		--transfowebkitrm: translate(0px, 0px);
 	}
 	100%{
 		-webkit-transform: translate(0px, -1270px);
@@ -254,13 +248,13 @@ classes réservées pour le traitement JS :
 
 .exit .footer{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
-	animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;
 	-webkit-animation-delay: 0.8s;
-	-moz-animation-delay: 0.8s;
-	-ms-animation-delay: 0.8s;
-	animation-delay: 0.8s;	
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
 }
 
 @-webkit-keyframes moveFooterExit{

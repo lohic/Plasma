@@ -1,92 +1,79 @@
 {
     "action" : "index.html",
     "method" : "post",
-    "title" : "super",
+    "title" : "Slide Événement",
     "html" :
     [
         {
-            "type" : "textarea",
-            "name" : "letexte",
-            "caption" : "Texte"
-        },
-        {
-            "type" : "p",
-            "html" : "You must login",
-            "class": "super"
-        },
-        {
-            "type" : "div",
-            "html" : 
-            {
-                "name" : "username",
-                "id" : "txt-username",
-                "caption" : "Username",
-                "type" : "text",
-                "placeholder" : "E.g. user@example.com"
-            }
-        },   
-        {
-            "type" : "select",
-            "caption" : "Pays",
-            "id" : "pays",
-            "name" : "pays",
-            "options" : {
-                "USA" : "USA",
-                "Canada" : "Canada",
-                "Allemagne" : "Allemagne"
-            }
-        },
-        {
-            "type" : "select",
-            "caption" : "Coorganisateur",
-            "name" : "coorganisateur",
-            "options" : {
-                "" : "aucun",
-                "École de finance" : "École de finance",
-                "École de communication" : "École de communication"
-            }
-        },
-        {
-            "name" : "password",
-            "caption" : "Password",
-            "type" : "password"
-        },
-        {
-            "type" : "progressbar",
-            "name" : "progression"
+            "type" : "text",
+            "name" : "type",
+            "id" : "type",
+            "caption" : "Type d'événement"
         },
         {
             "type" : "text",
-            "caption" : "Date",
-            "name" : "date_slide",
-            "datepicker" : {
-                "minDate" : "+1",
-                "dateFormat": "yy-mm-dd",
-                "firstDay": 1,
-                "dayNamesMin" : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-                "monthNames" : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]
-            }
+            "name" : "date_horaire",
+            "id" : "date_horaire",
+            "caption" : "Date et horaire"
+        },
+        {
+            "type" : "text",
+            "name" : "lieu",
+            "id" : "lieu",
+            "caption" : "Lieu de l'événement"
+        },
+        {
+            "type" : "text",
+            "name" : "code_batiment",
+            "id" : "code_batiment",
+            "caption" : "Code du batiment"
+        },
+        {
+            "type" : "text",
+            "name" : "langue",
+            "id" : "langue",
+            "caption" : "Langue de l'événement"
+        },
+        {
+            "type" : "text",
+            "name" : "titre",
+            "id" : "titre",
+            "caption" : "Titre de l'événement"
+        },
+        {
+            "type" : "text",
+            "name" : "organisateur",
+            "id" : "organisateur",
+            "caption" : "Organisateur"
+        },
+        {
+            "type" : "text",
+            "name" : "qualite",
+            "id" : "qualite",
+            "caption" : "Qualité de l'organisateur"
+        },
+        {
+            "type" : "text",
+            "name" : "coorganisateur",
+            "id" : "coorganisateur",
+            "caption" : "Co-organisateur"
         },
         {
             "type" : "file",
-            "caption" : "Fichier"
+            "name": "image",
+            "id": "image",
+            "caption" : "Image"
         },
         {
-            "type" : "checkbox",
-            "caption" : "Logo"
-        },
-        {
-            "type" : "reset",
-            "html" : "Réinitialiser"
+            "type" : "text",
+            "name" : "inscription",
+            "id" : "inscription",
+            "caption" : "Entrée libre ou inscription obligatoire"
         },
         {
             "type" : "button",
-            "html" : "Login",
+            "html" : "Sauvegarder",
             "id" : "validation"
-        },
-        {
-            "type" : "hellobutton",
-            "alert" : "Hello world!"
         }
     ]
 }

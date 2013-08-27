@@ -1,92 +1,71 @@
 {
     "action" : "index.html",
     "method" : "post",
-    "title" : "super",
+    "title" : "Slide Sport",
     "html" :
     [
         {
-            "type" : "textarea",
-            "name" : "letexte",
-            "caption" : "Texte"
-        },
-        {
-            "type" : "p",
-            "html" : "You must login",
-            "class": "super"
-        },
-        {
-            "type" : "div",
-            "html" : 
-            {
-                "name" : "username",
-                "id" : "txt-username",
-                "caption" : "Username",
-                "type" : "text",
-                "placeholder" : "E.g. user@example.com"
-            }
-        },   
-        {
             "type" : "select",
-            "caption" : "Pays",
-            "id" : "pays",
-            "name" : "pays",
+            "caption" : "Catégorie de sport",
+            "name" : "type_sport",
+            "id" : "type_sport",
             "options" : {
-                "USA" : "USA",
-                "Canada" : "Canada",
-                "Allemagne" : "Allemagne"
+                "football"          : "football",
+                "rugby"             : "rugby",
+                "handball"          : "handball",
+                "volleyball"        : "volleyball",
+                "basketball"        : "basketball",
+                "escrime"           : "escrime",
+                "badminton"         : "badminton",
+                "aviron"            : "aviron",
+                "athletisme"        : "athletisme",
+                "natation"          : "natation",
+                "artsmartiaux"      : "artsmartiaux",
+                "tennis"            : "tennis",
+                "pingpong"          : "pingpong",
+                "futsal"            : "futsal",
+                "equitation"        : "equitation",
+                "polo"              : "polo",
+                "voile"             : "voile",
+                "karting"           : "karting",
+                "courseorientation" : "courseorientation",
+                "footballamericain" : "footballamericain",
+                "tirpistolet"       : "tirpistolet",
+                "ultimatefrisbee"   : "ultimatefrisbee",
+                "tirarc"            : "tirarc",
+                "echecs"            : "echecs",
+                "hockeygazon"       : "hockeygazon"
+
             }
-        },
-        {
-            "type" : "select",
-            "caption" : "Coorganisateur",
-            "name" : "coorganisateur",
-            "options" : {
-                "" : "aucun",
-                "École de finance" : "École de finance",
-                "École de communication" : "École de communication"
-            }
-        },
-        {
-            "name" : "password",
-            "caption" : "Password",
-            "type" : "password"
-        },
-        {
-            "type" : "progressbar",
-            "name" : "progression"
         },
         {
             "type" : "text",
-            "caption" : "Date",
-            "name" : "date_slide",
-            "datepicker" : {
-                "minDate" : "+1",
-                "dateFormat": "yy-mm-dd",
-                "firstDay": 1,
-                "dayNamesMin" : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-                "monthNames" : ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]
-            }
+            "name" : "titre",
+            "id" : "titre",
+            "caption" : "Nom du championnat ou du tournois"
         },
         {
-            "type" : "file",
-            "caption" : "Fichier"
+            "type" : "text",
+            "name" : "participant",
+            "id" : "participant",
+            "caption" : "Nom de l'équipe ou du sportif"
         },
         {
-            "type" : "checkbox",
-            "caption" : "Logo"
+            "type" : "text",
+            "name" : "type_resultat",
+            "id" : "type_resultat",
+            "caption" : "Type de résultat"
         },
         {
-            "type" : "reset",
-            "html" : "Réinitialiser"
-        },
+            "type" : "textarea",
+            "name" : "resultat",
+            "id" : "resultat",
+            "caption" : "Résultat(s)"
+        }
         {
             "type" : "button",
-            "html" : "Login",
+            "html" : "Sauvegarder",
             "id" : "validation"
-        },
-        {
-            "type" : "hellobutton",
-            "alert" : "Hello world!"
         }
     ]
 }

@@ -1,6 +1,6 @@
 {
     "action" : "index.html",
     "method" : "post",
-    "title" : "Slide Meteo",
-    "html" :[]
+    "title" : "Slide Default",
+    "html" : []
 }

@@ -1,12 +1,8 @@
 /* CSS Document */
 @charset "UTF-8";
 /*
-version improvisée pour les tests...
+slide « sports »
 */
-@font-face { 
-    font-family: 'GoetheGothicBold'; 
-    src: local('GoetheGothicBold'), local('GoetheGothicBold'), url('fonts/GoetheGothicBold.ttf') format('truetype'); 
-}  
 
 *{
 	border:none;
@@ -15,9 +11,9 @@ version improvisée pour les tests...
 }
 
 body,td,th {
-	font-family: "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
 	font-size: 10px;
-	
+	font-weight:bold;
 }
 
 body, th, td, .header, .texte, .footer, .texte2, .sport, .classement, .detail_classement{
@@ -25,7 +21,7 @@ body, th, td, .header, .texte, .footer, .texte2, .sport, .classement, .detail_cl
 }
 
 h1, h2, h3 {
-	font-weight: normal;
+	font-weight: bold;
 }
 
 h1, h2, p{
@@ -54,13 +50,13 @@ classes réservées pour le traitement JS :
 	position:relative;
 	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveHeader 0.9s ease-in-out;
-	-moz-animation: moveHeader 0.9s ease-in-out;
-	-ms-animation: moveHeader 0.9s ease-in-out;
-	animation: moveHeader 0.9s ease-in-out;
+	   -moz-animation: moveHeader 0.9s ease-in-out;
+		-ms-animation: moveHeader 0.9s ease-in-out;
+			animation: moveHeader 0.9s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveHeader{
@@ -108,13 +104,13 @@ classes réservées pour le traitement JS :
 	margin-top:2px;
 	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 	-webkit-animation: moveTexte 1.4s ease-in-out;
-	-moz-animation: moveTexte 1.4s ease-in-out;
-	-ms-animation: moveTexte 1.4s ease-in-out;
-	animation: moveTexte 1.4s ease-in-out;
+	   -moz-animation: moveTexte 1.4s ease-in-out;
+		-ms-animation: moveTexte 1.4s ease-in-out;
+			animation: moveTexte 1.4s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 .texte{
@@ -130,13 +126,13 @@ classes réservées pour le traitement JS :
 .sport{
 	z-index:1;
 	-webkit-animation: moveTexte 1.2s ease-in-out;
-	-moz-animation: moveTexte 1.2s ease-in-out;
-	-ms-animation: moveTexte 1.2s ease-in-out;
-	animation: moveTexte 1.2s ease-in-out;
+	   -moz-animation: moveTexte 1.2s ease-in-out;
+		-ms-animation: moveTexte 1.2s ease-in-out;
+			animation: moveTexte 1.2s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 .sport .le_sport{
@@ -150,13 +146,13 @@ classes réservées pour le traitement JS :
 .texte2{
 	z-index:3;
 	-webkit-animation: moveTexte 1.6s ease-in-out;
-	-moz-animation: moveTexte 1.6s ease-in-out;
-	-ms-animation: moveTexte 1.6s ease-in-out;
-	animation: moveTexte 1.6s ease-in-out;
+	   -moz-animation: moveTexte 1.6s ease-in-out;
+		-ms-animation: moveTexte 1.6s ease-in-out;
+			animation: moveTexte 1.6s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 .texte h3{
@@ -199,13 +195,13 @@ classes réservées pour le traitement JS :
 	padding-top:22px;
 	padding-bottom:35px;
 	-webkit-animation: moveFooter 1.8s ease-in-out;
-	-moz-animation: moveFooter 1.8s ease-in-out;
-	-ms-animation: moveFooter 1.8s ease-in-out;
-	animation: moveFooter 1.8s ease-in-out;
+	   -moz-animation: moveFooter 1.8s ease-in-out;
+		-ms-animation: moveFooter 1.8s ease-in-out;
+			animation: moveFooter 1.8s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveFooter{
@@ -228,13 +224,13 @@ classes réservées pour le traitement JS :
 	z-index:5;
 	padding-top:22px;
 	-webkit-animation: moveFooter 2s ease-in-out;
-	-moz-animation: moveFooter 2s ease-in-out;
-	-ms-animation: moveFooter 2s ease-in-out;
-	animation: moveFooter 2s ease-in-out;
+	   -moz-animation: moveFooter 2s ease-in-out;
+		-ms-animation: moveFooter 2s ease-in-out;
+			animation: moveFooter 2s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveFooter{
@@ -255,13 +251,13 @@ classes réservées pour le traitement JS :
 
 .exit .header{
 	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	-moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	animation: moveHeaderExit 0.4s ease-in-out forwards;
+	   -moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
+		-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
+			animation: moveHeaderExit 0.4s ease-in-out forwards;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;	
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;	
 }
 
 @-webkit-keyframes moveHeaderExit{
@@ -291,35 +287,35 @@ classes réservées pour le traitement JS :
 
 .exit .texte{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
-	animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
-	-moz-animation-delay: 0.4s;
-	-ms-animation-delay: 0.4s;
-	animation-delay: 0.4s;	
+	   -moz-animation-delay: 0.4s;
+		-ms-animation-delay: 0.4s;
+			animation-delay: 0.4s;	
 }
 
 .exit .texte2{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
-	animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.6s;
-	-moz-animation-delay: 0.6s;
-	-ms-animation-delay: 0.6s;
-	animation-delay: 0.6s;	
+	   -moz-animation-delay: 0.6s;
+		-ms-animation-delay: 0.6s;
+			animation-delay: 0.6s;	
 }
 
 .exit .sport{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
-	animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.2s;
-	-moz-animation-delay: 0.2s;
-	-ms-animation-delay: 0.2s;
-	animation-delay: 0.2s;	
+	   -moz-animation-delay: 0.2s;
+		-ms-animation-delay: 0.2s;
+			animation-delay: 0.2s;	
 }
 
 @-webkit-keyframes moveTexteExit{
@@ -349,24 +345,24 @@ classes réservées pour le traitement JS :
 
 .exit .classement{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
-	animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;
 	-webkit-animation-delay: 1s;
-	-moz-animation-delay: 1s;
-	-ms-animation-delay: 1s;
-	animation-delay: 1s;	
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;	
 }
 
 .exit .detail_classement{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
-	animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;
 	-webkit-animation-delay: 1.2s;
-	-moz-animation-delay: 1.2s;
-	-ms-animation-delay: 1.2s;
-	animation-delay: 1.2s;	
+	   -moz-animation-delay: 1.2s;
+		-ms-animation-delay: 1.2s;
+			animation-delay: 1.2s;	
 }
 
 @-webkit-keyframes moveFooterExit{

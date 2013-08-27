@@ -1,7 +1,9 @@
-
 // Javascript
+// SLIDE METEO
 
-$(document).ready(function(){
+remplissage();
+
+function remplissage(){
 	
 	// remplissage
 	
@@ -41,7 +43,6 @@ $(document).ready(function(){
 		$('#meteo1 .forecast'+i+' .temperature_max span').html(		forecast.temp_max);
 	}
 	
-	
 	//$('#meteo1').hide(); $('#meteo2').show();
 	
 	// les résumés
@@ -59,7 +60,6 @@ $(document).ready(function(){
 		}
 	}
 	
-	
 	// timeout pour passer au 2ème slide
 	// slide_duree est transmis par structure/slideshow-javascript.php
 
@@ -71,7 +71,6 @@ $(document).ready(function(){
 		/*$('#meteo1').addClass('exit');*/
 	}, nextMeteoDelay);
 
-	$('#meteo2').hide();
+	$('#meteo2').hide();	
 	
-	
-});
+}

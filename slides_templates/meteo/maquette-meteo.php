@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>SciencesPo | Écrans PLASMA</title>
 
-<link href="../css/slideshow.css" rel="stylesheet" type="text/css" />
+<link href="../../css/slideshow.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 
 <script language="javascript" src="http://client.syclo.fr/sciencespo/plasma/js/jquery-1.7.2.min.js"></script>

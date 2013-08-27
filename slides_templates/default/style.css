@@ -1,9 +1,8 @@
 /* CSS Document */
 @charset "UTF-8";
 /*
-style « verbatim »
+slide « default »
 */
-
 
 *{
 	border:none;
@@ -14,8 +13,8 @@ style « verbatim »
 body,td,th {
 	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
 	font-size: 10px;
-	font-weight:bold;
 	background:rgb(203,02,26);
+	font-weight: bold;
 }
 h1, h2, h3 {
 	font-weight: bold;
@@ -27,7 +26,7 @@ h1, p{
 
 #template{
 	width:720px;
-	height:1210px;
+	height:1270px;
 	padding:35px 0px;
 	overflow: hidden;
 	display:block;
@@ -130,10 +129,16 @@ classes réservées pour le traitement JS :
 	float:left;
 	width: 87.8%;
 	padding:0px 6.1%;
-	-webkit-animation: moveTexte 0.8s ease-in-out;
-	   -moz-animation: moveTexte 0.8s ease-in-out;
-		-ms-animation: moveTexte 0.8s ease-in-out;
-			animation: moveTexte 0.8s ease-in-out;
+
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+		-ms-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
+
+	-webkit-animation: moveTexte 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexte 0.8s ease-in-out forwards;
+		-ms-animation: moveTexte 0.8s ease-in-out forwards;
+			animation: moveTexte 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
 	   -moz-animation-delay: 0.4s;
 		-ms-animation-delay: 0.4s;
@@ -144,19 +149,33 @@ classes réservées pour le traitement JS :
 	0%{
 		-webkit-transform: translate(0px, 1270px);
 	}
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
 }
 @-moz-keyframes moveTexte{
 	0%{
 		-moz-transform: translate(0px, 1270px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
 	}
 }
 @keyframes moveTexte{
 	0%{
 		transform: translate(0px, 1270px);
 	}
+	100%{
+		transform: translate(0px, 0px);
+	}
 }
 
+
 .exit .texte{
+	-webkit-transform: translate(0px, 0px);
+	   -moz-transform: translate(0px, 0px);
+			transform: translate(0px, 0px);
+
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
 	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
 		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
@@ -205,17 +224,22 @@ classes réservées pour le traitement JS :
 }
 
 .footer {
+	position:absolute;
 	height: 27px;
 	width: 87.8%;
 	padding:30px 6.1% 0px;
 	border-top:1px solid #000;
-	position:absolute;
 	left:0px;
 	bottom:35px;
-	-webkit-animation: moveFooter 0.4s ease-in-out;
-	   -moz-animation: moveFooter 0.4s ease-in-out;
-		-ms-animation: moveFooter 0.4s ease-in-out;
-			animation: moveFooter 0.4s ease-in-out;
+	-webkit-transform: translate(0px, 100px);
+	   -moz-transform: translate(0px, 100px);
+		-ms-transform: translate(0px, 100px);
+			transform: translate(0px, 100px);
+
+	-webkit-animation: moveFooter 0.4s ease-in-out forwards;
+	   -moz-animation: moveFooter 0.4s ease-in-out forwards;
+		-ms-animation: moveFooter 0.4s ease-in-out forwards;
+			animation: moveFooter 0.4s ease-in-out forwards;
 	-webkit-animation-delay: 1.1s;
 	   -moz-animation-delay: 1.1s;
 		-ms-animation-delay: 1.1s;
@@ -226,17 +250,27 @@ classes réservées pour le traitement JS :
 	0%{
 		-webkit-transform: translate(0px, 100px);
 	}
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
 }
 @-moz-keyframes moveFooter{
 	0%{
 		-moz-transform: translate(0px, 100px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
 	}
 }
 @keyframes moveFooter{
 	0%{
 		transform: translate(0px, 100px);
 	}
+	100%{
+		transform: translate(0px, 0px);
+	}
 }
+
 
 .exit .footer{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
@@ -273,6 +307,8 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, -1270px);
 	}
 }
+
+
 
 @media screen and (orientation:landscape){
 	#ombre{

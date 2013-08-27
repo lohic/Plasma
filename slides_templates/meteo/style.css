@@ -1,12 +1,8 @@
 /* CSS Document */
 @charset "UTF-8";
 /*
-version improvisée pour les tests...
+slide « meteo »
 */
-@font-face { 
-    font-family: 'GoetheGothicBold'; 
-    src: local('GoetheGothicBold'), local('GoetheGothicBold'), url('fonts/GoetheGothicBold.ttf') format('truetype'); 
-}  
 
 *{
 	border:none;
@@ -15,11 +11,12 @@ version improvisée pour les tests...
 }
 
 body,td,th {
-	font-family: "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
 	font-size: 10px;
+	font-weight:bold;
 }
 h1, h2, h3 {
-	font-weight: normal;
+	font-weight: bold;
 }
 
 h1, p{
@@ -80,13 +77,13 @@ classes réservées pour le traitement JS :
 	position:relative;
 	margin-bottom:30px;
 	-webkit-animation: moveHeader 0.9s ease-in-out;
-	-moz-animation: moveHeader 0.9s ease-in-out;
-	-ms-animation: moveHeader 0.9s ease-in-out;
-	animation: moveHeader 0.9s ease-in-out;
+	   -moz-animation: moveHeader 0.9s ease-in-out;
+		-ms-animation: moveHeader 0.9s ease-in-out;
+			animation: moveHeader 0.9s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo1 .ville{
@@ -257,13 +254,13 @@ classes réservées pour le traitement JS :
 	padding:0px 6.1%;
 	margin-top:30px;
 	-webkit-animation: moveTexte 1.2s ease-in-out;
-	-moz-animation: moveTexte 1.2s ease-in-out;
-	-ms-animation: moveTexte 1.2s ease-in-out;
-	animation: moveTexte 1.2s ease-in-out;
+	   -moz-animation: moveTexte 1.2s ease-in-out;
+		-ms-animation: moveTexte 1.2s ease-in-out;
+			animation: moveTexte 1.2s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 	padding-bottom:0px;
 	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 }
@@ -317,13 +314,13 @@ classes réservées pour le traitement JS :
 	float:left;
 	padding-top:30px;
 	-webkit-animation: moveFooter 1.5s ease-in-out;
-	-moz-animation: moveFooter 1.5s ease-in-out;
-	-ms-animation: moveFooter 1.5s ease-in-out;
-	animation: moveFooter 1.5s ease-in-out;
+	   -moz-animation: moveFooter 1.5s ease-in-out;
+		-ms-animation: moveFooter 1.5s ease-in-out;
+			animation: moveFooter 1.5s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 	position:relative;
 	z-index:1;
 	margin-top:2px;
@@ -331,68 +328,68 @@ classes réservées pour le traitement JS :
 
 #meteo1 .footer .autre_jour:first-child{
 	-webkit-animation: moveFooter 1.5s ease-in-out;
-	-moz-animation: moveFooter 1.5s ease-in-out;
-	-ms-animation: moveFooter 1.5s ease-in-out;
-	animation: moveFooter 1.5s ease-in-out;
+	   -moz-animation: moveFooter 1.5s ease-in-out;
+		-ms-animation: moveFooter 1.5s ease-in-out;
+			animation: moveFooter 1.5s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo1 .footer .autre_jour + .autre_jour{
 	-webkit-animation: moveFooter 1.8s ease-in-out;
-	-moz-animation: moveFooter 1.8s ease-in-out;
-	-ms-animation: moveFooter 1.8s ease-in-out;
-	animation: moveFooter 1.8s ease-in-out;
+	   -moz-animation: moveFooter 1.8s ease-in-out;
+		-ms-animation: moveFooter 1.8s ease-in-out;
+			animation: moveFooter 1.8s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo1 .footer .autre_jour + .autre_jour + .autre_jour{
 	-webkit-animation: moveFooter 2.1s ease-in-out;
-	-moz-animation: moveFooter 2.1s ease-in-out;
-	-ms-animation: moveFooter 2.1s ease-in-out;
-	animation: moveFooter 2.1s ease-in-out;
+	   -moz-animation: moveFooter 2.1s ease-in-out;
+		-ms-animation: moveFooter 2.1s ease-in-out;
+			animation: moveFooter 2.1s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour{
 	-webkit-animation: moveFooter 2.4s ease-in-out;
-	-moz-animation: moveFooter 2.4s ease-in-out;
-	-ms-animation: moveFooter 2.4s ease-in-out;
-	animation: moveFooter 2.4s ease-in-out;
+	   -moz-animation: moveFooter 2.4s ease-in-out;
+		-ms-animation: moveFooter 2.4s ease-in-out;
+			animation: moveFooter 2.4s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour{
 	-webkit-animation: moveFooter 2.7s ease-in-out;
-	-moz-animation: moveFooter 2.7s ease-in-out;
-	-ms-animation: moveFooter 2.7s ease-in-out;
-	animation: moveFooter 2.7s ease-in-out;
+	   -moz-animation: moveFooter 2.7s ease-in-out;
+		-ms-animation: moveFooter 2.7s ease-in-out;
+			animation: moveFooter 2.7s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour{
 	-webkit-animation: moveFooter 3s ease-in-out;
-	-moz-animation: moveFooter 3s ease-in-out;
-	-ms-animation: moveFooter 3s ease-in-out;
-	animation: moveFooter 3s ease-in-out;
+	   -moz-animation: moveFooter 3s ease-in-out;
+		-ms-animation: moveFooter 3s ease-in-out;
+			animation: moveFooter 3s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveFooter{
@@ -422,13 +419,13 @@ classes réservées pour le traitement JS :
 
 #meteo1.exit .header{
 	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	-moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
-	animation: moveHeaderExit 0.4s ease-in-out forwards;
+	   -moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
+		-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
+			animation: moveHeaderExit 0.4s ease-in-out forwards;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;	
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;	
 }
 
 @-webkit-keyframes moveHeaderExit{
@@ -458,13 +455,13 @@ classes réservées pour le traitement JS :
 
 #meteo1.exit .texte{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-moz-animation: moveTexteExit 0.8s ease-in-out forwards;
-	-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
-	animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
-	-moz-animation-delay: 0.4s;
-	-ms-animation-delay: 0.4s;
-	animation-delay: 0.4s;	
+	   -moz-animation-delay: 0.4s;
+		-ms-animation-delay: 0.4s;
+			animation-delay: 0.4s;	
 }
 
 @-webkit-keyframes moveTexteExit{
@@ -494,13 +491,13 @@ classes réservées pour le traitement JS :
 
 #meteo1.exit .footer{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-moz-animation: moveFooterExit 0.9s ease-in-out forwards;
-	-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
-	animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;
 	-webkit-animation-delay: 0.8s;
-	-moz-animation-delay: 0.8s;
-	-ms-animation-delay: 0.8s;
-	animation-delay: 0.8s;	
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
 }
 
 @-webkit-keyframes moveFooterExit{
@@ -584,13 +581,13 @@ classes réservées pour le traitement JS :
     position: relative;
     width: 87.8%;
 	-webkit-animation: moveHeaderMeteo 0.9s ease-in-out;
-	-moz-animation: moveHeaderMeteo 0.9s ease-in-out;
-	-ms-animation: moveHeaderMeteo 0.9s ease-in-out;
-	animation: moveHeaderMeteo 0.9s ease-in-out;
+	   -moz-animation: moveHeaderMeteo 0.9s ease-in-out;
+		-ms-animation: moveHeaderMeteo 0.9s ease-in-out;
+			animation: moveHeaderMeteo 0.9s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveHeaderMeteo{
@@ -757,13 +754,13 @@ classes réservées pour le traitement JS :
 
 #meteo2 .footer {
 	-webkit-animation: moveFooterMeteo 1.2s ease-in-out;
-	-moz-animation: moveFooterMeteo 1.2s ease-in-out;
-	-ms-animation: moveFooterMeteo 1.2s ease-in-out;
-	animation: moveFooterMeteo 1.2s ease-in-out;
+	   -moz-animation: moveFooterMeteo 1.2s ease-in-out;
+		-ms-animation: moveFooterMeteo 1.2s ease-in-out;
+			animation: moveFooterMeteo 1.2s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
     float: left;
     margin-top: 2px;
     position: relative;
@@ -772,68 +769,68 @@ classes réservées pour le traitement JS :
 
 #meteo2 .footer .autre_campus:first-child{
 	-webkit-animation: moveFooterMeteo 1.5s ease-in-out;
-	-moz-animation: moveFooterMeteo 1.5s ease-in-out;
-	-ms-animation: moveFooterMeteo 1.5s ease-in-out;
-	animation: moveFooterMeteo 1.5s ease-in-out;
+	   -moz-animation: moveFooterMeteo 1.5s ease-in-out;
+		-ms-animation: moveFooterMeteo 1.5s ease-in-out;
+			animation: moveFooterMeteo 1.5s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo2 .footer .autre_campus + .autre_campus{
 	-webkit-animation: moveFooterMeteo 1.8s ease-in-out;
-	-moz-animation: moveFooterMeteo 1.8s ease-in-out;
-	-ms-animation: moveFooterMeteo 1.8s ease-in-out;
-	animation: moveFooterMeteo 1.8s ease-in-out;
+	   -moz-animation: moveFooterMeteo 1.8s ease-in-out;
+		-ms-animation: moveFooterMeteo 1.8s ease-in-out;
+			animation: moveFooterMeteo 1.8s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus{
 	-webkit-animation: moveFooterMeteo 2.1s ease-in-out;
-	-moz-animation: moveFooterMeteo 2.1s ease-in-out;
-	-ms-animation: moveFooterMeteo 2.1s ease-in-out;
-	animation: moveFooterMeteo 2.1s ease-in-out;
+	   -moz-animation: moveFooterMeteo 2.1s ease-in-out;
+		-ms-animation: moveFooterMeteo 2.1s ease-in-out;
+			animation: moveFooterMeteo 2.1s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus{
 	-webkit-animation: moveFooterMeteo 2.4s ease-in-out;
-	-moz-animation: moveFooterMeteo 2.4s ease-in-out;
-	-ms-animation: moveFooterMeteo 2.4s ease-in-out;
-	animation: moveFooterMeteo 2.4s ease-in-out;
+	   -moz-animation: moveFooterMeteo 2.4s ease-in-out;
+		-ms-animation: moveFooterMeteo 2.4s ease-in-out;
+			animation: moveFooterMeteo 2.4s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
 	-webkit-animation: moveFooterMeteo 2.7s ease-in-out;
-	-moz-animation: moveFooterMeteo 2.7s ease-in-out;
-	-ms-animation: moveFooterMeteo 2.7s ease-in-out;
-	animation: moveFooterMeteo 2.7s ease-in-out;
+	   -moz-animation: moveFooterMeteo 2.7s ease-in-out;
+		-ms-animation: moveFooterMeteo 2.7s ease-in-out;
+			animation: moveFooterMeteo 2.7s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
 	-webkit-animation: moveFooterMeteo 3s ease-in-out;
-	-moz-animation: moveFooterMeteo 3s ease-in-out;
-	-ms-animation: moveFooterMeteo 3s ease-in-out;
-	animation: moveFooterMeteo 3s ease-in-out;
+	   -moz-animation: moveFooterMeteo 3s ease-in-out;
+		-ms-animation: moveFooterMeteo 3s ease-in-out;
+			animation: moveFooterMeteo 3s ease-in-out;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 @-webkit-keyframes moveFooterMeteo{
@@ -863,13 +860,13 @@ classes réservées pour le traitement JS :
 
 #meteo2 .exit .header{
 	-webkit-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
-	-moz-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
-	-ms-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
-	animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
+	   -moz-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
+		-ms-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
+			animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
 	-webkit-animation-delay: 0s;
-	-moz-animation-delay: 0s;
-	-ms-animation-delay: 0s;
-	animation-delay: 0s;	
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;	
 }
 
 @-webkit-keyframes moveHeaderMeteoExit{
@@ -899,13 +896,13 @@ classes réservées pour le traitement JS :
 
 #meteo2 .exit .footer{
 	-webkit-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
-	-moz-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
-	-ms-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
-	animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+			animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
-	-moz-animation-delay: 0.4s;
-	-ms-animation-delay: 0.4s;
-	animation-delay: 0.4s;	
+	   -moz-animation-delay: 0.4s;
+		-ms-animation-delay: 0.4s;
+			animation-delay: 0.4s;	
 }
 
 @-webkit-keyframes moveFooterMeteoExit{
