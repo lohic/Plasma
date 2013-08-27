@@ -1,3 +1,26 @@
+#show_previous{
+    float: left;
+
+}
+#show_next{
+    float: right;
+}
+
+input#group{
+    display: inline-block;
+}
+#add_screen{
+    display: inline-block;
+}
+
+#mytimeline{
+    margin-top:30px;
+}
+
+/*
+MISE EN FORME DE LA TIMELINE
+ */
+
 div.timeline-frame {
     border: 1px solid #BEBEBE;
     overflow: hidden;

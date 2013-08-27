@@ -567,36 +567,47 @@ class Slide {
 	/*
 	* mise à jour ou création d'un item de la timeline
 	 */
-	function update_timeline_item($id=NULL){
+	function update_timeline_item($id=NULL, $delete = false){
+
+		$titre		= isset($_POST['titre'])	? func::GetSQLValueString( $_POST['titre'], 'text') : 'sans titre';
+		$start  	= isset($_POST['start']) 	? func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ), 'text') : date('Y-m-d H:i:s');
+        $end    	= isset($_POST['end']) 		? func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ), 'text') : date('Y-m-d H:i:s');
+        $group		= isset($_POST['group']) 	? func::GetSQLValueString( $_POST['group'], 'text') : '';
+        $published	= isset($_POST['published'])? func::GetSQLValueString( $_POST['published'],'int'): 1;
+        $ordre		= isset($_POST['ordre']) 	? func::GetSQLValueString( $_POST['ordre'], 'int') : 0;
 
 		if( !isset($id) ){
 			// création
 			// 
-			// 
-			$start  	= func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ),'text');
-            $end    	= func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ),'text');
-            $group		= func::GetSQLValueString($_POST['group'],'text');
-            $published	= func::GetSQLValueString($_POST['published'],'int');
-            $ordre		= func::GetSQLValueString($_POST['ordre'],'int');
+			
 
-            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end) VALUES (%s, %s)",$start,$end);
+            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slide_tb (titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s)",$titre,$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
 
 			echo '{"id":"'+ $item_id +'"}';
 
-		}else{
+		}else if( !$delete ){
 			//mise à jour
-			$start  = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ),'text');
-            $end    = func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ),'text');
-            $group	= func::GetSQLValueString($_POST['group'],'text');
+
+            $sql_slide			= sprintf("UPDATE ".TB."timeline_slide_tb SET titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$titre,$start,$end,$group,$published,$id);
+            //sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+
+			echo '{"id":"'+ $id +'"}';
+		}else{
+			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_slide_tb WHERE id=%s",$id);
+            //sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+
+			echo '{"message":"supression du slide «'. $_POST['titre'] .'»"}';
 		}
 	}
 
 	function get_timeline_items(){
 
-		$query 				= 'SELECT id,start,end FROM '.TB.'timeline_slide_tb';
+		$query 				= 'SELECT * FROM '.TB.'timeline_slide_tb';
 		$sql_slide			= sprintf($query); //echo $sql_slide;	
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
@@ -604,27 +615,19 @@ class Slide {
 
 		while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
 
+			$class = $slide_item['published']==0?'unpublished':'';
+
 			$temp[] = '{
-    "start"	: new Date('. $this->dateMysql2JS( $slide_item['start'] ) .') ,
+    "id":'. $slide_item['id'] .',
+    "start"	: new Date('. $this->dateMysql2JS( $slide_item['start'] ) .'),
     "end"	: new Date('. $this->dateMysql2JS( $slide_item['end'] ) .'),
-    "content": "item-'. $slide_item['id'] .'",
-    "className": "evenement-1",
-    "group":"2 - écran 2",
+    "content": "'. $slide_item['titre'] .'",
+    "className": "'. $class .'",
+    "group":"'. $slide_item['type_target'] .'",
     "editable": true,
-    "type" : "slide",
-    "test":"youpi 2",
-    "id":'. $slide_item['id'] .'
+    "type" : "slide"
 }';
 						
-			/*$class				= 'listItemRubrique'.($i+1);
-			$id					= $slide_item['id'];
-			$nom				= $slide_item['nom'];
-			$template			= $slide_item['template'];
-			$icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$template.'/vignette.gif';
-				
-			include('../structure/slide-list-bloc.php');
-			
-			$i = ($i+1)%2;*/
 		}
 
 		return implode(",\n", $temp);

@@ -61,12 +61,14 @@ $isGroup = true;
 	<div class="reset"></div>
 
 	<p>Le début d'un slide est prioritaire sur sa fin.</p>
-        
-	<p>Slides du <span id="json_start_date">date de début</span> au <span id="json_end_date">date de fin</span>.</p>
+    
+    <div class="reset"></div>   
 	<p>
 		<button id="show_previous">Afficher les 10 jours précédents</button>
 		<button id="show_next">Afficher les 10 jours suivants</button>
 	</p>
+	<div class="reset"></div>
+	
 	<p>
 		<input type="text" value="group" id="group" />
 		<button id="add_screen">Ajouter un écran</button>
@@ -80,15 +82,13 @@ $isGroup = true;
 
 
 <!--
-EDITER LES INFORMATIONS D'UN SLIDE
+EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 -->
 <script id="slide_editor" type="text/html">
     <div style="width:500px">
         <h1>{{content}}</h1>
         <form>
-            <p><input type="text" value="{{start}}" /></p>
-            <p><input type="text" value="{{end}}" /></p>
-            <p><input type="text" value="{{content}}" /><p/>
+        	<fieldset>
             <p>
                 <select id="screen_reference">
                     {{#selector}}
@@ -97,18 +97,15 @@ EDITER LES INFORMATIONS D'UN SLIDE
                 </select>
             </p>
             <div>
-                <p><label for="test"></label><input id="test" name="test" type="text" value="{{test}}"></p>
-                <h3>durée</h3>
-                <p class="duree">durée : {{duree}}</p>
-                <h3>début</h3>
-                <p>année : {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>
-                <h3>fin</h3>
-                <p>année : {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
+                <h3>Durée : {{duree}}</h3>
+                <p><span class="date">début :</span> {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>
+                <p><span class="date">fin :</span> {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
             </div>
-            <!--<p><input type="submit" value="Enregistrer" id="save_slide"></p>-->
+            </fieldset>
         </form>
-        <button id="edit_slide_content">Éditer le contenu</button>
+        
         <button id="save_slide">Enregistrer</button>
+        <button id="edit_slide_content">Éditer le contenu</button>
         <button id="publish_slide">Publier le slide</button>
     </div>
 </script>

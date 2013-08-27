@@ -228,6 +228,13 @@ a:hover{
 	margin:5px 0;
 }
 
+p span.date{
+	display: inline-block;
+	width:80px;
+	font-weight: bold;
+	font-style: italic;
+}
+
 .resume{
 	font-size:10px;
 	font-style:italic;

@@ -21,4 +21,17 @@ if($core->isAdmin){
 
         $slide->update_timeline_item();
     }
+
+    else if($action != NULL && $action == 'update-item' && isset($_POST['id']) ){
+
+        $slide->update_timeline_item( $_POST['id'] );
+
+    }
+
+    else if($action != NULL && $action == 'delete-item' && isset($_POST['id']) ){
+
+        $slide->update_timeline_item( $_POST['id'], true );
+
+    }
+
 }

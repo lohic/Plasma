@@ -14,12 +14,12 @@ $('document').ready(function(){
         addScreen();
     });
 
-    $.getJSON('../ajax/slide-data.js', function(data) {
+    /*$.getJSON('../ajax/slide-data.js', function(data) {
         console.log("C : "+data.C);
-    });
+    });*/
 
     // TEST D'INCLUSION DE TEMPLATE
-    var timestamp = new Date().getTime();
+    /*var timestamp = new Date().getTime();
     $.ajax({
         url: "../slides_templates/compte_a_rebours/structure.js?cache="+timestamp,
     }).done(function ( data ) {
@@ -28,7 +28,7 @@ $('document').ready(function(){
         console.log("OK template ready");
         console.log(structure.date);
         ich.addTemplate('compte_a_rebour',template);
-    });
+    });*/
     
     drawVisualization();
 });
@@ -50,12 +50,10 @@ function drawVisualization() {
         'width':  '100%',
         'height': 'auto',
         'snapEvents' : true,
-        //'start': new Date(2012, 0, 1),
-        //'end': new Date(2012, 11, 31),
         'cluster': true,
         'axisOnTop': true,
         'zoomMin' : 1000*60*60,
-        'min' : new Date(2012, 0, 1),
+        'min' : new Date(2013, 7, 1),
         'max' : new Date(2013, 11, 31),
         'start' : todayM3,
         'end' : todayP4,
@@ -115,6 +113,7 @@ function drawVisualization() {
                 type    : "POST",
                 dataType:'json',
                 data    : {
+                    titre   : data[row].content,
                     start   : new Date(data[row].start).addHours(2),
                     end     : new Date(data[row].end).addHours(2),
                     group   : data[row].group,
@@ -148,10 +147,26 @@ function drawVisualization() {
 
             var debut = new Date(data[row].start);
 
-            $(".start_date").text(  debut.getDate() + " " + (debut.getMonth()+1) + " " + debut.getFullYear());
-            $(".end_date").text( data[row].end );
-            $(".contenu").text( data[row].content );
-            $(".groupe").text( data[row].group );
+            $.ajax({
+                url     :"../ajax/data-timeline-slide.php",
+                type    : "POST",
+                dataType:'json',
+                data    : {
+                    id      : data[row].id,
+                    titre   : data[row].content,
+                    start   : new Date(data[row].start).addHours(2),
+                    end     : new Date(data[row].end).addHours(2),
+                    group   : data[row].group,
+                    action  : 'update-item'
+                }
+            }).done(function ( dataJSON ) {
+                console.log(dataJSON);
+                if( typeof(ref)!='undefined' ){
+                    timeline.changeItem(ref, {
+                        'id': dataJSON.id
+                    });
+                }
+            });
 
             console.log("onChange :\n" + data[row].start + ' >> ' + data[row].end + '\n[groupe : ' + data[row].group + ']');
         }
@@ -169,7 +184,20 @@ function drawVisualization() {
         }
 
         if (row != undefined) {
-            console.log('Delete : ' + data[row].content + '\n' +  data[row].test);
+            $.ajax({
+                url     :"../ajax/data-timeline-slide.php",
+                type    : "POST",
+                dataType:'json',
+                data    : {
+                    id      : data[row].id,
+                    titre   : data[row].content,
+                    action  : 'delete-item'
+                }
+            }).done(function ( dataJSON ) {
+                alert(dataJSON.message);
+                console.log(dataJSON);
+            });
+            console.log('DELETE : ' + data[row].content);
         }
     }
     
@@ -186,12 +214,12 @@ function drawVisualization() {
         }
 
         if (row != undefined) {
-            console.log("SELECT - id : " + row);
+            console.log("SELECT");
+            console.log("id : "  + data[row].id );
             console.log("start : "  + data[row].start );
             console.log("end : "    + data[row].end );
             console.log("content : "+ data[row].content );
             console.log("group : "  + data[row].group );
-
         }  
     };
 
@@ -266,23 +294,22 @@ function editSlide(ref){
         content:   data[ref].content,
         start:     data[ref].start,
         end:       data[ref].end,
-        test:      data[ref].test,
 
         duree:     second2HMS(duree),
 
         annee1:    date1.getFullYear(),
-        mois1:     date1.getMonth() + 1,
-        jour1:     date1.getDate(),
-        heure1:    date1.getHours(),
-        minute1:   date1.getMinutes(),
-        seconde1:  date1.getSeconds(),
+        mois1:     date1.getMonth() + 1 <10 ? "0"+(date1.getMonth() + 1): date1.getMonth() + 1,
+        jour1:     date1.getDate() <10      ? "0"+date1.getDate()       : date1.getDate(),
+        heure1:    date1.getHours()<10      ? "0"+date1.getHours()      : date1.getHours(),
+        minute1:   date1.getMinutes()<10    ? "0"+date1.getMinutes()    : date1.getMinutes(),
+        seconde1:  date1.getSeconds()<10    ? "0"+date1.getSeconds()    : date1.getSeconds(),
 
         annee2:    date2.getFullYear(),
-        mois2:     date2.getMonth() + 1,
-        jour2:     date2.getDate(),
-        heure2:    date2.getHours(),
-        minute2:   date2.getMinutes(),
-        seconde2:  date2.getSeconds(),
+        mois2:     date2.getMonth() + 1 <10 ? "0"+(date2.getMonth() + 1): date2.getMonth() + 1,
+        jour2:     date2.getDate() <10      ? "0"+date2.getDate()       : date2.getDate(),
+        heure2:    date2.getHours()<10      ? "0"+date2.getHours()      : date2.getHours(),
+        minute2:   date2.getMinutes()<10    ? "0"+date2.getMinutes()    : date2.getMinutes(),
+        seconde2:  date2.getSeconds()<10    ? "0"+date2.getSeconds()    : date2.getSeconds(),
 
         selector: screen_list,
 
@@ -304,6 +331,8 @@ function editSlide(ref){
     $('#screen_reference').val(data[ref].group);
 
     $('#save_slide').click(function(e){
+
+        console.log('ok');
 
         var group = $('#screen_reference').val();
         console.log('changement de groupe : '+group);
@@ -348,13 +377,13 @@ function editSlideContent(ref){
 */ 
 function second2HMS(duree){
     // heure
-    retour = (duree-duree%3600)/3600 + 'h : ';
+    retour = (duree-duree%3600)/3600<10 ? "0"+ (duree-duree%3600)/3600+"h"  : (duree-duree%3600)/3600 + 'h';
     duree = duree%3600;
     // minute
-    retour += (duree-duree%60)/60 + 'm : ';
+    retour += (duree-duree%60)/60 <10   ? "0"+(duree-duree%60)/60+"m"    : (duree-duree%60)/60 + 'm';
     duree = duree%60;
     // secondes
-    retour += duree +'s';
+    retour += duree < 10                ? "0"+duree+"s"                      : duree+'s';
 
     return retour;
 }
