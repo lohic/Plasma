@@ -7,28 +7,28 @@ include_once('../classe/classe_core.php');
 include_once('../classe/classe_slide.php');
 include_once("../classe/classe_fonctions.php");
 
-
 $core = new core();
 
 if($core->isAdmin){ 
 
     $slide = new Slide();
-
     $action = isset($_POST['action']) ? $_POST['action'] : NULL;
 
-
+    // creation d'un item
     if($action != NULL && $action == 'create-item'){
 
         $slide->update_timeline_item();
     }
-
-    else if($action != NULL && $action == 'update-item' && isset($_POST['id']) ){
+    // mise à jour d'un item
+    else
+    if($action != NULL && $action == 'update-item' && isset($_POST['id']) ){
 
         $slide->update_timeline_item( $_POST['id'] );
 
     }
-
-    else if($action != NULL && $action == 'delete-item' && isset($_POST['id']) ){
+    // suppression d'un item
+    else
+    if($action != NULL && $action == 'delete-item' && isset($_POST['id']) ){
 
         $slide->update_timeline_item( $_POST['id'], true );
 

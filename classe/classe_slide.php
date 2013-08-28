@@ -13,11 +13,11 @@ class Slide {
 	var $id				= NULL;
 	var $func			= NULL;
 	
-	/*
-	@ GESTION DES TEMPLATE
-	@ LOIC
-	@ 18/07/2012
-	*/
+	/**
+	 * GESTION DES TEMPLATE
+	 * LOIC
+	 * 18/07/2012
+	 */
 	function slide($_id=NULL){
 		global $connexion_info;
 		$this->slide_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
@@ -32,11 +32,11 @@ class Slide {
 		$this->slide_update_data();
 	}
 	
-	/*
-	@ mise à jour des informations d'un slide
-	@ LOIC
-	@ 18/07/2012
-	*/
+	/**
+	 * mise à jour des informations d'un slide
+	 * LOIC
+	 * 18/07/2012
+	 */
 	function slide_update_data(){
 		
 		// on normalise les données
@@ -66,13 +66,13 @@ class Slide {
 	
 	
 	
-	/*
-	@ creation ou modification d'un slide
-	@ LOIC
-	@ 18/07/2012
-	@ mod Gildas 
-	@ 19/07/2012
-	*/
+	/**
+	 * creation ou modification d'un slide
+	 * LOIC
+	 * 18/07/2012
+	 * mod Gildas 
+	 * 19/07/2012
+	 */
 	function update_slide($_array_val,$_id=NULL){
 		$this->slide_db->connect_db();
 		
@@ -117,13 +117,13 @@ class Slide {
 		
 	}
 	
-	/*
-	@ creation  d'un slide
-	@ LOIC
-	@ 18/07/2012
-	@ mod Gildas 
-	@ 11/10/2012
-	*/
+	/**
+	 * creation d'un slide
+	 * @author LOIC
+	 * 18/07/2012
+	 * mod Gildas 
+	 * 11/10/2012
+	 */
 	function create_slide($_array_val){
 		$this->slide_db->connect_db();
 		
@@ -165,10 +165,10 @@ class Slide {
 		
 	}
 	
-	/*
-	@ GILDAS
-	@ 11/10/2012
-	*/
+	/**
+	 * GILDAS
+	 * 11/10/2012
+	 */
 	function create_slide_folders(){
 		$this->slide_db->connect_db();
 		
@@ -196,13 +196,13 @@ class Slide {
 		}
 	}
 	
-	/*
-	@ suprression d'un slide
-	@ LOIC
-	@ 18/07/2012
-	@ mod Gildas 
-	@ 11/10/2012
-	*/
+	/**
+	 * suprression d'un slide
+	 * @author LOIC
+	 * @date 18/07/2012
+	 * mod Gildas 
+	 * 11/10/2012
+	 */
 	function suppr_slide($_id=NULL){
 		$this->slide_db->connect_db();
 		
@@ -220,12 +220,12 @@ class Slide {
 	}
 	
 	
-	/*
-	@ listage des slides existants
-	@ LOIC
-	@ mod GILDAS
-	@ 19/07/2012
-	*/
+	/**
+	 * listage des slides existants
+	 * @author LOIC
+	 * mod GILDAS
+	 * @date 19/07/2012
+	 */
 	function get_slide_edit_liste($template=NULL,$annee=NULL,$mois=NULL){
 		
 		$this->slide_db->connect_db();
@@ -268,13 +268,13 @@ class Slide {
 	}
 	
 	/**
-	* get_slide_popup_liste listage des slides existants pour la selection dans la gestion ecran
-	* @author Loïc Horellou
-	* @param $template
-	* @param $annee
-	* @param $mois
-	* @param $id_selected
-	*/
+	 * get_slide_popup_liste listage des slides existants pour la selection dans la gestion ecran
+	 * @author Loïc Horellou
+	 * @param $template
+	 * @param $annee
+	 * @param $mois
+	 * @param $id_selected
+	 */
 	function get_slide_popup_liste($template=NULL,$annee=NULL,$mois=NULL,$id_selected=NULL){
 		
 		$this->slide_db->connect_db();
@@ -324,7 +324,10 @@ class Slide {
 	
 	
 	
-	
+	/**
+	 * [get_slide_info description]
+	 * @return [type] [description]
+	 */
 	function get_slide_info(){
 		$this->slide_db->connect_db();
 		
@@ -353,11 +356,10 @@ class Slide {
 		
 	}
 	
-	/*
-	@ retourne la liste des slideshows
-	@
-	@
-	*/
+	/**
+	 * retourne la liste des slideshows
+	 * @param {$admin_groupe}
+	 */
 	static function get_slide_template_list($admin_groupe=NULL){
 		//echo 'liste des slideshows';
 		global $templateListe;
@@ -370,13 +372,13 @@ class Slide {
 	}
 	
 	
-	/*
-	@ creation du formulaire d'édition de slide
-	@ GILDAS
-	@ 19/07/2012
-	@ MOD GILDAS
-	@ 11/10/2012
-	*/
+	/**
+	 * creation du formulaire d'édition de slide
+	 * @author GILDAS
+	 * @date 19/07/2012
+	 * MOD GILDAS
+	 * 11/10/2012
+	 */
 	function create_slide_editor(){
 	
 		// créa des dossiers d'upload s'ils n'existent pas
@@ -520,11 +522,10 @@ class Slide {
 		return $code;
 	}
 	
-	/*
-	@ upload et traitement des images
-	@ GILDAS
-	@
-	*/
+	/**
+	 * upload et traitement des images
+	 * @author Gildas Paubert
+	 */
 	function upload_image($file=NULL){
 		if($file){
 			
@@ -532,11 +533,9 @@ class Slide {
 	}
 	
 	
-	/*
-	@ récupération du flux d'événéments
-	@ LOIC
-	@
-	*/
+	/**
+	 * récupération du flux d'événéments
+	 */
 	function get_event_list($id_organisme=NULL,$year=NULL,$month=NULL,$lang='fr'){
 		
 		$year = !empty($year)? $year : date('Y');
@@ -550,11 +549,11 @@ class Slide {
 		return $json;
 	}
 	
-	/*
-	@ récupération d'un d'événément
-	@ LOIC
-	@
-	*/
+	/**
+	 * récupération d'un d'événément
+	 * LOIC
+	 *
+	 */
 	function get_event_data($id=NULL,$lang='fr'){
 		$this->slide_db->connect_db();
 		
@@ -564,8 +563,11 @@ class Slide {
 		
 	}
 
-	/*
-	* mise à jour ou création d'un item de la timeline
+	/**
+	 * mise à jour ou création d'un item de la timeline
+	 * @param {$id} facultatif, id de l'item à éditer
+	 * @param {$delete} facultatif, booléen pour savoir si on doit supprimer ou non l'item
+	 * @return JSON contenant l'id de l'item ou un message si suppression
 	 */
 	function update_timeline_item($id=NULL, $delete = false){
 
@@ -605,6 +607,10 @@ class Slide {
 		}
 	}
 
+	/**
+	 * récupération des différents éléments item de la timeline
+	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
+	 */
 	function get_timeline_items(){
 
 		$query 				= 'SELECT * FROM '.TB.'timeline_item_tb';
@@ -633,7 +639,7 @@ class Slide {
 		return implode(",\n", $temp);
 	}
 
-	/*
+	/**
 	* pour convertir un timstamp mysql en timestamp javascript
 	* @param string date au format yyyy-mm-dd hh:mm:ss
 	* @return string date au format yyyy,mm-1,dd,hh,mm,ss 
