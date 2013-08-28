@@ -581,7 +581,7 @@ class Slide {
 			// 
 			
 
-            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slide_tb (titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s)",$titre,$start,$end,$group,$published);
+            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_item_tb (titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s)",$titre,$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
@@ -591,14 +591,14 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $sql_slide			= sprintf("UPDATE ".TB."timeline_slide_tb SET titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$titre,$start,$end,$group,$published,$id);
-            //sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
+            $sql_slide			= sprintf("UPDATE ".TB."timeline_item_tb SET titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$titre,$start,$end,$group,$published,$id);
+            //sprintf("INSERT INTO ".TB."timeline_item_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			echo '{"id":"'+ $id +'"}';
 		}else{
-			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_slide_tb WHERE id=%s",$id);
-            //sprintf("INSERT INTO ".TB."timeline_slide_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
+			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_item_tb WHERE id=%s",$id);
+            //sprintf("INSERT INTO ".TB."timeline_item_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			echo '{"message":"supression du slide «'. $_POST['titre'] .'»"}';
@@ -607,7 +607,7 @@ class Slide {
 
 	function get_timeline_items(){
 
-		$query 				= 'SELECT * FROM '.TB.'timeline_slide_tb';
+		$query 				= 'SELECT * FROM '.TB.'timeline_item_tb';
 		$sql_slide			= sprintf($query); //echo $sql_slide;	
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
