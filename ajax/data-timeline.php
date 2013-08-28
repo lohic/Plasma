@@ -35,6 +35,32 @@ var screen_list = [
     <?php echo !empty($data_screens) ? $data_screens->tab : ''; ?>
 ];
 
+var template_list = [
+    <?php
+        function listFolderFiles($dir,$recursif=true){
+            $ffs = scandir($dir);
+
+            $temp =array();
+            //echo '<ol>';
+            foreach($ffs as $ff){
+                if($ff != '.' && $ff != '..' && substr($ff, 0, 1)!= '.' && $ff != 'default'){
+                    //echo '<li>'.$ff;
+                    //if(is_dir($dir.'/'.$ff) && $recursif ) listFolderFiles($dir.'/'.$ff);
+                    //echo '</li>';
+                    $temp[] = '{"key":"'.$ff.'","value":"'.$ff.'"}';
+                }
+            }
+            //echo '</ol>';
+            return implode(',', $temp);
+        }
+
+        $dir = REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER;
+
+        echo listFolderFiles($dir, false);
+
+    ?>
+]
+
 data = [
     <?php echo implode(',', $json) ?>
 ];

@@ -626,8 +626,9 @@ class Slide {
     "content": "'. $slide_item['titre'] .'",
     "className": "'. $class .'",
     "group":"'. $slide_item['type_target'] .'",
+    "id_slide" : "'. $slide_item['id_slide'] .'",
     "editable": true,
-    "type" : "slide"
+    "type" : "slide",
 }';
 							
 			}
@@ -654,7 +655,36 @@ class Slide {
 			$temp = array();
 			$tab = array();
 
-			$i = 0;
+			$i = 3;
+
+			$temp[] = '{
+	"start" : new Date(2013, 7, 1),
+    "group" : "1-alerte nationale",
+    "editable" : false,
+	"content":"1-alerte nationale",
+    "type" : "screen",
+    "className" : "screen"
+}';
+			$temp[] = '{
+	"start" : new Date(2013, 7, 1),
+    "group" : "2-alerte locale",
+    "editable" : false,
+	"content":"2-alerte locale",
+    "type" : "screen",
+    "className" : "screen"
+}';
+
+			$temp[] = '{
+	"start" : new Date(2013, 7, 1),
+    "group" : "3-groupe",
+    "editable" : false,
+	"content":"3-groupe",
+    "type" : "screen",
+    "className" : "screen"
+}';
+			$tab[] = '{"key" : "1-alerte nationale", "value" : "1-alerte nationale"}';
+			$tab[] = '{"key" : "2-alerte locale", "value" : "2-alerte locale"}';
+			$tab[] = '{"key" : "3-groupe", "value" : "3-groupe"}';
 
 			while ($item = mysql_fetch_assoc($sql_slide_query)){
 

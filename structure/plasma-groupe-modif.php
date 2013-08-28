@@ -92,13 +92,24 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
         <h1>{{content}}</h1>
         <form>
         	<fieldset>
-	            <p>
-	                <select id="screen_reference">
-	                    {{#selector}}
-	                    <option value="{{ key }}">{{ value }}</option>
-	                    {{/selector}}
-	                </select>
-	            </p>
+        		<div>
+		            <p>
+		                <select id="screen_reference">
+		                    {{#group_selector}}
+		                    <option value="{{ key }}">{{ value }}</option>
+		                    {{/group_selector}}
+		                </select>
+		            </p>
+		        </div>
+		        <div>
+		            <p>
+		                <select id="template_reference">
+		                    {{#template_selector}}
+		                    <option value="{{ key }}">{{ value }}</option>
+		                    {{/template_selector}}
+		                </select>
+		            </p>
+		        </div>
 	            <div>
 	                <h3>Durée : {{duree}}</h3>
 	                <p><span class="date">début :</span> {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>

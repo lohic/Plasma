@@ -263,10 +263,11 @@ function drawTimeline() {
         if (row != undefined) {
             console.log("SELECT");
             console.log("id : "  + data[row].id );
-            console.log("start : "  + data[row].start );
-            console.log("end : "    + data[row].end );
-            console.log("content : "+ data[row].content );
-            console.log("group : "  + data[row].group );
+            console.log("id_slide : "  + data[row].id_slide );
+            //console.log("start : "  + data[row].start );
+            //console.log("end : "    + data[row].end );
+            //console.log("content : "+ data[row].content );
+            //console.log("group : "  + data[row].group );
         }  
     };
 
@@ -339,7 +340,7 @@ function drawTimeline() {
  * @param {ref} la référence de l'item timeline sélecctionné
  */
 function edit_item(ref){
-    console.log('edit slide');
+    console.log('Edit slide');
 
     var date1 = new Date(data[ref].start);
     var date2 = new Date(data[ref].end);
@@ -368,9 +369,12 @@ function edit_item(ref){
         minute2:   date2.getMinutes()<10    ? "0"+date2.getMinutes()    : date2.getMinutes(),
         seconde2:  date2.getSeconds()<10    ? "0"+date2.getSeconds()    : date2.getSeconds(),
 
-        selector: screen_list,
+        group_selector: screen_list,
+        template_selector:template_list, 
 
     };
+
+    console.log("ID_SLIDE : "+data[ref.id_slide]);
 
     slide_editor = ich.slide_editor(slide_info);
 
@@ -383,12 +387,20 @@ function edit_item(ref){
             }
         },
         afterLoad : function(){
-            console.log("fancybox OK");
+            //console.log("fancybox OK");
         }
     });
 
     // on selectionne le groupe quand on affiche le formulaire
     $('#screen_reference').val(data[ref].group);
+
+    $('#template_reference').change(function(){
+        if($(this).val() == 'meteo'){
+            $('#edit_slide_content').hide();
+        }else{
+            $('#edit_slide_content').show();
+        }
+    });
 
     $('#save_slide').click(function(e){
 
