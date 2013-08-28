@@ -133,9 +133,9 @@ div.timeline-navigation-new-line {
 
 div.timeline-navigation-delete {
     padding: 0 0 0 5px;
-    background: url('img/deleteEvent.png') no-repeat center;
-    width: 13px;
-    height: 13px;
+    background: url('../graphisme/delete.png') no-repeat center;
+    width: 16px;
+    height: 16px;
 }
 
 div.timeline-selectable div.timeline-event {
