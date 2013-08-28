@@ -61,7 +61,6 @@ class Slide {
 		if(isset($_POST['suppr']) && $_POST['suppr'] == 'slide'){
 			$this->suppr_slide($id);
 		}
-		
 	}
 	
 	
@@ -132,10 +131,7 @@ class Slide {
 		$date 			= date('Y-m-d');
 
 		// REQUETE
-		//mysql_query("INSERT INTO ".TB."slides_tb (nom, template) values ('".$nom."', '".$template."')");
-		
-		$sql_slide			= sprintf("INSERT INTO ".TB."slides_tb (nom, template, date) VALUES (".$nom.", ".$template.", '".$date."')");
-		//echo $sql_slide;
+		$sql_slide			= sprintf("INSERT INTO ".TB."slides_tb (nom, template, date) VALUES (%s,%s,%s)",$nom,$template,$date);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
 		// création des dossiers d'upload pour le slide
@@ -571,18 +567,16 @@ class Slide {
 	 */
 	function update_timeline_item($id=NULL, $delete = false){
 
-		$titre		= isset($_POST['titre'])	? func::GetSQLValueString( $_POST['titre'], 'text') : 'sans titre';
-		$start  	= isset($_POST['start']) 	? func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ), 'text') : date('Y-m-d H:i:s');
-        $end    	= isset($_POST['end']) 		? func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ), 'text') : date('Y-m-d H:i:s');
-        $group		= isset($_POST['group']) 	? func::GetSQLValueString( $_POST['group'], 'text') : '';
-        $published	= isset($_POST['published'])? func::GetSQLValueString( $_POST['published'],'int'): 1;
-        $ordre		= isset($_POST['ordre']) 	? func::GetSQLValueString( $_POST['ordre'], 'int') : 0;
+		$titre		= isset($_POST['titre'])?		func::GetSQLValueString( $_POST['titre'], 'text') : 'sans titre';
+		$start  	= isset($_POST['start'])?		func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ), 'text') : date('Y-m-d H:i:s');
+        $end    	= isset($_POST['end'])?			func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ), 'text') : date('Y-m-d H:i:s');
+        $group		= isset($_POST['group'])?		func::GetSQLValueString( $_POST['group'], 'text') : '';
+        $published	= isset($_POST['published'])?	func::GetSQLValueString( $_POST['published'],'int'): 1;
+        $ordre		= isset($_POST['ordre'])?		func::GetSQLValueString( $_POST['ordre'], 'int') : 0;
 
 		if( !isset($id) ){
-			// création
+			// création$
 			// 
-			
-
             $sql_slide			= sprintf("INSERT INTO ".TB."timeline_item_tb (titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s)",$titre,$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
@@ -594,13 +588,12 @@ class Slide {
 			//mise à jour
 
             $sql_slide			= sprintf("UPDATE ".TB."timeline_item_tb SET titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$titre,$start,$end,$group,$published,$id);
-            //sprintf("INSERT INTO ".TB."timeline_item_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			echo '{"id":"'+ $id +'"}';
+
 		}else{
 			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_item_tb WHERE id=%s",$id);
-            //sprintf("INSERT INTO ".TB."timeline_item_tb (start, end, type_target, published) VALUES (%s, %s, %s, %s)",$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			echo '{"message":"supression du slide «'. $_POST['titre'] .'»"}';
