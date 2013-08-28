@@ -454,7 +454,7 @@ function edit_slide(){
                     type: 'inside',
                     position: 'top'
                 }
-            },
+            }
         });
 
         // pour désactiver le clic extérieur sur fancybox

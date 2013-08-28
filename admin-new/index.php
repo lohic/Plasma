@@ -86,7 +86,7 @@ $ecran 		= new Ecran($id_plasma);
 		$timestamp  = <?php echo $timestamp = time();?>;
         $token      = '<?php echo md5('sciences_po_plasma' . $timestamp);?>';
         $videoExt   = Array('mp4','mov');
-        $template = 'video';
+        $template = 'compte_a_rebours';
         $slide_id = 1;
 	    <!--
 
