@@ -114,7 +114,7 @@ function drawTimeline() {
     $.ajax({
         url         : "../ajax/data-timeline.php",
         type        : "GET",
-        data        : {cache : timestamp},
+        data        : {cache : timestamp, id_groupe: $id_groupe},
         dataType    : 'script'
     }).done(function ( dataJSON ) {
         //console.log(dataJSON);
@@ -474,9 +474,9 @@ function addScreen(){
     var sel = timeline.getData();
     var lastItemID = sel.length-1;
 
-    screens.push(lastItemID);
-    //console.log("longueur : " + lastItemID);
-    //console.log(screens.join(', '));
+    // screens.push(lastItemID);
+    // console.log("longueur : " + lastItemID);
+    // console.log(screens.join(', '));
 }
 
 /**

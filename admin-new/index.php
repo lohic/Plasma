@@ -92,6 +92,7 @@ $ecran 		= new Ecran($id_plasma);
         $template = 'compte_a_rebours';
         // id du slide > à supprimer à terme
         $slide_id = 1;
+        $id_groupe = <?php echo !empty($_GET['id_groupe']) ? $_GET['id_groupe'] : 0; ?>;
 	  		
 	</script>
 

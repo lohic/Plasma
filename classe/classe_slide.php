@@ -602,21 +602,24 @@ class Slide {
 
 	/**
 	 * récupération des différents éléments item de la timeline
+	 * @param {$id_groupe} id du groupe dont il faut récupérer les items
 	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
 	 */
-	function get_timeline_items(){
+	function get_timeline_items($id_groupe=NULL){
 
-		$query 				= 'SELECT * FROM '.TB.'timeline_item_tb';
-		$sql_slide			= sprintf($query); //echo $sql_slide;	
-		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
-		
-		$temp = array();
+		if(!empty($id_groupe)){
 
-		while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
+			$query 				= 'SELECT * FROM '.TB.'timeline_item_tb';
+			$sql_slide			= sprintf($query); //echo $sql_slide;	
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			
+			$temp = array();
 
-			$class = $slide_item['published']==0?'unpublished':'';
+			while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
 
-			$temp[] = '{
+				$class = $slide_item['published']==0?'unpublished':'';
+
+				$temp[] = '{
     "id":'. $slide_item['id'] .',
     "start"	: new Date('. $this->dateMysql2JS( $slide_item['start'] ) .'),
     "end"	: new Date('. $this->dateMysql2JS( $slide_item['end'] ) .'),
@@ -626,10 +629,54 @@ class Slide {
     "editable": true,
     "type" : "slide"
 }';
-						
-		}
+							
+			}
 
-		return implode(",\n", $temp);
+			return implode(",\n", $temp);
+		}
+	}
+
+	/**
+	 * récupération des différents éléments screen de la timeline
+	 * @param {$id_groupe} id du groupe dont il faut récupérer les écrans
+	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
+	 */
+	function get_timeline_screens($id_groupe=NULL){
+
+		if(!empty($id_groupe)){
+
+			$retour = new stdClass();
+
+			$query 				= sprintf("SELECT * FROM ".TB."ecrans_tb WHERE id_groupe=%s",$id_groupe);
+			$sql_slide			= sprintf($query); //echo $sql_slide;	
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			
+			$temp = array();
+			$tab = array();
+
+			$i = 0;
+
+			while ($item = mysql_fetch_assoc($sql_slide_query)){
+
+				$i++;
+
+				$temp[] = '{
+    "start" : new Date(2013, 7, 1),
+    "group" : "'. $i.'-'.$item['nom'] .'",
+    "editable" : false,
+	"content":"'. $i.'-'.$item['nom'] .'",
+    "type" : "screen",
+    "className" : "screen"
+}';
+				$tab[] = '{"key" : "'.$i.'-'.$item['nom'].'", "value" : "'.$i.'-'.$item['nom'].'"}';					
+			}
+
+			$retour->json 	= implode(",\n", $temp);
+			$retour->tab	= implode(",\n", $tab);
+
+			//return implode(",\n", $temp);
+			return $retour;
+		}
 	}
 
 	/**
