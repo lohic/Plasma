@@ -1,6 +1,6 @@
-/*
-* SCRIPT POUR LE BACKOFFICE PLASMA
-*/
+/**
+ * SCRIPT POUR LE BACKOFFICE PLASMA
+ */
 
 // accents
 // http://www.pjb.com.au/comp/diacritics.html
@@ -10,33 +10,76 @@ var timeline;
 
 $('document').ready(function(){
 
+    // GESTION DU MENU PRINCIPAL
+    $('ul#menuDown > li').mouseover(function(){ $(this).children('a').addClass('menuDown-hover').siblings('ul').show(); });
+    $('ul#menuDown > li').mouseout(function(){ $(this).children('a').removeClass('menuDown-hover').siblings('ul').hide(); });
+
+    $("#globalnav>ul>li>a").each( function () { 
+        $(this).attr("class","");
+    } ) ;
+
+    $("#globalnav>ul>li>a").click( function () {
+        $("#globalnav>ul>li>a").each( function () {
+            $(this).attr("class","");
+
+        } ) ;
+
+        $(this).attr("class","select"); 
+    } ) ;
+
+    // quand on clique sur un icone poubelle
+    $("li span.trash").each( function () {  
+        $(this).click( function () {
+
+            $(this).parent().remove();
+            var order = '';
+
+            $('.news_list').each( function () {
+                order += $(this).attr('id') +':'+ $(this).sortable('toArray')+'|';
+            });
+
+            //alert(order);
+
+            var valeur = document.getElementById("save_value");
+            valeur.value = order;
+
+            $('#return_refresh').text('état : Sauvegarde en cours !');
+            $('#refresh_form').submit();
+        } ) ;
+    } ) ;
+    
+    // fonction pour ajouter un écran 
     $('#add_screen').click(function(e){
         addScreen();
     });
 
-    /*$.getJSON('../ajax/slide-data.js', function(data) {
-        console.log("C : "+data.C);
-    });*/
-
-    // TEST D'INCLUSION DE TEMPLATE
-    /*var timestamp = new Date().getTime();
-    $.ajax({
-        url: "../slides_templates/compte_a_rebours/structure.js?cache="+timestamp,
-    }).done(function ( data ) {
-        //console.log(dataJSON);
-        eval(data);      
-        console.log("OK template ready");
-        console.log(structure.date);
-        ich.addTemplate('compte_a_rebour',template);
-    });*/
+    // activation du datepicker jquery
+    $(function() {
+        $(".date").datepicker({
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            dayNamesMin : ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+            monthNames : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
+        });
+    });
     
-    drawVisualization();
+    // on vérifie la présence d'une balise de timeline
+    if($('#mytimeline').length != 0){
+        drawTimeline();
+    }
 });
 
-// Called when the Visualization API is loaded.
-function drawVisualization() {
 
-    // AFFICHE LA TIMELINE
+
+
+/**
+ * génère l'affichage de la timeline
+ * après récupération des données dans ../ajax/data-timeline.php
+ * attache les écouteurs nécessaires
+ */
+function drawTimeline() {
+
+    // créé l'objet timeline en instanciant le DIV correspondant
     timeline = new links.Timeline(document.getElementById('mytimeline'));
     
     var todayM3 = new Date();
@@ -76,21 +119,23 @@ function drawVisualization() {
     }).done(function ( dataJSON ) {
         //console.log(dataJSON);
         
+        // on crée les objets SCREEN et SLIDE
         timeline.addItemType('screen', links.Timeline.ItemBox);
         timeline.addItemType('slide', links.Timeline.ItemRange);
 
-        // on scanne les données contenues dans data-taimline.php
+        // on scanne les données contenues dans data-timeline.php
         eval(dataJSON);
+        //AFFICHE LA TIMELINE
         timeline.draw(data ,options);
 
         console.log("Timeline ready");
 
         // on intitialise la position des étiquettes de groupes
-        for(var i = 0; i < screens.length ; i ++){
+        /*for(var i = 0; i < screens.length ; i ++){
             timeline.changeItem(screens[i], {'start' : todayM3 });
         }
 
-        timeline.setSelection();
+        timeline.setSelection();*/
     });
 
     // AJOUT D'UN SLIDE
@@ -268,14 +313,14 @@ function drawVisualization() {
 
     // MISE A JOUR LORS D'UN SCROLL OU UN ZOOM
     var onrangechange = function(event){           
-        for(var i = 0; i < screens.length ; i ++){
+        /*for(var i = 0; i < screens.length ; i ++){
             timeline.changeItem(screens[i], {'start' : new Date(event.start) });
             //console.log("start : "+new Date(event.start));
         }
-        timeline.setSelection();
+        timeline.setSelection();*/
     }
     
-
+    // ON ATTACHE LES DIFFERENTS ECOUTEURS DE LA TIMELINE
     links.events.addListener(timeline, 'add', onadd);
     links.events.addListener(timeline, 'change', onchange);
     links.events.addListener(timeline, 'delete', ondelete);
@@ -284,6 +329,15 @@ function drawVisualization() {
     links.events.addListener(timeline, 'rangechange', onrangechange);
 }
 
+
+
+/*
+ * fonction pour éditer les informations d'un item de la timeline
+ * normalise les données dans un objet
+ * affiche les données dans un formulaire généré avec iCanHaz
+ * affiche ce formulaire dans une fenêtre fancybox
+ * @param {ref} la référence de l'item timeline sélecctionné
+ */
 function edit_item(ref){
     console.log('edit slide');
 
@@ -291,6 +345,7 @@ function edit_item(ref){
     var date2 = new Date(data[ref].end);
     var duree = Math.round((date2-date1)/1000);
     
+    // on crée l'objet qui va récupérer les informations d'un item 
     slide_info = {
         group:     data[ref].group,
         content:   data[ref].content,
@@ -353,9 +408,9 @@ function edit_item(ref){
     editSlideContent(ref);
 }
 
-/*
-* fonction pour gérer l'édition de contenu d'un slide
-*/
+/**
+ * fonction pour gérer l'édition de contenu d'un slide
+ */
 function editSlideContent(ref){
 
     $('#edit_slide_content').click(function(e){
@@ -382,9 +437,11 @@ function editSlideContent(ref){
     });
 }
 
-/*
-* Conversion des secondes en hh : mm : ss
-*/ 
+/**
+ * Conversion des secondes en hh : mm : ss
+ * @param {duree} un entier qui indique une durée en secondes
+ * @return {retour} une chaîne formatée : '00h:00m:00s'
+ */ 
 function second2HMS(duree){
     // heure
     retour = (duree-duree%3600)/3600<10 ? "0"+ (duree-duree%3600)/3600+"h"  : (duree-duree%3600)/3600 + 'h';
@@ -422,6 +479,13 @@ function addScreen(){
     //console.log(screens.join(', '));
 }
 
+/**
+ * ajout d'une méthode addHours à l'objet Date
+ * permet d'additionner des heures à une date donnée
+ * notamment pour corriger les Date avec des décalages horaire
+ * @param {h} le nombre d'heures à ajouter
+ * @return {copiedDate} un objet Date
+ */
 Date.prototype.addHours= function(h){
     var copiedDate = new Date(this.getTime());
     copiedDate.setHours(copiedDate.getHours()+h);
@@ -429,12 +493,20 @@ Date.prototype.addHours= function(h){
 }
 
 
-/*
-* --------------------------------
-* POUR GERER L'EDITION DES SLIDES
-* --------------------------------
-*/
+/**
+ * --------------------------------
+ * POUR GERER L'EDITION DES SLIDES
+ * --------------------------------
+ */
 
+
+
+/**
+ * pour gérer l'édition d'un slide
+ * génère un formulaire avec le plugin jquery dform
+ * affiche le formulaire dans une fancybox
+ * si un champ FILE est trouvé utilise uploadifive
+ */
 function edit_slide(){
     console.log('edit_slide appelé DFORM');
     // on vide le formulaire
@@ -535,11 +607,14 @@ function edit_slide(){
 }
 
 
-/*
-* fonction pour créer la preview (image ou vidéo)
-* au chargement ou au rafraichissement
-* si le media est une vidéo, mets à jour la durée
-*/
+/**
+ * fonction pour créer la preview (image ou vidéo)
+ * au chargement ou au rafraichissement
+ * si le media est une vidéo, mets à jour la durée
+ * @param {ref}
+ * @param {file}
+ * @param {ext}
+ */
 function preview(ref, file, ext){
     console.log('PREVIEW');
     delete(ref.parent().prev().find('video'));
@@ -561,9 +636,10 @@ function preview(ref, file, ext){
 }
 
 
-/*
-* FONCTION POUR CALCULER LA DUREE D'UNE VIDEO
-*/
+/**
+ * FONCTION POUR CALCULER LA DUREE D'UNE VIDEO
+ * @param {ref}
+ */
 function dureeVideo(ref){
     //console.log( "durée : " + $(this).parent().prev().find('video').duration );
     //
@@ -579,12 +655,12 @@ function dureeVideo(ref){
     });
 }
 
-/*
-* fonction de conversion des éléments d'un formuaire en un objet JSON du type
-* { nom : valeur , nom2 : valeur2 }
-* @param data : un tableau d'objets issus d'un formulaire normalisées avec .serializeArray()
-* @return un objet javascript { nom : valeur , nom2 : valeur2 }
-*/
+/**
+ * fonction de conversion des éléments d'un formuaire en un objet JSON du type
+ * { nom : valeur , nom2 : valeur2 }
+ * @param {data} : un tableau d'objets issus d'un formulaire normalisées avec .serializeArray()
+ * @return {retour} un objet javascript { nom : valeur , nom2 : valeur2 }
+ */
 function formToJSON( data ) {
     // on crée l'objet retour
     var retour = {};

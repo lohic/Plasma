@@ -23,7 +23,7 @@ var screens = new Array(0,1,2);
 data = [
 // liste des écrans + alertes
     {
-        "start" : new Date(2012, 0, 1),
+        "start" : new Date(2013, 7, 1),
         "group" : "1 - écran 1",
         "editable" : false,
 		"content":"écran 1",
