@@ -133,21 +133,31 @@ div.timeline-currenttime{
 * FORMULAIRE DFORM AND UPLOADIFIVE
 */
 
-.ui-dform-form label, .ui-dform-form input {
+.fancybox-inner label,
+.fancybox-inner input,
+.ui-dform-form label,
+.ui-dform-form input {
     display: block;
     width: 300px;
     float: none;
 }
-
+.fancybox-inner label,
 .ui-dform-form label{
     font-weight: bold;
     margin-bottom: 5px;
     margin-top:10px;
 }
 
+
+.fancybox-inner input[type=text],
 .ui-dform-form input[type=text]{
     width: 300px;
     font-size: 14px;
+}
+
+.fancybox-inner button{
+    font-size: 12px;
+    margin: 20px 0 10px;
 }
 
 .ui-dform-form .vignette{
