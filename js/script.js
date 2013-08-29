@@ -126,7 +126,7 @@ function drawTimeline() {
         // on scanne les données contenues dans data-timeline.php
         eval(dataJSON);
         //AFFICHE LA TIMELINE
-        timeline.draw(data ,options);
+        timeline.draw(dataTimeline ,options);
 
         console.log("Timeline ready");
 
@@ -150,7 +150,6 @@ function drawTimeline() {
         }
 
         if (row != undefined) {
-            data[row].test = 'test : '+Math.random()*20;
             timeline.changeItem(row, {
                 'className': 'unpublished',
                 'type':'slide'
@@ -194,18 +193,18 @@ function drawTimeline() {
 
         if (row != undefined) {
 
-            var debut = new Date(data[row].start);
+            var debut = new Date(dataTimeline[row].start);
 
             $.ajax({
                 url     :"../ajax/data-timeline-slide.php",
                 type    : "POST",
                 dataType:'json',
                 data    : {
-                    id      : data[row].id,
-                    titre   : data[row].content,
-                    start   : new Date(data[row].start).addHours(2),
-                    end     : new Date(data[row].end).addHours(2),
-                    group   : data[row].group,
+                    id      : dataTimeline[row].id,
+                    titre   : dataTimeline[row].content,
+                    start   : new Date(dataTimeline[row].start).addHours(2),
+                    end     : new Date(dataTimeline[row].end).addHours(2),
+                    group   : dataTimeline[row].group,
                     action  : 'update-item'
                 }
             }).done(function ( dataJSON ) {
@@ -215,7 +214,7 @@ function drawTimeline() {
                 });
             });
 
-            console.log("onChange :\n" + data[row].start + ' >> ' + data[row].end + '\n[groupe : ' + data[row].group + ']');
+            console.log("onChange :\n" + dataTimeline[row].start + ' >> ' + dataTimeline[row].end + '\n[groupe : ' + dataTimeline[row].group + ']');
         }
     }
 
@@ -236,15 +235,15 @@ function drawTimeline() {
                 type    : "POST",
                 dataType:'json',
                 data    : {
-                    id      : data[row].id,
-                    titre   : data[row].content,
+                    id      : dataTimeline[row].id,
+                    titre   : dataTimeline[row].content,
                     action  : 'delete-item'
                 }
             }).done(function ( dataJSON ) {
                 alert(dataJSON.message);
                 console.log(dataJSON);
             });
-            console.log('DELETE : ' + data[row].content);
+            console.log('DELETE : ' + dataTimeline[row].content);
         }
     }
     
@@ -262,8 +261,8 @@ function drawTimeline() {
 
         if (row != undefined) {
             console.log("SELECT");
-            console.log("id : "  + data[row].id );
-            console.log("id_slide : "  + data[row].id_slide );
+            console.log("id : "  + dataTimeline[row].id );
+            console.log("id_slide : "  + dataTimeline[row].id_slide );
             //console.log("start : "  + data[row].start );
             //console.log("end : "    + data[row].end );
             //console.log("content : "+ data[row].content );
@@ -285,14 +284,14 @@ function drawTimeline() {
         if (row != undefined) {
             
 
-            if(data[row].type == 'slide'){
+            if(dataTimeline[row].type == 'slide'){
                 
                 edit_item(row);
                 
-            }else if(data[row].type == 'screen'){
+            }else if(dataTimeline[row].type == 'screen'){
                 screen_info = {
-                    group:     data[row].group,
-                    screen_title:   data[row].content,
+                    group:     dataTimeline[row].group,
+                    screen_title:   dataTimeline[row].content,
                     selector: screen_list
                 };
 
@@ -342,16 +341,16 @@ function drawTimeline() {
 function edit_item(ref){
     console.log('Edit slide');
 
-    var date1 = new Date(data[ref].start);
-    var date2 = new Date(data[ref].end);
+    var date1 = new Date(dataTimeline[ref].start);
+    var date2 = new Date(dataTimeline[ref].end);
     var duree = Math.round((date2-date1)/1000);
     
     // on crée l'objet qui va récupérer les informations d'un item 
     slide_info = {
-        group:     data[ref].group,
-        content:   data[ref].content,
-        start:     data[ref].start,
-        end:       data[ref].end,
+        group:     dataTimeline[ref].group,
+        content:   dataTimeline[ref].content,
+        start:     dataTimeline[ref].start,
+        end:       dataTimeline[ref].end,
 
         duree:     second2HMS(duree),
 
@@ -374,7 +373,7 @@ function edit_item(ref){
 
     };
 
-    console.log("ID_SLIDE : "+data[ref.id_slide]);
+    console.log("ID_SLIDE : "+dataTimeline[ref].id_slide);
 
     slide_editor = ich.slide_editor(slide_info);
 
@@ -392,7 +391,7 @@ function edit_item(ref){
     });
 
     // on selectionne le groupe quand on affiche le formulaire
-    $('#screen_reference').val(data[ref].group);
+    $('#screen_reference').val(dataTimeline[ref].group);
 
     $('#template_reference').change(function(){
         if($(this).val() == 'meteo'){
@@ -400,6 +399,9 @@ function edit_item(ref){
         }else{
             $('#edit_slide_content').show();
         }
+
+        //on mémorise le gabarit sélectionné
+        $template = $(this).val();
     });
 
     $('#save_slide').click(function(e){
@@ -412,37 +414,37 @@ function edit_item(ref){
             'group': group
         });
 
-        //$.fancybox.close();
+        /*
+        $.ajax({
+            url     :"../ajax/data-timeline-slide.php",
+            type    : "POST",
+            dataType:'json',
+            data    : {
+                id      : data[row].id,
+                titre   : data[row].content,
+                start   : new Date(data[row].start).addHours(2),
+                end     : new Date(data[row].end).addHours(2),
+                group   : data[row].group,
+                action  : 'update-item'
+            }
+        }).done(function ( dataJSON ) {
+            console.log(dataJSON);
+            timeline.changeItem(row, {
+                'id': dataJSON.id
+            });
+        });
+        */
+        
         e.preventDefault();
     });
 
     // gestion de l'édition de contenu
-    editSlideContent(ref);
-}
-
-/**
- * fonction pour gérer l'édition de contenu d'un slide
- */
-function editSlideContent(ref){
-
+    //editSlideContent(ref);
     $('#edit_slide_content').click(function(e){
 
         console.log(">>> EDIT SLIDE CONTENT : "+ ref);
 
-        /*var slide_content = {'id':ref};
-        slide_content_editor = ich.slide_content_editor(slide_content);
-
-        $.fancybox( slide_content_editor , {
-            title : '<h1>Modifier un slide</h1>',
-            helpers : {
-                title: {
-                    type: 'inside',
-                    position: 'top'
-                }
-            },
-        });*/
-
-        edit_slide();
+        edit_slide(ref);
 
         e.preventDefault();
 
@@ -519,7 +521,7 @@ Date.prototype.addHours= function(h){
  * affiche le formulaire dans une fancybox
  * si un champ FILE est trouvé utilise uploadifive
  */
-function edit_slide(){
+function edit_slide(ref){
     console.log('edit_slide appelé DFORM');
     // on vide le formulaire
     $("#myform").empty();
@@ -529,17 +531,27 @@ function edit_slide(){
     // et des données sauvegardées au format JSON en bas de donnée
     $("#myform").dform('../ajax/import-json.php?template='+ $template +'&slide_id=' + $slide_id,function(data){
 
+        //console.log(this);
+
         // quand le formulaire est généré, on ouvre une fenêtre fancybox
         $.fancybox( this , {
             title : '<h1>Éditeur de slide</h1>',
-            width : 500,
             helpers : {
                 title: {
                     type: 'inside',
                     position: 'top'
                 }
+            },
+            afterLoad : function(){
+
             }
         });
+
+        $(".fancybox-title h1").text( 'Éditeur de ' + $('#myform').attr('title') );
+        $(".fancybox-inner").prepend("<label>Titre du slide</label><input type='text' id='slide_title' value='"+dataTimeline[ref].content+"'/>");
+        $(".fancybox-inner #myform").append("<button id='back_to_item'>Retour à l’item</button>");
+        $(".fancybox-inner #myform").append("<button id='save_slide'>Sauvegarde</button>");
+
 
         // pour désactiver le clic extérieur sur fancybox
         $(".fancybox-overlay").unbind();
@@ -553,7 +565,6 @@ function edit_slide(){
         });
 
         // activation de uplodifive
-       
         $(function() {
             $('input[type="file"]').uploadifive({
                 'checkScript'       : '../js/uploadifive-v1.1.2-standard/check-exists.php',
@@ -586,7 +597,7 @@ function edit_slide(){
                     var attr = $(this).attr('name');
                     $(this).attr('name', attr + "-old");
                     $(this).data('old-name', attr);
-                    $(this).after( "<input type='hidden' name='" + attr + "'/>" );
+                    $(this).after( "<input type='hidden' name='" + attr + "' value='"+ $(this).data('file') +"'/>" );
 
                 },
                 'onUploadComplete'  : function(file,data) {
@@ -606,14 +617,41 @@ function edit_slide(){
 
         });
 
+        $("#back_to_item").click(function(e){
+            edit_item(ref);
+            e.preventDefault();
+        });
+
         // quand on valide
-        $("#validation").click(function(e){
+        $("#save_slide").click(function(e){
             // on attribue bien le contenu de tinyMCE aux champs d'origine
             tinyMCE.triggerSave();
-            
-            console.log( JSON.stringify( formToJSON( $("#myform").serializeArray() ) ) );
+            dform_value = formToJSON( $("#myform").serializeArray() );
 
+            console.log( "DATA  : "+JSON.stringify( dform_value ) );
+            console.log( "TITRE : "+$("#slide_title").val());
             e.preventDefault();
+
+            /*
+            $.ajax({
+                url     :"../ajax/data-timeline-slide.php",
+                type    : "POST",
+                dataType:'json',
+                data    : {
+                    id      : data[row].id,
+                    titre   : data[row].content,
+                    start   : new Date(data[row].start).addHours(2),
+                    end     : new Date(data[row].end).addHours(2),
+                    group   : data[row].group,
+                    action  : 'update-item'
+                }
+            }).done(function ( dataJSON ) {
+                console.log(dataJSON);
+                timeline.changeItem(row, {
+                    'id': dataJSON.id
+                });
+            });
+             */
         });
     });
 }

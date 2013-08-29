@@ -61,7 +61,7 @@ var template_list = [
     ?>
 ]
 
-data = [
+dataTimeline = [
     <?php echo implode(',', $json) ?>
 ];
 
