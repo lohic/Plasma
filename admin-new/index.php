@@ -65,7 +65,7 @@ $ecran 		= new Ecran($id_plasma);
 	<script type='text/javascript' src='../js/animatedcollapse.js'></script>
     <!-- FANCYBOX -->
     <script type="text/javascript" src="../js/jquery.mousewheel-3.0.6.pack.js"></script>
-    <script type="text/javascript" src="../js/jquery.fancybox.js?v=2.1.4"></script>
+    <script type="text/javascript" src="../js/jquery.fancybox.pack.js?v=2.1.5"></script>
 	<!--<script type="text/javascript" src="../js/json-minified.js"></script>-->
 	<!--<script type="text/javascript" src="../js/splitter.js"></script>-->
 	<script type="text/javascript" src="../js/fonctions.js"></script>
