@@ -94,7 +94,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
         	<fieldset>
         		<div>
 		            <p>
-		                <select id="screen_reference">
+		                <select id="screen_reference" name="screen_reference">
 		                    {{#group_selector}}
 		                    <option value="{{ key }}">{{ value }}</option>
 		                    {{/group_selector}}
@@ -103,7 +103,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 		        </div>
 		        <div>
 		            <p>
-		                <select id="template_reference">
+		                <select id="template_reference" name="template_reference">
 		                    {{#template_selector}}
 		                    <option value="{{ key }}">{{ value }}</option>
 		                    {{/template_selector}}
@@ -135,20 +135,8 @@ EDITER LE CONTENU D'UN SLIDE
 -->
 <script id="slide_content_editor" type="text/html">
     <div style="width:500px">
-        <h1>{{content}} {{id}}</h1>
-        <form>
-            <p><input type="text" value="{{start}}" /></p>
-            <p><input type="text" value="{{end}}" /></p>
-            <p><input type="text" value="{{content}}" /><p/>
-            <p>
-                <select id="screen_reference">
-                    {{#selector}}
-                    <option value="{{ key }}">{{ value }}</option>
-                    {{/selector}}
-                </select>
-            </p>
-            <!--<p><input type="submit" value="Enregistrer" id="save_slide"></p>-->
-        </form>
+        <h1>OK</h1>
+        <div>{{#formulaire}}</div>
         <button id="save_slide_content">Enregistrer le contenu</button>
     </div>
 </script>
