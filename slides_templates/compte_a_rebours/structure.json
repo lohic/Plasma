@@ -20,11 +20,6 @@
             "type" : "file",
             "name": "image",
             "caption" : "image"
-        },
-        {
-            "type" : "button",
-            "html" : "Sauvegarder",
-            "id" : "validation"
         }
     ]
 }

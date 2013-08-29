@@ -39,11 +39,6 @@
             "name" : "fichier_video",
             "id" : "fichier_video",
             "caption" : "Fichier Vidéo"
-        },
-        {
-            "type" : "button",
-            "html" : "Sauvegarder",
-            "id" : "validation"
         }
     ]
 }

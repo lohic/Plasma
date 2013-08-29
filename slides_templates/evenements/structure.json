@@ -69,11 +69,6 @@
             "name" : "inscription",
             "id" : "inscription",
             "caption" : "Entrée libre ou inscription obligatoire"
-        },
-        {
-            "type" : "button",
-            "html" : "Sauvegarder",
-            "id" : "validation"
         }
     ]
 }

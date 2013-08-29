@@ -61,11 +61,6 @@
             "name" : "resultat",
             "id" : "resultat",
             "caption" : "Résultat(s)"
-        },
-        {
-            "type" : "button",
-            "html" : "Sauvegarder",
-            "id" : "validation"
         }
     ]
 }

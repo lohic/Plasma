@@ -9,11 +9,6 @@
             "name" : "verbatim",
             "id" : "verbatim",
             "caption" : "Texte"
-        },
-        {
-            "type" : "button",
-            "html" : "Sauvegarder",
-            "id" : "validation"
         }
     ]
 }
