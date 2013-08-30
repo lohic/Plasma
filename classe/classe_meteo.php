@@ -33,7 +33,7 @@ class Meteo {
 		global $connexion_info;
 		$this->meteo_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 		
-		$this->local_data = "../".METEO_DATA_URL;
+		$this->local_data = REAL_LOCAL_PATH.METEO_DATA_URL;
 	
 		// zipcode principal
 		if(!empty($zipcode)){			
