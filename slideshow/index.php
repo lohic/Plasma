@@ -3,6 +3,8 @@
 include_once('../vars/config.php');
 include_once('../vars/statics_vars.php');
 include_once("../classe/classe_slideshow.php");
+include_once("../classe/classe_fonctions.php");
+
 
 $isdebug = isset($_GET['debug'])?true:false;
 $ispreview = isset($_GET['preview'])?true:false;

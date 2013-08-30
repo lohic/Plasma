@@ -10,8 +10,8 @@
 // alert("d1 year = " + d1.getFullYear());
 
 $(document).ready(function(){
-	var actual_date_json	='<?php //echo $this->ecran->actual_date_json; ?>';
-	var plasma_id			='<?php //echo $this->ecran->id; ?>';
+	//var actual_date_json	='<?php //echo $this->ecran->actual_date_json; ?>';
+	var plasma_id			= getUrlVars().plasma_id;
 	
 	$actual_data_date	= 'undefined';
 	$actual_slide_id	= 'undefined';
@@ -25,6 +25,8 @@ $(document).ready(function(){
 	// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
 	refresh();
 	setInterval(refresh, 1000);
+
+	console.log(plasma_id);
 });
 
 function refresh() {
@@ -32,7 +34,7 @@ function refresh() {
 	$("#now").text(new Date());
 	$("title").text("LOOP | Écrans PLASMA : "+new Date());
 
-	var data_url = "ajax/data-slideshow.php" ;
+	var data_url = "../ajax/data-slideshow.php" ;
 	var data_param = "action=refresh&plasma_id="+ $plasma_id +"&actual_data_date=" + $actual_data_date ;
 	
 	$.ajax({
@@ -45,16 +47,18 @@ function refresh() {
 			//countusers=json.countusers;
 			//$("#retour").text('ok : '+countusers);
 			if(json.update == true){
-				console.log('NEW DATA !!!')
+				console.log(" ");
+				console.log('NEW DATA')
 
 				$actual_data_date = json.publish_date;
-				console.log(json.date_slide);
+				console.log("data_slide : "+json.date_slide);
 
 				$data_slide_dates	= json.slides_dates;
 				$data_slide_ordered	= json.slides_ordered;
 				
 				//$('.date').text(actual_date_json);
 			}else{
+				console.log(" ");
 				console.log('NO NEW DATA');
 				//console.log(json);
 			}	
@@ -89,7 +93,7 @@ function loop_slideshow(){
         $loaded = true;
     }*/
 
-    load_slide('default',{titre_ecran : 'test écran', logo:'true'});
+    load_slide('default',{"titre_ecran" : "test écran", "logo":true});
 }
 
 function load_slide(template, data){
@@ -97,11 +101,16 @@ function load_slide(template, data){
 	if(! $loaded){
 
 		slide_data = data;
+
+		console.log("template : "+template+" data : "+data);
+
 		var slide = eval("ich."+template)(slide_data);
 
 		$("#template").empty();
-	    $('link[name="slide_css"]').attr('href','slides_templates/'+template+'/style.css');
-	    dynamicLoadJS('slides_templates/'+template+'/script.js');
+	    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css');
+	    dynamicLoadJS('../slides_templates/'+template+'/script.js');
+
+
 	    $("#template").html(slide);
 
     	$loaded = true;
@@ -140,7 +149,17 @@ Date.createFromMysql = function(mysql_string)
 }
 
 
-
+/**
+ * sert à récupérer les variables GET en javascript
+ * @return {[type]} [description]
+ */
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 /*
 * ---------------------------------
@@ -188,4 +207,6 @@ function get_next_id(plasma_id){
 }
 
 var timer = 0;
+
+
 

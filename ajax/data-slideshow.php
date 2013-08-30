@@ -2,6 +2,12 @@
 
 header('Content-Type: text/html; charset=utf-8');
 
+include_once('../vars/config.php');
+include_once('../vars/statics_vars.php');
+include_once('../classe/classe_core.php');
+include_once('../classe/classe_slide.php');
+include_once("../classe/classe_fonctions.php");
+
 $action         = isset( $_POST['action'] ) ? $_POST['action'] : null;
 $publish_date   = isset( $_POST['actual_data_date'] ) ? $_POST['actual_data_date'] : null;
 $plasma_id      = isset( $_POST['plasma_id'] ) ? $_POST['plasma_id'] : 0;
