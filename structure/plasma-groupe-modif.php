@@ -33,7 +33,13 @@ $isGroup = true;
 <div class="form_container">
 	<p class="intro_modif"><?php echo isset($id_groupe) ? 'Modification' : 'Création'; ?> du groupe d'écrans :</p>
 	<h3><?php echo $data->nom;?></h3>
-	<?php if ( isset($id_groupe) ){ ?><div class="options"> <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe"> Publier le groupe </a> </div><?php } ?>
+	<?php if ( isset($id_groupe) ){ ?>
+	<div class="options">
+		<!--<a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe">Publier le groupe</a>-->
+		<button type="button" id="group_publish" >Publier le groupe</button>
+	</div>
+	<?php } ?>
+
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_groupe)?'update':'create';?>" value="groupe"/>
 		

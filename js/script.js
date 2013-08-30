@@ -8,7 +8,6 @@
 var timeline;
 var dataTimeline;
 
-
 $('document').ready(function(){
 
     // GESTION DU MENU PRINCIPAL
@@ -68,6 +67,33 @@ $('document').ready(function(){
     if($('#mytimeline').length != 0){
         drawTimeline();
     }
+
+    /**
+     * ---------------------------------
+     * POUR GERER LES BOUTONS DE LA PAGE
+     * ---------------------------------
+     */
+
+    $('#group_publish').click(function(e){
+        e.preventDefault();
+
+        console.log(' ');
+        console.log('PUBLICATION DU GROUPE');
+        console.log('id_groupe : '+getUrlVars().id_groupe);
+        
+        $.ajax({
+            url     :"../ajax/publish-screen.php",
+            type    : "GET",
+            dataType:'json',
+            data    : {
+                id_groupe : getUrlVars().id_groupe,
+                publish  : 'groupe'
+            }
+        }).done(function ( dataJSON ) {
+            console.log(dataJSON);
+        });
+    });
+
 });
 
 
@@ -521,25 +547,13 @@ function addScreen(){
     // console.log(screens.join(', '));
 }
 
-/**
- * ajout d'une méthode addHours à l'objet Date
- * permet d'additionner des heures à une date donnée
- * notamment pour corriger les Date avec des décalages horaire
- * @param {h} le nombre d'heures à ajouter
- * @return {copiedDate} un objet Date
- */
-Date.prototype.addHours= function(h){
-    var copiedDate = new Date(this.getTime());
-    copiedDate.setHours(copiedDate.getHours()+h);
-    return copiedDate;
-}
-
 
 /**
  * --------------------------------
  * POUR GERER L'EDITION DES SLIDES
  * --------------------------------
  */
+
 
 
 
@@ -764,5 +778,33 @@ function formToJSON( data ) {
     });
     return retour;
 }
+
+
+/**
+ * ajout d'une méthode addHours à l'objet Date
+ * permet d'additionner des heures à une date donnée
+ * notamment pour corriger les Date avec des décalages horaire
+ * @param {h} le nombre d'heures à ajouter
+ * @return {copiedDate} un objet Date
+ */
+Date.prototype.addHours= function(h){
+    var copiedDate = new Date(this.getTime());
+    copiedDate.setHours(copiedDate.getHours()+h);
+    return copiedDate;
+}
+
+/**
+ * sert à récupérer les variables GET en javascript
+ * @return {[type]} [description]
+ */
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+
+
 
 //console.log = function() {};
