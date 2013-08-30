@@ -953,6 +953,7 @@ class Slideshow {
 	function archive_ecran($_id_archive_ecran){
 
 		if(!empty($_id_archive_ecran)){
+			
 			$sql = sprintf("SELECT P.id_groupe AS id_groupe, E.code_postal AS code_postal, E.code_meteo AS code_meteo
 								   FROM ".TB."ecrans_tb AS P,  ".TB."etablissements_tb AS E
 								   WHERE P.id_etablissement = E.id
@@ -962,10 +963,11 @@ class Slideshow {
 
 			$json = new stdClass();
 
-			$json->id_ecran		= $_id_archive_ecran;
-			$json->id_groupe	= $info['id_groupe'];
-			$json->code_postal	= $info['code_postal'];
-			$json->code_meteo	= $info['code_meteo'];
+			$json->id_ecran			= $_id_archive_ecran;
+			$json->id_groupe		= $info['id_groupe'];
+			$json->code_postal		= $info['code_postal'];
+			$json->code_meteo		= $info['code_meteo'];
+			$json->date_publication = date('Y-m-d H:i:s');
 
 			mysql_free_result($sql_query);
 
@@ -981,7 +983,7 @@ class Slideshow {
 																	ORDER BY start ASC",func::GetSQLValueString($json->code_postal, 'int'),
 																						func::GetSQLValueString($json->id_groupe, 'int'),
 																						func::GetSQLValueString($json->id_ecran, 'int'),
-																						func::GetSQLValueString(date('Y-m-d H:i:s'), 'text'),
+																						func::GetSQLValueString($json->date_publication, 'text'),
 																						func::GetSQLValueString(1, 'int'));
 			$sql_query		= mysql_query($sql) or die(mysql_error());
 

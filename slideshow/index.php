@@ -18,7 +18,7 @@ if(isset($_GET['plasma_id']) || isset($_GET['slide_id'])){
 		$id_ecran = $_GET['plasma_id'];
 	}
 	
-	$slideshow = new slideshow($id_ecran,'show');	
+	$slideshow = new slideshow($id_ecran);	
 	
 	echo $slideshow->run($ispreview,$isdebug);
 

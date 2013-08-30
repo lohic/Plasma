@@ -1,22 +1,67 @@
-/* CSS Document SLIDESHOW*/
+/* CSS Document */
+@charset "UTF-8";
 
-#debug{
-	position:fixed;
-	width:300px;
-	top:30px;
-	right:30px;
-	background:rgba(255,255,0,0.5);
-	padding:10px;
-	font-size:14px;
-	text-transform:uppercase;
-	z-index:900;
+*{
+	border:none;
+	padding:0px;
+	margin:0px; 
 }
+
+html,body,#template{
+	height:100% !important;
+	width: 100% !important;
+}
+
+body,td,th {
+	font-size: 30px;
+	font-weight: bold;
+}
+
 
 
 body{
-	cursor:none;
+     background-color:rgb(203,02,26);
+     -webkit-transition: background-color 1000ms linear;
+     	-moz-transition: background-color 1000ms linear;
+     	 -ms-transition: background-color 1000ms linear;
+     	  -o-transition: background-color 1000ms linear;
+     		 transition: background-color 1000ms linear;
 }
 
-body.preview{
-	cursor:auto;
+
+
+.console{
+	position : fixed;
+	right: 0;
+	top: 0;
+	width:400px;
+	background: rgba(255,255,0,0.7);
+	color: #000;
+	font-size: 15px;
+	font-weight: bold;
+	padding: 15px;
+	margin:15px; 
+	z-index: 999;
+	font-family: 'monaco';
+}
+
+.console:hover{
+	background: rgba(255,255,0,1);
+}
+
+.console p{
+	color:#000;
+}
+
+#template{
+	min-width:720px;
+	min-height:1270px;
+}
+
+@media screen and (orientation:landscape){
+
+	#template{
+		min-width:1270px;
+		min-height:720px;
+	}
 }
