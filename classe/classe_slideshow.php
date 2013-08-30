@@ -951,7 +951,75 @@ class Slideshow {
 	 * @return [type]                    [description]
 	 */
 	function archive_ecran($_id_archive_ecran){
-		$sql = sprintf("SELECT P.id, P.nom, P.id_etablissement, P.id_groupe, P.id_last_slide, P.order_last_slide, P.id_playlist_locale AS ecran_playlist_locale, P.id_playlist_nationale AS ecran_playlist_nationale, E.code_postal, G.id_playlist_locale AS groupe_playlist_locale, G.id_playlist_nationale AS groupe_playlist_nationale
+
+		if(!empty($_id_archive_ecran)){
+			$sql = sprintf("SELECT P.id_groupe AS id_groupe, E.code_postal AS code_postal, E.code_meteo AS code_meteo
+								   FROM ".TB."ecrans_tb AS P,  ".TB."etablissements_tb AS E
+								   WHERE P.id_etablissement = E.id
+								   AND P.id = %s", func::GetSQLValueString($_id_archive_ecran,'int') );
+			$sql_query		= mysql_query($sql) or die(mysql_error());							
+			$info 			= mysql_fetch_assoc($sql_query);
+
+			$json = new stdClass();
+
+			$json->id_ecran		= $_id_archive_ecran;
+			$json->id_groupe	= $info['id_groupe'];
+			$json->code_postal	= $info['code_postal'];
+			$json->code_meteo	= $info['code_meteo'];
+
+			mysql_free_result($sql_query);
+
+			$sql = sprintf("SELECT * FROM ".TB."timeline_item_tb WHERE (ref_target='nat'
+																 	 OR ref_target='loc'
+																 	AND id_target=%s
+																 	 OR ref_target='grp'
+																 	AND id_target=%s
+																 	 OR ref_target='ecr'
+																 	AND id_target=%s)
+																	AND end >= %s
+																	AND published = %s
+																	ORDER BY start ASC",func::GetSQLValueString($json->code_postal, 'int'),
+																						func::GetSQLValueString($json->id_groupe, 'int'),
+																						func::GetSQLValueString($json->id_ecran, 'int'),
+																						func::GetSQLValueString(date('Y-m-d H:i:s'), 'text'),
+																						func::GetSQLValueString(1, 'int'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());
+
+			//echo "\n".mysql_num_rows($sql_query)."\n";
+
+			$data = new stdClass();
+
+			while($info_item = mysql_fetch_assoc($sql_query)){
+
+				//echo "\n".$info_item['id'];
+
+				$data = new stdClass();
+
+				$data->id 			= $info_item['id'];
+				$data->id_slide 	= $info_item['id_slide'];
+				$data->id_target	= $info_item['id_target'];
+				$data->ref_target	= $info_item['ref_target'];
+				$data->type_target	= $info_item['type_target'];
+				$data->template		= $info_item['template'];
+				$data->titre		= $info_item['titre'];
+				$data->start		= $info_item['start'];
+				$data->end			= $info_item['end'];
+				$data->duree		= $info_item['duree'];
+				$data->ordre		= $info_item['ordre'];
+
+				$json->data[] = $data;
+			}
+		
+			$json_data = json_encode($json);
+		
+			$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
+							VALUES (%s,%s,NOW())",	func::GetSQLValueString( $_id_archive_ecran ,'int'),
+													func::GetSQLValueString( $json_data ,'text'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());	
+
+		}
+
+		/*$sql = sprintf("SELECT P.id, P.nom, P.id_etablissement, P.id_groupe, P.id_last_slide, P.order_last_slide, P.id_playlist_locale AS ecran_playlist_locale, P.id_playlist_nationale AS ecran_playlist_nationale, E.code_postal, G.id_playlist_locale AS groupe_playlist_locale, G.id_playlist_nationale AS groupe_playlist_nationale
 							FROM ".TB."ecrans_tb AS P,
 							".TB."etablissements_tb AS E,
 							".TB."ecrans_groupes_tb AS G
@@ -1046,7 +1114,7 @@ class Slideshow {
 				//$json->data_ecran_playlist[] = $data;
 				
 				$data = NULL;
-			}	
+			}
 		}
 		
 		if(!empty($temp_ecran->ecran_playlist_nationale)){			
@@ -1126,12 +1194,14 @@ class Slideshow {
 				$data = NULL;
 			}
 		}
-	
+		
 		$json_data = json_encode($json);
 		
 		$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication) VALUES (%s,%s,NOW())",  func::GetSQLValueString($_id_archive_ecran,'int'),
 																														func::GetSQLValueString($json_data,'text'));
 		$sql_query		= mysql_query($sql) or die(mysql_error());	
+
+		*/
 	}	
 	
 	
