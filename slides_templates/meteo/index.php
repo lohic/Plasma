@@ -5,10 +5,10 @@ $meteo = new meteo(); // normalement on doit injecter un zipcode dans meteo()...
 
 $json_injector = $meteo->get_meteo(); ?>
 
-<script language="javascript" type="text/javascript">
+<!--<script language="javascript" type="text/javascript">
 json_data = <?php echo $json_injector; ?>;
 main_zip = "<?php echo $meteo->zipcode; ?>";
-</script>
+</script>-->
 
 <div id="meteo1" class="meteo1">
 	<div id="ombre"></div>

@@ -10,7 +10,7 @@
 </div>
 
 <div class="footer" id="C">
-	<!--{{# logo }}-->
+	{{# logo }}
 	<img src="<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'default/'; ?>logo.png" alt="Sciences Po"/>
-	<!--{{/ logo }}-->
+	{{/ logo }}
 </div>
