@@ -106,9 +106,9 @@ class Slideshow {
 	function generate_slide_page($ispreview=false,$isdebug=false){
 		//$this->slide_db->connect_db();
 
-		$le_slide = $this->generate_slide($isdebug);
+		//$le_slide = $this->generate_slide($isdebug);
 		
-		$plasma_id = $this->ecran->id;
+		//$plasma_id = $this->ecran->id;
 		
 		$contents ='';
 		ob_start();
@@ -269,7 +269,7 @@ class Slideshow {
 	 * @param $alerte si slide cherché doit être une alerte (false, national, code_postal)
 	 * @return retourne un objet avec contenant les variables id_slide,id_playlist,ordre,duree ou false si aucun slide n'a été trouvé
 	 */
-	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte='false'){
+	/*function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte='false'){
 		
 		//echo "<br/>".$type_target . ' : ' . $id_target . ' | type : ' . $type . ' | alerte : '. $alerte;
 		
@@ -571,7 +571,7 @@ class Slideshow {
 			
 			return false;	
 		}
-	}
+	}*/
 	
 	
 	/**
@@ -582,7 +582,7 @@ class Slideshow {
 	* @param $duree duree du slide hh:mm:ss
 	* @return la duree en secondes ou false (durée restante si le slide est dans l'intervale de temps)
 	*/
-	function verif_time_slide($start_time_slide,$duree_slide){
+	/*function verif_time_slide($start_time_slide,$duree_slide){
 		
 		$t = func::time2sec($start_time_slide);
 		$d = func::time2sec($duree_slide);
@@ -596,7 +596,7 @@ class Slideshow {
 		}else{
 			return false;	
 		}
-	}
+	}*/
 	
 	/**
 	* récupère l'id du prochain slide d'un écran C'EST LE COEUR DU SYSTÈME - C'EST POUR ÇA QUE LA FONCTION EST UN PEU LONGUE
@@ -605,19 +605,19 @@ class Slideshow {
 	* @param $test pour savoir si on teste l'id ou pas, dans ce cas ou mets ou pas à jour les informations de l'écran
 	* @return false ou un objet contenant les informations liées au slide (id_slide,id_playlist,ordre,duree)
 	*/
-	function get_next_slide_id($test=false){
-		/*
-		> ecran
-		> groupe
-		> slideshow		
-		*/
+	/*function get_next_slide_id($test=false){
+		//
+		//> ecran
+		//> groupe
+		//> slideshow		
+		//
 		
 		if(isset($_GET['slide_id'])){
-			/*
-			@ switch pour un aperçu d'un seul slide
-			@ GILDAS
-			@ 20/07/2012
-			*/
+			//
+			//@ switch pour un aperçu d'un seul slide
+			//@ GILDAS
+			//@ 20/07/2012
+			//
 
 			// instanciation des objets
 			$retour = (object)array();
@@ -801,7 +801,7 @@ class Slideshow {
 				return false;	
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * get_ecran_info récupère les dernières informations d'un écran
@@ -1247,6 +1247,34 @@ class Slideshow {
 		}
 		
 		
+	}
+
+	/**
+	 * [get_template description]
+	 * @return string une balise <script> contenant la structure du slide
+	 */
+	function get_templates(){
+
+		$dir = REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER;
+		$recursif=false;
+        $ffs = scandir($dir);
+
+        $temp =array();
+        //echo '<ol>';
+        foreach($ffs as $ff){
+            if($ff != '.' && $ff != '..' && substr($ff, 0, 1)!= '.'){
+                //echo '<li>'.$ff;
+                //if(is_dir($dir.'/'.$ff) && $recursif ) listFolderFiles($dir.'/'.$ff);
+                //echo '</li>';
+                //$temp[] = '{"key":"'.$ff.'","value":"'.$ff.'"}';
+
+                if(isset($ff)){
+					echo '<script id="' . $ff . '" type="text/html">'."\n";
+					include_once( REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER . $ff . '/index.php');
+					echo "\n".'</script>'."\n"."\n";
+				}
+            }
+        }
 	}
 }
 	
