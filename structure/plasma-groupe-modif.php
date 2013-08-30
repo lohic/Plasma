@@ -94,6 +94,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
         	<fieldset>
         		<div>
 		            <p>
+		            	<label>Alerte / Groupe / Écran :</label>
 		                <select id="screen_reference" name="screen_reference">
 		                    {{#group_selector}}
 		                    <option value="{{ key }}">{{ value }}</option>
@@ -103,11 +104,18 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 		        </div>
 		        <div>
 		            <p>
+		            	<label>Type de slide :</label>
 		                <select id="template_reference" name="template_reference">
 		                    {{#template_selector}}
 		                    <option value="{{ key }}">{{ value }}</option>
 		                    {{/template_selector}}
 		                </select>
+		            </p>
+		        </div>
+		        <div>
+		            <p>
+		            	<label>Publié oui/non :</label>
+		                <input id="published" type="checkbox" name="published">
 		            </p>
 		        </div>
 	            <div>
@@ -116,7 +124,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 	                <p><span class="date">fin :</span> {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
 	            </div>
 			
-				<button id="save_slide">Enregistrer</button>
+				<button id="save_item">Enregistrer</button>
 		        <button id="edit_slide_content">Éditer le contenu</button>
 		        <button id="publish_slide">Publier le slide</button>
 

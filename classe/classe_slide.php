@@ -327,8 +327,8 @@ class Slide {
 	function get_slide_info(){
 		$this->slide_db->connect_db();
 		
-		$sql_slide		= sprintf("SELECT * FROM ".TB."slides_tb WHERE id=%s",func::GetSQLValueString($this->id,'int'));
-		$sql_slide_query = mysql_query($sql_slide) or die(mysql_error());
+		$query		= sprintf("SELECT * FROM ".TB."slides_tb WHERE id=%s",func::GetSQLValueString($this->id,'int'));
+		$sql_slide_query = mysql_query($query) or die(mysql_error());
 		
 		$slide_item = mysql_fetch_assoc($sql_slide_query);
 		
@@ -571,14 +571,16 @@ class Slide {
 		$start  	= isset($_POST['start'])?		func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ), 'text') : date('Y-m-d H:i:s');
         $end    	= isset($_POST['end'])?			func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['end']) ), 'text') : date('Y-m-d H:i:s');
         $group		= isset($_POST['group'])?		func::GetSQLValueString( $_POST['group'], 'text') : '';
-        $published	= isset($_POST['published'])?	func::GetSQLValueString( $_POST['published'],'int'): 1;
+        $published	= isset($_POST['published'])?	func::GetSQLValueString( $_POST['published'],'int'): 0;
         $ordre		= isset($_POST['ordre'])?		func::GetSQLValueString( $_POST['ordre'], 'int') : 0;
+        $id_slide	= isset($_POST['id_slide'])?	func::GetSQLValueString( $_POST['id_slide'], 'int') : 0;
+        $id_group	= isset($_POST['id_group'])?	func::GetSQLValueString( $_POST['id_group'], 'int') : 0;
 
 		if( !isset($id) ){
 			// création$
 			// 
-            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_item_tb (titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s)",$titre,$start,$end,$group,$published);
-			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s, %s, %s)",$id_slide, $id_group, $titre,$start,$end,$group,$published);
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
 
@@ -587,16 +589,16 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $sql_slide			= sprintf("UPDATE ".TB."timeline_item_tb SET titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$titre,$start,$end,$group,$published,$id);
-			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$id_slide, $id_group, $titre,$start,$end,$group,$published,$id);
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			echo '{"id":"'+ $id +'"}';
 
 		}else{
-			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_item_tb WHERE id=%s",$id);
-			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			$query			= sprintf("DELETE FROM ".TB."timeline_item_tb WHERE id=%s",$id);
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
-			echo '{"message":"supression du slide «'. $_POST['titre'] .'»"}';
+			echo '{"message":"supression de l’item «'. $_POST['titre'] .'»"}';
 		}
 	}
 
@@ -609,9 +611,8 @@ class Slide {
 
 		if(!empty($id_groupe)){
 
-			$query 				= 'SELECT * FROM '.TB.'timeline_item_tb';
-			$sql_slide			= sprintf($query); //echo $sql_slide;	
-			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			$query			= sprintf('SELECT * FROM '.TB.'timeline_item_tb'); //echo $sql_slide;	
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 			
 			$temp = array();
 
@@ -649,8 +650,7 @@ class Slide {
 			$retour = new stdClass();
 
 			$query 				= sprintf("SELECT * FROM ".TB."ecrans_tb WHERE id_groupe=%s",$id_groupe);
-			$sql_slide			= sprintf($query); //echo $sql_slide;	
-			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 			
 			$temp = array();
 			$tab = array();
@@ -721,6 +721,111 @@ class Slide {
 		$temp[1] --;
 
 		return implode(',',$temp); 
+	}
+
+
+	/**
+	 * mise à jour ou création d'un item de la timeline
+	 * @param {$id} facultatif, id dedu slide à éditer
+	 * @param {$delete} facultatif, booléen pour savoir si on doit supprimer ou non le slide, dans ce cas on il faut supprimer les références de ce slide dans les items
+	 * @return JSON contenant l'id du slide ou un message si suppression
+	 */
+	function update_timeline_slide($id=NULL, $delete = false){
+
+		$_nom = !empty($_POST['nom']) ? $_POST['nom'] : 'Nouveau';
+
+		$nom		= func::GetSQLValueString( $_nom, 'text');
+		$template  	= isset($_POST['template'])?	func::GetSQLValueString( $_POST['template'] , 'text') : func::GetSQLValueString('default', 'text') ;
+        $json    	= isset($_POST['json'])?		func::GetSQLValueString( $_POST['json'] , 'text') : func::GetSQLValueString('{}', 'text');
+        $date		= func::GetSQLValueString( date('Y-m-d H:i:s'), 'text');
+
+		if( !isset($id) ){
+			// création$
+			// 
+            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slides_tb (nom, template, json, date) VALUES (%s, %s, %s, %s)",$nom,$template,$json,$date);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+
+			$slide_id = mysql_insert_id();
+
+			$retour = new stdClass();
+			$retour->id = $slide_id;
+			$retour->nom = addslashes($_nom);
+
+			echo json_encode($retour);
+
+			//echo '{"id" : "'+ $slide_id +'" , "nom" : "'.$_nom.'"}';
+
+		}else if( !$delete ){
+			//mise à jour
+
+            $sql_slide			= sprintf("UPDATE ".TB."timeline_slides_tb SET nom=%s, template=%s, json=%s  WHERE id=%s",$nom,$template,$json,$id);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+
+			$retour = new stdClass();
+			$retour->id = $id;
+			$retour->nom = addslashes($_nom);
+
+			echo json_encode($retour);
+
+		}else{
+			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_slides_tb WHERE id=%s",$id);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+
+			echo '{"message":"supression du slide «'. $_POST['titre'] .'»"}';
+		}
+	}
+
+	/**
+	 * récupération des différents éléments item de la timeline
+	 * @param {$id_groupe} id du groupe dont il faut récupérer les items
+	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
+	 */
+	function get_timeline_slide_data($id_slide=NULL,$template=NULL){
+
+		if(!empty($id_slide)){
+
+			$query			= sprintf("SELECT * FROM ".TB."timeline_slides_tb WHERE id=%s", func::GetSQLValueString($id_slide, 'int') ); //echo $sql_slide;	
+			$sql_slide 		= mysql_query($query) or die(mysql_error());
+			
+			$slide_data =  mysql_fetch_assoc($sql_slide);
+
+			$data = json_decode($slide_data['json']);
+   
+		}else{
+		    $data = json_decode('{}');
+		}
+
+		
+		if(!empty($template)){
+
+		    $json = json_decode( file_get_contents( REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$template.'/structure.json' ) );
+
+		    foreach($json->html as $line){
+
+		        //echo $line->type."<br/>\n";
+		        //echo isset($line->name) ? $line->name."<br/>\n" : "<br/>\n";
+		        //echo "---------<br/>\n";
+		        //$line->value = 'ok';
+		        //  
+
+		        if( isset($line->name) ){
+		            $name = $line->name;
+		            if (isset($data->$name) ){
+		                if($line->type == 'file'){
+		                    $attr = 'data-file';
+		                    $line->$attr = $data->$name;
+		                }else{
+		                    $line->value = $data->$name;
+		                }
+		            }
+		        }
+		    }
+		}else{
+		    $json = '{}';
+		}
+
+
+		echo json_encode($json);
 	}
 	
 }

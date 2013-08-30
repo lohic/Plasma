@@ -15,22 +15,22 @@ if($core->isAdmin){
     $action = isset($_POST['action']) ? $_POST['action'] : NULL;
 
     // creation d'un item
-    if($action != NULL && $action == 'create-slide'){
+    if($action != NULL && $action == 'create-item'){
 
-        $slide->update_timeline_slide();
+        $slide->update_timeline_item();
     }
     // mise à jour d'un item
     else
-    if($action != NULL && $action == 'update-slide' && isset($_POST['id_slide']) ){
+    if($action != NULL && $action == 'update-item' && isset($_POST['id']) ){
 
-        $slide->update_timeline_slide( $_POST['id_slide'] );
+        $slide->update_timeline_item( $_POST['id'] );
 
     }
     // suppression d'un item
     else
-    if($action != NULL && $action == 'delete-slide' && isset($_POST['id_slide']) ){
+    if($action != NULL && $action == 'delete-item' && isset($_POST['id']) ){
 
-        $slide->update_timeline_slide( $_POST['id_slide'], true );
+        $slide->update_timeline_item( $_POST['id'], true );
 
     }
 

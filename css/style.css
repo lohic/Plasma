@@ -128,6 +128,10 @@ div.timeline-currenttime{
 }
 
 
+.fancybox-inner fieldset, .fancybox-inner fieldset p{
+    width:480px;
+}
+
 
 /*
 * FORMULAIRE DFORM AND UPLOADIFIVE
@@ -164,6 +168,10 @@ div.timeline-currenttime{
     max-width: 100%;
     height: auto;
     margin-bottom: 15px;
+}
+
+.ui-dform-form .vignette[src="../slides_images/undefined"]{
+    display:none;
 }
 
 .ui-dform-form .ui-dform-button{
