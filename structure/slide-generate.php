@@ -1,74 +1,36 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>SciencesPo | Écrans PLASMA</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>LOOP | Écrans PLASMA</title>
 
-<link href="<?php //echo $template;?>../css/slideshow.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo ABSOLUTE_URL; ?>/fonts/GoetheGothic.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo ABSOLUTE_URL; ?>/css/slideshow.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo ABSOLUTE_URL; ?>/css/slideshow.css" rel="stylesheet" type="text/css" name="slide_css" />
 
-<?php 
-
-?>
-
-<script language="javascript" src="../js/jquery-1.10.2.min.js"></script>
-<script language="javascript" src="../js/slideshow.js"></script>
-
-<script>
-
-$(document).ready(function(){
-	var actual_date_json	='<?php echo $this->ecran->actual_date_json; ?>';
-	var plasma_id			='<?php echo $this->ecran->id; ?>';
-	
-	$("#retour").text('ok');
-	
-	function refresh() {
-	
-		$.ajax({
-			type: "POST",
-			data: "action=refresh_topic&plasma_id="+ plasma_id +"&actual_date_json=" + actual_date_json,
-			url: "tester.php",
-			dataType: 'json',
-			//async:false,
-			success: function(json){
-				//countusers=json.countusers;
-				//$("#retour").text('ok : '+countusers);
-				if(json.update == true){
-					actual_date_json = json.actual_date_json;
-					console.log(json.json);
-					
-					$('.date').text(actual_date_json);
-				}
-				console.log(json);
-			}
-		});
-	}
-	
-	setInterval(refresh, 5000);
-	
-	
-	$("#test").click(function(){
-		alert(actual_date_json);
-	});
-});
-
-</script>
-
-
+	<script src="<?php echo ABSOLUTE_URL; ?>/js/jquery-1.10.2.min.js" language="javascript"></script>
+	<script src="<?php echo ABSOLUTE_URL; ?>/js/ICanHaz.min.js" ="javascript"></script>
+	<script src="<?php echo ABSOLUTE_URL; ?>/js/slideshow.js" language="javascript" charset="UTF-8"></script>
 
 </head>
 
 <body<?php if($ispreview){echo ' class="preview"';} ?>>
+	<div class="console">
+		<p id="retour"></p>
 
-<p id="retour"></p>
+		<p id="test">clique</p>
 
-<p id="test">clique</p>
+		<h1><?php //echo $this->ecran->nom; ?></h1>
+		<p class="date"><span id="now"></span></p>
+		<p class="date"><span id="start"></span><span id="end"></span><?php //echo $this->ecran->actual_date_json; ?></p>
+	</div>
 
-<h1><?php echo $this->ecran->nom; ?></h1>
-<p class="date"><?php echo $this->ecran->actual_date_json; ?></p>
+	<div id="template"></div>
 
-<div id="template">
-	<?php //echo $le_slide; ?>
-</div>
+	<?php
+
+	$this->get_templates();
+
+	?>
 
 </body>
 </html>
