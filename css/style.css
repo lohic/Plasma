@@ -17,6 +17,10 @@ body {
     padding:10px;
 }
 
+/*
+ * Style de la timeline
+ */
+
 div.timeline-frame{
     border: 1px solid #ddd;
     background: #fbf5f6;
@@ -45,7 +49,9 @@ div.timeline-axis-text-major{
 }
 
 
-
+/*
+ * style des éléments de la timeline
+ */
 
 div.timeline-event.timeline-event-box{
     background: #333;
@@ -68,16 +74,20 @@ div.timeline-event-line{
 div.timeline-event.timeline-event-dot{
     border-style: solid;
     border-width: 0px;
-    border-radius: 0px;
-    -moz-border-radius: 0px;
     -webkit-border-radius: 0px;
+       -moz-border-radius: 0px;
+            border-radius: 0px;
 }
 
 div.timeline-event.timeline-event-range{
     background-image: none;
-    background-color: #ff9999;
+    /*background-color: #ff9999;*/
     border-color:#C00;
     color:#333;
+    border:0;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
 }
 
 div.timeline-event.timeline-event-range.unpublished{
@@ -86,7 +96,6 @@ div.timeline-event.timeline-event-range.unpublished{
     color: #fff;
     font-weight: bold;
 }
-
 
 div.timeline-event.timeline-event-selected{
     border-color: #C00;
@@ -110,6 +119,7 @@ div.timeline-event.readonly {
     border-color: red;
     color: white;
 }
+
 div.timeline-event.readonly.unpublished {
     background-image: url('../graphisme/unpublished-protected.png');
     background-repeat: repeat;
@@ -127,10 +137,31 @@ div.timeline-currenttime{
     background: none;
 }
 
-
-.fancybox-inner fieldset, .fancybox-inner fieldset p{
-    width:480px;
+/*
+ * couleur des templates
+ */
+div.timeline-event.timeline-event-range.default{
+    background-color: rgb(203,02,26);
 }
+div.timeline-event.timeline-event-range.compte_a_rebours{
+    background-color: rgb(203,02,26);
+}
+div.timeline-event.timeline-event-range.evenements{
+    background-color: #4670be;
+}
+div.timeline-event.timeline-event-range.meteo{
+    background-color: #f1a000;
+}
+div.timeline-event.timeline-event-range.sports{
+    background-color: rgb(247,207,50);
+}
+div.timeline-event.timeline-event-range.verbatim{
+    background-color: rgb(203,02,26);
+}
+div.timeline-event.timeline-event-range.video{
+    background-color: rgb(203,02,26);
+}
+
 
 
 /*
@@ -162,6 +193,10 @@ div.timeline-currenttime{
 .fancybox-inner button{
     font-size: 12px;
     margin: 20px 0 10px;
+}
+
+.fancybox-inner fieldset, .fancybox-inner fieldset p{
+    width:480px;
 }
 
 .ui-dform-form .vignette{

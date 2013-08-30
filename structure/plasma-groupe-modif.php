@@ -89,7 +89,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 -->
 <script id="slide_editor" type="text/html">
     <div style="width:500px">
-        <h1>{{content}}</h1>
+        <h1 id="item_title">{{content}}</h1>
         <form>
         	<fieldset>
         		<div>

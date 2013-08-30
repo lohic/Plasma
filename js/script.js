@@ -175,17 +175,17 @@ function drawTimeline() {
                 console.log(dataTimeline[row]); 
 
                 timeline.changeItem(row, {
-                    'id': dataJSON.id
+                    'id': dataJSON
                 });
+
+                console.log(' ');
+                console.log('ONADD ref : ' + row + ' id : ' + dataTimeline[row].id + ' id_slide : ' + dataTimeline[row].id_slide);
+                console.log('content  : ' + dataTimeline[row].content );
+                console.log('start  : ' + dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
+                console.log('groupe : ' + dataTimeline[row].group);
+                console.log('class  : ' + dataTimeline[row].className);
             });
-            console.log(' ');
-            console.log('AJOUT REF : ' + row );
-            console.log('Ajout  : ' + dataTimeline[row].content );
-            console.log('start  : ' + dataTimeline[row].start);
-            console.log('end    : ' + dataTimeline[row].end);
-            console.log('groupe : ' + dataTimeline[row].group);
-            console.log('class  : ' + dataTimeline[row].className);
-            console.log('id     : ' + dataTimeline[row].id);
+            
         }
     }
     
@@ -205,6 +205,11 @@ function drawTimeline() {
 
             var debut = new Date(dataTimeline[row].start);
 
+            console.log(' ');
+            console.log("ONCHANGE id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
+            console.log('start : '+dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
+            console.log('groupe : ' + dataTimeline[row].group);
+
             $.ajax({
                 url     :"../ajax/data-timeline-item.php",
                 type    : "POST",
@@ -221,13 +226,11 @@ function drawTimeline() {
                     action  : 'update-item'
                 }
             }).done(function ( dataJSON ) {
-                console.log(dataJSON);
-                timeline.changeItem(row, {
+                console.log("Save change : "+dataJSON);
+                /*timeline.changeItem(row, {
                     'id': dataJSON.id
-                });
+                });*/
             });
-
-            console.log("onChange :\n" + dataTimeline[row].start + ' >> ' + dataTimeline[row].end + '\n[groupe : ' + dataTimeline[row].group + ']');
         }
     }
 
@@ -254,9 +257,11 @@ function drawTimeline() {
                 }
             }).done(function ( dataJSON ) {
                 alert(dataJSON.message);
-                console.log(dataJSON);
+                //console.log(dataJSON);
             });
-            console.log('DELETE : ' + dataTimeline[row].content);
+
+            console.log(' ');
+            console.log('ONDELETE id : '+ dataTimeline[row].id + ' content : '+ dataTimeline[row].content);
         }
     }
     
@@ -273,13 +278,8 @@ function drawTimeline() {
         }
 
         if (row != undefined) {
-            console.log("SELECT");
-            console.log("id : "  + dataTimeline[row].id );
-            console.log("id_slide : "  + dataTimeline[row].id_slide );
-            //console.log("start : "  + data[row].start );
-            //console.log("end : "    + data[row].end );
-            //console.log("content : "+ data[row].content );
-            //console.log("group : "  + data[row].group );
+            console.log(' ');
+            console.log("ONSELECT id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
         }  
     };
 
@@ -296,7 +296,6 @@ function drawTimeline() {
 
         if (row != undefined) {
             
-
             if(dataTimeline[row].type == 'slide'){
                 
                 edit_item(row);
@@ -339,7 +338,7 @@ function drawTimeline() {
     links.events.addListener(timeline, 'delete', ondelete);
     links.events.addListener(timeline, 'select', onselect);
     links.events.addListener(timeline, 'edit',   onedit);
-    links.events.addListener(timeline, 'rangechange', onrangechange);
+    //links.events.addListener(timeline, 'rangechange', onrangechange);
 }
 
 
@@ -424,13 +423,17 @@ function edit_item(ref){
     $('#save_item').click(function(e){
         e.preventDefault();
 
-        var group = $('#screen_reference').val();
-        console.log('changement de groupe : '+group);
+        var group   = $('#screen_reference').val();
+        var content = $('#template_reference').val() == 'meteo' ? "Météo" : dataTimeline[ref].content;
+
+        $('#item_title').val(content);
 
         timeline.changeItem(ref, {
             'group': group,
             'className': $("#published").is(':checked') ? '' : 'unpublished',
+            'content' : content
         });
+
 
         $.ajax({
             url     :"../ajax/data-timeline-item.php",
@@ -449,9 +452,9 @@ function edit_item(ref){
             }
         }).done(function ( dataJSON ) {
             console.log(dataJSON);
-            timeline.changeItem(ref, {
-                'id': dataJSON.id
-            });
+            /*timeline.changeItem(ref, {
+                'id': dataJSON
+            });*/
         });
     });
 
@@ -688,9 +691,9 @@ function edit_slide(ref){
                     }
                 }).done(function ( dataJSON ) {
                     console.log(dataJSON);
-                    timeline.changeItem(ref, {
+                    /*timeline.changeItem(ref, {
                         'id': dataJSON.id
-                    });
+                    });*/
                 });
             });
         });

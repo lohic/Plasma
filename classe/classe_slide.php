@@ -617,15 +617,20 @@ class Slide {
 			$temp = array();
 
 			while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
+				$class = array();
 
-				$class = $slide_item['published']==0?'unpublished':'';
+				if($slide_item['published']!=1){
+					$class[] = 'unpublished';
+				}
+				$class[] = $slide_item['template'];
+
 
 				$temp[] = '{
     "id":'. $slide_item['id'] .',
     "start"	: new Date('. $this->dateMysql2JS( $slide_item['start'] ) .'),
     "end"	: new Date('. $this->dateMysql2JS( $slide_item['end'] ) .'),
     "content": "'. $slide_item['titre'] .'",
-    "className": "'. $class .'",
+    "className": "'. implode(' ',$class) .'",
     "group":"'. $slide_item['type_target'] .'",
     "id_slide" : "'. $slide_item['id_slide'] .'",
     "editable": true,
