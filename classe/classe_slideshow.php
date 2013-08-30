@@ -73,13 +73,13 @@ class Slideshow {
 	
 	
 	/**
-	* permet le lancement d'un slideshow
-	* @author Loïc Horellou
-	* @since v0.1
-	* @see Slideshow::generate_slide_page
-	* @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
-	* @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
-	*/
+	 * permet le lancement d'un slideshow
+	 * @author Loïc Horellou
+	 * @since v0.1
+	 * @see Slideshow::generate_slide_page
+	 * @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
+	 * @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
+	 */
 	function run($ispreview=false,$isdebug =false){
 		//$this->slide_db->connect_db();
 
@@ -96,13 +96,13 @@ class Slideshow {
 	
 	
 	/**
-	* récupère le code HTML provenant du prochain slide (récupère en cahce le résultat de generate_slide)
-	* @author Loïc Horellou
-	* @since v0.1
-	* @see Slideshow::generate_slide
-	* @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
-	* @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
-	*/
+	 * récupère le code HTML provenant du prochain slide (récupère en cahce le résultat de generate_slide)
+	 * @author Loïc Horellou
+	 * @since v0.1
+	 * @see Slideshow::generate_slide
+	 * @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
+	 * @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
+	 */
 	function generate_slide_page($ispreview=false,$isdebug=false){
 		//$this->slide_db->connect_db();
 
@@ -121,13 +121,13 @@ class Slideshow {
 	}
 	
 	/**
-	* generate_slide sert à générer l'affichage d'un slide
-	* @author Loïc Horellou
-	* @since v0.1
-	* @version v0.5 20/12/2012
-	* @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true)
-	* @return HTML pour le mode debug si activé
-	*/
+	 * generate_slide sert à générer l'affichage d'un slide
+	 * @author Loïc Horellou
+	 * @since v0.1
+	 * @version v0.5 20/12/2012
+	 * @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true)
+	 * @return HTML pour le mode debug si activé
+	 */
 	function generate_slide($isdebug=false){
 
 		$this->debug("ecran / id:".$this->ecran->id);
@@ -260,15 +260,15 @@ class Slideshow {
 	}
 	
 	/**
-	* request_next_slide_id_by_type sert à interroger les données JSON publiées pour écran
-	* @author Loïc Horellou
-	* @since v0.5 22/12/2012
-	* @param $id_target id de l'élément ciblé (peut être un écran, un groupe d'écran ou une playlist)
-	* @param $type_target le type de l'élément ciblé (groupe, ecran, slideshow)
-	* @param $type le type de slide cherché (date, freq, flux)
-	* @param $alerte si slide cherché doit être une alerte (false, national, code_postal)
-	* @return retourne un objet avec contenant les variables id_slide,id_playlist,ordre,duree ou false si aucun slide n'a été trouvé
-	*/
+	 * request_next_slide_id_by_type sert à interroger les données JSON publiées pour écran
+	 * @author Loïc Horellou
+	 * @since v0.5 22/12/2012
+	 * @param $id_target id de l'élément ciblé (peut être un écran, un groupe d'écran ou une playlist)
+	 * @param $type_target le type de l'élément ciblé (groupe, ecran, slideshow)
+	 * @param $type le type de slide cherché (date, freq, flux)
+	 * @param $alerte si slide cherché doit être une alerte (false, national, code_postal)
+	 * @return retourne un objet avec contenant les variables id_slide,id_playlist,ordre,duree ou false si aucun slide n'a été trouvé
+	 */
 	function request_next_slide_id_by_type($id_target, $type_target='ecran', $type='date', $alerte='false'){
 		
 		//echo "<br/>".$type_target . ' : ' . $id_target . ' | type : ' . $type . ' | alerte : '. $alerte;
@@ -804,11 +804,11 @@ class Slideshow {
 	}
 	
 	/**
-	* get_ecran_info récupère les dernières informations d'un écran
-	* @author Loïc Horellou
-	* @since 0.1
-	* @return un objet contenant id_groupe, id_last_slide, id_last_slideshow, order_last_slide, code_meteo
-	*/
+	 * get_ecran_info récupère les dernières informations d'un écran
+	 * @author Loïc Horellou
+	 * @since 0.1
+	 * @return un objet contenant id_groupe, id_last_slide, id_last_slideshow, order_last_slide, code_meteo
+	 */
 	function get_ecran_info(){
 		
 		if(!empty($this->ecran->id)){
@@ -862,12 +862,12 @@ class Slideshow {
 	}
 	
 	/**
-	* mets à jour les informations d'un écran, met à jour les informations de l'écran après une lecture, sauvegarde les id du dernier slide, slideshow et ordre
-	* attention dasn ce cas le concept de slideshow a été remplacé par playlist (on met à jour la dernière playlist ayant été jouée)
-	* @author Loïc Horellou
-	* @since 0.1	
-	* $param un tableau contenant id_last_slide, id_last_slideshow, ordre_last_slide
-	*/
+	 * mets à jour les informations d'un écran, met à jour les informations de l'écran après une lecture, sauvegarde les id du dernier slide, slideshow et ordre
+	 * attention dasn ce cas le concept de slideshow a été remplacé par playlist (on met à jour la dernière playlist ayant été jouée)
+	 * @author Loïc Horellou
+	 * @since 0.1	
+	 * $param un tableau contenant id_last_slide, id_last_slideshow, ordre_last_slide
+	 */
 	function update_ecran_info($tab=NULL){
 		if(!empty($this->ecran->id) && !empty($tab)){
 			$this->slide_db->connect_db();
@@ -883,16 +883,16 @@ class Slideshow {
 	}
 	
 	
+	
 	/**
-	* publish_slideshow sert à publier les différents slides attachés à un écran, un groupe, un établissement ou l'ensemble des écrans
-	* @author Loïc Horellou
-	* @since 0.5 20/12/2012
-	* @param $update_ecran_id			id de l'écran à archiver
-	* @param $update_groupe_id			id du groupe d'écrans à archiver
-	* @param $update_etablissement_id	id de l''établissement à archiver
-	* @param $update_all				true si on souhaite publier tous les slides et playlists 
-	*/
-	function publish_slideshow($update_ecran_id=NULL, $update_groupe_id=NULL, $update_etablissement_id=NULL, $update_all=NULL){
+	 * publish_slideshow sert à publier les différents slides attachés à un écran, un groupe, un établissement ou l'ensemble des écrans
+	 * @param  int $update_ecran_id         id de l'écran à archiver
+	 * @param  int $update_groupe_id        id du groupe d'écrans à archiver
+	 * @param  int $update_etablissement_id id de l''établissement à archiver
+	 * @param  boolean $update_all          true si on souhaite publier tous les slides et playlists 
+	 * @return void                         Rien n'est retourné
+	 */
+	function publish_slideshow($update_ecran_id=NULL, $update_groupe_id=NULL, $update_etablissement_id=NULL, $update_all=false){
 		
 		if(!empty($update_ecran_id) && $update_all != true){
 			// on arvhive l'écran dont l'id est spécifié
@@ -944,11 +944,12 @@ class Slideshow {
 	}
 	
 	/**
-	* archive_ecran archive au format json les différents type de slides attachés à un écran (ecran, groupe, playlist de l'écran, playlist du groupe)
-	* @author Loïc Horellou
-	* @since 0.5 20/12/2012
-	* @param $id_ecran	id de l'écran à archiver
-	*/
+	 * archive_ecran archive au format json les différents type de slides attachés à un écran (ecran, groupe, playlist de l'écran, playlist du groupe)
+	 * @author Loïc Horellou
+	 * @since 0.5 20/12/2012
+	 * @param  [type] $_id_archive_ecran id de l'écran à archiver
+	 * @return [type]                    [description]
+	 */
 	function archive_ecran($_id_archive_ecran){
 		$sql = sprintf("SELECT P.id, P.nom, P.id_etablissement, P.id_groupe, P.id_last_slide, P.order_last_slide, P.id_playlist_locale AS ecran_playlist_locale, P.id_playlist_nationale AS ecran_playlist_nationale, E.code_postal, G.id_playlist_locale AS groupe_playlist_locale, G.id_playlist_nationale AS groupe_playlist_nationale
 							FROM ".TB."ecrans_tb AS P,
@@ -1135,8 +1136,10 @@ class Slideshow {
 	
 	
 	/**
-	* pour récupérer les dernières information d'un écran
-	*/
+	 * pour récupérer les dernières information d'un écran
+	 * @param  [type] $actual_date_json [description]
+	 * @return [type]                   [description]
+	 */
 	function get_ecran_data($actual_date_json = NULL){
 		
 		
