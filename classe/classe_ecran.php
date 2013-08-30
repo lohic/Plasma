@@ -8,18 +8,20 @@ include_once('classe_slideshow.php');
 //include_once('../vars/statics_vars.php');
 //include_once('fonctions.php');
 
-
+/**
+ * 
+ */
 class Ecran {
 	
 	var $slide_db		= NULL;
 	var $id				= NULL;
 	static $updated		= false;
 	
-	/*
-	@ GESTION DES TEMPLATE
-	@
-	@
-	*/
+	/**
+	 * GESTION DES TEMPLATE
+	 * @param  [type] $_id [description]
+	 * @return [type]      [description]
+	 */
 	function ecran($_id=NULL){
 		global $connexion_info;
 		date_default_timezone_set('UTC');
@@ -32,11 +34,11 @@ class Ecran {
 		}
 	}
 	
-	/*
-	@ mise à jour des informations d'un écran
-	@ LOIC
-	@ 24/07/2012
-	*/
+	/**
+	 * mise à jour des informations d'un écran
+	 * @author LOIC
+	 * @date 24/07/2012
+	 */
 	function ecran_update_data(){
 		
 		// on normalise les données
@@ -100,11 +102,12 @@ class Ecran {
 	}
 	
 	
-	/*
-	@ mise à jour d'un ecran
-	@
-	@
-	*/
+	/**
+	 * mise à jour d'un ecran
+	 * @param  [type] $_array_val [description]
+	 * @param  [type] $id         [description]
+	 * @return [type]             [description]
+	 */
 	function update_ecran($_array_val,$id){
 		$this->slide_db->connect_db();
 		
@@ -128,11 +131,11 @@ class Ecran {
 
 	}
 	
-	/*
-	@ création d'un ecran
-	@
-	@
-	*/
+	/**
+	 * création d'un ecran
+	 * @param  [type] $_array_val [description]
+	 * @return [type]             [description]
+	 */
 	function create_ecran($_array_val){
 		$this->slide_db->connect_db();
 					
@@ -160,10 +163,10 @@ class Ecran {
 	
 	
 	/**
-	* mise à jour d'un groupe d'ecrans
-	* @param $_array_val liste des valeurs
-	* @param $_id_groupe id du groupe concerné
-	*/
+	 * mise à jour d'un groupe d'ecrans
+	 * @param $_array_val liste des valeurs
+	 * @param $_id_groupe id du groupe concerné
+	 */
 	function update_groupe_ecran($_array_val,$_id_groupe){
 		$this->slide_db->connect_db();
 		
@@ -183,11 +186,11 @@ class Ecran {
 
 	}
 	
-	/*
-	@ création d'un groupe d'ecrans
-	@
-	@
-	*/
+	/**
+	 * [create_groupe_ecran description]
+	 * @param  [type] $_array_val [description]
+	 * @return [type]             [description]
+	 */
 	function create_groupe_ecran($_array_val){
 		$this->slide_db->connect_db();
 					
@@ -208,16 +211,15 @@ class Ecran {
 
 	}
 	
-	
-	
+
 	
 	
 	/**
-	* récupère la liste des alertes d'un groupe ou d'un écran
-	* @param $_type_target ecran ou groupe
-	* @param $_id_groupe id du groupe si groupe
-	* @param $_type_alerte all (nationale ou 75000 code postal)
-	*/
+	 * récupère la li *te des alertes d'un groupe ou d'un écran
+	 * @param $_type_target ecran ou groupe
+	 * @param $_id_groupe id du groupe si groupe
+	 * @param $_type_alerte all (nationale ou 75000 code postal)
+	 */
 	function get_slide_alerte_list($_type_target = 'ecran',$_type_alerte='all',$_id_groupe = NULL){
 		$this->slide_db->connect_db();
 		
@@ -295,11 +297,10 @@ class Ecran {
 	}
 	
 	
-	/*
-	@
-	@
-	@
-	*/
+	/**
+	 * [get_form_select description]
+	 * @return [type] [description]
+	 */
 	function get_form_select(){
 		global $jListe;
 		global $JListe;
@@ -330,12 +331,12 @@ class Ecran {
 	}
 	
 	
-	/*
-	@ récupération des informations d'un ecran
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * récupération des informations d'un ecran
+	 * @author LOIC
+	 * @date 24/07/2012
+	 *
+	 */
 	function get_info(){
 		
 		// on initialise pour éviter les valeurs non déclarées dans les formulaires
@@ -371,12 +372,12 @@ class Ecran {
 
 	}
 	
-	/*
-	@ récupération des informations d'un groupe d'ecrans
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * récupération des informations d'un groupe d'ecrans
+	 * @author LOIC
+	 * 24/07/2012
+	 *
+	 */
 	function get_groupe_info($_id_groupe = NULL){
 
 		// instanciation de l'objet
@@ -411,12 +412,12 @@ class Ecran {
 
 	}
 	
-	/*
-	@ liste des établissements
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * liste des établissements
+	 * @author LOIC
+	 * 24/07/2012
+	 *
+	 */
 	function get_etablissement_list(){		
 			
 			$this->slide_db->connect_db();
@@ -438,12 +439,12 @@ class Ecran {
 	}
 	
 	
-	/*
-	@ liste des groupes d'écrans
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * liste des groupes d'écrans
+	 * @author LOIC
+	 * 24/07/2012
+	 *
+	 */
 	function get_ecran_groupe_list(){		
 			
 			$this->slide_db->connect_db();
@@ -465,12 +466,12 @@ class Ecran {
 	}
 	
 	
-	/*
-	@ liste des slideshows
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * liste des slideshows
+	 * @author LOIC
+	 * 24/07/2012
+	 *
+	 */
 	function get_playlist_list(){		
 			
 			$this->slide_db->connect_db();
@@ -492,12 +493,12 @@ class Ecran {
 	}
 	
 	
-	/*
-	@ liste des slides
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * liste des slides
+	 * @author LOIC
+	 * 24/07/2012
+	 *
+	 */
 	function get_slides_list(){		
 			
 			$this->slide_db->connect_db();
@@ -518,12 +519,12 @@ class Ecran {
 			return $retour;
 	}
 	
-	/*
-	@ liste des groupes d'écrans pour administration
-	@ LOIC
-	@ 24/07/2012
-	@
-	*/
+	/**
+	 * liste des groupes d'écrans pour administration
+	 * @author LOIC
+	 * 24/07/2012
+	 *
+	 */
 	function get_admin_ecran_groupe_list(){		
 			
 			$this->slide_db->connect_db();
@@ -560,11 +561,11 @@ class Ecran {
 	}
 	
 	/**
-	* liste des écrans pour administration (par groupe d'écran)
-	* @author Loïc Horellou
-	* @param $id_groupe
-	* @return HTML de la liste des écrans
-	*/
+	 * liste des écrans pour administration (par groupe d'écran)
+	 * @author Loïc Horellou
+	 * @param $id_groupe
+	 * @return HTML de la liste des écrans
+	 */
 	function get_admin_ecran_list($id_groupe=NULL){		
 		$retour = "";
 		
@@ -612,6 +613,13 @@ class Ecran {
 	}
 	
 	
+	/**
+	 * [get_next_slide description]
+	 * @param  [type] $_id_screen           [description]
+	 * @param  [type] $_id_actual_slide     [description]
+	 * @param  [type] $_id_actual_slideshow [description]
+	 * @return [type]                       [description]
+	 */
 	function get_next_slide($_id_screen=NULL,$_id_actual_slide=NULL,$_id_actual_slideshow=NULL){
 		$this->slide_db->connect_db();
 
@@ -624,12 +632,13 @@ class Ecran {
 		
 	}
 	
-	/*
-	@ METTRE A JOUR OU CREER UNE LIAISON SLIDE->ECRAN en mode freq ou date
-	@ cf classe SLIDESHOW pour LIAISON SLIDE->SLIDESHOW
-	@
-	@
-	*/
+	/**
+	 * METTRE A JOUR OU CREER UNE LIAISON SLIDE->ECRAN en mode freq ou date
+	 * cf classe SLIDESHOW pour LIAISON SLIDE->SLIDESHOW
+	 * @param  [type] $_array_val [description]
+	 * @param  [type] $id_rel     [description]
+	 * @return [type]             [description]
+	 */
 	function update_rel_slide($_array_val=NULL,$id_rel = NULL){
 		//if(!empty($this->id)){
 			
@@ -682,10 +691,12 @@ class Ecran {
 	}
 	
 	/**
-	* supprime les slides relieés à un écran ou à un groupe
-	* !!! il faudra passer toutes ces fonctions dans la classe slide ou alors faire une classe rel_slide
-	* pour uniformiser la gestion des relations des playlist, des écrans et des groupes d'écrans
-	*/
+	 * supprime les slides relieés à un écran ou à un groupe
+	 * !!! il faudra passer toutes ces fonctions dans la classe slide ou alors faire une classe rel_slide
+	 * pour uniformiser la gestion des relations des playlist, des écrans et des groupes d'écrans
+	 * @param  [type] $id_rel [description]
+	 * @return [type]         [description]
+	 */
 	function del_rel_slide($id_rel=NULL){
 		if(!empty($id_rel)){
 			
