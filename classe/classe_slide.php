@@ -561,9 +561,9 @@ class Slide {
 
 	/**
 	 * mise à jour ou création d'un item de la timeline
-	 * @param {$id} facultatif, id de l'item à éditer
-	 * @param {$delete} facultatif, booléen pour savoir si on doit supprimer ou non l'item
-	 * @return JSON contenant l'id de l'item ou un message si suppression
+	 * @param int 		$id 		facultatif, id de l'item à éditer
+	 * @param boolean 	$delete 	facultatif, booléen pour savoir si on doit supprimer ou non l'item
+	 * @return JSON 				contenant l'id de l'item ou un message si suppression
 	 */
 	function update_timeline_item($id=NULL, $delete = false){
 
@@ -604,8 +604,8 @@ class Slide {
 
 	/**
 	 * récupération des différents éléments item de la timeline
-	 * @param {$id_groupe} id du groupe dont il faut récupérer les items
-	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
+	 * @param int 	$id_groupe 	id du groupe dont il faut récupérer les items
+	 * @return 					string retourne une chaine JSON contenant le descriptif des items de la timeline
 	 */
 	function get_timeline_items($id_groupe=NULL){
 
@@ -645,8 +645,8 @@ class Slide {
 
 	/**
 	 * récupération des différents éléments screen de la timeline
-	 * @param {$id_groupe} id du groupe dont il faut récupérer les écrans
-	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
+	 * @param int 		$id_groupe 		id du groupe dont il faut récupérer les écrans
+	 * @return string 					retourne une chaine JSON contenant le descriptif des items de la timeline
 	 */
 	function get_timeline_screens($id_groupe=NULL){
 
@@ -731,9 +731,9 @@ class Slide {
 
 	/**
 	 * mise à jour ou création d'un item de la timeline
-	 * @param {$id} facultatif, id dedu slide à éditer
-	 * @param {$delete} facultatif, booléen pour savoir si on doit supprimer ou non le slide, dans ce cas on il faut supprimer les références de ce slide dans les items
-	 * @return JSON contenant l'id du slide ou un message si suppression
+	 * @param int		$id			facultatif, id dedu slide à éditer
+	 * @param boolean	$delete 	facultatif, booléen pour savoir si on doit supprimer ou non le slide, dans ce cas on il faut supprimer les références de ce slide dans les items
+	 * @return 						JSON contenant l'id du slide ou un message si suppression
 	 */
 	function update_timeline_slide($id=NULL, $delete = false){
 
@@ -747,7 +747,10 @@ class Slide {
 		if( !isset($id) ){
 			// création$
 			// 
-            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slides_tb (nom, template, json, date) VALUES (%s, %s, %s, %s)",$nom,$template,$json,$date);
+            $sql_slide			= sprintf("INSERT INTO ".TB."timeline_slides_tb (nom, template, json, date) VALUES (%s, %s, %s, %s)",$nom,
+            																														 $template,
+            																														 $json,
+            																														 $date);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			$slide_id = mysql_insert_id();
@@ -763,7 +766,10 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $sql_slide			= sprintf("UPDATE ".TB."timeline_slides_tb SET nom=%s, template=%s, json=%s  WHERE id=%s",$nom,$template,$json,$id);
+            $sql_slide			= sprintf("UPDATE ".TB."timeline_slides_tb SET nom=%s, template=%s, json=%s  WHERE id=%s",$nom,
+            																											  $template,
+            																											  $json,
+            																											  $id);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
 			$retour = new stdClass();
@@ -782,8 +788,8 @@ class Slide {
 
 	/**
 	 * récupération des différents éléments item de la timeline
-	 * @param {$id_groupe} id du groupe dont il faut récupérer les items
-	 * @return string retourne une chaine JSON contenant le descriptif des items de la timeline
+	 * @param int		$id_groupe	 	id du groupe dont il faut récupérer les items
+	 * @return string 					retourne une chaine JSON contenant le descriptif des items de la timeline
 	 */
 	function get_timeline_slide_data($id_slide=NULL,$template=NULL){
 
