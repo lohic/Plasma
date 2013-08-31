@@ -64,7 +64,7 @@ function refresh() {
 		data: {plasma_id : $plasma_id, actual_data_date: $actual_data_date},
 		dataType: 'json',
 		error : function(jqXHR,textStatus,errorThrown){
-			$(.info).text('Il y a une erreur dans le chargement des données du slideshow :\n'+errorThrown)
+			$('.info').text('Il y a une erreur dans le chargement des données du slideshow : '+errorThrown);
 		},
 		success: function(json){
 			console.log('ok');
