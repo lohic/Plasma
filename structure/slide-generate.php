@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="<?php if($ispreview){echo 'preview';} ?> <?php if($istiny){echo 'tiny';} ?>">
+<body class="<?php echo $class; ?>">
 	<div class="console">
 		<p id="retour"></p>
 

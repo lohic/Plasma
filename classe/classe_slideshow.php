@@ -109,6 +109,12 @@ class Slideshow {
 		//$le_slide = $this->generate_slide($isdebug);
 		
 		//$plasma_id = $this->ecran->id;
+		//
+		$class = array();
+		if($ispreview) $class[] = 'preview';
+		if($isdebug) $class[] = 'debug';
+		if($istiny) $class[] = 'tiny';
+		$class = implode(' ', $class);
 		
 		$contents ='';
 		ob_start();

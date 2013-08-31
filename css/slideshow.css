@@ -26,6 +26,14 @@ body{
      	 -ms-transition: background-color 1000ms linear;
      	  -o-transition: background-color 1000ms linear;
      		 transition: background-color 1000ms linear;
+     cursor: none;
+}
+
+body.preview{
+	cursor:auto;
+}
+body.debug{
+	cursor:auto;
 }
 
 .tiny #template{
@@ -40,6 +48,7 @@ body{
 
 
 .console{
+	display : none;
 	position : fixed;
 	right: 0;
 	top: 0;
@@ -53,6 +62,11 @@ body{
 	z-index: 999;
 	font-family: 'monaco';
 }
+
+.debug .console{
+	display : block;
+}
+
 
 .console:hover{
 	background: rgba(255,255,0,1);
