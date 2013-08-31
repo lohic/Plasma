@@ -14,7 +14,7 @@ $(document).ready(function(){
 	
 	$plasma_id			= getUrlVars().plasma_id;
 	$actual_data_date	= '0000-00-00 00:00:00';
-	$actual_item_id	= 'undefined';
+	$actual_item_id		= 'undefined';
 	$meteo_id			= 'EUR|FR|FR012|PARIS|';
 	$code_postal		= '75000';
 	$nom_ecran			= "lkjlj";
@@ -44,6 +44,10 @@ $(document).ready(function(){
 	console.log($plasma_id);
 });
 
+/**
+ * La fonction qui sert à rafraichir les données d'un écran
+ * @return {null}
+ */
 function refresh() {
 
 	$("#now").text($now);
@@ -81,27 +85,27 @@ function refresh() {
 
 
 				// on trie les slides :
-				// alerte locale > alerte nationale > groupe > écran > date de début croissante
+				// alerte locale > alerte nationale > écran > groupe  > date de début croissante
 				$slides = $slides.sort(function(a,b){
+				    valeur =
+				    (a.ref_target == 'nat' && b.ref_target == 'loc' ? -1 :
+				     (a.ref_target == 'loc' && b.ref_target == 'nat' ? 1 :
+				      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+				       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+				        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+				         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
 
-					valeur =(a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
-							(a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
-							(a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
-							(a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
-							(a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
-							(a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
-						  	(a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-						  	(a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-						  	(a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-						  	(a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
-							(a.ref_target == 'grp' && b.ref_target == 'ecr' ? -1 :
-							(a.ref_target == 'ecr' && b.ref_target == 'grp' ? 1 :
-						 	a.start <= b.start ? -1 : 1 ))))))))))));
+				          (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+				           (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+				            (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+				             (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
 
-					return valeur;
-				
+				              (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+				               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+				                a.start <= b.start ? -1 : 1 ))))))))))));
+
+				   return valeur;
 				});
-
 
 				//console.log($slides);
 				//
@@ -122,7 +126,11 @@ function refresh() {
 	//load_slide();
 }
 	
-
+/**
+ * La boucle qui est appelée toutes les secondes pour vérifier
+ * le chargement des slides en fonction du fichier de données d'écran chargé
+ * @return {null} 
+ */
 function loop_slideshow(){
 
 	if($data_loaded){
@@ -186,6 +194,12 @@ function loop_slideshow(){
     //load_slide('default',{"titre_ecran" : "test écran", "logo":true});
 }
 
+/**
+ * permet de charger un slide, sa feuille de style et son fichier javascript
+ * @param  {string} template le nom du template à charger (nom du dossier)
+ * @param  {json} 	data     les données json qui vont servir à iCanHaz à générer le slide 
+ * @return {null}	         remplace le html du div#template par le slide
+ */
 function load_slide(template, data){
 
 	//console.log("template : "+template+" data : "+data);
@@ -201,10 +215,12 @@ function load_slide(template, data){
 }
 
 
-/*
-* Pour charger dynamiquement le fichier javascript d'un slide, la fonction ajoutera temporairement une balise script pour inclure le fichier 
-* @path le chemin relatif à fournir
-*/
+/**
+ * Pour charger dynamiquement le fichier javascript d'un slide,
+ * la fonction ajoutera temporairement une balise script pour inclure le fichier 
+ * @param  {string}		path le chemin du script js à charger
+ * @return {null}		ajoute dans le DOM la balise script permettant de charger le script souhaité
+ */
 function dynamicLoadJS(path) {
     var DSLScript  = document.createElement("script");
     DSLScript.src  = path;
@@ -213,12 +229,23 @@ function dynamicLoadJS(path) {
     document.body.removeChild(DSLScript);
 }
 
+/**
+ * sert à convertir un timestamp mysql en objet date javascript
+ * @param  {string} 		timestamp le timestamp mysql
+ * @return {Date}           un objet Date javascript 
+ */
 function mysql2jsTimestamp(timestamp){
+
 	var t = timestamp.split(/[- :]/);
-	return new Date(t[0], t[1]-1, t[2], t[3], t[4], t[5]);
+	return new Date(t[0], t[1]-1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
 }
 
-Date.createFromMysql = function(mysql_string)
+/**
+ * [createFromMysql description]
+ * @param  {[type]} mysql_string [description]
+ * @return {[type]}              [description]
+ */
+/*Date.createFromMysql = function(mysql_string)
 { 
    if(typeof mysql_string === 'string')
    {
@@ -229,7 +256,7 @@ Date.createFromMysql = function(mysql_string)
    }
 
    return null;   
-}
+}*/
 
 
 /**
@@ -243,53 +270,4 @@ function getUrlVars() {
     });
     return vars;
 }
-
-/*
-* ---------------------------------
-* OLD OLD OLD
-* ---------------------------------
-*/
-nextSlideData = '';
-
-function get_next_slide(plasma_id, doNow){
-	
-	saved_doNow = doNow;
-	
-	$.get("XMLrequest_get_slide.php?plasma_id="+plasma_id, function(data){
-		//alert(data);
-		// stock pour plus tard
-		nextSlideData = data;
-		
-		// sortie de secours
-		if(saved_doNow){
-			exit_slideshow();	
-		}
-	});
-}
-
-nextId = false;
-
-function get_next_id(plasma_id){
-	
-	saved_plasma_id = plasma_id;
-	
-	/*$.get('XMLrequest_get_slide_id.php?plasma_id='+plasma_id, function(data){
-		//alert(data);
-		if(!nextId){
-			nextId = parseInt(data);
-			//alert(nextId);
-		} else {
-			if(nextId != parseInt(data)){
-				nextId = parseInt(data);
-				
-				// changement de programme !
-				get_next_slide(saved_plasma_id, true); // maj dès le chargement effectué
-			}
-		}
-	});*/
-}
-
-var timer = 0;
-
-
 
