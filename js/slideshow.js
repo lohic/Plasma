@@ -17,7 +17,7 @@ $(document).ready(function(){
 	$actual_item_id		= 'undefined';
 	$meteo_id			= 'EUR|FR|FR012|PARIS|';
 	$code_postal		= '75000';
-	$nom_ecran			= "lkjlj";
+	$nom_ecran			= "inconnu";
 
 	$loaded				= false;
 	$data_loaded		= false;
@@ -32,10 +32,14 @@ $(document).ready(function(){
 	$end				= new Date();
 	$newStart			= new Date();
 	$newEnd				= new Date();
+	$duree				= 0;
+	$duree_restante		= 0;
 
 	$template			= 'default';
 	$slide_data			= {};
 	$slide_id 			= 0;
+
+	$nbr				= 0;
 	
 	// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
 	refresh();
@@ -84,35 +88,40 @@ function refresh() {
 				$slides				= json.screen_data.data;
 
 
-				// on trie les slides :
-				// alerte locale > alerte nationale > écran > groupe  > date de début croissante
-				$slides = $slides.sort(function(a,b){
-				    valeur =
-				    (a.ref_target == 'nat' && b.ref_target == 'loc' ? -1 :
-				     (a.ref_target == 'loc' && b.ref_target == 'nat' ? 1 :
-				      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
-				       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
-				        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
-				         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+				$nbr = $slides.length;
+				if( $nbr > 0){
 
-				          (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-				           (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-				            (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-				             (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+					// on trie les slides :
+					// alerte locale > alerte nationale > écran > groupe  > date de début croissante
+					 
+					$slides = $slides.sort(function(a,b){
+					    valeur =
+					    (a.ref_target == 'nat' && b.ref_target == 'loc' ? -1 :
+					     (a.ref_target == 'loc' && b.ref_target == 'nat' ? 1 :
+					      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+					       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+					        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+					         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
 
-				              (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
-				               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
-				                a.start <= b.start ? -1 : 1 ))))))))))));
+					          (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+					           (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+					            (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+					             (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
 
-				   return valeur;
-				});
+					              (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+					               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+					                a.start <= b.start ? -1 : 1 ))))))))))));
+
+					   return valeur;
+					});
+				}
 
 				//console.log($slides);
 				//
 				$data_loaded = true;
-				$slide_data	= {"titre_ecran" : $nom_ecran};
+				
 
-				load_slide($template,$slide_data);
+				//load_slide($template,$slide_data);
 			}else{
 				//console.log(" ");
 				//console.log('NO NEW DATA');
@@ -132,13 +141,19 @@ function refresh() {
  * @return {null} 
  */
 function loop_slideshow(){
+	
+
+	// on vérifie qu'il y a bien un slide dont end >  $now
+	// qu'il y a bien au moins un slide en attente
+	// et que $now et à moins de 2 secondes de la fin du slide actuel 
+	if($now > $end-2000 && $nbr > 0 && $slide[$nbr-1].end<$now){
+		console.log('EXIT');
+		$('body').addClass('exit');
+	}
 
 	if($data_loaded){
 
-		
-
-		nbr = $slides.length;
-		for(var i = 0 ; i< nbr; i++){
+		for(var i = 0 ; i< $nbr; i++){
 			//console.log ( mysql2jsTimestamp($slides[i].start) < new Date());
 			$now 		= new Date();
 			$newStart 	= mysql2jsTimestamp($slides[i].start);
@@ -160,8 +175,10 @@ function loop_slideshow(){
 				//console.log( $slides[i].id );
 				//ON CHARGE LES DONNÉE DU PROCHAIN SLIDE
 				
-				if($template != 'meteo'){
-					if(! $loaded){
+				
+				if(! $loaded){
+
+					if($template != 'meteo'){
 						$.ajax({
 							type: "GET",
 							url: "../ajax/data-slide.php",
@@ -176,19 +193,27 @@ function loop_slideshow(){
 								$loaded = true;
 							}
 						});
+					}else{
+						$slide_data = {};
+						load_slide($template,$slide_data);
+						$loaded = true;
 					}
-				}else{
-					$slide_data = {};
-					load_slide($template,$slide_data);
-					$loaded = true;
 				}
+				
 
 				break;
+			}else if(false){
+				
 			}
 		}
 
 		$('.info').text( 'template : ' + $template + ' id_slide : '+$slide_id );
 
+	}else{
+		$slide_data	= {"titre_ecran" : $nom_ecran};
+		load_slide($template,$slide_data);
+
+		$loaded = true;
 	}
 
     //load_slide('default',{"titre_ecran" : "test écran", "logo":true});
@@ -203,12 +228,13 @@ function loop_slideshow(){
 function load_slide(template, data){
 
 	//console.log("template : "+template+" data : "+data);
+	$('body').removeClass('exit');
 
 	var slide = eval("ich."+template)(data);
 
 	$("#template").empty();
-    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css?cache='+new Date());
-    dynamicLoadJS('../slides_templates/'+template+'/script.js');
+    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css?cache='+$now);
+    dynamicLoadJS('../slides_templates/'+template+'/script.js?cache='+$now);
 
 
     $("#template").html(slide);
@@ -222,6 +248,7 @@ function load_slide(template, data){
  * @return {null}		ajoute dans le DOM la balise script permettant de charger le script souhaité
  */
 function dynamicLoadJS(path) {
+
     var DSLScript  = document.createElement("script");
     DSLScript.src  = path;
     DSLScript.type = "text/javascript";
