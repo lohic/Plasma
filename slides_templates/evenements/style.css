@@ -201,6 +201,10 @@ classes réservées pour le traitement JS :
 			animation-delay: 0s;
 	/* ajout Gildas 13/02/2013 */
 	background-repeat: no-repeat;
+	background-position: center;
+	-webkit-background-size: cover;
+	   -moz-background-size: cover;
+			background-size: cover;
 }
 
 @-webkit-keyframes moveImage{
@@ -445,14 +449,17 @@ classes réservées pour le traitement JS :
 		left:0px;
 		top:0px;
 		width:516px;
-		height:768px;
-		max-height:768px;
+		/*height:768px;
+		max-height:768px;*/
+		height:100%;
+		max-height: 100%;
 	}
 
 	.colonne{
 		padding:40px 0px 40px 0px;
 		float:left;
 		width: 764px;
+		/*width: -webkit-calc(100% - 516px);*/
 		height:100%;
 		margin-left:516px;
 		
@@ -463,13 +470,15 @@ classes réservées pour le traitement JS :
 		left:516px;
 		box-shadow:rgba(0,0,0,0.5) 0px -15px 15px;
 		z-index:100;
-		height:768px;
-		width:764px;
+		/*height:768px;*/
+		height:100%;
+		/*width:764px;*/
 	}
 
 	.texte, .texte2, .header, .footer{
 		padding:0px 44px 0px 52px;
 		width:668px;
+		/*width:100%;*/
 		/*box-shadow:none;*/
 	}
 
