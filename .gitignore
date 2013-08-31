@@ -5,6 +5,9 @@ connexion_vars.php
 
 config.php
 
+vars/meteo_json.txt
+slides_images/*
+
 *.sublime-project
 *.sublime-workspace
 
