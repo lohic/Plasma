@@ -11,110 +11,193 @@
 
 $(document).ready(function(){
 	//var actual_date_json	='<?php //echo $this->ecran->actual_date_json; ?>';
-	var plasma_id			= getUrlVars().plasma_id;
 	
-	$actual_data_date	= 'undefined';
-	$actual_slide_id	= 'undefined';
+	$plasma_id			= getUrlVars().plasma_id;
+	$actual_data_date	= '0000-00-00 00:00:00';
+	$actual_item_id	= 'undefined';
 	$meteo_id			= 'EUR|FR|FR012|PARIS|';
-	$plasma_id			= 1;
+	$code_postal		= '75000';
+	$nom_ecran			= "lkjlj";
+
 	$loaded				= false;
+	$data_loaded		= false;
 
 	$data_slide_dates	= 'undefined';
 	$data_slide_ordered	= 'undefined';
+
+	$slides				= Array();
+
+	$now				= new Date();
+	$start				= new Date();
+	$end				= new Date();
+	$newStart			= new Date();
+	$newEnd				= new Date();
+
+	$template			= 'default';
+	$slide_data			= {};
+	$slide_id 			= 0;
 	
 	// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
 	refresh();
 	setInterval(refresh, 1000);
 
-	console.log(plasma_id);
+	console.log($plasma_id);
 });
 
 function refresh() {
 
-	$("#now").text(new Date());
+	$("#now").text($now);
 	$("title").text("LOOP | Écrans PLASMA : "+new Date());
+
 
 	var data_url = "../ajax/data-slideshow.php" ;
 	var data_param = "action=refresh&plasma_id="+ $plasma_id +"&actual_data_date=" + $actual_data_date ;
 	
 	$.ajax({
-		type: "POST",
+		type: "GET",
 		url: data_url,
-		data: data_param,
+		data: {plasma_id : $plasma_id, actual_data_date: $actual_data_date},
 		dataType: 'json',
 		//async:false,
 		success: function(json){
+
 			//countusers=json.countusers;
 			//$("#retour").text('ok : '+countusers);
 			if(json.update == true){
 				console.log(" ");
-				console.log('NEW DATA')
+				console.log('NEW DATA');
+				//console.log(json.screen_data.data);
 
-				$actual_data_date = json.publish_date;
-				console.log("data_slide : "+json.date_slide);
+				console.log( $actual_data_date + " " + json.screen_data.date_publication);
 
-				$data_slide_dates	= json.slides_dates;
-				$data_slide_ordered	= json.slides_ordered;
+				//console.log(json.screen_data.nom_ecran);
+
+				$actual_data_date	= json.screen_data.date_publication;				
+				$meteo_id			= json.screen_data.code_meteo;
+				$code_postal		= json.screen_data.code_postal;
+				$nom_ecran			= json.screen_data.nom_ecran;
+
+				$slides				= json.screen_data.data;
+
+
+				// on trie les slides :
+				// alerte locale > alerte nationale > groupe > écran > date de début croissante
+				$slides = $slides.sort(function(a,b){
+
+					valeur =(a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
+							(a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
+							(a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+							(a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+							(a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+							(a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+						  	(a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+						  	(a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+						  	(a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+						  	(a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+							(a.ref_target == 'grp' && b.ref_target == 'ecr' ? -1 :
+							(a.ref_target == 'ecr' && b.ref_target == 'grp' ? 1 :
+						 	a.start <= b.start ? -1 : 1 ))))))))))));
+
+					return valeur;
 				
-				//$('.date').text(actual_date_json);
+				});
+
+
+				//console.log($slides);
+				//
+				$data_loaded = true;
+				$slide_data	= {"titre_ecran" : $nom_ecran};
+
+				load_slide($template,$slide_data);
 			}else{
-				console.log(" ");
-				console.log('NO NEW DATA');
+				//console.log(" ");
+				//console.log('NO NEW DATA');
 				//console.log(json);
 			}	
 		}
 	});
 
+	
 	loop_slideshow();
+	//load_slide();
 }
 	
 
 function loop_slideshow(){
 
+	if($data_loaded){
 
-	/*timer ++;
+		
 
-	var aleatoire = Math.round(Math.random()*5000);
+		nbr = $slides.length;
+		for(var i = 0 ; i< nbr; i++){
+			//console.log ( mysql2jsTimestamp($slides[i].start) < new Date());
+			$now 		= new Date();
+			$newStart 	= mysql2jsTimestamp($slides[i].start);
+			$newEnd		= mysql2jsTimestamp($slides[i].end);
 
-	//console.log("hello "+new Date());
+			if( $newStart < $now && $now < $newEnd){
 
-	if(! $loaded){
+				// si on détecte une alerte locale ou nationale
+				if(($slides[i].ref_target == 'nat' || $slides[i].ref_target == 'loc') && $actual_item_id != $slides[i].id){
+					$loaded = false;
+				}
 
-		slide_data = { delai: "20", image:"../dform/slides_images/2013/08/frankfurter-dauphin-magali.jpg" };
+				$start		= mysql2jsTimestamp($slides[i].start);
+				$end		= mysql2jsTimestamp($slides[i].end);
+				$template 	= $slides[i].template;
+				$slide_id	= $slides[i].id_slide;
+				$actual_item_id = $slides[i].id;
 
-        var slide = ich.compte_a_rebours(slide_data);
+				//console.log( $slides[i].id );
+				//ON CHARGE LES DONNÉE DU PROCHAIN SLIDE
+				
+				if($template != 'meteo'){
+					if(! $loaded){
+						$.ajax({
+							type: "GET",
+							url: "../ajax/data-slide.php",
+							data: {slide_id : $slide_id},
+							dataType: 'json',
+							//async:false,
+							success: function(json){
+								console.log("DATA SLIDE CHARGEES "+json);
+								$slide_data	= json;
 
-        $("#template").empty();
-        $('link[name="slide_css"]').attr('href','slides_templates/compte_a_rebours/style.css');
-        dynamicLoadJS('slides_templates/compte_a_rebours/');
-        $("#template").html(slide);
+								load_slide($template,$slide_data);
+								$loaded = true;
+							}
+						});
+					}
+				}else{
+					$slide_data = {};
+					load_slide($template,$slide_data);
+					$loaded = true;
+				}
 
-        console.log(slide);
-        $loaded = true;
-    }*/
+				break;
+			}
+		}
 
-    load_slide('default',{"titre_ecran" : "test écran", "logo":true});
+		$('.info').text( 'template : ' + $template + ' id_slide : '+$slide_id );
+
+	}
+
+    //load_slide('default',{"titre_ecran" : "test écran", "logo":true});
 }
 
 function load_slide(template, data){
 
-	if(! $loaded){
+	//console.log("template : "+template+" data : "+data);
 
-		slide_data = data;
+	var slide = eval("ich."+template)(data);
 
-		console.log("template : "+template+" data : "+data);
-
-		var slide = eval("ich."+template)(slide_data);
-
-		$("#template").empty();
-	    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css');
-	    dynamicLoadJS('../slides_templates/'+template+'/script.js');
+	$("#template").empty();
+    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css');
+    dynamicLoadJS('../slides_templates/'+template+'/script.js');
 
 
-	    $("#template").html(slide);
-
-    	$loaded = true;
-	}
+    $("#template").html(slide);
 }
 
 

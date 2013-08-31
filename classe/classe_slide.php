@@ -832,11 +832,33 @@ class Slide {
 		        }
 		    }
 		}else{
-		    $json = '{}';
+		    $json = json_decode('{}');
 		}
 
 
 		echo json_encode($json);
+	}
+
+	/**
+	 * sert à récupérer les données JSON d'un slide
+	 * @return JSON les données du slide formattées dans un objet JSON
+	 */
+	function get_slideshow_slide_data(){
+
+		if(!empty($this->id)){
+
+			$query			= sprintf("SELECT * FROM ".TB."timeline_slides_tb WHERE id=%s", func::GetSQLValueString($this->id, 'int') ); //echo $sql_slide;	
+			$sql_slide 		= mysql_query($query) or die(mysql_error());
+			
+			$slide_data =  mysql_fetch_assoc($sql_slide);
+
+			$data = json_decode($slide_data['json']);
+   
+		}else{
+		    $data = json_decode('{}');
+		}
+
+		return json_encode($data);
 	}
 	
 }

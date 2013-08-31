@@ -28,6 +28,15 @@ body{
      		 transition: background-color 1000ms linear;
 }
 
+.tiny #template{
+	-webkit-transform:scale(0.3,0.3);
+	   -moz-transform:scale(0.3,0.3);
+	   		transform:scale(0.3,0.3);
+	-webkit-transform-origin:0 0;
+	   -moz-transform-origin:0 0;
+			transform-origin:0 0;
+
+}
 
 
 .console{

@@ -10,17 +10,11 @@ include_once("../classe/classe_fonctions.php");
 
 $core = new core();
 
-if($core->isAdmin){ 
+if($core->isAdmin) { 
 
-    $slide = new Slide();
-    $action = isset($_POST['action']) ? $_POST['action'] : NULL;
+    $slide = new Slide( $_GET['slide_id'] );
 
     // creation d'un item
-    if($action != NULL && $action == 'create-item'){
-
-        //$slide->update_timeline_item();
-    }
-
-	echo '{ delai: "20" }';
+    echo $slide->get_slideshow_slide_data();
 
 }

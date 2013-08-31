@@ -80,10 +80,10 @@ class Slideshow {
 	 * @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
 	 * @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
 	 */
-	function run($ispreview=false,$isdebug =false){
+	function run($ispreview=false,$isdebug =false,$istiny =false){
 		//$this->slide_db->connect_db();
 
-		echo $this->generate_slide_page($ispreview,$isdebug);
+		echo $this->generate_slide_page($ispreview,$isdebug,$istiny);
 
 		//$i = ($this->get_next_slide_id());
 		/*
@@ -103,7 +103,7 @@ class Slideshow {
 	 * @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
 	 * @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
 	 */
-	function generate_slide_page($ispreview=false,$isdebug=false){
+	function generate_slide_page($ispreview=false,$isdebug=false,$istiny=false){
 		//$this->slide_db->connect_db();
 
 		//$le_slide = $this->generate_slide($isdebug);
@@ -954,7 +954,7 @@ class Slideshow {
 
 		if(!empty($_id_archive_ecran)){
 			
-			$sql = sprintf("SELECT P.id_groupe AS id_groupe, E.code_postal AS code_postal, E.code_meteo AS code_meteo
+			$sql = sprintf("SELECT P.id_groupe AS id_groupe, P.nom AS nom, E.code_postal AS code_postal, E.code_meteo AS code_meteo
 								   FROM ".TB."ecrans_tb AS P,  ".TB."etablissements_tb AS E
 								   WHERE P.id_etablissement = E.id
 								   AND P.id = %s", func::GetSQLValueString($_id_archive_ecran,'int') );
@@ -964,6 +964,7 @@ class Slideshow {
 			$json = new stdClass();
 
 			$json->id_ecran			= $_id_archive_ecran;
+			$json->nom_ecran		= $info['nom'];
 			$json->id_groupe		= $info['id_groupe'];
 			$json->code_postal		= $info['code_postal'];
 			$json->code_meteo		= $info['code_meteo'];
@@ -1214,8 +1215,9 @@ class Slideshow {
 	 */
 	function get_ecran_data($actual_date_json = NULL){
 		
-		
-		if(!empty($this->ecran->id)){
+		$retour = new stdClass();
+
+		if(!empty($this->ecran->id) && $this->ecran->id !=0 ){
 			
 			$sql = sprintf("		SELECT json_data AS json,
 									date_publication AS date_json
@@ -1224,27 +1226,30 @@ class Slideshow {
 									
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			$info 			= mysql_fetch_assoc($sql_query);
-			
-			
+				
 			$date_json = $info['date_json'];
 			
 			if($date_json>$actual_date_json){
 				// instanciation des objets
 				if(empty($this->ecran)){ $this-> ecran = (object)array(); }
-				$retour = (object)array();
 	
 				//$retour->id								= $this->ecran->id;
-				$retour->json				= $info['json'];
-				$retour->actual_date_json	= $date_json;
+				$retour->screen_data		= json_decode($info['json']);
 				$retour->update				= true;			
 			}else{
 				$retour->update				= false;
 			}
 			
-			$retour = json_encode($retour);
 			
-			return $retour;
+		}else{
+
+			$retour = new stdClass();
+			$retour->update			= false;
 		}
+
+		$retour = json_encode($retour);
+			
+		return $retour;
 		
 		
 	}

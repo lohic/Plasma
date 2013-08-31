@@ -6,8 +6,9 @@ include_once("../classe/classe_slideshow.php");
 include_once("../classe/classe_fonctions.php");
 
 
-$isdebug = isset($_GET['debug'])?true:false;
-$ispreview = isset($_GET['preview'])?true:false;
+$isdebug	= isset($_GET['debug'])?true:false;
+$ispreview	= isset($_GET['preview'])?true:false;
+$istiny		= isset($_GET['tiny'])?true:false;
 
 /* */
 if(isset($_GET['plasma_id']) || isset($_GET['slide_id'])){
@@ -22,7 +23,7 @@ if(isset($_GET['plasma_id']) || isset($_GET['slide_id'])){
 	
 	$slideshow = new slideshow($id_ecran);	
 	
-	echo $slideshow->run($ispreview,$isdebug);
+	echo $slideshow->run($ispreview,$isdebug,$istiny);
 
 /* */
 
