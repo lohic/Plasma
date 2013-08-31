@@ -193,7 +193,7 @@ function load_slide(template, data){
 	var slide = eval("ich."+template)(data);
 
 	$("#template").empty();
-    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css');
+    $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css?cache='+new Date());
     dynamicLoadJS('../slides_templates/'+template+'/script.js');
 
 
