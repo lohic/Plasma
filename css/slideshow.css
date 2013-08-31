@@ -19,7 +19,7 @@ body,td,th {
 
 
 
-body{
+body, #template{
      background-color:rgb(203,02,26);
      -webkit-transition: background-color 1000ms linear;
      	-moz-transition: background-color 1000ms linear;
