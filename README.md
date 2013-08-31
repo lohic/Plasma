@@ -10,6 +10,41 @@ plasma
 
 dev-Beta-2 : intègre les modifications liées à l'utilisation de la timeline dans le backoffice
 
+
+fonction de tri des écrans en javascript (http://jsfiddle.net/WDzXc/) :
+```javascript
+var slides = [
+    {ref_target:'ecr',start:123},
+    {ref_target:'grp',start:56},
+    {ref_target:'ecr',start:98},
+    {ref_target:'loc',start:23},
+    {ref_target:'nat',start:09},
+    {ref_target:'nat',start:10}
+];
+
+
+slides = slides.sort(function(a,b){
+    valeur =
+    (a.ref_target == 'nat' && b.ref_target == 'loc' ? -1 :
+     (a.ref_target == 'loc' && b.ref_target == 'nat' ? 1 :
+      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+          (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+           (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+            (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+             (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+              (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+                a.start <= b.start ? -1 : 1 ))))))))))));
+
+   return valeur;
+});
+
+```
+
+
 Système de gestion des écrans déportés.
 
 Le système est une web-app PHP/HTML/CSS/JAVASCRIPT.
