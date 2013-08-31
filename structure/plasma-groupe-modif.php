@@ -80,6 +80,8 @@ $isGroup = true;
 		<button id="add_screen">Ajouter un écran</button>
 	</p>
 
+	<iframe style="width:384px;height:216px;border:0;" src="http://localhost:8888/Site_SCIENCESPO_PLASMA/slideshow/?plasma_id=1&tiny&preview"></iframe>
+
 
 	<div id="mytimeline"></div>
 
