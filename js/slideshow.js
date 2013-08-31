@@ -53,22 +53,21 @@ $(document).ready(function(){
  * @return {null}
  */
 function refresh() {
+	$now 		= new Date();
 
 	$("#now").text($now);
 	$("title").text("LOOP | Écrans PLASMA : "+new Date());
-
-
-	var data_url = "../ajax/data-slideshow.php" ;
-	var data_param = "action=refresh&plasma_id="+ $plasma_id +"&actual_data_date=" + $actual_data_date ;
 	
 	$.ajax({
 		type: "GET",
-		url: data_url,
+		url: "../ajax/data-slideshow.php",
 		data: {plasma_id : $plasma_id, actual_data_date: $actual_data_date},
 		dataType: 'json',
-		//async:false,
+		error : function(jqXHR,textStatus,errorThrown){
+			$(.info).text('Il y a une erreur dans le chargement des données du slideshow :\n'+errorThrown)
+		},
 		success: function(json){
-
+			console.log('ok');
 			//countusers=json.countusers;
 			//$("#retour").text('ok : '+countusers);
 			if(json.update == true){
@@ -121,7 +120,12 @@ function refresh() {
 				$data_loaded = true;
 				
 
-				//load_slide($template,$slide_data);
+				if(!$loaded){
+					$slide_data	= {"titre_ecran" : $nom_ecran};
+					load_slide($template,$slide_data);
+
+					$loaded = true;
+				}
 			}else{
 				//console.log(" ");
 				//console.log('NO NEW DATA');
@@ -145,8 +149,8 @@ function loop_slideshow(){
 
 	// on vérifie qu'il y a bien un slide dont end >  $now
 	// qu'il y a bien au moins un slide en attente
-	// et que $now et à moins de 2 secondes de la fin du slide actuel 
-	if($now > $end-2000 && $nbr > 0 && $slide[$nbr-1].end<$now){
+	// et que $now et à moins de 2 secondes de la fin du slide actuel
+	if(typeof $slide != "undefined"  &&$now > $end-2000 && $nbr > 0 && $slide[$nbr-1].end<$now){
 		console.log('EXIT');
 		$('body').addClass('exit');
 	}
@@ -155,7 +159,6 @@ function loop_slideshow(){
 
 		for(var i = 0 ; i< $nbr; i++){
 			//console.log ( mysql2jsTimestamp($slides[i].start) < new Date());
-			$now 		= new Date();
 			$newStart 	= mysql2jsTimestamp($slides[i].start);
 			$newEnd		= mysql2jsTimestamp($slides[i].end);
 
@@ -184,7 +187,6 @@ function loop_slideshow(){
 							url: "../ajax/data-slide.php",
 							data: {slide_id : $slide_id},
 							dataType: 'json',
-							//async:false,
 							success: function(json){
 								console.log("DATA SLIDE CHARGEES "+json);
 								$slide_data	= json;
@@ -210,10 +212,7 @@ function loop_slideshow(){
 		$('.info').text( 'template : ' + $template + ' id_slide : '+$slide_id );
 
 	}else{
-		$slide_data	= {"titre_ecran" : $nom_ecran};
-		load_slide($template,$slide_data);
-
-		$loaded = true;
+		
 	}
 
     //load_slide('default',{"titre_ecran" : "test écran", "logo":true});
