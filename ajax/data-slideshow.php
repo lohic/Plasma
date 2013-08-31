@@ -12,7 +12,7 @@ include_once("../classe/classe_fonctions.php");
 
 $core = new core();
 
-if($core->isAdmin){
+if(isset($core)){
 
     $actual_data_date   = isset( $_GET['actual_data_date'] ) ? $_GET['actual_data_date'] : '0000-00-00 00:00:00';
     $plasma_id          = isset( $_GET['plasma_id'] ) ? $_GET['plasma_id'] : 0;
@@ -22,4 +22,10 @@ if($core->isAdmin){
     $slideshow = new Slideshow($plasma_id);
 
     echo $slideshow->get_ecran_data($actual_data_date);    
+}else{
+	$retour = new stdClass();
+	$retour->update	= false;
+	$retour = json_encode($retour);
+	
+	echo $retour;
 }

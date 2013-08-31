@@ -10,11 +10,17 @@ include_once("../classe/classe_fonctions.php");
 
 $core = new core();
 
-if($core->isAdmin) { 
+if(isset($core)) { 
 
     $slide = new Slide( $_GET['slide_id'] );
 
     // creation d'un item
     echo $slide->get_slideshow_slide_data();
 
+}else{
+	$retour = new stdClass();
+	$retour->update	= false;
+	$retour = json_encode($retour);
+	
+	echo $retour;
 }
