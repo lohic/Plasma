@@ -66,6 +66,17 @@ $isGroup = true;
 
 	<div class="reset"></div>
 
+	<div class="child-screen">
+	
+    <?php
+    echo $ecran->get_admin_ecran_list($id_groupe)->ecrans;
+    ?>
+		
+	</div>
+
+
+	<div class="reset"></div>
+
 	<p>Le début d'un slide est prioritaire sur sa fin.</p>
     
     <div class="reset"></div>   
