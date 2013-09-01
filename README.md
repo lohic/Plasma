@@ -14,33 +14,57 @@ dev-Beta-2 : intègre les modifications liées à l'utilisation de la timeline d
 fonction de tri des écrans en javascript (http://jsfiddle.net/WDzXc/) :
 ```javascript
 var slides = [
-    {ref_target:'ecr',start:123},
-    {ref_target:'grp',start:56},
-    {ref_target:'ecr',start:98},
-    {ref_target:'loc',start:23},
-    {ref_target:'nat',start:09},
-    {ref_target:'nat',start:10}
+    {ref_target:'ecr',start:123,order:0},
+    {ref_target:'ord',start:0,order:2},
+    {ref_target:'grp',start:56,order:0},
+    {ref_target:'ord',start:0,order:1},
+    {ref_target:'ecr',start:98,order:0},
+    {ref_target:'loc',start:23,order:0},
+    {ref_target:'nat',start:9,order:0},
+    {ref_target:'nat',start:10,order:0}
 ];
 
 
 slides = slides.sort(function(a,b){
+    $slides = $slides.sort(function(a,b){
     valeur =
-    (a.ref_target == 'nat' && b.ref_target == 'loc' ? -1 :
-     (a.ref_target == 'loc' && b.ref_target == 'nat' ? 1 :
+    (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
+     (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
+    
       (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
        (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+    
         (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
          (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
-          (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-           (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-            (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-             (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
-              (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
-               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
-                a.start <= b.start ? -1 : 1 ))))))))))));
-
-   return valeur;
+    
+          (a.ref_target == 'nat' && b.ref_target == 'ord' ? -1 :
+           (a.ref_target == 'ord' && b.ref_target == 'nat' ? 1 :
+    
+            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+    
+              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+    
+                (a.ref_target == 'loc' && b.ref_target == 'ord' ? -1 :
+                 (a.ref_target == 'ord' && b.ref_target == 'loc' ? 1 :
+    
+                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+    
+                    (a.ref_target == 'grp' && b.ref_target == 'ord' ? -1 :
+                     (a.ref_target == 'ord' && b.ref_target == 'grp' ? 1 :
+    
+                      (a.ref_target == 'ecr' && b.ref_target == 'ord' ? -1 :
+                       (a.ref_target == 'ord' && b.ref_target == 'ecr' ? 1 :
+                        (a.start <= b.start ? -1 : 
+                         (a > b.start ? 1 :
+                          (a.order <= b.order ? -1 : 0 )))))))))))))))))))))));
+    
+    				   return valeur;
 });
+
+console.log(slides);
 
 ```
 
