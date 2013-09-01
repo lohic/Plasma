@@ -1,7 +1,7 @@
-/*
-* contient les différenets fonctions pour gérer le slideshows d'un écran 
-* @author Loic Horellou
-*/
+/**
+ * contient les différenets fonctions pour gérer le slideshows d'un écran 
+ * @author Loic Horellou
+ */
 
 // console.log("Date js    "+new Date());
 // console.log("Date mysql "+new mysql2jsTimestamp('2013-08-25 19:58:30'));
@@ -9,6 +9,9 @@
 // var d2 = Date.createFromMysql("2011-02-20 17:16:00");
 // alert("d1 year = " + d1.getFullYear());
 
+/**
+ * Initialisation du javascritp et la boucle
+ */
 $(document).ready(function(){
 	//var actual_date_json	='<?php //echo $this->ecran->actual_date_json; ?>';
 	
@@ -19,10 +22,12 @@ $(document).ready(function(){
 	$code_postal		= '75000';
 	$nom_ecran			= "inconnu";
 
-	$loaded				= false;
+	$slide_loaded		= false;
 	$data_loaded		= false;
 
+	// ????
 	$data_slide_dates	= 'undefined';
+	// ????
 	$data_slide_ordered	= 'undefined';
 
 	$slides				= Array();
@@ -32,7 +37,9 @@ $(document).ready(function(){
 	$end				= new Date();
 	$newStart			= new Date();
 	$newEnd				= new Date();
+	// ????
 	$duree				= 0;
+	// ????
 	$duree_restante		= 0;
 
 	$template			= 'default';
@@ -95,23 +102,40 @@ function refresh() {
 					 
 					$slides = $slides.sort(function(a,b){
 					    valeur =
-					    (a.ref_target == 'nat' && b.ref_target == 'loc' ? -1 :
-					     (a.ref_target == 'loc' && b.ref_target == 'nat' ? 1 :
+					    (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
+					     (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
+					    
 					      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
 					       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+					    
 					        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
 					         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+					    
+					          (a.ref_target == 'nat' && b.ref_target == 'ord' ? -1 :
+					           (a.ref_target == 'ord' && b.ref_target == 'nat' ? 1 :
+					    
+					            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+					             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+					    
+					              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+					               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+					    
+					                (a.ref_target == 'loc' && b.ref_target == 'ord' ? -1 :
+					                 (a.ref_target == 'ord' && b.ref_target == 'loc' ? 1 :
+					    
+					                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+					                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+					    
+					                    (a.ref_target == 'grp' && b.ref_target == 'ord' ? -1 :
+					                     (a.ref_target == 'ord' && b.ref_target == 'grp' ? 1 :
+					    
+					                      (a.ref_target == 'ecr' && b.ref_target == 'ord' ? -1 :
+					                       (a.ref_target == 'ord' && b.ref_target == 'ecr' ? 1 :
+					                        (a.start <= b.start ? -1 : 
+					                         (a > b.start ? 1 :
+					                          (a.order <= b.order ? -1 : 0 )))))))))))))))))))))));
 
-					          (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-					           (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-					            (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-					             (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
-
-					              (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
-					               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
-					                a.start <= b.start ? -1 : 1 ))))))))))));
-
-					   return valeur;
+										   return valeur;
 					});
 				}
 
@@ -120,11 +144,11 @@ function refresh() {
 				$data_loaded = true;
 				
 
-				if(!$loaded){
+				if(!$slide_loaded){
 					$slide_data	= {"titre_ecran" : $nom_ecran};
 					load_slide($template,$slide_data);
 
-					$loaded = true;
+					$slide_loaded = true;
 				}
 			}else{
 				//console.log(" ");
@@ -165,8 +189,14 @@ function loop_slideshow(){
 			if( $newStart < $now && $now < $newEnd){
 
 				// si on détecte une alerte locale ou nationale
-				if(($slides[i].ref_target == 'nat' || $slides[i].ref_target == 'loc') && $actual_item_id != $slides[i].id){
-					$loaded = false;
+				if($actual_item_id != $slides[i].id){
+
+					if($slides[i].ref_target == 'loc' || $slides[i].ref_target == 'nat' ){
+						$slide_loaded = false;
+					}else if( ($slides[i].ref_target == 'ecr' || $slides[i].ref_target == 'grp') && $now >= $slides[i].end ){
+
+					}
+
 				}
 
 				$start		= mysql2jsTimestamp($slides[i].start);
@@ -179,7 +209,7 @@ function loop_slideshow(){
 				//ON CHARGE LES DONNÉE DU PROCHAIN SLIDE
 				
 				
-				if(! $loaded){
+				if(! $slide_loaded){
 
 					if($template != 'meteo'){
 						$.ajax({
@@ -192,16 +222,15 @@ function loop_slideshow(){
 								$slide_data	= json;
 
 								load_slide($template,$slide_data);
-								$loaded = true;
+								$slide_loaded = true;
 							}
 						});
 					}else{
 						$slide_data = {};
 						load_slide($template,$slide_data);
-						$loaded = true;
+						$slide_loaded = true;
 					}
-				}
-				
+				}				
 
 				break;
 			}else if(false){
