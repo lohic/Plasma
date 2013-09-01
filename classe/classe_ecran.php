@@ -528,11 +528,15 @@ class Ecran {
 	function get_admin_ecran_groupe_list(){		
 			
 			$this->slide_db->connect_db();
+			
 			$sql		= sprintf("SELECT *	FROM ".TB."ecrans_groupes_tb");
+		
+			
 			$sql_query	= mysql_query($sql) or die(mysql_error());
 			
 			//$item = mysql_fetch_assoc($sql_query);
 			
+			$retour = array();			
 			
 			$i = 0;
 			
