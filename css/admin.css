@@ -36,7 +36,7 @@ a:hover{
 	display: none;
 	position: absolute;
 	z-index: 3000;
-	background: #FFF url(../graphisme/fancybox/fancybox_loading.gif) center no-repeat;
+	background: #FFF url(../graphisme/loading.gif) center no-repeat;
 }
 
 
