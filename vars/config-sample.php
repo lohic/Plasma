@@ -18,6 +18,7 @@ $connexion_info['db']		 	= 'sciences_po_plasma_db';
 define ('SUB_FOLDER',			'Site_SCIENCESPO_PLASMA/');
 define ('ABSOLUTE_URL',			'http://localhost:8888/'.SUB_FOLDER);
 define ('LOCAL_PATH',			getcwd().'/../');
+define ('REAL_LOCAL_PATH',		realpath( dirname(__FILE__).'/../').'/' );
 
 define ('IS_LDAP_SERVER',		false);
 define ('IS_MAIL_LOGIN',		false);
