@@ -184,6 +184,10 @@ div.timeline-event.timeline-event-range.video{
     margin-top:10px;
 }
 
+.fancybox-inner #slide_view{
+    float: right;
+}
+
 
 .fancybox-inner input[type=text],
 .ui-dform-form input[type=text]{

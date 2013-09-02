@@ -575,13 +575,14 @@ class Slide {
         $ordre		= isset($_POST['ordre'])?		func::GetSQLValueString( $_POST['ordre'], 'int') : 0;
         $id_slide	= isset($_POST['id_slide'])?	func::GetSQLValueString( $_POST['id_slide'], 'int') : 0;
         $id_group	= isset($_POST['id_group'])?	func::GetSQLValueString( $_POST['id_group'], 'int') : 0;
+        $template	= isset($_POST['template'])?	func::GetSQLValueString( $_POST['template'], 'text') : func::GetSQLValueString( 'default', 'text');
 
         $info_target = $this->get_item_target_ref($_POST['group'], $_POST['id_group']);
 
 		if( !isset($id) ){
 			// création$
 			// 
-            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$group,$published);
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, type_target, published, template) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$group,$published,$template);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
@@ -591,7 +592,7 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, ref_target=%s, titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$id_slide, $info_target->id_target, $info_target->ref_target, $titre, $start,$end,$group,$published,$id);
+            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, ref_target=%s, titre=%s, start=%s, end=%s, type_target=%s, published=%s, template=%s  WHERE id=%s",$id_slide, $info_target->id_target, $info_target->ref_target, $titre, $start,$end,$group,$published,$template,$id);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			echo '{"id":"'+ $id +'"}';
@@ -776,6 +777,7 @@ class Slide {
     "className": "'. implode(' ',$class) .'",
     "group":"'. /*$slide_item['type_target']*/ $group .'",
     "id_slide" : "'. $slide_item['id_slide'] .'",
+    "template" : "'. $slide_item['template'] .'",
     "editable": "'.$editable.'",
     "type" : "slide",
 }';

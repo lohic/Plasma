@@ -48,11 +48,44 @@ $(document).ready(function(){
 
 	$nbr				= 0;
 	
-	// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
-	refresh();
-	setInterval(refresh, 1000);
 
-	console.log($plasma_id);
+	if(typeof(getUrlVars().slide_id)!='undefined' ){
+		console.log("on prévisualise un slide");
+
+		$template = getUrlVars().template;
+		$slide_id = getUrlVars().slide_id;
+
+		if($template != 'meteo'){
+			$.ajax({
+				type: "GET",
+				url: "../ajax/data-slide.php",
+				data: {slide_id : $slide_id},
+				dataType: 'json',
+				success: function(json){
+					$('.info').text( 'Données du slide chargées' );
+					console.log("DATA SLIDE CHARGEES "+json);
+					$slide_data	= json;
+
+					$('body').removeClass('exit');
+					load_slide($template,$slide_data);
+					$slide_loaded = true;
+				}
+			});
+		}else{
+			$slide_data = {};
+			load_slide($template,$slide_data);
+			$slide_loaded = true;
+		}
+
+
+	}else{
+		// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
+		console.log("on prévisualise un écran");
+		refresh();
+		setInterval(refresh, 1000);
+
+		console.log($plasma_id);
+	}
 });
 
 /**

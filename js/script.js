@@ -205,8 +205,9 @@ function drawTimeline() {
 
         if (row != undefined) {
             timeline.changeItem(row, {
-                'className': 'unpublished',
+                'className': 'unpublished default',
                 'type':'slide',
+                'template':'default',
                 'id_slide':0
             });
 
@@ -221,6 +222,7 @@ function drawTimeline() {
                     start   : new Date( dataTimeline[row].start ).addHours(2),
                     end     : new Date( dataTimeline[row].end   ).addHours(2),
                     group   : dataTimeline[row].group,
+                    template: dataTimeline[row].template,
                     action  : 'create-item'
                 }
             }).done(function ( dataJSON ) {
@@ -275,6 +277,7 @@ function drawTimeline() {
                     start   : new Date(dataTimeline[row].start).addHours(2),
                     end     : new Date(dataTimeline[row].end).addHours(2),
                     group   : dataTimeline[row].group,
+                    template: dataTimeline[row].template,
                     published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
                     action  : 'update-item'
                 }
@@ -412,6 +415,8 @@ function edit_item(ref){
     
     // on crée l'objet qui va récupérer les informations d'un item 
     slide_info = {
+        slide_id:  dataTimeline[ref].id_slide,
+
         group:     dataTimeline[ref].group,
         content:   dataTimeline[ref].content,
         start:     dataTimeline[ref].start,
@@ -457,8 +462,35 @@ function edit_item(ref){
 
     // on selectionne le groupe quand on affiche le formulaire
     $('#screen_reference').val(dataTimeline[ref].group);
+    $('#template_reference').val(dataTimeline[ref].template);
     $('#published').attr('checked', dataTimeline[ref].className.indexOf("unpublished") < 0 ? true : false);
+    if($('#template_reference').val() == 'meteo'){
+            $('#edit_slide_content').hide();
+    }
+    $template = $('#template_reference').val();
     //alert( dataTimeline[ref].className.indexOf("unpublished") >= 0 ? 1 : 0) ;
+    
+    // ------------------------------------
+    $("#slide_view>a").mouseenter(function(){
+        console.log('preview : '+$(this).attr('href')+"&template="+dataTimeline[ref].template+"&preview&tiny");
+
+        $('#preview_screen').attr('src', $(this).attr('href')+"&template="+dataTimeline[ref].template+"&preview&tiny");
+        $('#preview_screen').show();
+
+        $( "#preview_screen" ).position({
+            of: $(this),
+            my: "center bottom",
+            at: "center top-10",
+            collision: "none flip"
+        });
+    });
+
+
+    $("#slide_view>a").mouseleave(function(){
+        $('#preview_screen').hide();
+        $('#preview_screen').attr('src', "");
+    });
+    // ------------------------------------
 
 
     $('#template_reference').change(function(){
@@ -476,8 +508,9 @@ function edit_item(ref){
     $('#save_item').click(function(e){
         e.preventDefault();
 
-        var group   = $('#screen_reference').val();
-        var content = $('#template_reference').val() == 'meteo' ? "Météo" : dataTimeline[ref].content;
+        var group       = $('#screen_reference').val();
+        var content     = $('#template_reference').val() == 'meteo' ? "Météo" : dataTimeline[ref].content;
+        var template    = $('#template_reference').val();
 
         $('#item_title').val(content);
 
@@ -510,15 +543,18 @@ function edit_item(ref){
                 classes.push('unpublished');
             }
         }
+        classes.push(template);
+        classes = cleanArray(classes);
         classes = classes.join(' ');
         //console.log("class :"+classes);
 
-        //
+        console.log("template : "+template);
 
         timeline.changeItem(ref, {
-            'group': group,
-            'className': classes,
-            'content' : content
+            'group':        group,
+            'className':    classes,
+            'content' :     content,
+            'template' :    template
         });
 
         //ok 2
@@ -534,6 +570,7 @@ function edit_item(ref){
                 start   : new Date(dataTimeline[ref].start).addHours(2),
                 end     : new Date(dataTimeline[ref].end).addHours(2),
                 group   : dataTimeline[ref].group,
+                template: dataTimeline[ref].template,
                 published : dataTimeline[ref].className.indexOf("unpublished") < 0 ? 1 : 0,
                 action  : 'update-item'
             }
@@ -625,6 +662,7 @@ function addScreen(){
  * si un champ FILE est trouvé utilise uploadifive
  */
 function edit_slide(ref){
+    $.fancybox.close();
     // on vide le formulaire
     $("#myform").empty();
 
@@ -645,7 +683,10 @@ function edit_slide(ref){
                 }
             },
             afterLoad : function(){
-
+                $.fancybox.update();
+            },
+            afterShow: function(){
+                $.fancybox.update();
             }
         });
 
@@ -731,6 +772,7 @@ function edit_slide(ref){
             tinyMCE.triggerSave();
             dform_value = formToJSON( $("#myform").serializeArray() );
             
+            // on sauvegarde les valeurs en base de donnée
             $.ajax({
                 url     :"../ajax/data-timeline-slide.php",
                 type    : "POST",
@@ -761,6 +803,7 @@ function edit_slide(ref){
                         start   : new Date(dataTimeline[row].start).addHours(2),
                         end     : new Date(dataTimeline[row].end).addHours(2),
                         group   : dataTimeline[row].group,
+                        template: dataTimeline[row].template,
                         published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
                         action  : 'update-item'
                     }
@@ -946,6 +989,22 @@ function getUrlVars() {
     return vars;
 }
 
+
+/**
+ * cleanArray removes all duplicated elements
+ * @param  {[type]} array [description]
+ * @return {[type]}       [description]
+ */
+function cleanArray(array) {
+  var i, j, len = array.length, out = [], obj = {};
+  for (i = 0; i < len; i++) {
+    obj[array[i]] = 0;
+  }
+  for (j in obj) {
+    out.push(j);
+  }
+  return out;
+}
 
 
 //console.log = function() {};
