@@ -1,7 +1,10 @@
 // Javascript
 // SLIDE METEO
 
-remplissage();
+$(document).ready(function(){
+	remplissage();
+});
+
 
 function remplissage(){
 
@@ -12,10 +15,12 @@ function remplissage(){
 	main_zip = $meteo_id;
 	var start = $start;
 	var end = $end;
-	var slide_duree = (end-start)/1000;
+	var slide_duree = (new Date($end) - new Date($start))/1000;
 	var alert_end = end -2000;
 
 	console.log(alert_end+" "+end);
+
+	console.log( "moite : "+ (new Date($end) - new Date($start))/1000/2	 );
 
 	
 	// on a déjà, en dur, 'json_data' et 'main_zip' (l'id de la ville principale)
@@ -80,6 +85,8 @@ function remplissage(){
 					rank++;
 				}
 			}
+
+			$('#meteo1').show();
 			
 			// timeout pour passer au 2ème slide
 			// slide_duree est transmis par structure/slideshow-javascript.php
@@ -89,7 +96,6 @@ function remplissage(){
 			setTimeout(function(){
 				$('#meteo1').slideUp(600);
 				$('#meteo2').show();
-				/*$('#meteo1').addClass('exit');*/
 			}, nextMeteoDelay);
 
 			$('#meteo2').hide();

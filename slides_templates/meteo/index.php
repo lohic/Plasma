@@ -135,10 +135,6 @@ main_zip = "<?php //echo $meteo->zipcode; ?>";
 
 
 
-
-
-
-
 <div id="meteo2" class="meteo2">
 	<div id="ombre2"></div>
 	<div class="colonne_gauche">
