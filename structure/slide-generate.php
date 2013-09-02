@@ -17,8 +17,6 @@
 	<div class="console">
 		<p id="retour"></p>
 
-		<p id="test">clique</p>
-
 		<h1><?php //echo $this->ecran->nom; ?></h1>
 		<p class="date"><span id="now"></span></p>
 		<p class="date"><span id="start"></span><span id="end"></span><?php //echo $this->ecran->actual_date_json; ?></p>

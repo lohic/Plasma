@@ -170,7 +170,6 @@ function refresh() {
  */
 function loop_slideshow(){
 	
-
 	// on vérifie qu'il y a bien un slide dont end >  $now
 	// qu'il y a bien au moins un slide en attente
 	// et que $now et à moins de 2 secondes de la fin du slide actuel
@@ -186,59 +185,68 @@ function loop_slideshow(){
 			$newStart 	= mysql2jsTimestamp($slides[i].start);
 			$newEnd		= mysql2jsTimestamp($slides[i].end);
 
+			// on boucle pour vérifier si un écran est dans le bon interval de temps
 			if( $newStart < $now && $now < $newEnd){
 
-				// si on détecte une alerte locale ou nationale
+				// si le slide détecté est différent du slide actuel
 				if($actual_item_id != $slides[i].id){
 
+					// si c'est un alerte
 					if($slides[i].ref_target == 'loc' || $slides[i].ref_target == 'nat' ){
-						$slide_loaded = false;
-					}else if( ($slides[i].ref_target == 'ecr' || $slides[i].ref_target == 'grp') && $now >= $slides[i].end ){
-
+						//$slide_loaded = false;
 					}
-
-				}
-
-				$start		= mysql2jsTimestamp($slides[i].start);
-				$end		= mysql2jsTimestamp($slides[i].end);
-				$template 	= $slides[i].template;
-				$slide_id	= $slides[i].id_slide;
-				$actual_item_id = $slides[i].id;
-
-				//console.log( $slides[i].id );
-				//ON CHARGE LES DONNÉE DU PROCHAIN SLIDE
-				
-				
-				if(! $slide_loaded){
-
-					if($template != 'meteo'){
-						$.ajax({
-							type: "GET",
-							url: "../ajax/data-slide.php",
-							data: {slide_id : $slide_id},
-							dataType: 'json',
-							success: function(json){
-								console.log("DATA SLIDE CHARGEES "+json);
-								$slide_data	= json;
-
-								load_slide($template,$slide_data);
-								$slide_loaded = true;
-							}
-						});
-					}else{
-						$slide_data = {};
-						load_slide($template,$slide_data);
-						$slide_loaded = true;
+					// si c'est un slide de groupe ou un slide écran
+					else if( ($slides[i].ref_target == 'ecr' || $slides[i].ref_target == 'grp') && $now >= $slides[i].end ){
+						
 					}
-				}				
+					//ON CHARGE LES DONNÉE DU PROCHAIN SLIDE
+					$start		= mysql2jsTimestamp($slides[i].start);
+					$end		= mysql2jsTimestamp($slides[i].end);
+					$template 	= $slides[i].template;
+					$slide_id	= $slides[i].id_slide;
+					$actual_item_id = $slides[i].id;
+
+					// on annonce qu'on est en attente d'un nouveau slide
+					$slide_loaded = false;
+				}else{
+					// on ne fait rien c'est qu'on affiche le bon slide
+				}		
 
 				break;
-			}else if(false){
+			}else{
+				// sinon on va vérifier les slides par ordre
 				
 			}
 		}
 
-		$('.info').text( 'template : ' + $template + ' id_slide : '+$slide_id );
+		// si $slide_loaded == false
+		// alors on charge un nouveau slide
+		// en allant chercher ses données
+		if(! $slide_loaded){
+
+			if($template != 'meteo'){
+				$.ajax({
+					type: "GET",
+					url: "../ajax/data-slide.php",
+					data: {slide_id : $slide_id},
+					dataType: 'json',
+					success: function(json){
+						$('.info').text( 'Données du slide chargées' );
+						console.log("DATA SLIDE CHARGEES "+json);
+						$slide_data	= json;
+
+						load_slide($template,$slide_data);
+						$slide_loaded = true;
+					}
+				});
+			}else{
+				$slide_data = {};
+				load_slide($template,$slide_data);
+				$slide_loaded = true;
+			}
+		}		
+
+		$('.info').text( 'Template : ' + $template + ' id_slide : '+$slide_id );
 
 	}else{
 		
