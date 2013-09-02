@@ -54,7 +54,7 @@ if(empty($data->id_groupe)){
 				<label for="id_groupe">écran relié au <a href="?page=ecrans_groupe_modif&id_groupe=<?php echo  $id_groupe;?>">groupe</a> :</label>
 				<?php echo func::createSelect($ecran->get_ecran_groupe_list(), 'id_groupe', $id_groupe, "onchange=\"$('#news_select_form').submit();\"", false ); ?> </p>
 		</fieldset>
-		<fieldset>
+		<!--<fieldset>
 			<p>
 				<label for="id_playlist_locale">playlist locale :</label>
 				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_locale', $data->id_playlist_locale, "", true ); ?>
@@ -64,7 +64,7 @@ if(empty($data->id_groupe)){
 				<?php echo func::createSelect($ecran->get_playlist_list(), 'id_playlist_nationale', $data->id_playlist_nationale, "", true ); ?>
 			</p>
 				
-		</fieldset>
+		</fieldset>-->
 		<input type="submit" name="edit_user" class="buttonenregistrer" id="edit_user" value="<?php echo isset($id_plasma) ? 'Modifier' : 'Créer'; ?>" />
 	</form>
 	
