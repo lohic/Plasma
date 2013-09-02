@@ -35,6 +35,7 @@ h1, h2, p{
 	overflow: hidden;
 	display:block;
 	position:relative;
+	background:rgb(247,207,50);
 }
 
 /* 
