@@ -149,7 +149,7 @@ function drawTimeline() {
         'snapEvents' : true,
         'cluster': true,
         'axisOnTop': true,
-        'zoomMin' : 1000*60*60,
+        'zoomMin' : 1000*60*60/1.5,
         'min' : new Date(2013, 7, 1),
         'max' : new Date(2013, 11, 31),
         'start' : todayM3,
@@ -262,7 +262,7 @@ function drawTimeline() {
             console.log("ONCHANGE id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
             console.log('start : '+dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
             console.log('groupe : ' + dataTimeline[row].group);
-
+            //ok
             $.ajax({
                 url     :"../ajax/data-timeline-item.php",
                 type    : "POST",
@@ -332,7 +332,7 @@ function drawTimeline() {
 
         if (row != undefined) {
             console.log(' ');
-            console.log("ONSELECT id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
+            console.log("ONSELECT id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide + " classes : "+dataTimeline[row].className);
         }  
     };
 
@@ -481,13 +481,47 @@ function edit_item(ref){
 
         $('#item_title').val(content);
 
+        console.log($("#published").is(':checked') ? 'publié' : 'non publié');
+
+
+        //------------------------
+        // on réattribue les classes
+        //------------------------        
+        var classes = dataTimeline[ref].className;
+
+        console.log("class :"+classes);
+
+        classes = classes.split(' ');
+
+        if($("#published").is(':checked')){
+            for(var i=0; i<classes.length; i++){
+                if(classes[i] == 'unpublished'){
+                    classes[i] = '';
+                }
+            }
+        }else{
+            var isUnpublished = false;
+            for(var i=0; i<classes.length; i++){
+                if(classes[i] == 'unpublished'){
+                    isUnpublished = true;
+                }
+            }
+            if(!isUnpublished){
+                classes.push('unpublished');
+            }
+        }
+        classes = classes.join(' ');
+        console.log("class :"+classes);
+
+        //
+
         timeline.changeItem(ref, {
             'group': group,
-            'className': $("#published").is(':checked') ? '' : 'unpublished',
+            'className': classes,
             'content' : content
         });
 
-
+        //ok 2
         $.ajax({
             url     :"../ajax/data-timeline-item.php",
             type    : "POST",
@@ -500,7 +534,7 @@ function edit_item(ref){
                 start   : new Date(dataTimeline[ref].start).addHours(2),
                 end     : new Date(dataTimeline[ref].end).addHours(2),
                 group   : dataTimeline[ref].group,
-                published : $("#published").is(':checked') ? 1 : 0,
+                published : dataTimeline[ref].className.indexOf("unpublished") < 0 ? 0 : 1,
                 action  : 'update-item'
             }
         }).done(function ( dataJSON ) {
@@ -657,7 +691,7 @@ function edit_slide(ref){
                             $(this).before("<p>"+ $(this).data('file') + "</p>");
                             $(this).parent().before("<div class='preview'></div>")
 
-                            preview($(this), $(this).data('file'), ext);
+                            preview_media($(this), $(this).data('file'), ext);
                         }
                     });
 
@@ -673,7 +707,7 @@ function edit_slide(ref){
                     if(!info.error){
                         $('input[name="'+ $(this).data('old-name') +'"]' ).val( info.file );
 
-                        preview($(this),info.file,info.ext);
+                        preview_media($(this),info.file,info.ext);
 
                         console.log("upload finished : "+info.file +" / type : "+info.ext);
                     }else{
@@ -714,7 +748,7 @@ function edit_slide(ref){
                     'id_slide': dataJSON.id,
                     'content' : dataJSON.nom
                 });
-
+                // ok 3
                 $.ajax({
                     url     :"../ajax/data-timeline-item.php",
                     type    : "POST",
@@ -742,15 +776,90 @@ function edit_slide(ref){
 }
 
 
+function update_item(){
+
+     $.ajax({
+        url     :"../ajax/data-timeline-item.php",
+        type    : "POST",
+        dataType:'json',
+        data    : {
+            id      : dataTimeline[row].id,
+            id_slide: dataTimeline[row].id_slide,
+            id_group: $id_groupe,
+            titre   : dataTimeline[row].content,
+            start   : new Date(dataTimeline[row].start).addHours(2),
+            end     : new Date(dataTimeline[row].end).addHours(2),
+            group   : dataTimeline[row].group,
+            published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 0 : 1,
+            action  : 'update-item'
+        }
+    }).done(function ( dataJSON ) {
+        console.log("Save change : "+dataJSON);
+        /*timeline.changeItem(row, {
+            'id': dataJSON.id
+        });*/
+    });
+
+    // ---------------
+    
+    $.ajax({
+        url     :"../ajax/data-timeline-item.php",
+        type    : "POST",
+        dataType:'json',
+        data    : {
+            id      : dataTimeline[ref].id,
+            id_slide: dataTimeline[ref].id_slide,
+            id_group: $id_groupe,
+            titre   : dataTimeline[ref].content,
+            start   : new Date(dataTimeline[ref].start).addHours(2),
+            end     : new Date(dataTimeline[ref].end).addHours(2),
+            group   : dataTimeline[ref].group,
+            published : $("#published").is(':checked') ? 1 : 0,
+            action  : 'update-item'
+        }
+    }).done(function ( dataJSON ) {
+        console.log(dataJSON);
+        /*timeline.changeItem(ref, {
+            'id': dataJSON
+        });*/
+    });
+
+    // ---------------
+
+    $.ajax({
+        url     :"../ajax/data-timeline-item.php",
+        type    : "POST",
+        dataType:'json',
+        data    : {
+            id      : dataTimeline[row].id,
+            id_slide: dataTimeline[row].id_slide,
+            id_group: $id_groupe,
+            titre   : dataTimeline[row].content,
+            start   : new Date(dataTimeline[row].start).addHours(2),
+            end     : new Date(dataTimeline[row].end).addHours(2),
+            group   : dataTimeline[row].group,
+            published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 0 : 1,
+            action  : 'update-item'
+        }
+    }).done(function ( dataJSON ) {
+        console.log(dataJSON);
+        /*timeline.changeItem(ref, {
+            'id': dataJSON.id
+        });*/
+    });
+}
+
+
+
 /**
- * fonction pour créer la preview (image ou vidéo)
+ * fonction pour créer la preview d'un média (image ou vidéo)
  * au chargement ou au rafraichissement
  * si le media est une vidéo, mets à jour la durée
  * @param {ref}
  * @param {file}
  * @param {ext}
  */
-function preview(ref, file, ext){
+function preview_media(ref, file, ext){
     console.log('PREVIEW');
     delete(ref.parent().prev().find('video'));
     ref.parent().prev().html("");            

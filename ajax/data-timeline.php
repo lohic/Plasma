@@ -17,7 +17,7 @@ if($core->isAdmin){
     $id_groupe = isset($_GET['id_groupe']) ? $_GET['id_groupe'] : NULL;
 
     $data_screens   = $slide->get_timeline_screens($id_groupe);
-    $data_items     = $slide->get_timeline_items($id_groupe);
+    $data_items     = $slide->get_timeline_items($id_groupe, $core->user->userLevel);
 
     $json = array();
 

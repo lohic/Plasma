@@ -565,7 +565,7 @@ class Slide {
 	 * @param boolean 	$delete 	facultatif, booléen pour savoir si on doit supprimer ou non l'item
 	 * @return JSON 				contenant l'id de l'item ou un message si suppression
 	 */
-	function update_timeline_item($id=NULL, $delete = false){
+	function update_timeline_item($id=NULL, $delete = false, $user_level){
 
 		$titre		= isset($_POST['titre'])?		func::GetSQLValueString( $_POST['titre'], 'text') : 'sans titre';
 		$start  	= isset($_POST['start'])?		func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ), 'text') : date('Y-m-d H:i:s');
@@ -576,10 +576,12 @@ class Slide {
         $id_slide	= isset($_POST['id_slide'])?	func::GetSQLValueString( $_POST['id_slide'], 'int') : 0;
         $id_group	= isset($_POST['id_group'])?	func::GetSQLValueString( $_POST['id_group'], 'int') : 0;
 
+        $info_target = $this->update_item_target($_POST['group'], $_POST['id_group']);
+
 		if( !isset($id) ){
 			// création$
 			// 
-            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s, %s, %s)",$id_slide, $id_group, $titre,$start,$end,$group,$published);
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s, %s, %s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
@@ -589,7 +591,7 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$id_slide, $id_group, $titre,$start,$end,$group,$published,$id);
+            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, ref_target=%s, titre=%s, start=%s, end=%s, type_target=%s, published=%s  WHERE id=%s",$id_slide, $info_target->id_target, $info_target->ref_target, $titre, $start,$end,$group,$published,$id);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			echo '{"id":"'+ $id +'"}';
@@ -602,12 +604,79 @@ class Slide {
 		}
 	}
 
+	
+	/**
+	 * [update_item_target description]
+	 * @param  string $type_target [description]
+	 * @param  int $id_groupe   [description]
+	 * @return object              [description]
+	 */
+	function update_item_target($type_target=NULL,$id_groupe=NULL){
+		if(!empty($type_target) && !empty($id_groupe)){
+
+			$query			= sprintf("SELECT E.code_postal
+										FROM 	sp_plasma_ecrans_groupes_tb AS G,
+												sp_plasma_etablissements_tb AS E
+										WHERE G.id_etablissement = E.id
+										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
+			$result 		= mysql_query($query) or die(mysql_error());
+
+			$item 			= mysql_fetch_assoc($result);
+			$code_postal 	= $item['code_postal'];
+
+			//--------------
+
+			$query			= sprintf("SELECT P.nom, P.id
+										FROM 	sp_plasma_ecrans_groupes_tb AS G,
+												sp_plasma_ecrans_tb AS P 
+										WHERE P.id_groupe = G.id
+										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
+
+			$result 	= mysql_query($query) or die(mysql_error());
+
+			$temp = explode('-', $type_target);
+			$retour = new stdClass();
+
+			//$temp[1] = str_replace("'", '', $temp[1]);
+			if($temp[1] == 'alerte locale'){
+				$retour->id_target = func::GetSQLValueString($code_postal,'text');
+				$retour->ref_target = func::GetSQLValueString('loc','text');
+			}else
+			if($temp[1] == 'alerte nationale'){
+				$retour->id_target = func::GetSQLValueString('NULL','text');
+				$retour->ref_target = func::GetSQLValueString('nat','text');
+			}else
+			if($temp[1] == 'groupe'){
+				$retour->id_target = func::GetSQLValueString($id_groupe,'int');
+				$retour->ref_target = func::GetSQLValueString('grp','text');
+			}else
+			if($temp[1] == 'ordre'){
+				$retour->id_target = func::GetSQLValueString('NULL','text');
+				$retour->ref_target = func::GetSQLValueString('ord','text');
+			}else{
+				$retour->ref_target = func::GetSQLValueString('ecr','text');
+				while ($item = mysql_fetch_assoc($result)){
+					//echo $temp[1] ." ". $item['nom']."\n";
+					if($temp[1] == $item['nom']){
+						$retour->id_target = func::GetSQLValueString($item['id'],'int');
+					}
+				}
+			}
+
+			//var_dump($retour);
+
+			return $retour;
+		}
+	}
+
+
 	/**
 	 * récupération des différents éléments item de la timeline
 	 * @param int 	$id_groupe 	id du groupe dont il faut récupérer les items
+	 * @param int 	le niveau de l'utilisateur
 	 * @return 					string retourne une chaine JSON contenant le descriptif des items de la timeline
 	 */
-	function get_timeline_items($id_groupe=NULL){
+	function get_timeline_items($id_groupe=NULL, $user_level=10){
 
 		if(!empty($id_groupe)){
 
@@ -617,13 +686,30 @@ class Slide {
 			$temp = array();
 
 			while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
+				$editable = false;
+				/*if($slide_item['ref_target'] == 'nat' && $user_level == 1){
+					$editable = true;
+				}else if($slide_item['ref_target'] == 'loc' && $user_level == 1){
+					$editable = true;
+				}*/
+
+				$editable = ($slide_item['ref_target'] == 'nat' && $user_level > 1 ? false:
+							($slide_item['ref_target'] == 'loc' && $user_level > 2 ? false:
+							true ) );
+				
+
 				$class = array();
 
-				if($slide_item['published']!=1){
+				if($slide_item['published']!='1'){
 					$class[] = 'unpublished';
 				}
-				$class[] = $slide_item['template'];
+				if(!$editable) {
+					$class[] = 'protected';
+				}
 
+				$class[] = $slide_item['template'];
+				
+				
 
 				$temp[] = '{
     "id":'. $slide_item['id'] .',
@@ -633,7 +719,7 @@ class Slide {
     "className": "'. implode(' ',$class) .'",
     "group":"'. $slide_item['type_target'] .'",
     "id_slide" : "'. $slide_item['id_slide'] .'",
-    "editable": true,
+    "editable": "'.$editable.'",
     "type" : "slide",
 }';
 							
@@ -861,5 +947,39 @@ class Slide {
 		return json_encode($data);
 	}
 	
+
+	/**
+	 * envoi un message par mail quand une alerte a été publiée
+	 * @param  int $id_target   [description]
+	 * @param  string $action      [description]
+	 * @return [type]              [description]
+	 */
+	function alert_by_mail($id_target,$action = 'créée'){
+		$niveau = 1;
+		
+		$sql			= sprintf("SELECT *
+									FROM ".TB."user_tb
+									WHERE type = %s", 	func::GetSQLValueString($niveau,'int'));
+																		
+		$sql_query		= mysql_query($sql) or die(mysql_error());							
+		$nbr			= mysql_num_rows($sql_query);
+				
+		$headers  	= 'MIME-Version: 1.0'."\r\n";
+		$headers	.= 'Content-type: text/html; charset=UTF-8'."\r\n";
+		$headers	.= "From:noreply-plasma@sciencespo.fr\r\n";
+		//$headers	.= "Reply-To:".$mail_header->reply_to."\r\n";
+		
+		$url = ABSOLUTE_URL.'admin-new/?page=ecrans_groupe_modif&id_groupe='.$id_target ;
+	
+		$message 	= 'Une alerte a été '.$action.'! <br/>Vous pouvez le consulter <a href="'.$url.'">en cliquand ici</a>' ;
+		$objet		= 'PLASMA - Alerte sur un groupe!';
+		
+		while($info = mysql_fetch_assoc($sql_query)){
+		
+			$sentOk = mail($info['email'],$objet,$message,$headers);
+			
+		}
+		
+	}
 }
 

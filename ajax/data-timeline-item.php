@@ -17,20 +17,20 @@ if($core->isAdmin){
     // creation d'un item
     if($action != NULL && $action == 'create-item'){
 
-        $slide->update_timeline_item();
+        $slide->update_timeline_item(NULL, false, $core->user->userLevel);
     }
     // mise à jour d'un item
     else
     if($action != NULL && $action == 'update-item' && isset($_POST['id']) ){
 
-        $slide->update_timeline_item( $_POST['id'] );
+        $slide->update_timeline_item( $_POST['id'] , false, $core->user->userLevel);
 
     }
     // suppression d'un item
     else
     if($action != NULL && $action == 'delete-item' && isset($_POST['id']) ){
 
-        $slide->update_timeline_item( $_POST['id'], true );
+        $slide->update_timeline_item( $_POST['id'], true ,$core->user->userLevel);
 
     }
 
