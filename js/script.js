@@ -275,7 +275,7 @@ function drawTimeline() {
                     start   : new Date(dataTimeline[row].start).addHours(2),
                     end     : new Date(dataTimeline[row].end).addHours(2),
                     group   : dataTimeline[row].group,
-                    published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 0 : 1,
+                    published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
                     action  : 'update-item'
                 }
             }).done(function ( dataJSON ) {
@@ -457,7 +457,7 @@ function edit_item(ref){
 
     // on selectionne le groupe quand on affiche le formulaire
     $('#screen_reference').val(dataTimeline[ref].group);
-    $('#published').attr('checked', dataTimeline[ref].className.indexOf("unpublished") < 0);
+    $('#published').attr('checked', dataTimeline[ref].className.indexOf("unpublished") < 0 ? true : false);
     //alert( dataTimeline[ref].className.indexOf("unpublished") >= 0 ? 1 : 0) ;
 
 
@@ -489,7 +489,7 @@ function edit_item(ref){
         //------------------------        
         var classes = dataTimeline[ref].className;
 
-        console.log("class :"+classes);
+        //console.log("class :"+classes);
 
         classes = classes.split(' ');
 
@@ -511,7 +511,7 @@ function edit_item(ref){
             }
         }
         classes = classes.join(' ');
-        console.log("class :"+classes);
+        //console.log("class :"+classes);
 
         //
 
@@ -534,7 +534,7 @@ function edit_item(ref){
                 start   : new Date(dataTimeline[ref].start).addHours(2),
                 end     : new Date(dataTimeline[ref].end).addHours(2),
                 group   : dataTimeline[ref].group,
-                published : dataTimeline[ref].className.indexOf("unpublished") < 0 ? 0 : 1,
+                published : dataTimeline[ref].className.indexOf("unpublished") < 0 ? 1 : 0,
                 action  : 'update-item'
             }
         }).done(function ( dataJSON ) {
@@ -761,7 +761,7 @@ function edit_slide(ref){
                         start   : new Date(dataTimeline[row].start).addHours(2),
                         end     : new Date(dataTimeline[row].end).addHours(2),
                         group   : dataTimeline[row].group,
-                        published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 0 : 1,
+                        published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
                         action  : 'update-item'
                     }
                 }).done(function ( dataJSON ) {
@@ -777,7 +777,7 @@ function edit_slide(ref){
 
 
 function update_item(){
-
+/*
      $.ajax({
         url     :"../ajax/data-timeline-item.php",
         type    : "POST",
@@ -790,14 +790,11 @@ function update_item(){
             start   : new Date(dataTimeline[row].start).addHours(2),
             end     : new Date(dataTimeline[row].end).addHours(2),
             group   : dataTimeline[row].group,
-            published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 0 : 1,
+            published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
             action  : 'update-item'
         }
     }).done(function ( dataJSON ) {
         console.log("Save change : "+dataJSON);
-        /*timeline.changeItem(row, {
-            'id': dataJSON.id
-        });*/
     });
 
     // ---------------
@@ -814,14 +811,11 @@ function update_item(){
             start   : new Date(dataTimeline[ref].start).addHours(2),
             end     : new Date(dataTimeline[ref].end).addHours(2),
             group   : dataTimeline[ref].group,
-            published : $("#published").is(':checked') ? 1 : 0,
+            published : dataTimeline[ref].className.indexOf("unpublished") < 0 ? 1 : 0,
             action  : 'update-item'
         }
     }).done(function ( dataJSON ) {
         console.log(dataJSON);
-        /*timeline.changeItem(ref, {
-            'id': dataJSON
-        });*/
     });
 
     // ---------------
@@ -838,15 +832,12 @@ function update_item(){
             start   : new Date(dataTimeline[row].start).addHours(2),
             end     : new Date(dataTimeline[row].end).addHours(2),
             group   : dataTimeline[row].group,
-            published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 0 : 1,
+            published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
             action  : 'update-item'
         }
     }).done(function ( dataJSON ) {
         console.log(dataJSON);
-        /*timeline.changeItem(ref, {
-            'id': dataJSON.id
-        });*/
-    });
+    });*/
 }
 
 
@@ -920,14 +911,28 @@ function formToJSON( data ) {
  * ajout d'une méthode addHours à l'objet Date
  * permet d'additionner des heures à une date donnée
  * notamment pour corriger les Date avec des décalages horaire
- * @param {h} le nombre d'heures à ajouter
- * @return {copiedDate} un objet Date
+ * @param int h le nombre d'heures à ajouter (peut être négatif)
+ * @return date copiedDate un objet Date
  */
 Date.prototype.addHours= function(h){
     var copiedDate = new Date(this.getTime());
     copiedDate.setHours(copiedDate.getHours()+h);
     return copiedDate;
 }
+
+/**
+ * ajout d'une méthode addSeconds à l'objet Date
+ * permet d'additionner des secondes à une date donnée
+ * notamment pour mettre à jour les vidéos
+ * @param int s le nombre d'heures à ajouter (peut être négatif)
+ * @return date copiedDate un objet Date
+ */
+Date.prototype.addSeconds= function(s){
+    var copiedDate = new Date(this.getTime());
+    copiedDate.setSeconds(copiedDate.getSeconds()+s);
+    return copiedDate;
+}
+
 
 /**
  * sert à récupérer les variables GET en javascript

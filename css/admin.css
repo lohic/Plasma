@@ -35,7 +35,7 @@ a:hover{
 #preview_screen{
 	display: none;
 	position: absolute;
-	z-index: 3000;
+	z-index: 9000;
 	background: #FFF url(../graphisme/loading.gif) center no-repeat;
 }
 

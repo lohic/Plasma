@@ -114,7 +114,7 @@ div.timeline-event.timeline-event-selected.screen{
 }
 
 div.timeline-event.readonly {
-    background-image: url('../graphisme/unpublished-protected.png');
+    background-image: url('../graphisme/unpublished-protected.png') !i;
     background-color: #ff4500;
     border-color: red;
     color: white;
@@ -132,9 +132,10 @@ div.timeline-event.readonly.unpublished {
 
 div.timeline-currenttime{
     border-color: #09F;
-    border-right-width: 2px;
-    border-right-style: dotted;
+    border-right-width: 1px;
+    border-right-style: dashed;
     background: none;
+    z-index: 4000;
 }
 
 /*

@@ -78,6 +78,8 @@ $isGroup = true;
 		<button id="show_previous">Afficher les 10 jours précédents</button>
 		<button id="show_next">Afficher les 10 jours suivants</button>
 	</p>-->
+	<h4>Ordre des priorités :</h4>
+	<p><em>Alerte locale</em> <strong>></strong> <em>Alerte nationale</em> <strong>></strong> <em>Écran</em> <strong>></strong> <em>Groupe</em> <strong>></strong> <em>Slides par séquence</em></p>
 	
 	<div class="reset"></div>
 
@@ -130,7 +132,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 		        </div>
 		        <div>
 		            <p>
-		            	<label>Publié oui/non :</label>
+		            	<label>Publiable oui/non :</label>
 		                <input id="published" type="checkbox" name="published">
 		            </p>
 		        </div>

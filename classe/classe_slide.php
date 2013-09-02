@@ -565,7 +565,7 @@ class Slide {
 	 * @param boolean 	$delete 	facultatif, booléen pour savoir si on doit supprimer ou non l'item
 	 * @return JSON 				contenant l'id de l'item ou un message si suppression
 	 */
-	function update_timeline_item($id=NULL, $delete = false, $user_level){
+	function update_timeline_item($id=NULL, $delete = false, $user_level=10){
 
 		$titre		= isset($_POST['titre'])?		func::GetSQLValueString( $_POST['titre'], 'text') : 'sans titre';
 		$start  	= isset($_POST['start'])?		func::GetSQLValueString( date('Y-m-d H:i:s' , strtotime($_POST['start']) ), 'text') : date('Y-m-d H:i:s');
@@ -576,12 +576,12 @@ class Slide {
         $id_slide	= isset($_POST['id_slide'])?	func::GetSQLValueString( $_POST['id_slide'], 'int') : 0;
         $id_group	= isset($_POST['id_group'])?	func::GetSQLValueString( $_POST['id_group'], 'int') : 0;
 
-        $info_target = $this->update_item_target($_POST['group'], $_POST['id_group']);
+        $info_target = $this->get_item_target_ref($_POST['group'], $_POST['id_group']);
 
 		if( !isset($id) ){
 			// création$
 			// 
-            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s, %s, %s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$group,$published);
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, type_target, published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$group,$published);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
@@ -611,7 +611,7 @@ class Slide {
 	 * @param  int $id_groupe   [description]
 	 * @return object              [description]
 	 */
-	function update_item_target($type_target=NULL,$id_groupe=NULL){
+	function get_item_target_ref($type_target=NULL,$id_groupe=NULL){
 		if(!empty($type_target) && !empty($id_groupe)){
 
 			$query			= sprintf("SELECT E.code_postal
@@ -663,8 +663,6 @@ class Slide {
 				}
 			}
 
-			//var_dump($retour);
-
 			return $retour;
 		}
 	}
@@ -680,7 +678,56 @@ class Slide {
 
 		if(!empty($id_groupe)){
 
-			$query			= sprintf('SELECT * FROM '.TB.'timeline_item_tb'); //echo $sql_slide;	
+			//$query			= sprintf('SELECT * FROM '.TB.'timeline_item_tb'); //echo $sql_slide;	
+			
+			$query			= sprintf("SELECT E.code_postal
+										FROM 	sp_plasma_ecrans_groupes_tb AS G,
+												sp_plasma_etablissements_tb AS E
+										WHERE G.id_etablissement = E.id
+										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
+			$result 		= mysql_query($query) or die(mysql_error());
+
+			$item 			= mysql_fetch_assoc($result);
+			$code_postal 	= $item['code_postal'];
+
+			// ----------------------
+
+			$query			= sprintf("SELECT P.id, P.nom
+										FROM 	sp_plasma_ecrans_groupes_tb AS G,
+												sp_plasma_ecrans_tb AS P
+										WHERE G.id = P.id_groupe
+										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
+			$result 		= mysql_query($query) or die(mysql_error());
+
+			//echo 'OK OK OK';
+
+			$liste_ecrans   = array();
+			$liste_groupes  = array();
+			$id				= 3;
+
+			while ($ecran = mysql_fetch_assoc($result)){
+				$liste_ecrans[] = $ecran['id'];
+				$id++;
+				$liste_groupes[$ecran['id']] = $id.'-'.$ecran['nom'];
+			}
+			$liste_ecrans = implode(',', $liste_ecrans);
+
+
+			// ----------------------
+
+			$query = sprintf("SELECT * FROM sp_plasma_timeline_item_tb
+							WHERE ref_target='nat'
+							OR ref_target='loc'
+							AND id_target=%s
+							OR ref_target='ecr'
+							AND id_target IN (%s)
+							OR ref_target='grp'
+							AND id_target=%s
+							OR ref_target='ord'
+							ORDER BY start ASC", func::GetSQLValueString($code_postal,'int'),
+												 $liste_ecrans,
+												 func::GetSQLValueString($id_groupe,'int') );
+
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 			
 			$temp = array();
@@ -709,6 +756,16 @@ class Slide {
 
 				$class[] = $slide_item['template'];
 				
+
+				if($slide_item['ref_target'] == 'loc'){
+					$group = '1-alerte locale';
+				}else if($slide_item['ref_target'] == 'nat'){
+					$group = '2-alerte nationale';
+				}else if($slide_item['ref_target'] == 'grp'){
+					$group = '3-groupe';
+				}else if($slide_item['ref_target'] == 'ecr'){
+					$group = $liste_groupes[ $slide_item['id_target'] ];
+				}
 				
 
 				$temp[] = '{
@@ -717,7 +774,7 @@ class Slide {
     "end"	: new Date('. $this->dateMysql2JS( $slide_item['end'] ) .'),
     "content": "'. $slide_item['titre'] .'",
     "className": "'. implode(' ',$class) .'",
-    "group":"'. $slide_item['type_target'] .'",
+    "group":"'. /*$slide_item['type_target']*/ $group .'",
     "id_slide" : "'. $slide_item['id_slide'] .'",
     "editable": "'.$editable.'",
     "type" : "slide",
@@ -734,7 +791,7 @@ class Slide {
 	 * @param int 		$id_groupe 		id du groupe dont il faut récupérer les écrans
 	 * @return string 					retourne une chaine JSON contenant le descriptif des items de la timeline
 	 */
-	function get_timeline_screens($id_groupe=NULL){
+	function get_timeline_screens($id_groupe=NULL,$user_level=10){
 
 		if(!empty($id_groupe)){
 
@@ -750,21 +807,21 @@ class Slide {
 
 			$temp[] = '{
 	"start" : new Date(2013, 7, 1),
-    "group" : "1-alerte nationale",
+    "group" : "1-alerte locale",
     "editable" : false,
-	"content":"1-alerte nationale",
-    "type" : "screen",
-    "className" : "screen"
-}';
-			$temp[] = '{
-	"start" : new Date(2013, 7, 1),
-    "group" : "2-alerte locale",
-    "editable" : false,
-	"content":"2-alerte locale",
+	"content":"1-alerte locale",
     "type" : "screen",
     "className" : "screen"
 }';
 
+			$temp[] = '{
+	"start" : new Date(2013, 7, 1),
+    "group" : "2-alerte nationale",
+    "editable" : false,
+	"content":"2-alerte nationale",
+    "type" : "screen",
+    "className" : "screen"
+}';
 			$temp[] = '{
 	"start" : new Date(2013, 7, 1),
     "group" : "3-groupe",
@@ -773,8 +830,9 @@ class Slide {
     "type" : "screen",
     "className" : "screen"
 }';
-			$tab[] = '{"key" : "1-alerte nationale", "value" : "1-alerte nationale"}';
-			$tab[] = '{"key" : "2-alerte locale", "value" : "2-alerte locale"}';
+			
+			if($user_level <= 2) $tab[] = '{"key" : "1-alerte locale", "value" : "1-alerte locale"}';
+			if($user_level <= 1) $tab[] = '{"key" : "2-alerte nationale", "value" : "2-alerte nationale"}';
 			$tab[] = '{"key" : "3-groupe", "value" : "3-groupe"}';
 
 			while ($item = mysql_fetch_assoc($sql_slide_query)){
