@@ -10,8 +10,8 @@
         <h1></h1>
     </div>
     
-    <div class="visuel edit image" id="I" title="I - image">
-        <img src="<?php echo ABSOLUTE_URL.IMG_SLIDES; ?>{{image}}" width="768" alt="image" class="image-event" />
+    <div class="visuel edit image" id="I" title="I - image" style="background-image:url(<?php echo ABSOLUTE_URL.IMG_SLIDES; ?>{{image}})">
+        
     </div>
 
     <div class="footer">

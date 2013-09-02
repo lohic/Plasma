@@ -21,7 +21,7 @@ function decompte(){
 }
 
 $(document).ready(function(){
-	
+	console.log("compte à rebour");
 	decompte();
 		
 });
