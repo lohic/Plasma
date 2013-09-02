@@ -182,14 +182,21 @@ function refresh() {
  * @return {null} 
  */
 function loop_slideshow(){
+
+	//console.log($now +" "+ new Date($end).addSeconds(-3));
+
+	if($now > new Date($end).addSeconds(-2) && $template != 'default'){
+		console.log('exit');
+		$('body').addClass('exit');
+	}
 	
 	// on vérifie qu'il y a bien un slide dont end >  $now
 	// qu'il y a bien au moins un slide en attente
 	// et que $now et à moins de 2 secondes de la fin du slide actuel
-	if(typeof $slide != "undefined"  &&$now > $end-2000 && $nbr > 0 && $slide[$nbr-1].end<$now){
+	/*if(typeof $slide != "undefined"  && $now > new Date($end).addSeconds(-3) && $nbr > 0 && $slide[$nbr-1].end<$now){
 		console.log('EXIT');
 		$('body').addClass('exit');
-	}
+	}*/
 
 	if($data_loaded){
 
@@ -248,6 +255,7 @@ function loop_slideshow(){
 						console.log("DATA SLIDE CHARGEES "+json);
 						$slide_data	= json;
 
+						$('body').removeClass('exit');
 						load_slide($template,$slide_data);
 						$slide_loaded = true;
 					}
@@ -329,3 +337,15 @@ function getUrlVars() {
     return vars;
 }
 
+/**
+ * ajout d'une méthode addHours à l'objet Date
+ * permet d'additionner des heures à une date donnée
+ * notamment pour corriger les Date avec des décalages horaire
+ * @param {h} le nombre d'heures à ajouter
+ * @return {copiedDate} un objet Date
+ */
+Date.prototype.addSeconds= function(s){
+    var copiedDate = new Date(this.getTime());
+    copiedDate.setSeconds(copiedDate.getSeconds()+s);
+    return copiedDate;
+}
