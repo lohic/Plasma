@@ -149,7 +149,7 @@ function drawTimeline() {
         'snapEvents' : true,
         'cluster': true,
         'axisOnTop': true,
-        'zoomMin' : 1000*60*60/1.5,
+        'zoomMin' : 1000*60*60/5,
         'min' : new Date(2013, 7, 1),
         'max' : new Date(2013, 11, 31),
         'start' : todayM3,
@@ -423,6 +423,7 @@ function edit_item(ref){
         end:       dataTimeline[ref].end,
 
         duree:     second2HMS(duree),
+        template:  dataTimeline[ref].template,
 
         annee1:    date1.getFullYear(),
         mois1:     date1.getMonth() + 1 <10 ? "0"+(date1.getMonth() + 1): date1.getMonth() + 1,
@@ -771,6 +772,9 @@ function edit_slide(ref){
             // on attribue bien le contenu de tinyMCE aux champs d'origine
             tinyMCE.triggerSave();
             dform_value = formToJSON( $("#myform").serializeArray() );
+
+            var duree = parseInt( $('#myform input[name*="duration"]').val() ) + 3;
+            console.log("Durée de la vidéo : "+duree);
             
             // on sauvegarde les valeurs en base de donnée
             $.ajax({
@@ -788,7 +792,8 @@ function edit_slide(ref){
 
                 timeline.changeItem(ref, {
                     'id_slide': dataJSON.id,
-                    'content' : dataJSON.nom
+                    'content' : dataJSON.nom,
+                    'end'     : new Date(dataTimeline[ref].start).addSeconds(duree)
                 });
                 // ok 3
                 $.ajax({
@@ -809,9 +814,9 @@ function edit_slide(ref){
                     }
                 }).done(function ( dataJSON ) {
                     console.log(dataJSON);
-                    /*timeline.changeItem(ref, {
-                        'id': dataJSON.id
-                    });*/
+                    //timeline.changeItem(ref, {
+                    //    'id': dataJSON.id
+                    //});
                 });
             });
         });

@@ -11,7 +11,7 @@
     </div>
     
     <div class="visuel edit image" id="I" title="I - image">
-        <img src="<?php echo ABSOLUTE_URL.IMG_SLIDES.'compte_a_rebours/'; ?>{{image}}" width="768" alt="image" class="image-event" />
+        <img src="<?php echo ABSOLUTE_URL.IMG_SLIDES; ?>{{image}}" width="768" alt="image" class="image-event" />
     </div>
 
     <div class="footer">
