@@ -28,7 +28,44 @@ $isGroup = true;
 	background: #FF0;
 	width: 800px;
 }
+
+#preview_screen{
+	display: none;
+	position: absolute;
+	z-index: 3000;
+}
 </style>
+<script>
+$(document).ready(function(){
+
+	/**
+	 * Pour afficher ou masque le bloc de preview
+	 * quand on va sur l'icone de l'oeil d'un écran
+	 */
+	$(".child-screen .ecran").each(function(){
+
+		$(this).find('img[alt="voir"]').mouseenter(function(){
+			console.log('enter');
+
+			$('#preview_screen').attr('src', $(this).parent().attr('href'));
+			$('#preview_screen').show();
+
+			$( "#preview_screen" ).position({
+				of: $(this).parent().parent().parent(),
+				my: "center bottom",
+				at: "center top-10",
+				collision: "none flip"
+			});
+		});
+
+	});
+
+	$(".child-screen .ecran").mouseleave(function(){
+		$('#preview_screen').hide();
+	});
+
+});
+</script>
 
 <div class="form_container">
 	<p class="intro_modif"><?php echo isset($id_groupe) ? 'Modification' : 'Création'; ?> du groupe d'écrans :</p>
@@ -66,12 +103,11 @@ $isGroup = true;
 
 	<div class="reset"></div>
 
+	<?php if ( isset($id_groupe) ){ ?>
 	<div class="child-screen">
-	
     <?php
     echo $ecran->get_admin_ecran_list($id_groupe)->ecrans;
     ?>
-		
 	</div>
 
 
@@ -91,17 +127,18 @@ $isGroup = true;
 		<button id="add_screen">Ajouter un écran</button>
 	</p>
 
-	<iframe style="width:384px;height:216px;border:0;" src="http://localhost:8888/Site_SCIENCESPO_PLASMA/slideshow/?plasma_id=1&tiny&preview"></iframe>
+	<iframe id="preview_screen" style="width:384px;height:216px;border:0;" src=""></iframe>
 
 
 	<div id="mytimeline"></div>
 
 	<form id="myform" style="width:500px"></form>
+	<?php } ?>
 </div>
 
 
 
-
+<?php if ( isset($id_groupe) ){ ?>
 
 <!--
 EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
@@ -189,3 +226,5 @@ EDITER LES INFORMATIONS D'UN ÉCRAN
         </form>
     </div>
 </script>
+
+<?php } ?>

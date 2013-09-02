@@ -17,6 +17,11 @@ body {
     padding:10px;
 }
 
+
+div#mytimeline{
+    margin-top: 2em;
+}
+
 /*
  * Style de la timeline
  */
