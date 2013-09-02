@@ -111,3 +111,24 @@ Dynamic JS:
 - http://www.siteduzero.com/informatique/tutoriels/ajax-et-l-echange-de-donnees-en-javascript/charger-un-objet-json-statique
 - http://headjs.com
 - http://requirejs.org/docs/api.html
+ 
+Pour convertir un timestamp mysql et date javascript
+```javascript
+/**
+ * [createFromMysql description]
+ * @param  {[type]} mysql_string [description]
+ * @return {[type]}              [description]
+ */
+Date.createFromMysql = function(mysql_string)
+{ 
+   if(typeof mysql_string === 'string')
+   {
+      var t = mysql_string.split(/[- :]/);
+
+      //when t[3], t[4] and t[5] are missing they defaults to zero
+      return new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);          
+   }
+
+   return null;   
+}
+```
