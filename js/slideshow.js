@@ -74,9 +74,6 @@ function refresh() {
 			$('.info').text('Il y a une erreur dans le chargement des données du slideshow : '+errorThrown);
 		},
 		success: function(json){
-			console.log(json);			
-
-			console.log('ok');
 			//countusers=json.countusers;
 			//$("#retour").text('ok : '+countusers);
 			if(json.update == true && json.nodata != true){

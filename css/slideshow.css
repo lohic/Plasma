@@ -29,10 +29,10 @@ body, #template{
      cursor: none;
 }
 
-body.preview{
+body.preview, body.preview #template{
 	cursor:auto;
 }
-body.debug{
+body.debug, body.debug #template{
 	cursor:auto;
 }
 
