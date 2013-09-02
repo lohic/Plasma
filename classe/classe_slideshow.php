@@ -1242,6 +1242,9 @@ class Slideshow {
 				//$retour->id								= $this->ecran->id;
 				$retour->screen_data		= json_decode($info['json']);
 				$retour->update				= true;			
+			}else if(empty($date_json)){
+				$retour->update				= false;
+				$retour->nodata = true;
 			}else{
 				$retour->update				= false;
 			}

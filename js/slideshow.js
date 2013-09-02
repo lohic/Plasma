@@ -74,10 +74,12 @@ function refresh() {
 			$('.info').text('Il y a une erreur dans le chargement des données du slideshow : '+errorThrown);
 		},
 		success: function(json){
+			console.log(json);			
+
 			console.log('ok');
 			//countusers=json.countusers;
 			//$("#retour").text('ok : '+countusers);
-			if(json.update == true){
+			if(json.update == true && json.nodata != true){
 				console.log(" ");
 				console.log('NEW DATA');
 				//console.log(json.screen_data.data);
@@ -150,7 +152,21 @@ function refresh() {
 
 					$slide_loaded = true;
 				}
-			}else{
+
+			}else if(json.nodata == true){
+
+				if($data_loaded == true){
+					$data_loaded = false;
+					$slide_loaded = false;
+				}
+				
+				if(!$slide_loaded){
+					$slide_data	= {"titre_ecran" : $nom_ecran};
+					load_slide($template,$slide_data);
+
+					$slide_loaded = true;
+				}
+
 				//console.log(" ");
 				//console.log('NO NEW DATA');
 				//console.log(json);
@@ -302,24 +318,6 @@ function mysql2jsTimestamp(timestamp){
 	var t = timestamp.split(/[- :]/);
 	return new Date(t[0], t[1]-1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
 }
-
-/**
- * [createFromMysql description]
- * @param  {[type]} mysql_string [description]
- * @return {[type]}              [description]
- */
-/*Date.createFromMysql = function(mysql_string)
-{ 
-   if(typeof mysql_string === 'string')
-   {
-      var t = mysql_string.split(/[- :]/);
-
-      //when t[3], t[4] and t[5] are missing they defaults to zero
-      return new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);          
-   }
-
-   return null;   
-}*/
 
 
 /**

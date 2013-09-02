@@ -25,6 +25,7 @@ if(isset($core)){
 }else{
 	$retour = new stdClass();
 	$retour->update	= false;
+	$retour->nodata = true;
 	$retour = json_encode($retour);
 	
 	echo $retour;

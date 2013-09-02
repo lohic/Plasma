@@ -157,7 +157,7 @@ class Ecran {
 		$id_last_ecran = mysql_insert_id();
 		
 		unset($_POST);
-		header('Location: ?page=ecrans_modif&id_plasma='.$id_last_ecran);
+		header('Location: ?page=ecrans_groupe_modif&id_groupe='.$_array_val['id_groupe']);
 
 	}
 	
@@ -320,6 +320,8 @@ class Ecran {
 		
 		$MListe2['*'] = '*';
 		$MListe2 = $MListe2+$moisListe;
+
+		$retour = new stdClass();
 		
 		$retour->M 		= str_replace("\n","",func::createSelect($MListe2, 'M[]', $M, "", false ));
 		$retour->j 		= str_replace("\n","",func::createSelect($jListe2, 'j[]', $j, "", false ));
@@ -338,6 +340,8 @@ class Ecran {
 	 *
 	 */
 	function get_info(){
+
+		$retour = new stdClass();
 		
 		// on initialise pour éviter les valeurs non déclarées dans les formulaires
 		$retour->id						= NULL;
@@ -381,7 +385,7 @@ class Ecran {
 	function get_groupe_info($_id_groupe = NULL){
 
 		// instanciation de l'objet
-		$retour = (object)array();
+		$retour = new stdClass();
 		
 		// on initialise pour éviter les valeurs non déclarées dans les formulaires
 		$retour->id						= NULL;
@@ -566,7 +570,7 @@ class Ecran {
 	 * @return HTML de la liste des écrans
 	 */
 	function get_admin_ecran_list($id_groupe=NULL){		
-		$retour = "";
+		$retour = new stdClass();
 		
 		if(isset($id_groupe)){	
 			$this->slide_db->connect_db();
