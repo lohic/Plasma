@@ -89,7 +89,7 @@ $isGroup = true;
 
 	<div id="mytimeline"></div>
 
-
+	
 	<div class="child-screen">
     <?php
     echo $ecran->get_admin_ecran_list($id_groupe)->ecrans;
@@ -145,7 +145,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 			
 				<button id="save_item">Enregistrer</button>
 		        <button id="edit_slide_content">Éditer le contenu</button>
-		        <button id="publish_slide">Publier le slide</button>
+		        <!--<button id="publish_slide">Publier le slide</button>-->
 
             </fieldset>
             

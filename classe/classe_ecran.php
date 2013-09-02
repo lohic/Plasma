@@ -531,9 +531,17 @@ class Ecran {
 	 */
 	function get_admin_ecran_groupe_list(){		
 			
+			if(empty($_GET['code_postal'])){
+				$code_postal = '75000';
+			}else{
+				$code_postal = $_GET['code_postal'];
+			}
+
 			$this->slide_db->connect_db();
 			
-			$sql		= sprintf("SELECT *	FROM ".TB."ecrans_groupes_tb");
+			$sql		= sprintf("SELECT G.id, G.nom FROM ".TB."ecrans_groupes_tb G, ".TB."etablissements_tb E
+									WHERE E.id = G.id_etablissement
+									AND E.code_postal=%s", func::GetSQLValueString($code_postal,'int'));
 		
 			
 			$sql_query	= mysql_query($sql) or die(mysql_error());
@@ -590,11 +598,11 @@ class Ecran {
 			ob_start();
 			
 			$groupe = $id_groupe;
+
 			include('../structure/ecran-list-add-bloc.php');
 			
 			while($item = mysql_fetch_assoc($sql_query)){
-				
-				
+					
 				$id = $item['id'];
 				$nom = $item['nom'];
 				$ville = $item['ville'];

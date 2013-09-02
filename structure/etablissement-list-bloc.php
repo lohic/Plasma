@@ -27,11 +27,11 @@
 	<form action="" method="post" id="modif_etablissement_form_<?php echo $id; ?>">
 	    <fieldset>
         
-		<div class="options">
+		<!--<div class="options">
         <a href="?page=etablissements&id_etablissement=<?php echo $id; ?>&publish=etablissement">
-            Publier l'établissment
+            Publier l'établissement
         </a>
-    </div>
+        </div>-->
     
 		
 		<p class="legend">Informations :</p>

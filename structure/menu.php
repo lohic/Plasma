@@ -45,12 +45,12 @@ admin
        			<li id=""><a href="./?page=playlist_create" class="<?php selectClass('playlist_create'); ?>"><span>Créer</span></a></li>
             </ul>	
         </li>-->
-        <li id=""><a href="./?page=slides_select" class="<?php selectClass('slides_select'); ?>"><span>Slides</span></a>
+        <!--<li id=""><a href="./?page=slides_select" class="<?php selectClass('slides_select'); ?>"><span>Slides</span></a>
             <ul>
             	<li id=""><a href="./?page=slide_create" class="<?php selectClass('slide_create'); ?>"><span>Créer</span></a></li>
             </ul>
-        </li>
-       
+        </li>-->
+       <?php if($core->isAdmin && $core->userLevel<=1){ ?>
         <!--<li id=""><a href="./?page=options" class="<?php selectClass('options'); ?>"><span>Options</span></a>
             <ul>-->
             	<li id=""><a href="./?page=etablissements" class="<?php selectClass('etablissements'); ?>"><span>Établissements</span></a></li>
@@ -61,6 +61,7 @@ admin
            		<li id=""><a href="./?page=organismes" class="<?php selectClass('organismes'); ?>"><span>Organismes</span></a></li>
         	</ul>
 	</li>
+  <?php } ?>
     </ul>
     <div class="reset"></div>
 </div>

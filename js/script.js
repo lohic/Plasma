@@ -677,14 +677,20 @@ function edit_slide(ref){
         // quand le formulaire est généré, on ouvre une fenêtre fancybox
         $.fancybox( this , {
             title : '<h1>Éditeur de slide</h1>',
+            //scrolling:'yes',
+            autoSize:false,
+            width:500,
+            height:600,
+            scrollOutside:false,
+            //autoHeight:true,
             helpers : {
                 title: {
-                    type: 'inside',
+                    type: 'inside', 
                     position: 'top'
                 }
             },
             afterLoad : function(){
-                $.fancybox.update();
+                //$.fancybox.update();
             },
             afterShow: function(){
                 $.fancybox.update();
@@ -752,6 +758,8 @@ function edit_slide(ref){
                         preview_media($(this),info.file,info.ext);
 
                         console.log("upload finished : "+info.file +" / type : "+info.ext);
+                        //$.fancybox.update();
+                        //$.fancybox.reposition();
                     }else{
                         alert( info.message );
                     }
@@ -792,8 +800,8 @@ function edit_slide(ref){
 
                 timeline.changeItem(ref, {
                     'id_slide': dataJSON.id,
-                    'content' : dataJSON.nom,
-                    'end'     : new Date(dataTimeline[ref].start).addSeconds(duree)
+                    'content' : $("#slide_title").val(),
+                    'end'     : duree>0 ? new Date(dataTimeline[ref].start).addSeconds(duree) : new Date(dataTimeline[ref].end)
                 });
                 // ok 3
                 $.ajax({
@@ -915,6 +923,7 @@ function preview_media(ref, file, ext){
         console.log('image');
         ref.parent().prev().html("<img src='../slides_images/"+ file +"' class='vignette'/>");
     }
+    //$.fancybox.update();
 }
 
 
