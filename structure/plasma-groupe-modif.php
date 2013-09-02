@@ -110,7 +110,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
         <h1 id="item_title">{{content}}</h1>
         <form>
         	<fieldset>
-        		<div id="slide_view"><a href="<?php echo ABSOLUTE_URL?>slideshow/?slide_id={{slide_id}}" target="_blank" ><img src="../graphisme/eye.png" alt="voir"/></a></div>
+        		<div id="slide_view"><a href="<?php echo ABSOLUTE_URL?>slideshow/?slide_id={{slide_id}}&template={{template}}" target="_blank" ><img src="../graphisme/eye.png" alt="voir"/></a></div>
         		<div>
 		            <p>
 		            	<label>Alerte / Groupe / Écran :</label>
