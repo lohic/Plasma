@@ -32,6 +32,13 @@ a:hover{
 	position:relative;
 }
 
+#preview_screen{
+	display: none;
+	position: absolute;
+	z-index: 3000;
+	background: #FFF url(../graphisme/fancybox/fancybox_loading.gif) center no-repeat;
+}
+
 
 #header{
 	background:#C00;
@@ -988,18 +995,20 @@ compteur-field
 
 /* LISTE DES ECRANS ENFANTS*/
 .child-screen{
+	margin-left: 1px ;
 }
 
 .child-screen .ecran{
-	width:150px;
+	width:141px;
 	height:150px;
 	float:left;
-	margin:5px 2px;
+	margin:5px 5px;
 	padding:5px;
 	border:dotted 1px #CCC;
 	background:#FFF;
 	position:relative;
 }
+
 
 .child-screen .ecran:hover{
 	border:dotted 1px #CB021A;

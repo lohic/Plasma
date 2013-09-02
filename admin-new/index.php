@@ -176,7 +176,7 @@ $ecran 		= new Ecran($id_plasma);
 	    <div class="bottom-div"></div>
 
 	    <?php }?>
-
+		<iframe id="preview_screen" style="width:384px;height:216px;border:0;" src=""></iframe>
 	</div>
 
 </body>

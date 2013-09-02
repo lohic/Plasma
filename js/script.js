@@ -94,6 +94,33 @@ $('document').ready(function(){
         });
     });
 
+    /**
+     * Pour afficher ou masque le bloc de preview
+     * quand on va sur l'icone de l'oeil d'un écran
+     */
+    $(".child-screen .ecran").each(function(){
+
+        $(this).find('img[alt="voir"]').mouseenter(function(){
+            console.log('enter');
+
+            $('#preview_screen').attr('src', $(this).parent().attr('href')+"&preview&tiny");
+            $('#preview_screen').show();
+
+            $( "#preview_screen" ).position({
+                of: $(this).parent().parent().parent(),
+                my: "center bottom",
+                at: "center top-10",
+                collision: "none flip"
+            });
+        });
+
+    });
+
+    $(".child-screen .ecran").mouseleave(function(){
+        $('#preview_screen').hide();
+        $('#preview_screen').attr('src', "");
+    });
+
 });
 
 
