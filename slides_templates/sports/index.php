@@ -8,7 +8,9 @@
 		
 		<div class="sport">
 			<h2><span class="edit textfield" max="30" id="B" title="B - Catégorie de sport">{{type_sport}}</span></h2>
-			<div class="le_sport football"></div>
+			{{#icone_sport}}
+			<div class="le_sport" style="background-image:url(<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'sports/pictos/'; ?>{{icone_sport}})"></div>
+			{{/icone_sport}}
 		</div>
 
 		<div class="texte">
@@ -27,6 +29,6 @@
 		</div>
 
 		<div class="detail_classement">
-			<span class="edit textarea" id="G" title="G - Résultat(s)">{{resultat}}</span>
+			<span class="edit textarea" id="G" title="G - Résultat(s)">{{{resultat}}}</span>
 		</div>
 	</div>

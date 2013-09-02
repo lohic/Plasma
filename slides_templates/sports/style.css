@@ -142,6 +142,8 @@ classes réservées pour le traitement JS :
 	height:161px;
 	right:44px;
 	top:0px;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 .texte2{
