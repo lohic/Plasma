@@ -29,43 +29,7 @@ $isGroup = true;
 	width: 800px;
 }
 
-#preview_screen{
-	display: none;
-	position: absolute;
-	z-index: 3000;
-}
 </style>
-<script>
-$(document).ready(function(){
-
-	/**
-	 * Pour afficher ou masque le bloc de preview
-	 * quand on va sur l'icone de l'oeil d'un écran
-	 */
-	$(".child-screen .ecran").each(function(){
-
-		$(this).find('img[alt="voir"]').mouseenter(function(){
-			console.log('enter');
-
-			$('#preview_screen').attr('src', $(this).parent().attr('href'));
-			$('#preview_screen').show();
-
-			$( "#preview_screen" ).position({
-				of: $(this).parent().parent().parent(),
-				my: "center bottom",
-				at: "center top-10",
-				collision: "none flip"
-			});
-		});
-
-	});
-
-	$(".child-screen .ecran").mouseleave(function(){
-		$('#preview_screen').hide();
-	});
-
-});
-</script>
 
 <div class="form_container">
 	<p class="intro_modif"><?php echo isset($id_groupe) ? 'Modification' : 'Création'; ?> du groupe d'écrans :</p>
@@ -104,14 +68,8 @@ $(document).ready(function(){
 	<div class="reset"></div>
 
 	<?php if ( isset($id_groupe) ){ ?>
-	<div class="child-screen">
-    <?php
-    echo $ecran->get_admin_ecran_list($id_groupe)->ecrans;
-    ?>
-	</div>
 
-
-	<div class="reset"></div>
+	<!--<div class="reset"></div>
 
 	<p>Le début d'un slide est prioritaire sur sa fin.</p>
     
@@ -119,20 +77,22 @@ $(document).ready(function(){
 	<p>
 		<button id="show_previous">Afficher les 10 jours précédents</button>
 		<button id="show_next">Afficher les 10 jours suivants</button>
-	</p>
-	<div class="reset"></div>
+	</p>-->
 	
-	<p>
-		<input type="text" value="group" id="group" />
-		<button id="add_screen">Ajouter un écran</button>
-	</p>
+	<div class="reset"></div>
 
-	<iframe id="preview_screen" style="width:384px;height:216px;border:0;" src=""></iframe>
+	
+	<form id="myform" style="width:500px"></form>
 
 
 	<div id="mytimeline"></div>
 
-	<form id="myform" style="width:500px"></form>
+
+	<div class="child-screen">
+    <?php
+    echo $ecran->get_admin_ecran_list($id_groupe)->ecrans;
+    ?>
+	</div>
 	<?php } ?>
 </div>
 

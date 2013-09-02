@@ -9,17 +9,9 @@ body {
     background: #eee;
 }
 
-#page{
-    max-width:1000px;
-    margin:auto;
-    background:#fff;
-    min-height:500px;
-    padding:10px;
-}
-
 
 div#mytimeline{
-    margin-top: 2em;
+    margin: 2em 0;
 }
 
 /*

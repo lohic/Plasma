@@ -34,10 +34,10 @@ admin
 <div id="menuHaut">
   <ul id="menuDown">
   		
-        <li id=""><a href="./?page=ecrans" class="<?php selectClass('ecrans'); ?>"><span>Écrans</span></a>
+        <li id=""><a href="./?page=ecrans" class="<?php selectClass('ecrans'); ?>"><span>Groupes d'écrans</span></a>
         	<ul>
-            	<li id=""><a href="./?page=ecran_create" class="<?php selectClass('ecran_create'); ?>"><span>Créer un écran</span></a></li>
-				<li id=""><a href="./?page=ecrans_groupe_modif" class="<?php selectClass('ecrans_groupe_create'); ?>"><span>Créer un groupe</span></a></li>
+            	<!--<li id=""><a href="./?page=ecran_create" class="<?php selectClass('ecran_create'); ?>"><span>Créer un écran</span></a></li>-->
+				      <li id=""><a href="./?page=ecrans_groupe_modif" class="<?php selectClass('ecrans_groupe_create'); ?>"><span>Créer un groupe</span></a></li>
             </ul>
   		</li>
         <!--<li id=""><a href="./?page=playlist_select" class="<?php selectClass('playlist_select'); ?>"><span>Playlist</span></a>
