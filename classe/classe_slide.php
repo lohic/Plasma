@@ -231,8 +231,10 @@ class Slide {
 		if($template!=-1){ 
 			array_push($optListe, "template='".$template."'"); 
 		}
-		array_push($optListe, "YEAR(date)=".$annee);
-		array_push($optListe, "MONTH(date)=".$mois);
+		$optListe[] = "YEAR(date)=".$annee;
+		$optListe[] = "MONTH(date)=".$mois;
+		$optListe[] = "template<>'meteo'";
+		$optListe[] = "template<>'default'";
 		
 		if(count($optListe)>0){
 			$opt = " WHERE ".implode(" AND ", $optListe);
@@ -240,7 +242,7 @@ class Slide {
 			$opt = "";
 		}
 		
-		$query = 'SELECT id,nom,template FROM '.TB.'slides_tb'.$opt;
+		$query = 'SELECT id,nom,template,date FROM '.TB.'timeline_slides_tb'.$opt.' ORDER BY date DESC';
 		
 		$sql_slide		= sprintf($query); //echo $sql_slide;	
 		$sql_slide_query = mysql_query($sql_slide) or die(mysql_error());
@@ -252,6 +254,7 @@ class Slide {
 			$class				= 'listItemRubrique'.($i+1);
 			$id					= $slide_item['id'];
 			$nom				= $slide_item['nom'];
+			$date				= $slide_item['date'];
 			$template			= $slide_item['template'];
 			$icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$template.'/vignette.gif';
 				
@@ -358,7 +361,18 @@ class Slide {
 	 */
 	static function get_slide_template_list($admin_groupe=NULL){
 		//echo 'liste des slideshows';
-		global $templateListe;
+		//global $templateListe;
+
+		$templateListe = array();
+		foreach(glob("{".LOCAL_PATH.SLIDE_TEMPLATE_FOLDER."*}",GLOB_BRACE) as $folder){
+		    	if(is_dir($folder)){
+			    	$folder = str_replace(LOCAL_PATH.SLIDE_TEMPLATE_FOLDER,'',$folder);
+			        if($folder!='meteo' && $folder!='default'){
+			        	//$dossier = str_replace(LOCAL_PATH.SLIDE_TEMPLATE_FOLDER,'',$folder);
+			      		$templateListe[$folder] = $folder ;
+					}
+				}
+		}
 		
 		$array = $templateListe;
 		

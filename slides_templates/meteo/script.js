@@ -10,9 +10,10 @@ function remplissage(){
 
 	// remplissage
 	// 
-	console.log('meteo : '+$meteo_id);
+	// 
+	main_zip = $('body').data('code_meteo');
+	console.log('meteo : '+main_zip);
 
-	main_zip = $meteo_id;
 	var start = $start;
 	var end = $end;
 	var slide_duree = (new Date($end) - new Date($start))/1000;

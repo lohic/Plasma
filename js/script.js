@@ -121,6 +121,8 @@ $('document').ready(function(){
         $('#preview_screen').attr('src', "");
     });
 
+    slide_preview();
+
 });
 
 
@@ -472,25 +474,7 @@ function edit_item(ref){
     //alert( dataTimeline[ref].className.indexOf("unpublished") >= 0 ? 1 : 0) ;
     
     // ------------------------------------
-    $("#slide_view>a").mouseenter(function(){
-        console.log('preview : '+$(this).attr('href')+"&template="+dataTimeline[ref].template+"&preview&tiny");
-
-        $('#preview_screen').attr('src', $(this).attr('href')+"&template="+dataTimeline[ref].template+"&preview&tiny");
-        $('#preview_screen').show();
-
-        $( "#preview_screen" ).position({
-            of: $(this),
-            my: "center bottom",
-            at: "center top-10",
-            collision: "none flip"
-        });
-    });
-
-
-    $("#slide_view>a").mouseleave(function(){
-        $('#preview_screen').hide();
-        $('#preview_screen').attr('src', "");
-    });
+    slide_preview();
     // ------------------------------------
 
 
@@ -603,6 +587,33 @@ function edit_item(ref){
 
     });
 }
+
+
+function slide_preview(){
+
+    $(".slide_view>a").mouseenter(function(){
+        console.log('ok');
+
+        console.log('preview : '+$(this).attr('href')+"&template="+$(this).data('id-slide')+"&preview&tiny");
+
+        $('#preview_screen').attr('src', $(this).attr('href')+"&preview&tiny");
+        $('#preview_screen').show();
+
+        $( "#preview_screen" ).position({
+            of: $(this),
+            my: "center bottom",
+            at: "center top-10",
+            collision: "none flip"
+        });
+    });
+
+
+    $(".slide_view>a").mouseleave(function(){
+        $('#preview_screen').hide();
+        $('#preview_screen').attr('src', "");
+    });
+}
+
 
 /**
  * Conversion des secondes en hh : mm : ss
