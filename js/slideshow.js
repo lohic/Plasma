@@ -20,7 +20,6 @@ $(document).ready(function(){
 	$actual_item_id		= 'undefined';
 	$meteo_id			= 'EUR|FR|FR012|PARIS|';
 	$code_postal		= '75000';
-	$nom_ecran			= "inconnu";
 
 	$slide_loaded		= false;
 	$data_loaded		= false;
@@ -121,7 +120,6 @@ function refresh() {
 				$actual_data_date	= json.screen_data.date_publication;				
 				$meteo_id			= json.screen_data.code_meteo;
 				$code_postal		= json.screen_data.code_postal;
-				$nom_ecran			= json.screen_data.nom_ecran;
 
 				$slides				= json.screen_data.data;
 
@@ -177,7 +175,7 @@ function refresh() {
 				
 
 				if(!$slide_loaded){
-					$slide_data	= {"titre_ecran" : $nom_ecran};
+					$slide_data	= {"titre_ecran" : $('body').data('name')};
 					load_slide($template,$slide_data);
 
 					$slide_loaded = true;
@@ -191,7 +189,7 @@ function refresh() {
 				}
 				
 				if(!$slide_loaded){
-					$slide_data	= {"titre_ecran" : $nom_ecran};
+					$slide_data	= {"titre_ecran" : $('body').data('name')};
 					load_slide($template,$slide_data);
 
 					$slide_loaded = true;

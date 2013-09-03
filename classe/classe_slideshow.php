@@ -110,6 +110,17 @@ class Slideshow {
 		
 		//$plasma_id = $this->ecran->id;
 		//
+		//
+		$ecran = new stdClass();
+		/*$ecran->id					= $this->ecran->id;
+		$ecran->nom					= $this->ecran->nom;
+		$ecran->id_etablissement	= $this->ecran->id_etablissement;
+		$ecran->id_groupe			= $this->ecran->id_groupe;
+		$ecran->code_postal			= $this->ecran->code_postal;
+		$ecran->code_meteo			= $this->ecran->code_meteo;*/
+		$ecran = $this->ecran;
+
+		//
 		$class = array();
 		if($ispreview) $class[] = 'preview';
 		if($isdebug) $class[] = 'debug';
@@ -829,6 +840,7 @@ class Slideshow {
 									G.id_playlist_locale AS id_groupe_playlist_locale,
 									G.id_playlist_nationale AS id_groupe_playlist_nationale,
 									E.code_postal,
+									E.code_meteo,
 									G.id_slideshow,
 									(SELECT json_data FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS json,
 									(SELECT date_publication FROM ".TB."slideshows_tb WHERE id_ecran = %s ORDER BY date_publication DESC LIMIT 0,1) AS actual_date_json
@@ -854,6 +866,7 @@ class Slideshow {
 			$retour->id_last_slide					= $info['id_last_slide'];
 			$retour->order_last_slide				= $info['order_last_slide'];
 			$retour->code_postal					= $info['code_postal'];
+			$retour->code_meteo						= $info['code_meteo'];
 			$retour->id_ecran_playlist_locale		= $info['id_ecran_playlist_locale'];
 			$retour->id_ecran_playlist_nationale	= $info['id_ecran_playlist_nationale'];
 			$retour->id_groupe_playlist_locale		= $info['id_groupe_playlist_locale'];

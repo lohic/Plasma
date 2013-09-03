@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="<?php echo $class; ?>">
+<body class="<?php echo $class; ?>" data-name="<?php echo $ecran->nom;?>" data-code-postal="<?php echo $ecran->code_postal; ?>" data-code-meteo="<?php echo $ecran->code_meteo;?>">
 	<div class="console">
 		<p id="retour"></p>
 
