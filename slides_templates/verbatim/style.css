@@ -130,10 +130,13 @@ classes réservées pour le traitement JS :
 	float:left;
 	width: 87.8%;
 	padding:0px 6.1%;
-	-webkit-animation: moveTexte 0.8s ease-in-out;
-	   -moz-animation: moveTexte 0.8s ease-in-out;
-		-ms-animation: moveTexte 0.8s ease-in-out;
-			animation: moveTexte 0.8s ease-in-out;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
+	-webkit-animation: moveTexte 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexte 0.8s ease-in-out forwards;
+		-ms-animation: moveTexte 0.8s ease-in-out forwards;
+			animation: moveTexte 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
 	   -moz-animation-delay: 0.4s;
 		-ms-animation-delay: 0.4s;
@@ -144,19 +147,31 @@ classes réservées pour le traitement JS :
 	0%{
 		-webkit-transform: translate(0px, 1270px);
 	}
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
 }
 @-moz-keyframes moveTexte{
 	0%{
 		-moz-transform: translate(0px, 1270px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
 	}
 }
 @keyframes moveTexte{
 	0%{
 		transform: translate(0px, 1270px);
 	}
+	100%{
+		transform: translate(0px, 0px);
+	}
 }
 
 .exit .texte{
+	-webkit-transform: translate(0px, 0px);
+	   -moz-transform: translate(0px, 0px);
+			transform: translate(0px, 0px);
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
 	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
 		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
@@ -212,10 +227,13 @@ classes réservées pour le traitement JS :
 	position:absolute;
 	left:0px;
 	bottom:35px;
-	-webkit-animation: moveFooter 0.4s ease-in-out;
-	   -moz-animation: moveFooter 0.4s ease-in-out;
-		-ms-animation: moveFooter 0.4s ease-in-out;
-			animation: moveFooter 0.4s ease-in-out;
+	-webkit-transform: translate(0px, 100px);
+	   -moz-transform: translate(0px, 100px);
+			transform: translate(0px, 100px);
+	-webkit-animation: moveFooter 0.4s ease-in-out forwards;
+	   -moz-animation: moveFooter 0.4s ease-in-out forwards;
+		-ms-animation: moveFooter 0.4s ease-in-out forwards;
+			animation: moveFooter 0.4s ease-in-out forwards;
 	-webkit-animation-delay: 1.1s;
 	   -moz-animation-delay: 1.1s;
 		-ms-animation-delay: 1.1s;
@@ -226,19 +244,31 @@ classes réservées pour le traitement JS :
 	0%{
 		-webkit-transform: translate(0px, 100px);
 	}
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
 }
 @-moz-keyframes moveFooter{
 	0%{
 		-moz-transform: translate(0px, 100px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
 	}
 }
 @keyframes moveFooter{
 	0%{
 		transform: translate(0px, 100px);
 	}
+	100%{
+		transform: translate(0px, 0px);
+	}
 }
 
 .exit .footer{
+	-webkit-transform: translate(0px, 0px);
+	   -moz-transform: translate(0px, 0px);
+			transform: translate(0px, 0px);
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
 	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
 		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
