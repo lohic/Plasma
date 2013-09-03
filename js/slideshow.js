@@ -85,6 +85,13 @@ $(document).ready(function(){
 
 		console.log($plasma_id);
 	}
+
+	$('#exit_button').click(function(e){
+		$('body').toggleClass('exit');
+		
+
+		e.preventDefault();
+	});
 });
 
 /**
