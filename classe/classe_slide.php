@@ -897,7 +897,7 @@ class Slide {
 	 */
 	function update_timeline_slide($id=NULL, $delete = false){
 
-		$_nom = !empty($_POST['nom']) ? $_POST['nom'] : 'Nouveau';
+		$_nom = !empty($_POST['nom']) ? str_replace("'","’",$_POST['nom']) : 'Nouveau';
 
 		$nom		= func::GetSQLValueString( $_nom, 'text');
 		$template  	= isset($_POST['template'])?	func::GetSQLValueString( $_POST['template'] , 'text') : func::GetSQLValueString('default', 'text') ;

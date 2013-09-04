@@ -25,6 +25,7 @@ $mois			= !empty($_GET['mois'])?$_GET['mois']:date('m');
 </div>
 
 
+<form id="myform" style="width:500px"></form>
 
 <div id="news_listing" class="listing_container">
 

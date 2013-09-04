@@ -14,7 +14,8 @@
     
     <div class="liens">
     
-        <a href="./?page=slide_modif&id_slide=<?php echo $id; ?>" title="modifier"><img src="../graphisme/pencil.png" alt="modifier"/></a>
+        <button class="edit_slide" data-id-slide="<?php echo $id; ?>" data-template="<?php echo $template; ?>" data-title="<?php echo $nom; ?>" title="modifier"><img src="../graphisme/pencil.png" alt="modifier"/></button>
+        <!--<a href="./?page=slide_modif&id_slide=<?php echo $id; ?>" title="modifier"><img src="../graphisme/pencil.png" alt="modifier"/></a>-->
 		&nbsp;
 		<span class="slide_view" data-id-slide="<?php echo $id;?>"><a href="<?php echo ABSOLUTE_URL?>slideshow/?slide_id=<?php echo $id;?>&template=<?php echo $template;?>" target="_blank"" target="_blank"><img src="../graphisme/eye.png" alt="voir"/></a></span>
 		<br/>

@@ -517,6 +517,11 @@ a.btn span{
 	margin:10px;
 }
 
+.listing_container button{
+	background: none;
+	border:none;
+}
+
 .listItemRubrique1, .listItemRubrique2{
 	float:left;
 	width:970px;
@@ -569,6 +574,7 @@ a.btn span{
 .liens, .infos, .places, .infos_large, .formulaire_large{
 	float:left;
 }
+
 
 .liens{
 	/*height:47px;*/
