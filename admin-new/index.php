@@ -31,7 +31,8 @@ $id_plasma	= !empty($_GET['id_plasma'])?$_GET['id_plasma']:NULL;
 $ecran 		= new Ecran($id_plasma);
 
 
-?><html>
+?><!doctype html>
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Sciences Po | Administration des écrans plasma</title>
@@ -44,6 +45,7 @@ $ecran 		= new Ecran($id_plasma);
 
 	<!-- JQUERY -->
 	<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-migrate-1.2.1.js"></script>
     <!-- ICANHAZ -->
     <script type="text/javascript" src="../js/ICanHaz.min.js" ></script>
     <!-- TIMLINE -->
