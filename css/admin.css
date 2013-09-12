@@ -25,6 +25,10 @@ a:hover{
 	color:#C00;
 }
 
+select{
+	max-width:99%;
+}
+
 #page{
 	width:1000px;
 	margin:auto;

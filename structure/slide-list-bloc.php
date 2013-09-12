@@ -7,7 +7,7 @@
     
     
         <div class="titre_heure">
-            <p class="titre"><!--<a href="./?page=slide_modif&id_slide=<?php echo $id; ?>" title="modifier">--><?php echo $nom; ?><!--</a>--></p>
+            <p class="titre" id="titre-slide-<?php echo $id;?>"><!--<a href="./?page=slide_modif&id_slide=<?php echo $id; ?>" title="modifier">--><?php echo $nom; ?><!--</a>--></p>
             <p><?php echo $template; ?></p>
         </div>
     </div>

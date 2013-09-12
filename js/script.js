@@ -7,6 +7,7 @@
 
 var timeline;
 var dataTimeline;
+var data_event;
 
 $('document').ready(function(){
 
@@ -420,6 +421,8 @@ function edit_item(ref){
     var date1 = new Date(dataTimeline[ref].start);
     var date2 = new Date(dataTimeline[ref].end);
     var duree = Math.round((date2-date1)/1000);
+
+    var actionAfterClose;
     
     // on crée l'objet qui va récupérer les informations d'un item 
     slide_info = {
@@ -466,6 +469,14 @@ function edit_item(ref){
         },
         afterLoad : function(){
             //console.log("fancybox OK");
+        },
+        afterClose : function(){
+            console.log('edit item close / action : '+actionAfterClose);
+
+            if(actionAfterClose == "edit_slide"){
+                //alert('ok');
+                edit_slide(dataTimeline[ref].id_slide, dataTimeline[ref].template, dataTimeline[ref].content, 'timeline',ref);
+            }
         }
     });
 
@@ -580,9 +591,10 @@ function edit_item(ref){
         //console.log(dataTimeline);
         console.log(">>> EDIT SLIDE CONTENT : "+ ref + " ID_SLIDE : "+ dataTimeline[ref].id_slide);
 
+        actionAfterClose = 'edit_slide';
         $.fancybox.close();
-        edit_slide(dataTimeline[ref].id_slide, $('#template_reference').val(), dataTimeline[ref].content, 'timeline',ref);
 
+        //edit_slide(dataTimeline[ref].id_slide, $('#template_reference').val(), dataTimeline[ref].content, 'timeline',ref);     
         e.preventDefault();
 
     });
@@ -684,23 +696,19 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
     
     // on vide le formulaire
     $("#myform").empty();
-    console.log(edit_from+" : "+id_slide+" "+template+" "+titre);
+    console.log("EDIT SLIDE : from "+edit_from+" : "+id_slide+" "+template+" "+titre);
 
+    // on vérifie si on crée un slide ou si on le modifie
     var type_action = id_slide==0 ? 'create-slide' : 'update-slide';
-
-    //console.log('On édite un slide ' + ref_timeline + " ID_SLIDE : "+ dataTimeline[ref_timeline].id_slide);
-
-    //dataTimeline[ref_timeline].id_slide
 
     // on génère un formulaire à partir d'une structure JSON
     // la structure est la fusion du fichier structure.json correspondant au template
     // et des données sauvegardées au format JSON en bas de donnée
-    $("#myform").dform('../ajax/import_slide_json.php?template='+ template +'&id_slide=' + id_slide ,function(data){
+    $("#myform").dform('../ajax/import_slide_json.php?template='+ template +'&id_slide=' + id_slide +"&cache=" + new Date() ,function(data){
 
         // quand le formulaire est généré, on ouvre une fenêtre fancybox
         $.fancybox( this , {
             title : '<h1>Éditeur de slide</h1>',
-            //scrolling:'yes',
             autoSize:false,
             width:500,
             scrollOutside:false,
@@ -711,97 +719,103 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
                     position: 'top'
                 }
             },
-            afterLoad : function(){
-                //$.fancybox.update();
-            },
             afterShow: function(){
-                $.fancybox.update();
+        
+            },
+            afterLoad: function(current, previous) {
+                console.log(current);
+                //$.fancybox.reposition();
+                //$.fancybox.update();
             }
         });
-
-        if(template == 'evenements'){
-            event_selector();
-        }
-
+        //*
         $(".fancybox-title h1").text( 'Éditeur de ' + $('#myform').attr('title') );
-        $(".fancybox-inner").prepend("<label>Titre du slide</label><input type='text' id='slide_title' value='"+titre+"'/>");
-        $(".fancybox-inner #myform").append("<button id='back_to_item'>Retour à l’item</button>");
-        $(".fancybox-inner #myform").append("<button id='save_slide'>Sauvegarde</button>");
+                $(".fancybox-inner").prepend("<label>Titre du slide</label><input type='text' id='slide_title' value='"+titre+"'/>");
+                if(template == 'evenements'){
+                    event_selector();
+                }
+                $(".fancybox-inner #myform").append("<button id='back_to_item'>Retour à l’item</button>");
+                $(".fancybox-inner #myform").append("<button id='save_slide'>Sauvegarde</button>");
 
-        if(typeof(ref_timeline) != 'undefined'){
-            $("#back_to_item").click(function(e){
-                e.preventDefault();
-                edit_item(ref_timeline);
-            });
-        }else{
-            $("#back_to_item").hide();
-        }
+                $(".fancybox-title h1").click(function(e){
+                    $.fancybox.update();
+                    e.preventDefault();
+                });
 
-        // pour désactiver le clic extérieur sur fancybox
-        $(".fancybox-overlay").unbind();
+                if(typeof(ref_timeline) != 'undefined'){
+                    $("#back_to_item").click(function(e){
+                        e.preventDefault();
+                        edit_item(ref_timeline);
+                    });
+                }else{
+                    $("#back_to_item").hide();
+                }
 
-        // on initialise tinyMCE
-        tinymce.init({
-            selector: "textarea",
-            toolbar: " ",
-            menubar : false,
-            entity_encoding : 'raw',    
-        });
+                // pour désactiver le clic extérieur sur fancybox
+                $(".fancybox-overlay").unbind();
 
-        // activation de uplodifive
-        $(function() {
-            $('input[type="file"]').uploadifive({
-                'checkScript'       : '../js/uploadifive-v1.1.2-standard/check-exists.php',
-                'multi'             : false,
-                'formData'          : {
-                                       'timestamp' : $timestamp,
-                                       'token'     : $token
-                                      },
-                'queueSizeLimit'    : 1,
-                //'queueID'          : 'queue',
-                'removeCompleted'   : true,
-                'uploadScript'      : '../ajax/uploadifive.php',
-                'onInit'            : function(){
-                    
-                    // on affiche une vignette ou un texte si on trouve un média image ou vidéo
-                    $('input[type="file"]').each(function(){
-                        if( $(this).data('file') != undefined ) {
-
-                            var temp = $(this).data('file').split('.');
-                            var ext = temp[temp.length-1].toLowerCase();
+                // on initialise tinyMCE
+                tinymce.init({
+                    selector: "textarea",
+                    toolbar: " ",
+                    menubar : false,
+                    entity_encoding : 'raw',    
+                });
+                // activation de uplodifive
+                $(function() {
+                    $('input[type="file"]').uploadifive({
+                        'checkScript'       : '../js/uploadifive-v1.1.2-standard/check-exists.php',
+                        'multi'             : false,
+                        'formData'          : {
+                                               'timestamp' : $timestamp,
+                                               'token'     : $token
+                                              },
+                        'queueSizeLimit'    : 1,
+                        //'queueID'          : 'queue',
+                        'removeCompleted'   : true,
+                        'uploadScript'      : '../ajax/uploadifive.php',
+                        'onInit'            : function(){
                             
+                            // on affiche une vignette ou un texte si on trouve un média image ou vidéo
+                            $('input[type="file"]').each(function(){
+                                if( $(this).data('file') != undefined ) {
 
-                            $(this).before("<p>"+ $(this).data('file') + "</p>");
-                            $(this).parent().before("<div class='preview'></div>")
+                                    var temp = $(this).data('file').split('.');
+                                    var ext = temp[temp.length-1].toLowerCase();
+                                    
 
-                            preview_media($(this), $(this).data('file'), ext);
+                                    $(this).before("<p>"+ $(this).data('file') + "</p>");
+                                    $(this).parent().before("<div class='preview'></div>")
+
+                                    preview_media($(this), $(this).data('file'), ext);
+                                }
+                            });
+
+                            var attr = $(this).attr('name');
+                            $(this).attr('name', attr + "-old");
+                            $(this).data('old-name', attr);
+                            $(this).after( "<input type='hidden' name='" + attr + "' value='"+ $(this).data('file') +"'/>" );
+
+                        },
+                        'onUploadComplete'  : function(file,data) {
+
+                            info = JSON.parse(data);
+                            if(!info.error){
+                                $('input[name="'+ $(this).data('old-name') +'"]' ).val( info.file );
+
+                                preview_media($(this),info.file,info.ext);
+
+                                console.log("upload finished : "+info.file +" / type : "+info.ext);
+                                //$.fancybox.update();
+                                //$.fancybox.reposition();
+                            }else{
+                                alert( info.message );
+                            }
                         }
                     });
 
-                    var attr = $(this).attr('name');
-                    $(this).attr('name', attr + "-old");
-                    $(this).data('old-name', attr);
-                    $(this).after( "<input type='hidden' name='" + attr + "' value='"+ $(this).data('file') +"'/>" );
-
-                },
-                'onUploadComplete'  : function(file,data) {
-
-                    info = JSON.parse(data);
-                    if(!info.error){
-                        $('input[name="'+ $(this).data('old-name') +'"]' ).val( info.file );
-
-                        preview_media($(this),info.file,info.ext);
-
-                        console.log("upload finished : "+info.file +" / type : "+info.ext);
-                        //$.fancybox.update();
-                        //$.fancybox.reposition();
-                    }else{
-                        alert( info.message );
-                    }
-                }
-            });
-
-        });        
+                });
+        
 
         // SAUVEGARDE DU SLIDE
         $("#save_slide").click(function(e){
@@ -829,15 +843,19 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
             }).done(function ( dataJSON ) {
                 console.log("slide sauvegardé");
 
+
                 // SI ON EDITE DEPUIS DE LISTING DE SLIDES
                 if(edit_from == 'slide'){
+                    console.log('changement de nom : '+$("#slide_title").val());
+                    //$('#news_listing>div .liens button[data-id-slide="'+id_slide+'"]').parent().parent().find('.titre a').text( $("#slide_title").val() );
+                    $('#titre-slide-'+id_slide).text( $("#slide_title").val() );
 
-                    $('#news_listing>div .liens button[data-id-slide="'+id_slide+'"]').parent().parent().find('.titre a').text($("#slide_title").val());
-
+                    $('.edit_slide[data-id-slide="'+id_slide+'"]').data('title',$("#slide_title").val() );
                 }
 
                 // SI ON EDITE DEPUIS LA TIMELINE
                 else if(edit_from == 'timeline' && typeof(ref_timeline) != 'undefined'){
+                    // on sauvegarde les propriétés de l'item
                     timeline.changeItem(ref_timeline, {
                         'id_slide': dataJSON.id,
                         'content' : $("#slide_title").val(),
@@ -863,18 +881,183 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
                         }
                     }).done(function ( dataJSON ) {
                         console.log(dataJSON);
-                        //timeline.changeItem(ref_timeline, {
-                        //    'id': dataJSON.id
-                        //});
                     });
                 }
             });
         });
+        //*/
     });
 }
 
 function event_selector(){
     console.log('SELECTEUR D’ÉVENEMENT');
+
+    var data_event_selector = {
+        "year_event" : [
+        {"key":2013,"value":2013},
+        {"key":2012,"value":2012},
+        {"key":2011,"value":2011}],
+        "month_event" : [
+        {"key":1,"value":"janvier"},
+        {"key":2,"value":"février"},
+        {"key":3,"value":"mars"},
+        {"key":4,"value":"avril"},
+        {"key":5,"value":"mai"},
+        {"key":6,"value":"juin"},
+        {"key":7,"value":"juillet"},
+        {"key":8,"value":"août"},
+        {"key":9,"value":"septembre"},
+        {"key":10,"value":"octobre"},
+        {"key":11,"value":"novembre"},
+        {"key":12,"value":"décembre"}]
+    }
+
+    var event_selector = ich.event_selector(data_event_selector);
+    $(".fancybox-inner").prepend(event_selector);
+
+    loadEventFromAPI();
+
+    $("#year_event").change(function(e){
+        $("#id_session").empty();
+         $("#id_event").empty();
+        loadEventFromAPI('event');
+    });
+    $("#month_event").change(function(e){
+        $("#id_session").empty();
+         $("#id_event").empty();
+        loadEventFromAPI('event');
+    });
+    $("#id_organisme").change(function(e){
+        $("#id_session").empty();
+         $("#id_event").empty();
+        loadEventFromAPI('event');
+    });
+    $("#id_event").change(function(e){
+        $("#id_session").empty();
+        loadEventFromAPI('session');
+    });
+
+    $("#refresh_event").click(function(e){
+        refresh_event();
+    });
+
+    var d = new Date();
+
+    $("#year_event").val(d.getFullYear());
+    $("#month_event").val(d.getMonth()+1);
+}
+
+function refresh_event(){
+    console.log(data_event);
+
+    var id_session = $("#id_session option:selected").index();
+
+    console.log("id_session : "+id_session);
+
+    $("#slide_title").val(                          data_event.sessions[id_session].titre);
+
+    //$('#myform input[name="type"]').val(            data_event);
+    $('#myform input[name="date_horaire"]').val(    data_event.sessions[id_session].date_debut + " " +data_event.sessions[id_session].horaire_debut);
+    $('#myform input[name="lieu"]').val(            data_event.sessions[id_session].lieu);
+    $('#myform input[name="code_batiment"]').val(   data_event.sessions[id_session].code_batiment);
+    $('#myform input[name="langue"]').val(          data_event.sessions[id_session].code_langue);
+    $('#myform input[name="titre"]').val(           data_event.sessions[id_session].titre);
+    $('#myform input[name="organisateur"]').val(    data_event.organisateur);
+    $('#myform input[name="qualite"]').val(         data_event.organisateur_qualite);
+    $('#myform input[name="coorganisateur"]').val(  data_event.coorganisateur);
+    //$('#myform input[name="image"]').val();
+    //
+    
+    downloadEventImage(data_event.url_image, data_event.id);
+
+    $('#myform input[name="inscription"]').val(     data_event.sessions[id_session].type_inscription);
+
+
+
+}
+
+function downloadEventImage(url,id){
+    console.log("téléchargement image : "+url);
+    $.ajax({
+        url     :"../ajax/event-image-download.php",
+        type    : "POST",
+        dataType:'json',
+        data    : {
+            url      : url,
+            id_event : id,
+        }
+    }).done(function ( dataJSON ) {
+        console.log("retour download : "+dataJSON);
+        //timeline.changeItem(ref_timeline, {
+        //    'id': dataJSON.id
+        //});
+        $('#myform input[name="image"]').val(dataJSON.file);
+
+        preview_media($('#myform input[name="image-old"]'), dataJSON.file, dataJSON.ext);
+    });
+}
+
+function loadEventFromAPI(info_to_refresh){
+
+    $.ajax({
+        url     :"../ajax/api-event.php",
+        type    : "GET",
+        dataType:'json',
+        data    : {
+            year        : $("#year_event").val(),
+            month       : $("#month_event").val(),
+            id_organisme: $("#id_organisme").val(),
+            lang        : "fr",
+            id_event       : $("#id_event").val()
+        }
+
+    }).done(function ( dataJSON ) {
+        console.log('date event reçues');
+
+        //info = JSON.JSONparse(dataJSON);
+
+        //console.log(dataJSON.evenements.organismes);
+
+        //console.log(dataJSON.evenements.evenement);
+
+        if(typeof(dataJSON.evenements) != 'undefined'){
+            var event_selector = $("#id_event");
+            var organisme_selector = $("#id_organisme");
+            //don't forget error handling!
+            event_selector.empty();
+            $.each(dataJSON.evenements.evenement, function(item) {
+                event_selector.append($("<option />").val( dataJSON.evenements.evenement[item].id ).text(dataJSON.evenements.evenement[item].titre));
+            });
+
+            $.each(dataJSON.evenements.organismes, function(item) {
+                organisme_selector.append($("<option />").val( dataJSON.evenements.organismes[item].id ).text(dataJSON.evenements.organismes[item].nom));
+            });
+
+            event_selector.prop("selectedIndex", 0);
+            organisme_selector.prop("selectedIndex", 0);
+
+            $("#refresh_event").hide();
+        }
+
+        if(typeof(dataJSON.evenement) != 'undefined'){
+            var session_selector = $("#id_session");
+            //don't forget error handling!
+            session_selector.empty();
+            $.each(dataJSON.evenement.sessions, function(item) {
+                session_selector.append($("<option />").val( dataJSON.evenement.sessions[item].id ).text(dataJSON.evenement.sessions[item].titre));
+            });
+
+            session_selector.prop("selectedIndex", 0);
+
+            data_event = dataJSON.evenement;
+
+            $("#refresh_event").show();
+        }
+
+        //timeline.changeItem(ref_timeline, {
+        //    'id': dataJSON.id
+        //});
+    });
 }
 
 function slide_selector(){

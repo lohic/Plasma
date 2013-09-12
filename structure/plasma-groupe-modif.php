@@ -83,22 +83,17 @@ $isGroup = true;
 	
 	<div class="reset"></div>
 
-	
-	<form id="myform" style="width:500px"></form>
-
-
 	<div id="mytimeline"></div>
 
-	
 	<div class="child-screen">
     <?php
     echo $ecran->get_admin_ecran_list($id_groupe)->ecrans;
     ?>
 	</div>
 	<?php } ?>
+
+	<form id="myform" style="width:500px"></form>
 </div>
-
-
 
 <?php if ( isset($id_groupe) ){ ?>
 
@@ -189,5 +184,42 @@ EDITER LES INFORMATIONS D'UN ÉCRAN
         </form>
     </div>
 </script>
+
+
+<!--
+EVENT SELECTOR
+-->
+<script id="event_selector" type="text/html">
+    <div style="width:500px">
+        <h4>Sélectionner un événement</h4>
+        <p><label>Organisme :</label>
+        <select id="id_organisme" name="id_organisme">
+            <!--<option value="1">Direction de la communication</option>-->
+            <!--<option value="2">CERI</option>-->
+            <!--<option value="6">Picasso</option>-->
+        </select></p>
+
+        <p><label>Année / mois :</label>
+        <select id="year_event" name="year_event">
+            {{#year_event}}
+            <option value="{{ key }}">{{ value }}</option>
+            {{/year_event}}
+        </select></p>
+        <p><select id="month_event" name="month_event">
+            {{#month_event}}
+            <option value="{{ key }}">{{ value }}</option>
+            {{/month_event}}
+        </select></p>
+
+        <p><label>Événement / session:</label>
+        <select id="id_event" name="id_event">
+        </select>
+        <select id="id_session" name="id_session">
+        </select></p>
+
+        <p><button id="refresh_event">Rafraichir les données</button></p>
+    </div>
+</script>
+
 
 <?php } ?>

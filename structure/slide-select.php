@@ -41,6 +41,42 @@ $mois			= !empty($_GET['mois'])?$_GET['mois']:date('m');
     <input type="hidden" name="suppr" id="suppr_slide" value="slide" />
 </form>
 
+
+<!--
+EVENT SELECTOR
+-->
+<script id="event_selector" type="text/html">
+    <div style="width:500px">
+        <h4>Sélectionner un événement</h4>
+        <p><label>Organisme :</label>
+        <select id="id_organisme" name="id_organisme">
+            <!--<option value="1">Direction de la communication</option>-->
+            <!--<option value="2">CERI</option>-->
+            <!--<option value="6">Picasso</option>-->
+        </select></p>
+
+        <p><label>Année / mois :</label>
+        <select id="year_event" name="year_event">
+            {{#year_event}}
+            <option value="{{ key }}">{{ value }}</option>
+            {{/year_event}}
+        </select></p>
+        <p><select id="month_event" name="month_event">
+            {{#month_event}}
+            <option value="{{ key }}">{{ value }}</option>
+            {{/month_event}}
+        </select></p>
+
+        <p><label>Événement / session:</label>
+        <select id="id_event" name="id_event">
+        </select>
+        <select id="id_session" name="id_session">
+        </select></p>
+
+        <p><button id="refresh_event">Rafraichir les données</button></p>
+    </div>
+</script>
+
 <script type="text/javascript" language="javascript">
 
 function supprSlide(id, nom){ 
