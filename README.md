@@ -132,3 +132,10 @@ Date.createFromMysql = function(mysql_string)
    return null;   
 }
 ```
+
+
+OPTIMISATION LEFT JOIN
+http://hackmysql.com/case4
+
+CLASSE LOG PHP
+http://www.finalclap.com/tuto/php-logger-class-78/
