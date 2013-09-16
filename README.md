@@ -134,8 +134,12 @@ Date.createFromMysql = function(mysql_string)
 ```
 
 
-OPTIMISATION LEFT JOIN
-http://hackmysql.com/case4
+optimisation LEFT JOIN :
+- http://hackmysql.com/case4
 
-CLASSE LOG PHP
-http://www.finalclap.com/tuto/php-logger-class-78/
+Classe LOG PHP :
+- http://www.finalclap.com/tuto/php-logger-class-78/
+
+file_get_content et POST ou GET :
+- http://php.net/manual/fr/function.stream-context-create.php
+- http://stackoverflow.com/questions/2445276/how-to-post-data-in-php-using-file-get-contents
