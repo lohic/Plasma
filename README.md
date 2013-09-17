@@ -145,4 +145,4 @@ file_get_content et POST ou GET :
 - http://stackoverflow.com/questions/2445276/how-to-post-data-in-php-using-file-get-contents
 
 formatage de la date d'un événement :
--http://jsfiddle.net/h2vrk/
+- http://jsfiddle.net/h2vrk/
