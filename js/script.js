@@ -7,7 +7,6 @@
 
 var timeline;
 var dataTimeline;
-var data_event;
 
 $('document').ready(function(){
 
@@ -473,10 +472,10 @@ function edit_item(ref){
         afterClose : function(){
             console.log('edit item close / action : '+actionAfterClose);
 
-            if(actionAfterClose == "edit_slide"){
+            //if(actionAfterClose == "edit_slide"){
                 //alert('ok');
-                edit_slide(dataTimeline[ref].id_slide, dataTimeline[ref].template, dataTimeline[ref].content, 'timeline',ref);
-            }
+            //    edit_slide(dataTimeline[ref].id_slide, dataTimeline[ref].template, dataTimeline[ref].content, 'timeline',ref);
+            //}
         }
     });
 
@@ -591,10 +590,10 @@ function edit_item(ref){
         //console.log(dataTimeline);
         console.log(">>> EDIT SLIDE CONTENT : "+ ref + " ID_SLIDE : "+ dataTimeline[ref].id_slide);
 
-        actionAfterClose = 'edit_slide';
-        $.fancybox.close();
+        //actionAfterClose = 'edit_slide';
+        //$.fancybox.close();
 
-        //edit_slide(dataTimeline[ref].id_slide, $('#template_reference').val(), dataTimeline[ref].content, 'timeline',ref);     
+        edit_slide(dataTimeline[ref].id_slide, $('#template_reference').val(), dataTimeline[ref].content, 'timeline',ref);     
         e.preventDefault();
 
     });
@@ -889,6 +888,25 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
     });
 }
 
+
+
+
+
+
+/**
+ * ------------------------------------
+ * POUR GERER L'EDITION DES ÉVÉNEMENTS
+ * ------------------------------------
+ */
+
+var data_event;
+var p_year;
+var p_month;
+var p_id_organisme;
+var p_id_event;
+var p_id_session;
+var issetParam = false;
+
 function event_selector(){
     console.log('SELECTEUR D’ÉVENEMENT');
 
@@ -915,26 +933,56 @@ function event_selector(){
     var event_selector = ich.event_selector(data_event_selector);
     $(".fancybox-inner").prepend(event_selector);
 
+    if( $('#myform input[name="session_id"]').val() > 0 ){
+        $.ajax({
+            url     :"../ajax/api-event.php",
+            type    : "GET",
+            dataType:'json',
+            data    : {
+                session        : $('#myform input[name="session_id"]').val()
+            }
+        }).done(function ( dataJSON ) {
+            console.log(" ");
+            console.log("retour info event :");
+            console.log(dataJSON);
+            
+            //$("#year_event").val( dataJSON.session.annee );
+            //$("#month_event").val( parseInt(dataJSON.session.mois) );
+            //$("#id_organisme").val( dataJSON.session.organisme_id );
+            //$("#id_event").val( dataJSON.session.event_id );
+            //
+            p_year          = dataJSON.session.annee;
+            p_month         = parseInt(dataJSON.session.mois);
+            p_id_organisme  = parseInt(dataJSON.session.organisme_id);
+            p_id_event      = parseInt(dataJSON.session.event_id);
+            p_id_session    = parseInt(dataJSON.session.id);
+           
+            loadEventFromAPI(true);
+        });
+    }else{
+
+    }
+
     loadEventFromAPI();
 
     $("#year_event").change(function(e){
         $("#id_session").empty();
          $("#id_event").empty();
-        loadEventFromAPI('event');
+        loadEventFromAPI();
     });
     $("#month_event").change(function(e){
         $("#id_session").empty();
          $("#id_event").empty();
-        loadEventFromAPI('event');
+        loadEventFromAPI();
     });
     $("#id_organisme").change(function(e){
         $("#id_session").empty();
          $("#id_event").empty();
-        loadEventFromAPI('event');
+        loadEventFromAPI();
     });
     $("#id_event").change(function(e){
         $("#id_session").empty();
-        loadEventFromAPI('session');
+        loadEventFromAPI();
     });
 
     $("#refresh_event").click(function(e){
@@ -948,43 +996,60 @@ function event_selector(){
 }
 
 function refresh_event(){
-    console.log(data_event);
+    //console.log(data_event);
 
     var id_session = $("#id_session option:selected").index();
 
-    console.log("id_session : "+id_session);
+    $("#slide_title").val( data_event.sessions[id_session].titre );
 
-    $("#slide_title").val(                          data_event.sessions[id_session].titre);
+    var jours = new Array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
+
+    var d = new Date( data_event.sessions[id_session].date_debut );
+    var l = d.toLocaleDateString().split(' ');
+
+    var date_event = jours[d.getDay()]+" "+l[0]+" "+l[1];
+    var start_event = data_event.sessions[id_session].horaire_debut;
+    var end_event = data_event.sessions[id_session].horaire_fin;
+
+    start_event = start_event.split(':');
+    start_event = start_event[0]+"H"+start_event[1];
+
+    end_event = end_event.split(':');
+    end_event = end_event[0]+"H"+end_event[1];
 
     //$('#myform input[name="type"]').val(            data_event);
-    $('#myform input[name="date_horaire"]').val(    data_event.sessions[id_session].date_debut + " " +data_event.sessions[id_session].horaire_debut);
+    $('#myform input[name="date_horaire"]').val( date_event + ", " +start_event + " - " + end_event );
     $('#myform input[name="lieu"]').val(            data_event.sessions[id_session].lieu);
     $('#myform input[name="code_batiment"]').val(   data_event.sessions[id_session].code_batiment);
     $('#myform input[name="langue"]').val(          data_event.sessions[id_session].code_langue);
     $('#myform input[name="titre"]').val(           data_event.sessions[id_session].titre);
+    $('#myform input[name="session_id"]').val(      data_event.sessions[id_session].id);
     $('#myform input[name="organisateur"]').val(    data_event.organisateur);
     $('#myform input[name="qualite"]').val(         data_event.organisateur_qualite);
     $('#myform input[name="coorganisateur"]').val(  data_event.coorganisateur);
+
     //$('#myform input[name="image"]').val();
-    //
     
-    downloadEventImage(data_event.url_image, data_event.id);
+    var date_folder = data_event.sessions[id_session].date_debut.split('-');
+    console.log(date_folder[0]+'/'+date_folder[1]);
+
+    downloadEventImage(data_event.url_image, data_event.id, date_folder[1], date_folder[0]);
 
     $('#myform input[name="inscription"]').val(     data_event.sessions[id_session].type_inscription);
 
-
-
 }
 
-function downloadEventImage(url,id){
+function downloadEventImage(url,id,month,year){
     console.log("téléchargement image : "+url);
     $.ajax({
         url     :"../ajax/event-image-download.php",
         type    : "POST",
         dataType:'json',
         data    : {
-            url      : url,
-            id_event : id,
+            url        : url,
+            id_event   : id,
+            year_event : year,
+            month_event: month,
         }
     }).done(function ( dataJSON ) {
         console.log("retour download : "+dataJSON);
@@ -997,68 +1062,111 @@ function downloadEventImage(url,id){
     });
 }
 
-function loadEventFromAPI(info_to_refresh){
+/**
+ * [loadEventFromAPI description]
+ * @param  {boolean} param sert à définir si on rafraichit en prennant en compte les paramètres initiaux ou les paramètres du formulaire
+ * parametres -> formulaire ou
+ * formulaire -> parametres
+ */
+function loadEventFromAPI(param){
+
+    issetParam = typeof(param) != 'undefined' ? param : false;
+
+    if(typeof(p_year)!= 'undefined' && typeof(p_month)!= 'undefined' && typeof(p_id_organisme)!= 'undefined' && typeof(p_id_event)!= 'undefined' && typeof(p_id_session)!= 'id_session' && issetParam == true ){
+
+        var param = {
+            year        : p_year,
+            month       : p_month,
+            id_organisme: p_id_organisme,
+            lang        : "fr",
+            //id_event       : p_id_event
+        }
+
+    }else{
+
+        var param = {
+            year        : $("#year_event").val(),
+            month       : $("#month_event").val(),
+            id_organisme: $("#id_organisme").val(),
+            lang        : "fr",
+            id_event    : $("#id_event").val()
+        }
+    }
+
 
     $.ajax({
         url     :"../ajax/api-event.php",
         type    : "GET",
         dataType:'json',
-        data    : {
-            year        : $("#year_event").val(),
-            month       : $("#month_event").val(),
-            id_organisme: $("#id_organisme").val(),
-            lang        : "fr",
-            id_event       : $("#id_event").val()
-        }
+        data    : param
 
     }).done(function ( dataJSON ) {
         console.log('date event reçues');
 
         //info = JSON.JSONparse(dataJSON);
-
         //console.log(dataJSON.evenements.organismes);
-
         //console.log(dataJSON.evenements.evenement);
 
+        // Liste des événements et leur sessions attachées, sur un mois et pour un organisme donné
         if(typeof(dataJSON.evenements) != 'undefined'){
-            var event_selector = $("#id_event");
-            var organisme_selector = $("#id_organisme");
-            //don't forget error handling!
-            event_selector.empty();
+
+            $("#id_event").empty();
             $.each(dataJSON.evenements.evenement, function(item) {
-                event_selector.append($("<option />").val( dataJSON.evenements.evenement[item].id ).text(dataJSON.evenements.evenement[item].titre));
+                $("#id_event").append($("<option />").val( dataJSON.evenements.evenement[item].id ).text(dataJSON.evenements.evenement[item].titre));
+
+                // si on se base sur les paramètres sauvegardés alors on sélectionne la session
+                if(issetParam){
+
+                    if(dataJSON.evenements.evenement[item].id == p_id_event){
+
+                        $("#id_session").empty();
+                        $.each(dataJSON.evenements.evenement[item].sessions, function(itemsession){
+
+                            $("#id_session").append($("<option />").val( dataJSON.evenements.evenement[item].sessions[itemsession].id ).text(dataJSON.evenements.evenement[item].sessions[itemsession].titre));
+                        });
+                        $("#year_event").val( p_year );
+                        $("#month_event").val( p_month );
+                        $("#id_organisme").val( p_id_organisme );
+                        $("#id_event").val(p_id_event);
+
+                        $("#refresh_event").show();
+
+                        $("#id_session").val(p_id_session);
+
+                        loadEventFromAPI();
+                        //$("#id_session").prop("selectedIndex", 0);
+                    }
+                }
             });
 
+
+            $("#id_organisme").empty();
             $.each(dataJSON.evenements.organismes, function(item) {
-                organisme_selector.append($("<option />").val( dataJSON.evenements.organismes[item].id ).text(dataJSON.evenements.organismes[item].nom));
+                $("#id_organisme").append($("<option />").val( dataJSON.evenements.organismes[item].id ).text(dataJSON.evenements.organismes[item].nom));
             });
 
-            event_selector.prop("selectedIndex", 0);
-            organisme_selector.prop("selectedIndex", 0);
+            //event_selector.prop("selectedIndex", 0);
+            //organisme_selector.prop("selectedIndex", 0);
 
-            $("#refresh_event").hide();
+            //$("#refresh_event").hide();
         }
 
+        // détail d'un évéenement et des sessions attachées
         if(typeof(dataJSON.evenement) != 'undefined'){
-            var session_selector = $("#id_session");
-            //don't forget error handling!
-            session_selector.empty();
-            $.each(dataJSON.evenement.sessions, function(item) {
-                session_selector.append($("<option />").val( dataJSON.evenement.sessions[item].id ).text(dataJSON.evenement.sessions[item].titre));
-            });
 
-            session_selector.prop("selectedIndex", 0);
+            $("#id_session").empty();
+            $.each(dataJSON.evenement.sessions, function(item) {
+                $("#id_session").append($("<option />").val( dataJSON.evenement.sessions[item].id ).text(dataJSON.evenement.sessions[item].titre));
+            });
 
             data_event = dataJSON.evenement;
 
             $("#refresh_event").show();
         }
-
-        //timeline.changeItem(ref_timeline, {
-        //    'id': dataJSON.id
-        //});
     });
 }
+
+
 
 function slide_selector(){
     console.log('SELECTEUR DE SLIDES');   

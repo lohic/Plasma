@@ -2,7 +2,7 @@
 <div id="ombre">
 
 </div>
-<div class="colonne">
+<div class="colonne {{type}}" data-type="{{type}}">
     <div class="header">
         <h2>
             <span class="edit textfield" max="22" id="A" title="A - Type d’événement">{{type}}</span><br/>

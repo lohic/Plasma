@@ -104,7 +104,7 @@ classes réservées pour le traitement JS :
 	position:absolute;
 	color:rgba(255,255,255,0.6);
 	font-size:24.5px;
-	right:5px;
+	right:35px;
 	top:0px;
 	text-transform:uppercase;
 	line-height:24.5px;
@@ -186,10 +186,12 @@ classes réservées pour le traitement JS :
 
 .visuel{
 	min-height:465px;
+	max-height:585px;
 	z-index:1;
 	position:relative;
 	width:768px;
-	max-height:585px;
+	min-height:768px;
+	max-height:768px;
 	float:left;
 	overflow:hidden;
 	-webkit-animation: moveImage 1.8s ease-in-out;
@@ -439,7 +441,8 @@ classes réservées pour le traitement JS :
 
 @media screen and (orientation:landscape){
 	#template{
-		width:1280px;
+		width:100%;
+		min-width:1280px;
 		height:768px;
 		padding:0px 0px;
 		position:relative;
@@ -460,7 +463,7 @@ classes réservées pour le traitement JS :
 		padding:40px 0px 40px 0px;
 		float:left;
 		width: 764px;
-		/*width: -webkit-calc(100% - 516px);*/
+		width: -webkit-calc(100% - 612px);
 		height:100%;
 		margin-left:516px;
 		
@@ -479,6 +482,7 @@ classes réservées pour le traitement JS :
 	.texte, .texte2, .header, .footer{
 		padding:0px 44px 0px 52px;
 		width:668px;
+		width:100%;
 		/*width:100%;*/
 		/*box-shadow:none;*/
 	}

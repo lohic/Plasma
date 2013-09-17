@@ -14,6 +14,7 @@ $param['year'] 			= !empty($_GET['year']) 	 	? $_GET['year'] 		: date('Y');
 $param['month'] 		= !empty($_GET['month']) 		? $_GET['month'] 		: date('m');
 $param['id_organisme']  = !empty($_GET['id_organisme']) ? $_GET['id_organisme'] : 1;
 $param['event']  		= !empty($_GET['id_event']) 	? $_GET['id_event'] 	: NULL;
+$param['session']  		= !empty($_GET['session']) 		? $_GET['session'] 		: NULL;
 
 $url = array();
 

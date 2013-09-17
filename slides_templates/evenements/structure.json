@@ -5,10 +5,18 @@
     "html" :
     [
         {
-            "type" : "text",
+            "type" : "select",
             "name" : "type",
             "id" : "type",
-            "caption" : "Type d'événement"
+            "caption" : "Type d'événement",
+            "options" : {
+                "vie_associative"                   : "Vie associative",
+                "expositions"                       : "Expositions",
+                "conferences_recherches_debats"     : "Conférences, recherches et débats",
+                "art_culture"                       : "Art et culture",
+                "vie_citoyenne"                     : "Vie citoyenne",
+                "rencontres_metiers"                : "Rencontres métiers"
+            }
         },
         {
             "type" : "text",
@@ -69,6 +77,11 @@
             "name" : "inscription",
             "id" : "inscription",
             "caption" : "Entrée libre ou inscription obligatoire"
+        },
+        {
+            "type" : "hidden",
+            "name" : "session_id",
+            "id" : "session_id"
         }
     ]
 }

@@ -8,7 +8,13 @@ if(!empty($_POST['url'])){
 	$id_event = $_POST['id_event'];
 
 	$base_dir = '../slides_images/';
-	$date_dir = date('Y/m/');
+
+	if(empty($_POST['month_event']) && empty($_POST['year_event'])){
+		$date_dir = date('Y/m/');
+	}else{
+		$date_dir = $_POST['year_event'].'/'.$_POST['month_event'].'/';
+	}
+	
 	$uploadDir = createPath($base_dir.$date_dir);
 
 
@@ -24,8 +30,8 @@ if(!empty($_POST['url'])){
 
 	$retour->file	= $date_dir.$fileName ;
 
+	// on récupère l'extension
 	$completeName = explode('.',$fileName);
-
 	$retour->ext	= $completeName[count($completeName)-1];
 
 	echo json_encode($retour);
