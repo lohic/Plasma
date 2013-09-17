@@ -143,3 +143,6 @@ Classe LOG PHP :
 file_get_content et POST ou GET :
 - http://php.net/manual/fr/function.stream-context-create.php
 - http://stackoverflow.com/questions/2445276/how-to-post-data-in-php-using-file-get-contents
+
+formatage de la date d'un événement :
+-http://jsfiddle.net/h2vrk/
