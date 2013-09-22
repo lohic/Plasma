@@ -90,9 +90,7 @@ $accountTypeTab['ldap']	= 'compte ldap';
 
 /* meteo */
 
-$meteo_refresh_delay = 2*60*60; // 2 minutes
+$meteo_refresh_delay = 10*60*60; // 2 minutes
 $meteo_wind_teshold = 18.5; // en mph, environ 30 km/h... 1 km = 0.62 miles
 $meteo_cold_treshold = 10; // en degrés
 $meteo_hot_treshold = 26; // en degrés
-
-?>

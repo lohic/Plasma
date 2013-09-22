@@ -619,6 +619,92 @@ class Slide {
 		}
 	}
 
+
+	/**
+	 * [update_sequence_item description]
+	 * @param  [type]  $id         [description]
+	 * @param  boolean $delete     [description]
+	 * @param  integer $user_level [description]
+	 * @return [type]              [description]
+	 */
+	function update_sequence_item($id=NULL, $delete = false, $user_level=10){
+
+		$titre		= isset($_POST['titre'])?		func::GetSQLValueString( $_POST['titre'], 'text') : 'Nouveau';
+        $published	= isset($_POST['published'])?	func::GetSQLValueString( $_POST['published'],'int'): 0;
+        $ordre		= isset($_POST['ordre'])?		func::GetSQLValueString( $_POST['ordre'], 'int') : 0;
+        $id_slide	= isset($_POST['id_slide'])?	func::GetSQLValueString( $_POST['id_slide'], 'int') : 0;
+        $template	= isset($_POST['template'])?	func::GetSQLValueString( $_POST['template'], 'text') : func::GetSQLValueString( 'default', 'text');
+        $id_groupe	= isset($_POST['id_groupe'])?	func::GetSQLValueString( $_POST['id_groupe'], 'int') : 0;
+        
+        $duree		= isset($_POST['duree'])?		$_POST['duree'] : 30*60;
+        $duree 		= sprintf('%02d:%02d:%02d', ($duree/3600),($duree/60%60), $duree%60);
+        $duree 		= func::GetSQLValueString( $duree, 'text');
+
+        $ref 		= func::GetSQLValueString('seq','text');
+
+		if( !isset($id) ){
+			// création$
+			// 
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, published, template, ordre, duree) VALUES (%s, %s, %s, %s, %s,%s, %s, %s)",$id_slide, $id_groupe, $ref, $titre, $published,$template,$ordre, $duree);
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
+
+			$item_id = mysql_insert_id();
+
+			$retour = new stdClass;
+			$retour->id = $item_id ;
+
+			echo json_encode($retour);
+
+		}else if( !$delete ){
+			//mise à jour
+
+            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, titre=%s,  published=%s, template=%s, duree=%s  WHERE id=%s",$id_slide, $titre, $published, $template, $duree, $id);
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
+
+			$retour = new stdClass;
+			$retour->id = $id ;
+
+			echo json_encode($retour);
+
+		}else{
+			$query			= sprintf("DELETE FROM ".TB."timeline_item_tb WHERE id=%s",$id);
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
+
+			$retour = new stdClass;
+			$retour->message = '{"message":"supression de l’item «'. $_POST['titre'] .'»"}' ;
+
+			echo json_encode($retour);
+		}
+	}
+
+	/**
+	 * [update_sequence_item_order description]
+	 * @param  [type] $id_tab [description]
+	 * @return [type]         [description]
+	 */
+	function update_sequence_item_order($id_tab = NULL){
+		if(!empty($id_tab)){
+
+			 
+			$id_tab = json_decode($id_tab);
+
+			$ordre = 0;
+
+			foreach ($id_tab as $id) {
+				$ordre ++;
+
+				$query			= sprintf("UPDATE ".TB."timeline_item_tb SET ordre=%s WHERE id=%s", $ordre, $id);
+				$sql_slide_query 	= mysql_query($query) or die(mysql_error());
+			}
+
+			$retour = new stdClass();
+			$retour->message = 'Tri effectué';
+
+			echo json_encode($retour);
+
+		}
+	}
+
 	
 	/**
 	 * [update_item_target description]
@@ -679,6 +765,59 @@ class Slide {
 			}
 
 			return $retour;
+		}
+	}
+
+	/**
+	 * [get_sequence_items description]
+	 * @param  [type]  $id_groupe  [description]
+	 * @param  integer $user_level [description]
+	 * @return [type]              [description]
+	 */
+	function get_sequence_items($id_groupe=NULL, $user_level=10){
+		if(!empty($id_groupe)){
+
+			$query = sprintf("SELECT * FROM sp_plasma_timeline_item_tb
+							WHERE ref_target='seq'
+							AND id_target=%s
+							ORDER BY ordre ASC", func::GetSQLValueString($id_groupe,'int') );
+
+			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
+			
+			$temp = array();
+
+			while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
+				//$editable = true;
+			
+				$class = array();
+
+				if($slide_item['published']!='1'){
+					$class[] = 'unpublished';
+				}
+				/*if(!$editable) {
+					$class[] = 'protected';
+				}*/
+
+				$class[] = $slide_item['template'];	
+
+				$duree = explode(':', $slide_item['duree']);
+				$duree = $duree[0]*60*60 + $duree[1]*60	+ $duree[2];	
+ 
+				$item = new stdClass();
+
+				$item->id = $slide_item['id'];
+				$item->duree = $duree;
+				$item->titre = $slide_item['titre'];
+				$item->class =  implode(' ',$class);
+				$item->id_slide = $slide_item['id_slide'];
+				$item->template = $slide_item['template'];
+
+				$temp[] = $item;
+							
+			}
+
+			return json_encode($temp);
+
 		}
 	}
 
@@ -755,6 +894,8 @@ class Slide {
 					$editable = true;
 				}*/
 
+				// seuls les utilisateurs de niveau « Super Admin » peuvent faire une alerte nationale
+				// seuls les utilisateurs de niveau « Admin » peuvent faire une alerte locale
 				$editable = ($slide_item['ref_target'] == 'nat' && $user_level > 1 ? false:
 							($slide_item['ref_target'] == 'loc' && $user_level > 2 ? false:
 							true ) );
@@ -1055,5 +1196,124 @@ class Slide {
 		}
 		
 	}
+
+	/**
+	 * [get_select_info description]
+	 * @param  int $id_target [description]
+	 * @return json            [description]
+	 */
+	function get_select_info($id_target){
+
+		$retour = new stdClass();
+
+		$sql			= sprintf("SELECT DISTINCT YEAR(date) AS annee FROM ".TB."timeline_slides_tb ORDER BY date DESC");																
+		$sql_query		= mysql_query($sql) or die(mysql_error());	
+
+		while($row = mysql_fetch_assoc($sql_query)){
+			$retour->annees[] = $row['annee'];
+		}
+
+
+		$sql			= sprintf("SELECT DISTINCT MONTH(date) AS mois FROM ".TB."timeline_slides_tb ORDER BY date DESC");																
+		$sql_query		= mysql_query($sql) or die(mysql_error());	
+
+		while($row = mysql_fetch_assoc($sql_query)){
+			setlocale(LC_TIME, "fr_FR");
+			$retour->mois[$row['mois']] = strftime("%B",mktime(0, 0, 0, $row['mois'], 10));
+		}
+
+		$templates = json_decode($this->listTemplates());
+
+		$retour->templates = $templates;
+
+		//echo  $_POST['mois'].' '. $_POST['annee'].' '.$_POST['template'].' '.$_POST['slide_selector_refresh'];
+
+		if(!empty($id_target) && $id_target!=0 && $_POST['slide_selector_refresh'] == 'true'){
+			$sql			= sprintf("SELECT date, nom, template FROM ".TB."timeline_slides_tb WHERE id=%s", func::GetSQLValueString($id_target ,'int'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());
+			$row 			= mysql_fetch_assoc($sql_query);
+
+			$slide_info = new stdClass();
+
+			$temp = explode('-', $row['date']);
+
+			$mois 		= $temp[1];
+			$annee 		= $temp[0];
+
+			$slide_info->id 		= $id_target;
+			$slide_info->date 		= $row['date'];
+			$slide_info->annee		= $annee;
+			$slide_info->mois		= $mois;
+			$slide_info->nom 		= $row['nom'];
+			$slide_info->template 	= $row['template'];
+
+			$retour->slide_info 	= $slide_info;
+
+			
+			$template 	= $row['template'];
+
+		}else if($_POST['slide_selector_refresh'] == 'false'){
+			$mois 		= $_POST['mois'];
+			$annee 		= $_POST['annee'];
+			$template 	= $_POST['template'];
+		}else{
+			$mois = date("Y");
+			$annee = date("m");
+			$template 	= $templates[0];
+		}
+
+		//echo $mois." ".$annee." ".$template;
+
+		$sql			= sprintf("SELECT id, nom 
+									FROM ".TB."timeline_slides_tb
+									WHERE MONTH(date)=%s 
+									AND YEAR(date)=%s
+									AND template=%s
+									ORDER BY date DESC", 	func::GetSQLValueString($mois ,'text'),
+														func::GetSQLValueString($annee ,'text'),
+														func::GetSQLValueString($template ,'text'));
+		$sql_query		= mysql_query($sql) or die(mysql_error());
+
+
+		$temp = new stdClass();
+		$temp->id = 0;
+		$temp->nom = 'Nouveau';
+
+		$retour->liste_slides[0] = $temp;
+		while($row = mysql_fetch_assoc($sql_query)){
+			$temp = new stdClass();
+			$temp->id = $row['id'];
+			$temp->nom = $row['nom'];
+
+			$retour->liste_slides[$row['id']] = $temp;
+		}
+
+
+		echo json_encode($retour);
+
+	}
+
+
+    /**
+     * [listTemplates description]
+     * @return [type] [description]
+     */
+    function listTemplates(){
+
+    	$ffs = scandir(REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER);
+
+        $temp =array();
+        //echo '<ol>';
+        foreach($ffs as $ff){
+            if($ff != '.' && $ff != '..' && substr($ff, 0, 1)!= '.' && $ff != 'default'){
+                //echo '<li>'.$ff;
+                //if(is_dir($dir.'/'.$ff) && $recursif ) listFolderFiles($dir.'/'.$ff);
+                //echo '</li>';
+                $temp[] = $ff;
+            }
+        }
+        //echo '</ol>';
+        return json_encode($temp);
+    }
 }
 

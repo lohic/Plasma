@@ -83,7 +83,12 @@ $isGroup = true;
 	
 	<div class="reset"></div>
 
-	<div id="mytimeline"></div>
+	<div id="dateTimeline"></div>
+
+	<div id="sequenceTimeline">
+		<div id="sequenceContainer">
+		</div>
+	</div>
 
 	<div class="child-screen">
     <?php
@@ -105,7 +110,7 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
         <h1 id="item_title">{{content}}</h1>
         <form>
         	<fieldset>
-        		<div class="slide_view" data-id-slide="{{slide_id}}"><a href="<?php echo ABSOLUTE_URL?>slideshow/?slide_id={{slide_id}}&template={{template}}" target="_blank" ><img src="../graphisme/eye.png" alt="voir"/></a></div>
+        		<div class="slide_view" data-id-slide="{{slide_id}}" data-absolute-url="<?php echo ABSOLUTE_URL?>"><a href="<?php echo ABSOLUTE_URL?>slideshow/?slide_id={{slide_id}}&template={{template}}" target="_blank" ><img src="../graphisme/eye.png" alt="voir"/></a></div>
         		<div>
 		            <p>
 		            	<label>Alerte / Groupe / Écran :</label>
@@ -118,13 +123,26 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 		        </div>
 		        <div>
 		            <p>
-		            	<label>Type de slide :</label>
+		            	<label for="template_reference">Type de slide :</label>
 		                <select id="template_reference" name="template_reference">
 		                    {{#template_selector}}
 		                    <option value="{{ key }}">{{ value }}</option>
 		                    {{/template_selector}}
 		                </select>
 		            </p>
+		        	<p class="nometeo">
+		        		<label>Année / Mois:</label>
+		        		<select id="annee_slide" name="annee_slide">
+		        		</select>
+		        		<select id="mois_slide" name="mois_slide">
+		        		</select>
+		        	</p>
+		        	<p class="nometeo">
+		        		<label for="id_slide">Slide :</label>
+		        		<select id="id_slide" name="id_slide">
+		        			<option value="0">Nouveau</option>
+		        		</select>
+		        	</p>
 		        </div>
 		        <div>
 		            <p>
@@ -134,13 +152,12 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 		        </div>
 	            <div>
 	                <h3>Durée : {{duree}}</h3>
-	                <p><span class="date">début :</span> {{annee1}}/{{mois1}}/{{jour1}} {{heure1}}:{{minute1}}:{{seconde1}}</p>
-	                <p><span class="date">fin :</span> {{annee2}}/{{mois2}}/{{jour2}} {{heure2}}:{{minute2}}:{{seconde2}}</p>
+	                <p><span class="date">début :</span> {{startDate}}</p>
+	                <p><span class="date">fin :</span> {{endDate}}</p>
 	            </div>
 			
 				<button id="save_item">Enregistrer</button>
-		        <button id="edit_slide_content">Éditer le contenu</button>
-		        <!--<button id="publish_slide">Publier le slide</button>-->
+		        <button id="edit_slide_content" class="nometeo">Éditer le contenu</button>
 
             </fieldset>
             
@@ -152,16 +169,66 @@ EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
     </div>
 </script>
 
+
 <!--
-EDITER LE CONTENU D'UN SLIDE
+EDITER LES INFORMATIONS D'UN ITEM DE LA TIMELINE
 -->
-<script id="slide_content_editor" type="text/html">
+<script id="item_sequence_editor" type="text/html">
     <div style="width:500px">
-        <h1>OK</h1>
-        <div>{{#formulaire}}</div>
-        <button id="save_slide_content">Enregistrer le contenu</button>
+        <h1 id="item_title">{{content}}</h1>
+        <form>
+        	<fieldset>
+        		<div class="slide_view" data-id-slide="{{slide_id}}" data-absolute-url="<?php echo ABSOLUTE_URL?>"><a href="<?php echo ABSOLUTE_URL?>slideshow/?slide_id={{slide_id}}&template={{template}}" target="_blank" ><img src="../graphisme/eye.png" alt="voir"/></a>
+        		</div>
+		        <div>
+		            <p>
+		            	<label for="template_reference">Type de slide :</label>
+		                <select id="template_reference" name="template_reference">
+		                    {{#template_selector}}
+		                    <option value="{{ key }}">{{ value }}</option>
+		                    {{/template_selector}}
+		                </select>
+		            </p>
+		        	<p class="nometeo">
+		        		<label>Année / Mois:</label>
+		        		<select id="annee_slide" name="annee_slide">
+		        		</select>
+		        		<select id="mois_slide" name="mois_slide">
+		        		</select>
+		        	</p>
+		        	<p class="nometeo">
+		        		<label for="id_slide">Slide :</label>
+		        		<select id="id_slide" name="id_slide">
+		        			<option value="0">Nouveau</option>
+		        		</select>
+		        	</p>
+		        </div>
+		        <div>
+		            <p>
+		            	<label>Publiable oui/non :</label>
+		                <input id="published" type="checkbox" name="published">
+		            </p>
+		        </div>
+	            <div>
+	                <labem>Durée en secondes :</label>
+	                <input id="duree" name="duree" value="{{duree}}" />
+	                <p id="dureeHMS">{{dureeHMS}}</p>
+	            </div>
+			
+				<button id="save_sequence_item">Enregistrer</button>
+		        <button id="edit_slide_content" class="nometeo">Éditer le contenu</button>
+
+            </fieldset>
+            
+        </form>
+
+        
+
+        <div class="reset"></div>
     </div>
 </script>
+
+
 
 
 <!--

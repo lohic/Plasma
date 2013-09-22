@@ -2,6 +2,12 @@
 // Javascript
 
 
+$(document).ready(function(){
+	$('body, th, td, .header, .texte, .footer, .texte2, #template').removeAttr( 'style' );
+
+	loadMovie();
+});
+
 function loadMovie(){
 	
 	//var videoURL = '../'+$('.video').html().replace(/\s/g, '').replace(/(\r\n|\n|\r)/gm,"");
@@ -28,4 +34,3 @@ function loadMovie(){
 	});
 }
 
-loadMovie();

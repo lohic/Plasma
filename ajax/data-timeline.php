@@ -35,7 +35,7 @@ var screen_list = [
     <?php echo !empty($data_screens) ? $data_screens->tab : ''; ?>
 ];
 
-var template_list = [
+/*var template_list = [
     <?php
         function listFolderFiles($dir,$recursif=true){
             $ffs = scandir($dir);
@@ -59,7 +59,7 @@ var template_list = [
         echo listFolderFiles($dir, false);
 
     ?>
-]
+]*/
 
 dataTimeline = [
     <?php echo implode(',', $json) ?>

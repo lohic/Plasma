@@ -85,10 +85,8 @@ class Meteo {
 			$full_json .= ']}';
 			
 			// on écrit le fichier en dur
-			file_put_contents($file, $full_json);
-			
+			file_put_contents($file, $full_json);	
 		}
-	
 	}
 	
 	/*
@@ -269,49 +267,49 @@ class Meteo {
 	
 		$weatherIcons = array(
 		null,
-		"soleil", 						// 1 Sunny
-		"soleil",						// 2 Mostly Sunny
+		"soleil", 					// 1 Sunny
+		"soleil",					// 2 Mostly Sunny
 		"peu_nuageux",				// 3 Partly Sunny
 		"peu_nuageux",				// 4 Intermittent Clouds
-		"brume",				// 5 Hazy Sunshine
-		"couvert",				// 6 Mostly Cloudy
+		"brume",					// 5 Hazy Sunshine
+		"couvert",					// 6 Mostly Cloudy
 		"couvert",					// 7 Cloudy (am/pm)
 		"couvert",					// 8 Dreary (am/pm)
 		null,						// 9 retired
 		null,						// 10 retired
-		"brume",						// 11 fog (am/pm)
-		"pluvieux",						// 12 showers (am/pnm)
-		"pluvieux",				// 13 Mostly Cloudy with Showers
+		"brume",					// 11 fog (am/pm)
+		"pluvieux",					// 12 showers (am/pnm)
+		"pluvieux",					// 13 Mostly Cloudy with Showers
 		"variable",					// 14 Partly Sunny with Showers
-		"orage",				// 15 Thunderstorms (am/pm)
-		"orage",				// 16 Mostly Cloudy with Thunder Showers
-		"orage",				// 17 Partly Sunnty with Thunder Showers
-		"pluvieux",						// 18 Rain (am/pm)
+		"orage",					// 15 Thunderstorms (am/pm)
+		"orage",					// 16 Mostly Cloudy with Thunder Showers
+		"orage",					// 17 Partly Sunnty with Thunder Showers
+		"pluvieux",					// 18 Rain (am/pm)
 		"neige",					// 19 Flurries (am/pm)
 		"neige",					// 20 Mostly Cloudy with Flurries
 		"neige",					// 21 Partly Sunny with Flurries
-		"neige",						// 22 Snow (am/pm)
-		"neige",						// 23 Mostly Cloudy with Snow
-		"neige",						// 24 Ice (am/pm)
-		"neige",						// 25 Sleet (am/pm)
-		"neige",						// 26 Freezing Rain (am/pm)
+		"neige",					// 22 Snow (am/pm)
+		"neige",					// 23 Mostly Cloudy with Snow
+		"neige",					// 24 Ice (am/pm)
+		"neige",					// 25 Sleet (am/pm)
+		"neige",					// 26 Freezing Rain (am/pm)
 		null,						// 27 retired
 		null,						// 28 retired
-		"neige",				// 29 Rain and Snow Mixed (am/pm)
-		"soleil",						// 30 Hot (am/pm)
-		"soleil",						// 31 Cold (am/pm)
+		"neige",					// 29 Rain and Snow Mixed (am/pm)
+		"soleil",					// 30 Hot (am/pm)
+		"soleil",					// 31 Cold (am/pm)
 		"wind",						// 32 Windy (am/pm)
 		// Night only Icons
 		"nuit",						// 33 Clear
 		"nuit",						// 34 Mostly Clear
-		"nuit",					// 35 Partly Cloudy
-		"nuit",					// 36 Intermittent Clouds
-		"nuit",				// 37 Hazy
-		"nuit",				// 38 Mostly Cloudy
-		"nuit",				// 39 Partly Cloudy with Showers
-		"nuit", 				// 40 Mostly Cloudy with Showers
-		"nuit",				// 41 Partly Cloudy with Thunder Showers
-		"nuit",				// 42 Mostly Cloudy with Thunder Showers
+		"nuit",						// 35 Partly Cloudy
+		"nuit",						// 36 Intermittent Clouds
+		"nuit",						// 37 Hazy
+		"nuit",						// 38 Mostly Cloudy
+		"nuit",						// 39 Partly Cloudy with Showers
+		"nuit", 					// 40 Mostly Cloudy with Showers
+		"nuit",						// 41 Partly Cloudy with Thunder Showers
+		"nuit",						// 42 Mostly Cloudy with Thunder Showers
 		"nuit"						// 43 Mostly Cloudy with Flurries
 		
 		);

@@ -3,7 +3,8 @@ include(REAL_LOCAL_PATH."/classe/classe_meteo.php");
 
 $meteo = new meteo(); // normalement on doit injecter un zipcode dans meteo()... j'ai prévu Paris par défaut.
 
-//$json_injector = $meteo->get_meteo(); ?>
+$json_injector = $meteo->get_meteo(); ?>
+
 
 <!--<script language="javascript" type="text/javascript">
 json_data = <?php //echo $json_injector; ?>;

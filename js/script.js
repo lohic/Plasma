@@ -5,8 +5,16 @@
 // accents
 // http://www.pjb.com.au/comp/diacritics.html
 
+var timestamp = new Date().getTime();
+
 var timeline;
 var dataTimeline;
+var timeline_selected_item;
+
+var seqItemNbr = 0;
+var seqItemSelected;
+
+var pixOneSecond=1/60;
 
 $('document').ready(function(){
 
@@ -49,9 +57,9 @@ $('document').ready(function(){
     } ) ;
     
     // fonction pour ajouter un écran 
-    $('#add_screen').click(function(e){
+    /*$('#add_screen').click(function(e){
         addScreen();
-    });
+    });*/
 
     // activation du datepicker jquery
     $(function() {
@@ -64,7 +72,7 @@ $('document').ready(function(){
     });
     
     // on vérifie la présence d'une balise de timeline
-    if($('#mytimeline').length != 0){
+    if($('#dateTimeline').length != 0){
         drawTimeline();
     }
 
@@ -129,7 +137,273 @@ $('document').ready(function(){
 
     slide_preview();
 
+
+
+
+    /**
+     * GESTION DES ITEMS SEQUENTIELS
+     */
+    
+    // Pour ajouter un item
+    $('#sequenceTimeline').dblclick(function(e){
+
+        var ordre = parseInt($('.sequence-item').length)+1;
+
+        $.ajax({
+            url         : "../ajax/data-sequence-item.php",
+            type        : "POST",
+            data        : {
+                id_groupe:  $id_groupe,
+                ordre:      ordre ,
+                titre :     'Nouveau',
+                action:     'create-item'
+            },
+            dataType    : 'json'
+        }).done(function ( dataJSON ) {
+
+            addSequenceSlide(dataJSON.id,'Nouveau',0,30*60,'default','unpublished default');
+        });
+    })
+    .click(function(e){
+        seqItemSelected = undefined;
+    });
+
+    // GGestion du tri
+    $( "#sequenceContainer" ).sortable({
+        axis: "x",
+        update: function( event, ui ) {
+            $.ajax({
+                url         : "../ajax/data-sequence-item.php",
+                type        : "POST",
+                data        : {
+                    action:     'sort-item',
+                    id_tab:     JSON.stringify($( "#sequenceContainer" ).sortable( "toArray", { attribute : 'data-id' } ))
+                },
+                dataType    : 'json'
+            }).done(function ( dataJSON ) {
+
+                console.log('RETOUR TRI : ');
+                console.log(dataJSON.message);
+            });
+        }
+    });
+    $('#sequenceTimeline').disableSelection();
+    $( "#sequenceContainer" ).disableSelection();
+
+
+    // chargement des items sequentiels
+    $.ajax({
+        url         : "../ajax/data-sequence.php",
+        type        : "GET",
+        data        : {cache : timestamp, id_groupe: $id_groupe},
+        dataType    : 'json'
+    }).done(function ( dataJSON ) {
+        $.each(dataJSON, function(item) {
+            addSequenceSlide( dataJSON[item].id, dataJSON[item].titre, dataJSON[item].id_slide, dataJSON[item].duree, dataJSON[item].template, dataJSON[item].class );
+        });
+    });
 });
+
+
+
+/**
+ * Fonction servant à ajouter des items séquentiels triés par ordre
+ * @param {[int]}       id        id de l'item
+ * @param {[string]}    titre     titre du slide à afficher
+ * @param {[int]}       id_slide  id du slide à afficher
+ * @param {[int]}       duree     durée de l'item en secondes
+ * @param {[string]}    template  template du slide à afficher
+ * @param {[string]}    className les classes à affecter (published + template)
+ */
+function addSequenceSlide(id,titre,id_slide,duree,template,className){
+
+    // conteneur du titre
+    $content = $("<div/>")
+    .addClass('timeline-event-content')
+    .text(titre);
+
+    // dic de l'item
+    $item = $("<div/>")
+    .append($content)
+    .addClass('sequence-item '+className)
+    .attr('id','sequence-item'+id)
+    .data('duree', duree)
+    .data('id_slide', id_slide)
+    .data('template', template)
+    .attr('data-id', id)
+    .width(pixOneSecond*duree)
+    .click(function(e){
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        e.cancelBubble = true;
+        // on séléctionne l'item
+        seqItemSelected = $(this);
+        seqItemSelected = undefined;
+    })
+    .dblclick(function(e){
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+        e.cancelBubble = true;
+        // on séléctionne l'item
+        seqItemSelected = $(this);
+        edit_item_sequence();
+    });
+
+    $('#sequenceContainer').append($item);
+    // on rafraichit les dimentions des items
+    refreshSequenceSlide();
+}
+
+/**
+ * [refreshSequenceSlide description]
+ * @return {[type]} [description]
+ */
+function refreshSequenceSlide(){
+
+    var largeur =0;
+    $('.sequence-item').each(function(){
+        $(this).width(pixOneSecond*$(this).data('duree'));
+
+        largeur += $(this).outerWidth(true);
+    });
+
+    largeur+=100;
+
+    //console.log(largeur);
+
+    $('#sequenceContainer').width(largeur);
+}
+
+
+/**
+ * [edit_item_sequence description]
+ * @return {[type]} [description]
+ */
+function edit_item_sequence(){
+    console.log('Edit item From Sequence');
+
+    item_sequence_info = {
+        slide_id:  seqItemSelected.data('id_slide'),
+        content:   seqItemSelected.text(),
+        duree:     seqItemSelected.data('duree'),
+        dureeHMS:  second2HMS(seqItemSelected.data('duree')),
+        template:  seqItemSelected.data('template')
+    };
+
+    item_sequence_editor = ich.item_sequence_editor(item_sequence_info);
+
+    $.fancybox( item_sequence_editor , {
+        helpers : {
+            title: {
+                type: 'inside',
+                position: 'top'
+            }
+        }
+    });
+
+    $('#published').attr('checked', seqItemSelected.hasClass("unpublished") ? false : true);
+
+    $( "#duree" )
+    .spinner({
+        min: 60,
+        step: 30,
+        spin: function(){
+            $('#dureeHMS').text( second2HMS( parseInt($( "#duree" ).val()) ) );
+        }
+    })
+    .change(function() {
+        $('#dureeHMS').text( second2HMS( parseInt($( "#duree" ).val()) ) );
+    });
+
+    
+    // ------------------------------------
+    slide_preview();
+    // ------------------------------------
+    slide_selector_refresh = true;
+    slide_selector_from = 'sequence';
+    slide_selector();
+
+    // sauvegarde d'un item
+    $('#save_sequence_item').click(function(e){
+        e.preventDefault();
+
+        var titre_slide = $('#template_reference').val() == 'meteo' ? "Météo" : $('#id_slide option:selected').text();
+        var template    = $('#template_reference').val();
+        var duree       = $('#duree').val();
+        var id_slide    = $('#id_slide').val();
+
+        console.log('SAVE template '+template);
+
+        $('#item_title').text(titre_slide);
+        $('.slide_view').data('id-slide',id_slide);
+        $('.slide_view>a').attr('href', $('.slide_view').data('absolute-url')+'slideshow/?slide_id='+id_slide+'&template='+template);
+
+        //------------------------
+        // on réattribue les classes
+        //------------------------        
+        var classes = seqItemSelected.attr('class');
+        classes = Array('sequence-item');
+
+        if($("#published").is(':checked')){
+            // rien
+            var published = 1;
+        }else{
+            classes.push('unpublished');
+            var published = 0;
+        }
+        classes.push(template);
+        classes = cleanArray(classes);
+        classes = classes.join(' ');
+
+        seqItemSelected
+        .attr('class',classes)
+        .data('duree', duree)
+        .data('id_slide', id_slide)
+        .data('template', template)
+        .find('div')
+        .text(titre_slide);
+
+        $.ajax({
+            url         : "../ajax/data-sequence-item.php",
+            type        : "POST",
+            data        : {
+                id:         seqItemSelected.data('id'),
+                id_slide:   id_slide,
+                titre :     titre_slide,
+                template :  template,
+                duree :     duree,
+                published:  published,
+                action:     'update-item'
+            },
+            dataType    : 'json'
+        }).done(function ( dataJSON ) {
+
+            //console.log('OK OK sequence : ');
+            console.log(dataJSON);
+            refreshSequenceSlide();
+        });
+    });
+
+    // gestion de l'édition de contenu
+    $('#edit_slide_content').click(function(e){
+
+        console.log(">>> EDIT SLIDE CONTENT : "+ ref + " ID_SLIDE : "+ dataTimeline[ref].id_slide);
+
+        edit_slide(dataTimeline[ref].id_slide, $('#template_reference').val(), dataTimeline[ref].content, 'timeline',ref);     
+        e.preventDefault();
+
+    });
+}
+
+
+
+/**
+ * ------------------------------------
+ * POUR GERER LA TIMELINE
+ * ------------------------------------
+ */
 
 
 
@@ -142,7 +416,7 @@ $('document').ready(function(){
 function drawTimeline() {
 
     // créé l'objet timeline en instanciant le DIV correspondant
-    timeline = new links.Timeline(document.getElementById('mytimeline'));
+    timeline = new links.Timeline(document.getElementById('dateTimeline'));
     
     var todayM3 = new Date();
     todayM3.setDate(todayM3.getDate() - 3);
@@ -172,7 +446,6 @@ function drawTimeline() {
     };
 
     // charge en AJAX le contenu du fichier data-timeline.php
-    var timestamp = new Date().getTime();
     $.ajax({
         url         : "../ajax/data-timeline.php",
         type        : "GET",
@@ -191,13 +464,6 @@ function drawTimeline() {
         timeline.draw(dataTimeline ,options);
 
         console.log("Timeline ready");
-
-        // on intitialise la position des étiquettes de groupes
-        /*for(var i = 0; i < screens.length ; i ++){
-            timeline.changeItem(screens[i], {'start' : todayM3 });
-        }
-
-        timeline.setSelection();*/
     });
 
     // AJOUT D'UN SLIDE
@@ -241,12 +507,12 @@ function drawTimeline() {
                     'id': dataJSON
                 });
 
-                console.log(' ');
-                console.log('ONADD ref : ' + row + ' id : ' + dataTimeline[row].id + ' id_slide : ' + dataTimeline[row].id_slide);
-                console.log('content  : ' + dataTimeline[row].content );
-                console.log('start  : ' + dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
-                console.log('groupe : ' + dataTimeline[row].group);
-                console.log('class  : ' + dataTimeline[row].className);
+                //console.log(' ');
+                //console.log('ONADD ref : ' + row + ' id : ' + dataTimeline[row].id + ' id_slide : ' + dataTimeline[row].id_slide);
+                //console.log('content  : ' + dataTimeline[row].content );
+                //console.log('start  : ' + dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
+                //console.log('groupe : ' + dataTimeline[row].group);
+                //console.log('class  : ' + dataTimeline[row].className);
             });
             
         }
@@ -268,11 +534,11 @@ function drawTimeline() {
 
             var debut = new Date(dataTimeline[row].start);
 
-            console.log(' ');
-            console.log("ONCHANGE id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
-            console.log('start : '+dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
-            console.log('groupe : ' + dataTimeline[row].group);
-            //ok
+            //console.log(' ');
+            //console.log("ONCHANGE id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
+            //console.log('start : '+dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
+            //console.log('groupe : ' + dataTimeline[row].group);
+
             $.ajax({
                 url     :"../ajax/data-timeline-item.php",
                 type    : "POST",
@@ -290,10 +556,7 @@ function drawTimeline() {
                     action  : 'update-item'
                 }
             }).done(function ( dataJSON ) {
-                console.log("Save change : "+dataJSON);
-                /*timeline.changeItem(row, {
-                    'id': dataJSON.id
-                });*/
+                //console.log("Save change : "+dataJSON);
             });
         }
     }
@@ -324,8 +587,8 @@ function drawTimeline() {
                 //console.log(dataJSON);
             });
 
-            console.log(' ');
-            console.log('ONDELETE id : '+ dataTimeline[row].id + ' content : '+ dataTimeline[row].content);
+            //console.log(' ');
+            //console.log('ONDELETE id : '+ dataTimeline[row].id + ' content : '+ dataTimeline[row].content);
         }
     }
     
@@ -342,8 +605,8 @@ function drawTimeline() {
         }
 
         if (row != undefined) {
-            console.log(' ');
-            console.log("ONSELECT id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide + " classes : "+dataTimeline[row].className);
+            //console.log(' ');
+            //console.log("ONSELECT id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide + " classes : "+dataTimeline[row].className);
         }  
     };
 
@@ -361,6 +624,8 @@ function drawTimeline() {
         if (row != undefined) {
             
             if(dataTimeline[row].type == 'slide'){
+
+                timeline_selected_item = row;
                 
                 edit_item(row);
                 
@@ -394,6 +659,13 @@ function drawTimeline() {
             //console.log("start : "+new Date(event.start));
         }
         timeline.setSelection();*/
+        var pixelRange = $('.timeline-axis').width();
+        var timeRange = event.end-event.start;
+        pixOneSecond = pixelRange/timeRange*1000;
+
+        refreshSequenceSlide();
+
+        //console.log( "1 seconde = "+ pixOneSecond +" pixels");
     }
     
     // ON ATTACHE LES DIFFERENTS ECOUTEURS DE LA TIMELINE
@@ -402,10 +674,9 @@ function drawTimeline() {
     links.events.addListener(timeline, 'delete', ondelete);
     links.events.addListener(timeline, 'select', onselect);
     links.events.addListener(timeline, 'edit',   onedit);
-    //links.events.addListener(timeline, 'rangechange', onrangechange);
+    links.events.addListener(timeline, 'rangechange', onrangechange);
 }
-
-
+    
 
 /*
  * fonction pour éditer les informations d'un item de la timeline
@@ -415,13 +686,13 @@ function drawTimeline() {
  * @param {ref} la référence de l'item timeline sélecctionné
  */
 function edit_item(ref){
-    console.log('Edit slide');
+    console.log('Edit item From Timeline');
 
     var date1 = new Date(dataTimeline[ref].start);
     var date2 = new Date(dataTimeline[ref].end);
     var duree = Math.round((date2-date1)/1000);
 
-    var actionAfterClose;
+    //var actionAfterClose;
     
     // on crée l'objet qui va récupérer les informations d'un item 
     slide_info = {
@@ -435,22 +706,11 @@ function edit_item(ref){
         duree:     second2HMS(duree),
         template:  dataTimeline[ref].template,
 
-        annee1:    date1.getFullYear(),
-        mois1:     date1.getMonth() + 1 <10 ? "0"+(date1.getMonth() + 1): date1.getMonth() + 1,
-        jour1:     date1.getDate() <10      ? "0"+date1.getDate()       : date1.getDate(),
-        heure1:    date1.getHours()<10      ? "0"+date1.getHours()      : date1.getHours(),
-        minute1:   date1.getMinutes()<10    ? "0"+date1.getMinutes()    : date1.getMinutes(),
-        seconde1:  date1.getSeconds()<10    ? "0"+date1.getSeconds()    : date1.getSeconds(),
-
-        annee2:    date2.getFullYear(),
-        mois2:     date2.getMonth() + 1 <10 ? "0"+(date2.getMonth() + 1): date2.getMonth() + 1,
-        jour2:     date2.getDate() <10      ? "0"+date2.getDate()       : date2.getDate(),
-        heure2:    date2.getHours()<10      ? "0"+date2.getHours()      : date2.getHours(),
-        minute2:   date2.getMinutes()<10    ? "0"+date2.getMinutes()    : date2.getMinutes(),
-        seconde2:  date2.getSeconds()<10    ? "0"+date2.getSeconds()    : date2.getSeconds(),
+        startDate : date2mysql(date1),
+        endDate : date2mysql(date2),   
 
         group_selector: screen_list,
-        template_selector:template_list, 
+        //template_selector:template_list, 
 
     };
 
@@ -459,41 +719,34 @@ function edit_item(ref){
     slide_editor = ich.slide_editor(slide_info);
 
     $.fancybox( slide_editor , {
-        title : '<h1>Éditeur de slide</h1>',
+        //title : '<h1>Éditeur de slide</h1>',
         helpers : {
             title: {
                 type: 'inside',
                 position: 'top'
             }
-        },
-        afterLoad : function(){
-            //console.log("fancybox OK");
-        },
-        afterClose : function(){
-            console.log('edit item close / action : '+actionAfterClose);
-
-            //if(actionAfterClose == "edit_slide"){
-                //alert('ok');
-            //    edit_slide(dataTimeline[ref].id_slide, dataTimeline[ref].template, dataTimeline[ref].content, 'timeline',ref);
-            //}
         }
     });
 
     // on selectionne le groupe quand on affiche le formulaire
     $('#screen_reference').val(dataTimeline[ref].group);
-    $('#template_reference').val(dataTimeline[ref].template);
+    //$('#template_reference').val(dataTimeline[ref].template);
     $('#published').attr('checked', dataTimeline[ref].className.indexOf("unpublished") < 0 ? true : false);
-    if($('#template_reference').val() == 'meteo'){
+    /*if($('#template_reference').val() == 'meteo'){
             $('#edit_slide_content').hide();
-    }
-    $template = $('#template_reference').val();
+    }*/
+    //$template = $('#template_reference').val();
     //alert( dataTimeline[ref].className.indexOf("unpublished") >= 0 ? 1 : 0) ;
     
     // ------------------------------------
     slide_preview();
     // ------------------------------------
+    slide_selector_refresh = true;
+    slide_selector_from = 'timeline';
+    slide_selector();
 
 
+    /*
     $('#template_reference').change(function(){
         if($(this).val() == 'meteo'){
             $('#edit_slide_content').hide();
@@ -503,7 +756,7 @@ function edit_item(ref){
 
         //on mémorise le gabarit sélectionné
         $template = $(this).val();
-    });
+    });*/
 
     // sauvegarde d'un item
     $('#save_item').click(function(e){
@@ -512,8 +765,18 @@ function edit_item(ref){
         var group       = $('#screen_reference').val();
         var content     = $('#template_reference').val() == 'meteo' ? "Météo" : dataTimeline[ref].content;
         var template    = $('#template_reference').val();
+        var id_slide    = $('#id_slide').val();
+        if(template!='meteo'){
+            var titre_slide = $('#id_slide option:selected').text();
+        }else{
+            var titre_slide = "Météo";
+        }
 
-        $('#item_title').val(content);
+        console.log('SAVE template '+template);
+
+        $('#item_title').text(titre_slide);
+        $('.slide_view').data('id-slide',id_slide);
+        $('.slide_view>a').attr('href', $('.slide_view').data('absolute-url')+'slideshow/?slide_id='+id_slide+'&template='+template);
 
         console.log($("#published").is(':checked') ? 'publié' : 'non publié');
 
@@ -555,7 +818,9 @@ function edit_item(ref){
             'group':        group,
             'className':    classes,
             'content' :     content,
-            'template' :    template
+            'template' :    template,
+            'id_slide' :    id_slide,
+            'content' :     titre_slide
         });
 
         //ok 2
@@ -606,13 +871,16 @@ function edit_item(ref){
     });
 }
 
-
+/**
+ * [slide_preview description]
+ * @return {[type]} [description]
+ */
 function slide_preview(){
 
     $(".slide_view>a").mouseenter(function(){
         console.log('ok');
 
-        console.log('preview : '+$(this).attr('href')+"&template="+$(this).data('id-slide')+"&preview&tiny");
+        console.log('preview : '+$(this).attr('href')+"&preview&tiny");
 
         $('#preview_screen').attr('src', $(this).attr('href')+"&preview&tiny");
         $('#preview_screen').show();
@@ -633,47 +901,14 @@ function slide_preview(){
 }
 
 
-/**
- * Conversion des secondes en hh : mm : ss
- * @param {duree} un entier qui indique une durée en secondes
- * @return {retour} une chaîne formatée : '00h:00m:00s'
- */ 
-function second2HMS(duree){
-    // heure
-    retour = (duree-duree%3600)/3600<10 ? "0"+ (duree-duree%3600)/3600+"h"  : (duree-duree%3600)/3600 + 'h';
-    duree = duree%3600;
-    // minute
-    retour += (duree-duree%60)/60 <10   ? "0"+(duree-duree%60)/60+"m"    : (duree-duree%60)/60 + 'm';
-    duree = duree%60;
-    // secondes
-    retour += duree < 10                ? "0"+duree+"s"                      : duree+'s';
-
-    return retour;
-}
-
-/**
- * ajouter un écran
- */
-function addScreen(){
-    screen_list.push ({"key" : $('#group').val(), "value" : $('#group').val()})
-
-    timeline.addItem({
-        'start': new Date(2012, 0, 1),
-        "group" : $('#group').val(),
-        "editable" : true,
-        'content': $('#group').val(),
-        "type" : "screen",
-        "className" : "screen"
-    });
 
 
-    var sel = timeline.getData();
-    var lastItemID = sel.length-1;
 
-    // screens.push(lastItemID);
-    // console.log("longueur : " + lastItemID);
-    // console.log(screens.join(', '));
-}
+
+
+
+
+
 
 
 /**
@@ -854,6 +1089,10 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
 
                 // SI ON EDITE DEPUIS LA TIMELINE
                 else if(edit_from == 'timeline' && typeof(ref_timeline) != 'undefined'){
+
+                    id_slide = dataJSON.id;
+                    type_action = 'update-slide';
+
                     // on sauvegarde les propriétés de l'item
                     timeline.changeItem(ref_timeline, {
                         'id_slide': dataJSON.id,
@@ -884,9 +1123,16 @@ function edit_slide(id_slide,template,titre,edit_from,ref_timeline){
                 }
             });
         });
-        //*/
     });
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -907,6 +1153,10 @@ var p_id_event;
 var p_id_session;
 var issetParam = false;
 
+/**
+ * [event_selector description]
+ * @return {[type]} [description]
+ */
 function event_selector(){
     console.log('SELECTEUR D’ÉVENEMENT');
 
@@ -960,10 +1210,8 @@ function event_selector(){
             loadEventFromAPI(true);
         });
     }else{
-
+        loadEventFromAPI();
     }
-
-    loadEventFromAPI();
 
     $("#year_event").change(function(e){
         $("#id_session").empty();
@@ -995,6 +1243,11 @@ function event_selector(){
     $("#month_event").val(d.getMonth()+1);
 }
 
+
+/**
+ * [refresh_event description]
+ * @return {[type]} [description]
+ */
 function refresh_event(){
     //console.log(data_event);
 
@@ -1039,6 +1292,14 @@ function refresh_event(){
 
 }
 
+/**
+ * [downloadEventImage description]
+ * @param  {[type]} url   [description]
+ * @param  {[type]} id    [description]
+ * @param  {[type]} month [description]
+ * @param  {[type]} year  [description]
+ * @return {[type]}       [description]
+ */
 function downloadEventImage(url,id,month,year){
     console.log("téléchargement image : "+url);
     $.ajax({
@@ -1110,6 +1371,12 @@ function loadEventFromAPI(param){
         // Liste des événements et leur sessions attachées, sur un mois et pour un organisme donné
         if(typeof(dataJSON.evenements) != 'undefined'){
 
+            $("#id_organisme").empty();
+            $.each(dataJSON.evenements.organismes, function(item) {
+                $("#id_organisme").append($("<option />").val( dataJSON.evenements.organismes[item].id ).text(dataJSON.evenements.organismes[item].nom));
+                $("#id_session").prop("selectedIndex", 0);
+            });
+
             $("#id_event").empty();
             $.each(dataJSON.evenements.evenement, function(item) {
                 $("#id_event").append($("<option />").val( dataJSON.evenements.evenement[item].id ).text(dataJSON.evenements.evenement[item].titre));
@@ -1139,12 +1406,6 @@ function loadEventFromAPI(param){
                 }
             });
 
-
-            $("#id_organisme").empty();
-            $.each(dataJSON.evenements.organismes, function(item) {
-                $("#id_organisme").append($("<option />").val( dataJSON.evenements.organismes[item].id ).text(dataJSON.evenements.organismes[item].nom));
-            });
-
             //event_selector.prop("selectedIndex", 0);
             //organisme_selector.prop("selectedIndex", 0);
 
@@ -1168,10 +1429,149 @@ function loadEventFromAPI(param){
 
 
 
+
+
+
+
+
+
+
+
+
+
+/**
+ * -----------------------------------
+ * POUR GERER LA SELECTION DES SLIDES
+ * -----------------------------------
+ */
+
+var slide_selector_refresh = false;
+var slide_selector_from = 'timeline';
+/**
+ * gestion du formulaire pour sélectionner les slides
+ * @return {[type]} [description]
+ */
 function slide_selector(){
-    console.log('SELECTEUR DE SLIDES');   
+
+    if(slide_selector_from == 'timeline'){
+        id = dataTimeline[timeline_selected_item].id_slide;
+    }else if(slide_selector_from = 'sequence'){
+        id = seqItemSelected.data('id_slide');
+    }
+    console.log('SELECTEUR DE SLIDES from '+slide_selector_from+': '+id);
+    console.log($("#template_reference").val()+" "+ parseInt($("#mois_slide").val()) +" "+ parseInt($("#annee_slide").val()) + " "+slide_selector_refresh);
+
+    $.ajax({
+        url     :"../ajax/data-timeline-slide.php",
+        type    : "POST",
+        dataType:'json',
+        data    : {
+            action                  : 'get_select_info',
+            id_slide                : id,
+            template                : $("#template_reference").val(),
+            annee                   : parseInt($("#annee_slide").val()),
+            mois                    : parseInt($("#mois_slide").val()),
+            slide_selector_refresh  : slide_selector_refresh
+        }
+    }).done(function ( dataJSON ) {
+        console.log(' ');
+        console.log('Info Slide :');
+        console.log(dataJSON);
+        /*timeline.changeItem(ref, {
+            'id': dataJSON
+        });*/
+
+        if(slide_selector_refresh == true){
+
+            $('#annee_slide').empty();
+            $.each(dataJSON.annees, function(item) {
+                $("#annee_slide").append($("<option />").val( dataJSON.annees[item] ).text( dataJSON.annees[item] ));
+            });
+            $('#mois_slide').empty();
+            $.each(dataJSON.mois, function(item) {
+                $("#mois_slide").append($("<option />").val( item ).text( dataJSON.mois[item] ));
+            });
+            $('#template_reference').empty();
+            $.each(dataJSON.templates, function(item) {
+                $("#template_reference").append($("<option />").val( dataJSON.templates[item] ).text( dataJSON.templates[item] ));         
+            });
+        }
+
+        $('#id_slide').empty();
+        $.each(dataJSON.liste_slides, function(item) {
+            $("#id_slide").append($("<option />").val( item ).text( dataJSON.liste_slides[item].nom ));
+           
+        });
+
+        if(typeof(dataJSON.slide_info) != 'undefined' && slide_selector_refresh == true){
+            console.log("SLIDE DEFINI "+ dataJSON.slide_info.template);
+            $("#annee_slide").val(parseInt(dataJSON.slide_info.annee));
+            $("#mois_slide").val(parseInt(dataJSON.slide_info.mois));
+            $("#template_reference").val(dataJSON.slide_info.template);
+            $("#id_slide").val(parseInt(dataJSON.slide_info.id));
+
+            $('.slide_view').data('id-slide',dataJSON.slide_info.id);
+            $('.slide_view>a').attr('href', $('.slide_view').data('absolute-url')+'slideshow/?slide_id='+dataJSON.slide_info.id+'&template='+dataJSON.slide_info.template);
+
+        }else if(typeof(dataJSON.slide_info) == 'undefined' && slide_selector_refresh == true){
+            console.log("SLIDE DEFINI INDEFINI");
+            $("#annee_slide").prop("selectedIndex", 0);
+            $("#mois_slide").prop("selectedIndex", 0);
+            $("#template_reference").prop("selectedIndex", 0);
+            $("#id_slide").prop("selectedIndex", 0);
+
+            slide_selector_refresh = false;
+            slide_selector(timeline_selected_item);
+        }
+
+
+        $('#annee_slide').change(function(e){
+            slide_selector_refresh = false;
+            slide_selector(timeline_selected_item);
+        });
+        $('#mois_slide').change(function(e){
+            slide_selector_refresh = false;
+            slide_selector(timeline_selected_item);
+        });
+        $('#template_reference').change(function(e){
+            slide_selector_refresh = false;
+            slide_selector(timeline_selected_item);
+
+             if($(this).val() == 'meteo'){
+                $('.nometeo').hide();
+            }else{
+                $('.nometeo').show();
+            }
+
+            //on mémorise le gabarit sélectionné
+            $template = $(this).val();
+        });
+        $('#id_slide').change(function(e){
+            //slide_selector_refresh = false;
+            //slide_selector(timeline_selected_item);
+            console.log($('#id_slide').val()+" "+$('#id_slide option:selected').text());
+        });
+    }); 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * -------------------
+ * FONCTIONS DIVERSES
+ * -------------------
+ */
 
 
 /**
@@ -1299,6 +1699,43 @@ function cleanArray(array) {
   }
   return out;
 }
+
+/**
+ * [date2mysql description]
+ * @param  {[type]} date [description]
+ * @return {[type]}      [description]
+ */
+function date2mysql(date){
+    annee   = date.getFullYear();
+    mois    = date.getMonth() + 1 <10 ? "0"+(date.getMonth() + 1): date.getMonth() + 1;
+    jour    = date.getDate() <10      ? "0"+date.getDate()       : date.getDate();
+    heure   = date.getHours()<10      ? "0"+date.getHours()      : date.getHours();
+    minute  = date.getMinutes()<10    ? "0"+date.getMinutes()    : date.getMinutes();
+    seconde = date.getSeconds()<10    ? "0"+date.getSeconds()    : date.getSeconds();
+
+    return annee+"-"+mois+"-"+jour+" "+heure+":"+minute+":"+seconde;
+}
+
+
+/**
+ * Conversion des secondes en hh : mm : ss
+ * @param {duree} un entier qui indique une durée en secondes
+ * @return {retour} une chaîne formatée : '00h:00m:00s'
+ */ 
+function second2HMS(duree){
+    // heure
+    retour = (duree-duree%3600)/3600<10 ? "0"+ (duree-duree%3600)/3600+"h"  : (duree-duree%3600)/3600 + 'h';
+    duree = duree%3600;
+    // minute
+    retour += (duree-duree%60)/60 <10   ? "0"+(duree-duree%60)/60+"m"    : (duree-duree%60)/60 + 'm';
+    duree = duree%60;
+    // secondes
+    retour += duree < 10                ? "0"+duree+"s"                      : duree+'s';
+
+    return retour;
+}
+
+
 
 
 //console.log = function() {};

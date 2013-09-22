@@ -29,6 +29,8 @@ $(document).ready(function(){
 	// ????
 	$data_slide_ordered	= 'undefined';
 
+	$last_ordre			= 0;
+
 	$slides				= Array();
 
 	$now				= new Date();
@@ -79,11 +81,11 @@ $(document).ready(function(){
 
 	}else{
 		// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
-		console.log("on prévisualise un écran");
+		console.log("on visualise un écran");
 		refresh();
 		setInterval(refresh, 1000);
 
-		console.log($plasma_id);
+		console.log('id ecran : '+$plasma_id);
 	}
 
 	$('#exit_button').click(function(e){
@@ -102,6 +104,7 @@ function refresh() {
 	$now 		= new Date();
 
 	$("#now").text($now);
+	$("#end").text($end);
 	$("title").text("LOOP | Écrans PLASMA : "+new Date());
 	
 	$.ajax({
@@ -148,8 +151,8 @@ function refresh() {
 					        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
 					         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
 					    
-					          (a.ref_target == 'nat' && b.ref_target == 'ord' ? -1 :
-					           (a.ref_target == 'ord' && b.ref_target == 'nat' ? 1 :
+					          (a.ref_target == 'nat' && b.ref_target == 'seq' ? -1 :
+					           (a.ref_target == 'seq' && b.ref_target == 'nat' ? 1 :
 					    
 					            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
 					             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
@@ -157,26 +160,28 @@ function refresh() {
 					              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
 					               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
 					    
-					                (a.ref_target == 'loc' && b.ref_target == 'ord' ? -1 :
-					                 (a.ref_target == 'ord' && b.ref_target == 'loc' ? 1 :
+					                (a.ref_target == 'loc' && b.ref_target == 'seq' ? -1 :
+					                 (a.ref_target == 'seq' && b.ref_target == 'loc' ? 1 :
 					    
 					                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
 					                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
 					    
-					                    (a.ref_target == 'grp' && b.ref_target == 'ord' ? -1 :
-					                     (a.ref_target == 'ord' && b.ref_target == 'grp' ? 1 :
+					                    (a.ref_target == 'grp' && b.ref_target == 'seq' ? -1 :
+					                     (a.ref_target == 'seq' && b.ref_target == 'grp' ? 1 :
 					    
-					                      (a.ref_target == 'ecr' && b.ref_target == 'ord' ? -1 :
-					                       (a.ref_target == 'ord' && b.ref_target == 'ecr' ? 1 :
-					                        (a.start <= b.start ? -1 : 
-					                         (a > b.start ? 1 :
-					                          (a.order <= b.order ? -1 : 0 )))))))))))))))))))))));
+					                      (a.ref_target == 'ecr' && b.ref_target == 'seq' ? -1 :
+					                       (a.ref_target == 'seq' && b.ref_target == 'ecr' ? 1 :
+
+					                        (a.start < b.start ? -1 : 
+					                         (a.start > b.start ? 1 :
+
+					                          (parseInt(a.ordre) <= parseInt(b.ordre) ? -1 : 1 )))))))))))))))))))))));
 
 										   return valeur;
 					});
 				}
-
-				//console.log($slides);
+				//console.log('slides après tri :');
+				//nsole.log($slides);
 				//
 				$data_loaded = true;
 				
@@ -277,6 +282,42 @@ function loop_slideshow(){
 			}
 		}
 
+		if($slide_loaded){
+
+			if( $now >= $end){
+
+				for(var i = 0 ; i< $nbr; i++){
+
+					if($slides[i].ordre > $last_ordre){
+						$start		= $now;
+						$end		= new Date($now).addSeconds(mysql2jsSecond($slides[i].duree));
+						$template 	= $slides[i].template;
+						$slide_id	= $slides[i].id_slide;
+						$actual_item_id = $slides[i].id;
+
+						//console.log('duree : '+mysql2jsSecond($slides[i].duree));
+
+						$last_ordre = $slides[i].ordre;
+						console.log("dernier n° d'ordre : "+$last_ordre);
+
+						// on annonce qu'on est en attente d'un nouveau slide
+						$slide_loaded = false;
+
+						break;
+					}else{
+						if(i == $slides.length-1){
+							$last_ordre = 0;	
+						}
+
+					}
+
+				}
+			}
+
+		}
+
+
+
 		// si $slide_loaded == false
 		// alors on charge un nouveau slide
 		// en allant chercher ses données
@@ -290,7 +331,8 @@ function loop_slideshow(){
 					dataType: 'json',
 					success: function(json){
 						$('.info').text( 'Données du slide chargées' );
-						console.log("DATA SLIDE CHARGEES "+json);
+						console.log("DATA SLIDE CHARGEES :");
+						console.log(json);
 						$slide_data	= json;
 
 						$('body').removeClass('exit');
@@ -299,13 +341,17 @@ function loop_slideshow(){
 					}
 				});
 			}else{
+				$('.info').text( 'Données du slide chargées' );
+				console.log("METEO");
 				$slide_data = {};
+
+				$('body').removeClass('exit');
 				load_slide($template,$slide_data);
 				$slide_loaded = true;
 			}
 		}		
 
-		$('.info').text( 'Template : ' + $template + ' id_slide : '+$slide_id );
+		$('.info').html( 'template : <span class="red">' + $template + '</span><br/>id_slide : <span class="red">'+$slide_id +'</span>');
 
 	}else{
 		
@@ -360,6 +406,17 @@ function mysql2jsTimestamp(timestamp){
 
 	var t = timestamp.split(/[- :]/);
 	return new Date(t[0], t[1]-1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
+}
+
+/**
+ * sert à convertir un timestamp mysql en objet date javascript
+ * @param  {string} 		timestamp le timestamp mysql
+ * @return {Date}           un objet Date javascript 
+ */
+function mysql2jsSecond(timestamp){
+
+	var t = timestamp.split(':');
+	return parseInt(t[0])*60*60 + parseInt(t[1])*60 + parseInt(t[2]);
 }
 
 

@@ -467,7 +467,7 @@ li span.handler{
 .ui-sortable-placeholder{
 	/*background:#CB021A;
 	opacity:0.2;*/
-	background:#FFF;
+	background:#000;
 	height:20px;
 	visibility:visible!important;
 }

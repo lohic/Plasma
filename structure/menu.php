@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 if($core->isAdmin && $core->userLevel<=3){
 	

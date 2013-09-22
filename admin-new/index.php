@@ -45,7 +45,7 @@ $ecran 		= new Ecran($id_plasma);
 
 	<!-- JQUERY -->
 	<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="../js/jquery-migrate-1.2.1.js"></script>
+	<script type="text/javascript" src="../js/jquery-migrate-1.2.1.min.js"></script>
     <!-- ICANHAZ -->
     <script type="text/javascript" src="../js/ICanHaz.min.js" ></script>
     <!-- TIMLINE -->

@@ -10,9 +10,9 @@ include_once("../classe/classe_fonctions.php");
 $core = new core();
 
 if($core->isAdmin){ 
-
-    $slide = new Slide();
+    
     $action = isset($_POST['action']) ? $_POST['action'] : NULL;
+    $slide = new Slide();
 
     // creation d'un item
     if($action != NULL && $action == 'create-slide'){
@@ -31,6 +31,13 @@ if($core->isAdmin){
     if($action != NULL && $action == 'delete-slide' && isset($_POST['id_slide']) ){
 
         $slide->update_timeline_slide( $_POST['id_slide'], true );
+
+    }
+    // recupération des informations (années, mois, templates, liste des slides)
+    else
+    if($action != NULL && $action == 'get_select_info' && isset($_POST['id_slide']) ){
+
+        $slide->get_select_info($_POST['id_slide']);
 
     }
 

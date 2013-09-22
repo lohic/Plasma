@@ -88,21 +88,6 @@ function supprSlide(id, nom){
 	return false;
 }
 
-/*function saveOrderPage() {
-	var serialStr1 = "";
-	//var serialStr2 = "";
-	//var serialStr3 = "";
-	$("body ul#evenements_list>li").each(function(i, elm) { serialStr1 += (i > 0 ? "|" : "") + $(elm).attr("id"); });
-	// this dynamically updates string to hidden form field
-	//alert( serialStr1+"\n"+serialStr2+"\n"+serialStr3);
-	
-	//var valeur = document.getElementById("save_value");
-	var valeur = document.getElementById("save_value");
-	valeur.value = serialStr1;
-		
-	$('#refresh_form').submit();
-};*/
-
 $(document).ready(function() {
 
 	// ACTIVATION DU DRAG&DROP
