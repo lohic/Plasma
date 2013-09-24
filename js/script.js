@@ -1349,6 +1349,8 @@ function refresh_event(){
     $('#myform input[name="date_horaire"]').val(    date_event + ", " +start_event + " - " + end_event );
     $('#myform input[name="lieu"]').val(            data_event.sessions[id_session].lieu);
     $('#myform input[name="code_batiment"]').val(   data_event.sessions[id_session].code_batiment);
+    $('#myform input[name="adresse_nom"]').val(     data_event.sessions[id_session].adresse_nom);
+    $('#myform input[name="adresse"]').val(         data_event.sessions[id_session].adresse);
     $('#myform input[name="langue"]').val(          data_event.sessions[id_session].code_langue);
     $('#myform input[name="titre"]').val(           data_event.sessions[id_session].titre);
     $('#myform input[name="session_id"]').val(      data_event.sessions[id_session].id);

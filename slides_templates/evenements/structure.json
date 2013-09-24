@@ -38,6 +38,18 @@
         },
         {
             "type" : "text",
+            "name" : "adresse_nom",
+            "id" : "adresse_nom",
+            "caption" : "Nom de l'adresse"
+        },
+        {
+            "type" : "text",
+            "name" : "adresse",
+            "id" : "adresse",
+            "caption" : "Adresse"
+        },
+        {
+            "type" : "text",
             "name" : "langue",
             "id" : "langue",
             "caption" : "Langue de l'événement"

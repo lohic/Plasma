@@ -7,7 +7,7 @@
         <h2>
             <span class="edit textfield" max="22" id="A" title="A - Type d’événement">{{type}}</span><br/>
 			<span class="edit textfield" max="30" id="C" title="C - Date-horaire">{{date_horaire}}</span><br/>
-			<span class="edit textfield" max="30" id="E" title="E - Information de lieu">{{lieu}}</span>, 
+			<span class="edit textfield" max="30" id="E" title="E - Information de lieu">{{lieu}}</span>,
 			<span class="edit textfield" id="F" title="F - Code bâtiment">{{code_batiment}}</span>
         </h2>
         <p class="edit langue textfield" max="11" id="B" title="B - Langue">{{langue}}</p>
