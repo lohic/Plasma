@@ -94,6 +94,13 @@ $(document).ready(function(){
 
 		e.preventDefault();
 	});
+
+	$('#pause_button').click(function(e){
+
+		$('body').toggleClass('pause');
+
+		e.preventDefault();
+	})
 });
 
 /**
@@ -101,6 +108,8 @@ $(document).ready(function(){
  * @return {null}
  */
 function refresh() {
+	if(!$('body').hasClass('pause')){
+
 	$now 		= new Date();
 
 	$("#now").text($now);
@@ -358,6 +367,7 @@ function loop_slideshow(){
 	}
 
     //load_slide('default',{"titre_ecran" : "test écran", "logo":true});
+    }
 }
 
 /**

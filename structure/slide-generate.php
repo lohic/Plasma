@@ -22,7 +22,7 @@
 		<p class="date"><span id="end"></span></p>
 		<p class="date"><span id="start"></span><span id="end"></span><?php //echo $this->ecran->actual_date_json; ?></p>
 		<p class="info">Informations</p>
-		<p><button id="exit_button">TOGGLE EXIT</button></p>
+		<p><button id="exit_button">TOGGLE EXIT</button> <button id="pause_button">TOGGLE PLAY/PAUSE</button></p>
 	</div>
 
 	<div id="template"></div>
