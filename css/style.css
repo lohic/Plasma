@@ -57,10 +57,21 @@ div.sequence-item{
     overflow: hidden;
     white-space : nowrap;
     color: #fff;
+    position: relative;
 }
 
 div.sequence-item.unpublished{
     opacity: 0.35;
+}
+
+div.sequence-item .suppr-item{
+    height: 16px;
+    width:16px;
+    top:8px;
+    right:8px;
+    position: absolute;
+    background: url('../graphisme/delete.png') 0 0 no-repeat;
+    opacity: 1;
 }
 
 /*

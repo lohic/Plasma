@@ -165,6 +165,7 @@ $('document').ready(function(){
         });
     })
     .click(function(e){
+        unselectSequenceItem();
         seqItemSelected = undefined;
     });
 
@@ -205,6 +206,10 @@ $('document').ready(function(){
 });
 
 
+function unselectSequenceItem(){
+    seqItemSelected = undefined;
+    $('.suppr-item').remove();
+}
 
 /**
  * Fonction servant à ajouter des items séquentiels triés par ordre
@@ -238,22 +243,56 @@ function addSequenceSlide(id,titre,id_slide,duree,template,className){
         }
         e.cancelBubble = true;
         // on séléctionne l'item
+        unselectSequenceItem();
         seqItemSelected = $(this);
-        seqItemSelected = undefined;
+        //seqItemSelected = undefined;
+        sequenceSlideSupressing();
     })
     .dblclick(function(e){
         if (e.stopPropagation) {
             e.stopPropagation();
         }
         e.cancelBubble = true;
+        unselectSequenceItem();
         // on séléctionne l'item
         seqItemSelected = $(this);
+        sequenceSlideSupressing();
         edit_item_sequence();
     });
 
     $('#sequenceContainer').append($item);
     // on rafraichit les dimentions des items
     refreshSequenceSlide();
+}
+
+/**
+ * [sequenceSlideSupressing description]
+ * @return {[type]} [description]
+ */
+function sequenceSlideSupressing(){
+    seqItemSelected.append(
+        $('<div/>')
+        .addClass('suppr-item')
+        .click(function(e){
+            $.ajax({
+                url         : "../ajax/data-sequence-item.php",
+                type        : "POST",
+                data        : {
+                    id:         seqItemSelected.data('id'),
+                    titre :     seqItemSelected.find('.timeline-event-content').text(),
+                    action:     'delete-item'
+                },
+                dataType    : 'json'
+            }).done(function ( dataJSON ) {
+
+                //console.log('OK OK sequence : ');
+                console.log(dataJSON);
+                seqItemSelected.remove();
+                unselectSequenceItem();
+            });
+            
+        })
+    );
 }
 
 /**
