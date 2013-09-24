@@ -17,8 +17,6 @@ body,td,th {
 	font-weight: bold;
 }
 
-
-
 body, #template{
      background-color:rgb(203,02,26);
      -webkit-transition: background-color 1000ms linear;
@@ -36,6 +34,7 @@ body.debug, body.debug #template{
 	cursor:auto;
 }
 
+/* affichage miniature */
 .tiny #template{
 	-webkit-transform:scale(0.3,0.3);
 	   -moz-transform:scale(0.3,0.3);
@@ -46,6 +45,10 @@ body.debug, body.debug #template{
 
 }
 
+/* console */
+.debug .console{
+	display : block;
+}
 
 .console{
 	display : none;
@@ -63,12 +66,16 @@ body.debug, body.debug #template{
 	font-family: 'monaco';
 }
 
-.console .red{
-	color:red;
+.console:hover{
+	background: rgba(255,255,0,1);
 }
 
-.debug .console{
-	display : block;
+.console p{
+	color:#000;
+}
+
+.console .red{
+	color:red;
 }
 
 .console button{
@@ -79,14 +86,8 @@ body.debug, body.debug #template{
 	margin-top:10px; 
 }
 
-.console:hover{
-	background: rgba(255,255,0,1);
-}
 
-.console p{
-	color:#000;
-}
-
+/* dimensions #template */
 #template{
 	min-width:720px;
 	min-height:1270px;

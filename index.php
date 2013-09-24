@@ -3,7 +3,7 @@
 //echo 'plasma<br/>';
 
 
-//include('vars/test.php');
+include('vars/config.php');
 
 
-header('Location: http://www.sciencespo.fr');
+header('Location: '.ABSOLUTE_URL.'admin-new');
