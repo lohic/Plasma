@@ -95,6 +95,7 @@ classes réservées pour le traitement JS :
 
 
 .header h1{
+	position: relative;
 	font-size:195px;
 	line-height:195px;
 	margin:0;
@@ -194,7 +195,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -170px);
+		-webkit-transform: translate(0px, -200px);
 	}
 }
 @-moz-keyframes moveHeaderExit{
@@ -202,7 +203,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -170px);
+		-moz-transform: translate(0px, -200px);
 	}
 }
 @keyframes moveHeaderExit{
@@ -210,7 +211,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -170px);
+		transform: translate(0px, -200px);
 	}
 }
 
@@ -288,10 +289,6 @@ classes réservées pour le traitement JS :
 
 @media screen and (orientation:landscape){
 
-	.header h1 {
-		margin-top:-32px;
-	}
-
 	#template{
 		width:1270px;
 		/*height:720px;*/
@@ -319,7 +316,7 @@ classes réservées pour le traitement JS :
 	}
 
 	.image, .header, .footer{
-		padding:0px 44px 0px 52px;
+		padding:0px 44px 30px 52px;
 		width:416px;
 		box-shadow:none;
 	}
@@ -328,8 +325,8 @@ classes réservées pour le traitement JS :
 		padding:0;
 	}
 
-	.header{
-		padding-bottom:30px;
+	.header h1 {
+		margin-top:-32px;
 	}
 
 	.footer{
