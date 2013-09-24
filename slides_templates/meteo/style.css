@@ -530,7 +530,8 @@ classes réservées pour le traitement JS :
 	float:left;
 	padding:26px 6.1% 24px;
 	position:relative;
-	width:87.8%;
+	/*width:87.8%;*/
+	width:100%;
 	margin-top:2px;
     z-index: 1;
 }
@@ -710,7 +711,7 @@ classes réservées pour le traitement JS :
     padding: 0 6.1%;
     position: relative;
     /*width: 87.8%;*/
-    width:82.4%;
+    width:-webkit-calc(100% - 108px);
     margin-top: 2px;
     z-index: 1;
 }
@@ -938,7 +939,8 @@ classes réservées pour le traitement JS :
 		box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
 		z-index:100;
 		height:100%;
-		width:736px;
+		/*width:736px;*/
+		width:100%;
 	}
 
 	#template{
@@ -983,7 +985,8 @@ classes réservées pour le traitement JS :
 	    height: 100%;
 	    margin-top: -3px;
 	    padding: 40px 0;
-	    width: 736px;
+	    /*width: 736px;*/
+	    width:-webkit-calc(100% - 544px);
 	}
 
 
@@ -1126,6 +1129,7 @@ classes réservées pour le traitement JS :
 		z-index:100;
 		height:100%;
 		width:736px;
+		width:-webkit-calc(100% - 544px);
 	}
 
 	#meteo2 .header{
@@ -1152,6 +1156,7 @@ classes réservées pour le traitement JS :
 		padding:40px 0px 40px;
 		float:left;
 		width: 764px;
+		width:-webkit-calc(100% - 544px);
 		height:100%;
 		margin-top:-3px;
 	}

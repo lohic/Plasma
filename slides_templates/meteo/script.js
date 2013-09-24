@@ -3,6 +3,10 @@
 
 
 
+var meteo1played = false;
+var nextMeteoDelay = 0;
+var rafraichissement ;
+
 $(document).ready(function(){
 
 	$('body, th, td, .header, .texte, .footer, .texte2, #template').removeAttr( 'style' );
@@ -16,7 +20,7 @@ function remplissage(){
 	// remplissage
 	// 
 	// 
-	main_zip = $('body').data('code_meteo');
+	main_zip = $('body').data('code-meteo');
 	console.log('meteo : '+main_zip);
 
 	var start = $start;
@@ -33,8 +37,6 @@ function remplissage(){
 	// écrits via php au début du template
 	
 	// on a aussi 'slide_duree' écrit en dur depuis la classe slideshow / generate_slide()
-	// 
-	// 
 	$.ajax({
 		type: "GET",
 		url: "../vars/meteo_json.txt",
@@ -92,20 +94,25 @@ function remplissage(){
 				}
 			}
 
-			$('#meteo1').show();
+			
 			
 			// timeout pour passer au 2ème slide
 			// slide_duree est transmis par structure/slideshow-javascript.php
 
-			nextMeteoDelay = Math.round((slide_duree-2000)/2);
+			nextMeteoDelay = Math.round((slide_duree-2)/2)*1000;
 
-			setTimeout(function(){
-				$('#meteo1').slideUp(600);
-				$('#meteo2').show();
-			}, nextMeteoDelay);
-
+			
+			$('#meteo1').show();
 			$('#meteo2').hide();
-
+			rafraichissement = setInterval( refreshMeteo , nextMeteoDelay );
 		}
 	});
+}
+
+
+function refreshMeteo(){
+	console.log('refresh meteo is meteo1played :'+meteo1played);
+
+	$('#meteo1').slideUp(600);
+	$('#meteo2').show();
 }

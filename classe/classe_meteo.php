@@ -63,7 +63,7 @@ class Meteo {
 		 
 		if(!file_exists($file) || @mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
 			
-			if(isset($_GET['debug'])){ echo ' Refresh from accuweather'; }
+			//if(isset($_GET['debug'])){ echo ' Refresh from accuweather'; }
 		
 			// on liste les établissements
 			$villes = $this->get_etablissements();
