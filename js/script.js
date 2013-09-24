@@ -935,7 +935,6 @@ function slide_preview(){
         });
     });
 
-
     $(".slide_view>a").mouseleave(function(){
         $('#preview_screen').hide();
         $('#preview_screen').attr('src', "");
@@ -972,7 +971,7 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
     
     // on vide le formulaire
     $("#myform").empty();
-    console.log("EDIT SLIDE : from "+edit_from+" : "+id_slide+" "+template+" "+titre);
+    //console.log("EDIT SLIDE : from "+edit_from+" : "+id_slide+" "+template+" "+titre);
 
     // on vérifie si on crée un slide ou si on le modifie
     var type_action = id_slide==0 ? 'create-slide' : 'update-slide';
@@ -997,7 +996,7 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
             }
         });
 
-
+        // TITRE DE LA FANCYBOX
         $(".fancybox-title h1").text( 'Éditeur de ' + $('#myform').attr('title') );
 
         // ON AJOUTE LE TITRE DU SLIDE QU'ON EDITE
@@ -1008,91 +1007,87 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
             event_selector();
         }
 
-                // ON AJOUTE LES BOUTONS
-                $(".fancybox-inner #myform").append("<button id='back_to_item'>Retour à l’item</button>");
-                $(".fancybox-inner #myform").append("<button id='save_slide'>Sauvegarde</button>");
+        // ON AJOUTE LES BOUTONS
+        $(".fancybox-inner #myform").append("<button id='save_slide'>Sauvegarde</button>");
 
-                // ON AFFICHE OU MASQUE LE BOUTON DE RETOUR À L'ITEM
-                if(typeof(ref_item) != 'undefined'){
-                    $("#back_to_item").click(function(e){
-                        e.preventDefault();
+        // ON AFFICHE OU MASQUE LE BOUTON DE RETOUR À L'ITEM
+        if(typeof(ref_item) != 'undefined'){
+            $(".fancybox-inner #myform").append("<button id='back_to_item'>Retour à l’item</button>");
+            $("#back_to_item").click(function(e){
+                e.preventDefault();
 
-                        if(edit_from=='timeline'){
-                            edit_item(ref_item);
-                        }
-                        else if(edit_from=='sequence'){
-                            edit_item_sequence();
-                        }
-                    });
-                }else{
-                    $("#back_to_item").hide();
+                if(edit_from=='timeline'){
+                    edit_item(ref_item);
                 }
+                else if(edit_from=='sequence'){
+                    edit_item_sequence();
+                }
+            });
+        }
 
-                // POUR DÉSACTIVER LE CLIC EXTÉRIEUR SUR FANCYBOX
-                $(".fancybox-overlay").unbind();
+        // POUR DÉSACTIVER LE CLIC EXTÉRIEUR SUR FANCYBOX
+        $(".fancybox-overlay").unbind();
 
-                // ON ITNIALISE TINYMCE
-                tinymce.init({
-                    selector: "textarea",
-                    toolbar: " ",
-                    menubar : false,
-                    entity_encoding : 'raw',    
-                });
+        // ON ITNIALISE TINYMCE
+        tinymce.init({
+            selector: "textarea",
+            toolbar: " ",
+            menubar : false,
+            entity_encoding : 'raw',    
+        });
 
-                // ACTIVATION DE UPLOADIFIVE
-                $(function() {
-                    $('input[type="file"]').uploadifive({
-                        'checkScript'       : '../js/uploadifive-v1.1.2-standard/check-exists.php',
-                        'multi'             : false,
-                        'formData'          : {
-                                               'timestamp' : $timestamp,
-                                               'token'     : $token
-                                              },
-                        'queueSizeLimit'    : 1,
-                        //'queueID'          : 'queue',
-                        'removeCompleted'   : true,
-                        'uploadScript'      : '../ajax/uploadifive.php',
-                        'onInit'            : function(){
+        // ACTIVATION DE UPLOADIFIVE
+        $(function() {
+            $('input[type="file"]').uploadifive({
+                'checkScript'       : '../js/uploadifive-v1.1.2-standard/check-exists.php',
+                'multi'             : false,
+                'formData'          : {
+                                       'timestamp' : $timestamp,
+                                       'token'     : $token
+                                      },
+                'queueSizeLimit'    : 1,
+                //'queueID'          : 'queue',
+                'removeCompleted'   : true,
+                'uploadScript'      : '../ajax/uploadifive.php',
+                'onInit'            : function(){
+                    
+                    // on affiche une vignette ou un texte si on trouve un média image ou vidéo
+                    $('input[type="file"]').each(function(){
+                        if( $(this).data('file') != undefined ) {
+
+                            var temp = $(this).data('file').split('.');
+                            var ext = temp[temp.length-1].toLowerCase();
                             
-                            // on affiche une vignette ou un texte si on trouve un média image ou vidéo
-                            $('input[type="file"]').each(function(){
-                                if( $(this).data('file') != undefined ) {
 
-                                    var temp = $(this).data('file').split('.');
-                                    var ext = temp[temp.length-1].toLowerCase();
-                                    
+                            $(this).before("<p>"+ $(this).data('file') + "</p>");
+                            $(this).parent().before("<div class='preview'></div>")
 
-                                    $(this).before("<p>"+ $(this).data('file') + "</p>");
-                                    $(this).parent().before("<div class='preview'></div>")
-
-                                    preview_media($(this), $(this).data('file'), ext);
-                                }
-                            });
-
-                            var attr = $(this).attr('name');
-                            $(this).attr('name', attr + "-old");
-                            $(this).data('old-name', attr);
-                            $(this).after( "<input type='hidden' name='" + attr + "' value='"+ $(this).data('file') +"'/>" );
-
-                        },
-                        'onUploadComplete'  : function(file,data) {
-
-                            info = JSON.parse(data);
-                            if(!info.error){
-                                $('input[name="'+ $(this).data('old-name') +'"]' ).val( info.file );
-
-                                preview_media($(this),info.file,info.ext);
-
-                                console.log("upload finished : "+info.file +" / type : "+info.ext);
-                                //$.fancybox.update();
-                                //$.fancybox.reposition();
-                            }else{
-                                alert( info.message );
-                            }
+                            preview_media($(this), $(this).data('file'), ext);
                         }
                     });
 
-                });
+                    var attr = $(this).attr('name');
+                    $(this).attr('name', attr + "-old");
+                    $(this).data('old-name', attr);
+                    $(this).after( "<input type='hidden' name='" + attr + "' value='"+ $(this).data('file') +"'/>" );
+
+                },
+                'onUploadComplete'  : function(file,data) {
+
+                    info = JSON.parse(data);
+                    if(!info.error){
+                        $('input[name="'+ $(this).data('old-name') +'"]' ).val( info.file );
+
+                        preview_media($(this),info.file,info.ext);
+
+                        //console.log("upload finished : "+info.file +" / type : "+info.ext);
+                    }else{
+                        alert( info.message );
+                    }
+                }
+            });
+
+        });
         
 
         // SAUVEGARDE DU SLIDE
@@ -1163,7 +1158,7 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                             action  : 'update-item'
                         }
                     }).done(function ( dataJSON ) {
-                        console.log(dataJSON);
+                        //console.log(dataJSON);
                     });
                 }
 
@@ -1202,8 +1197,8 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                         dataType    : 'json'
                     }).done(function ( dataJSON ) {
 
-                        //console.log('OK OK sequence : ');
-                        console.log(dataJSON);
+                        //console.log('sequence : ');
+                        //console.log(dataJSON);
                         refreshSequenceSlide();
                     });
                 }
@@ -1319,7 +1314,6 @@ function event_selector(){
     });
 
     var d = new Date();
-
     $("#year_event").val(d.getFullYear());
     $("#month_event").val(d.getMonth()+1);
 }
@@ -1352,7 +1346,7 @@ function refresh_event(){
     end_event = end_event[0]+"H"+end_event[1];
 
     //$('#myform input[name="type"]').val(            data_event);
-    $('#myform input[name="date_horaire"]').val( date_event + ", " +start_event + " - " + end_event );
+    $('#myform input[name="date_horaire"]').val(    date_event + ", " +start_event + " - " + end_event );
     $('#myform input[name="lieu"]').val(            data_event.sessions[id_session].lieu);
     $('#myform input[name="code_batiment"]').val(   data_event.sessions[id_session].code_batiment);
     $('#myform input[name="langue"]').val(          data_event.sessions[id_session].code_langue);
@@ -1394,10 +1388,8 @@ function downloadEventImage(url,id,month,year){
             month_event: month,
         }
     }).done(function ( dataJSON ) {
-        console.log("retour download : "+dataJSON);
-        //timeline.changeItem(ref_timeline, {
-        //    'id': dataJSON.id
-        //});
+        //console.log("retour download : "+dataJSON);
+
         $('#myform input[name="image"]').val(dataJSON.file);
 
         preview_media($('#myform input[name="image-old"]'), dataJSON.file, dataJSON.ext);
@@ -1421,7 +1413,6 @@ function loadEventFromAPI(param){
             month       : p_month,
             id_organisme: p_id_organisme,
             lang        : "fr",
-            //id_event       : p_id_event
         }
 
     }else{
@@ -1482,15 +1473,9 @@ function loadEventFromAPI(param){
                         $("#id_session").val(p_id_session);
 
                         loadEventFromAPI();
-                        //$("#id_session").prop("selectedIndex", 0);
                     }
                 }
             });
-
-            //event_selector.prop("selectedIndex", 0);
-            //organisme_selector.prop("selectedIndex", 0);
-
-            //$("#refresh_event").hide();
         }
 
         // détail d'un évéenement et des sessions attachées
@@ -1539,8 +1524,8 @@ function slide_selector(){
     }else if(slide_selector_from = 'sequence'){
         id = seqItemSelected.data('id_slide');
     }
-    console.log('SELECTEUR DE SLIDES from '+slide_selector_from+': '+id);
-    console.log($("#template_reference").val()+" "+ parseInt($("#mois_slide").val()) +" "+ parseInt($("#annee_slide").val()) + " "+slide_selector_refresh);
+    //console.log('SELECTEUR DE SLIDES from '+slide_selector_from+': '+id);
+    //console.log($("#template_reference").val()+" "+ parseInt($("#mois_slide").val()) +" "+ parseInt($("#annee_slide").val()) + " "+slide_selector_refresh);
 
     $.ajax({
         url     :"../ajax/data-timeline-slide.php",
@@ -1555,12 +1540,10 @@ function slide_selector(){
             slide_selector_refresh  : slide_selector_refresh
         }
     }).done(function ( dataJSON ) {
-        console.log(' ');
-        console.log('Info Slide :');
-        console.log(dataJSON);
-        /*timeline.changeItem(ref, {
-            'id': dataJSON
-        });*/
+        //console.log(' ');
+        //console.log('Info Slide :');
+        //console.log(dataJSON);
+
 
         if(slide_selector_refresh == true){
 
@@ -1815,7 +1798,6 @@ function second2HMS(duree){
 
     return retour;
 }
-
 
 
 
