@@ -56,7 +56,7 @@ body.debug, body.debug #template{
 	right: 0;
 	top: 0;
 	width:400px;
-	background: rgba(255,255,0,0.7);
+	background: rgba(255,255,0,0.5);
 	color: #000;
 	font-size: 15px;
 	font-weight: bold;
@@ -64,6 +64,7 @@ body.debug, body.debug #template{
 	margin:15px; 
 	z-index: 999;
 	font-family: 'monaco';
+	border: dashed 1px #FF0;
 }
 
 .console:hover{
@@ -84,6 +85,10 @@ body.debug, body.debug #template{
 	padding: 3px;
 	font-size: 15px;
 	margin-top:10px; 
+}
+
+.pause .console #now{
+	text-decoration: line-through;
 }
 
 

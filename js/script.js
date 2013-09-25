@@ -171,14 +171,15 @@ $('document').ready(function(){
 
     // GGestion du tri
     $( "#sequenceContainer" ).sortable({
-        axis: "x",
+        axis:   'x',
+        cancel: '.suppr-item',
         update: function( event, ui ) {
             $.ajax({
                 url         : "../ajax/data-sequence-item.php",
                 type        : "POST",
                 data        : {
-                    action:     'sort-item',
-                    id_tab:     JSON.stringify($( "#sequenceContainer" ).sortable( "toArray", { attribute : 'data-id' } ))
+                    action: 'sort-item',
+                    id_tab: JSON.stringify($( "#sequenceContainer" ).sortable( "toArray", { attribute : 'data-id' } )),
                 },
                 dataType    : 'json'
             }).done(function ( dataJSON ) {
@@ -186,10 +187,14 @@ $('document').ready(function(){
                 console.log('RETOUR TRI : ');
                 console.log(dataJSON.message);
             });
+        },
+        start: function( event, ui ) {
+            $('.suppr-item').remove();
         }
     });
+    //$('#sequenceContainer li' ).disableSelection();
     $('#sequenceTimeline').disableSelection();
-    $( "#sequenceContainer" ).disableSelection();
+    $('#sequenceContainer').disableSelection();
 
 
     // chargement des items sequentiels
@@ -209,6 +214,7 @@ $('document').ready(function(){
 function unselectSequenceItem(){
     seqItemSelected = undefined;
     $('.suppr-item').remove();
+    $('.selected').removeClass('selected');
 }
 
 /**
@@ -242,11 +248,11 @@ function addSequenceSlide(id,titre,id_slide,duree,template,className){
         if (e.stopPropagation) {
             e.stopPropagation();
         }
+        console.log(this);
         e.cancelBubble = true;
-        // on séléctionne l'item
         unselectSequenceItem();
+        // on séléctionne l'item
         seqItemSelected = $(this);
-        //seqItemSelected = undefined;
         sequenceSlideSupressing();
     })
     .dblclick(function(e){
@@ -271,29 +277,30 @@ function addSequenceSlide(id,titre,id_slide,duree,template,className){
  * @return {[type]} [description]
  */
 function sequenceSlideSupressing(){
-    seqItemSelected.append(
-        $('<div/>')
-        .addClass('suppr-item')
-        .click(function(e){
-            $.ajax({
-                url         : "../ajax/data-sequence-item.php",
-                type        : "POST",
-                data        : {
-                    id:         seqItemSelected.data('id'),
-                    titre :     seqItemSelected.find('.timeline-event-content').text(),
-                    action:     'delete-item'
-                },
-                dataType    : 'json'
-            }).done(function ( dataJSON ) {
+    seqItemSelected.addClass('selected');
 
-                //console.log('OK OK sequence : ');
-                console.log(dataJSON);
-                seqItemSelected.remove();
-                unselectSequenceItem();
-            });
-            
-        })
-    );
+    $('<div/>')
+    .addClass('suppr-item')
+    .click(function(e){
+        seqItemSelected.remove();
+        $.ajax({
+            url         : "../ajax/data-sequence-item.php",
+            type        : "POST",
+            data        : {
+                id:         seqItemSelected.data('id'),
+                titre :     seqItemSelected.find('.timeline-event-content').text(),
+                action:     'delete-item'
+            },
+            dataType    : 'json'
+        }).done(function ( dataJSON ) {
+
+            //console.log('OK OK sequence : ');
+            console.log(dataJSON);
+            //seqItemSelected.remove();
+            unselectSequenceItem();
+        });
+    })
+    .insertAfter(seqItemSelected);
 }
 
 /**
@@ -357,6 +364,7 @@ function edit_item_sequence(){
         $('#dureeHMS').text( second2HMS( parseInt($( "#duree" ).val()) ) );
     });
 
+    $template = seqItemSelected.data('template');
     
     // ------------------------------------
     slide_preview();
@@ -1523,8 +1531,10 @@ function slide_selector(){
 
     if(slide_selector_from == 'timeline'){
         id = dataTimeline[timeline_selected_item].id_slide;
+        $template = dataTimeline[timeline_selected_item].template;
     }else if(slide_selector_from = 'sequence'){
         id = seqItemSelected.data('id_slide');
+        $template = seqItemSelected.data('template');
     }
     //console.log('SELECTEUR DE SLIDES from '+slide_selector_from+': '+id);
     //console.log($("#template_reference").val()+" "+ parseInt($("#mois_slide").val()) +" "+ parseInt($("#annee_slide").val()) + " "+slide_selector_refresh);
@@ -1570,7 +1580,7 @@ function slide_selector(){
         });
 
         if(typeof(dataJSON.slide_info) != 'undefined' && slide_selector_refresh == true){
-            console.log("SLIDE DEFINI "+ dataJSON.slide_info.template);
+            console.log("SLIDE DEFINI : "+ dataJSON.slide_info.template);
             $("#annee_slide").val(parseInt(dataJSON.slide_info.annee));
             $("#mois_slide").val(parseInt(dataJSON.slide_info.mois));
             $("#template_reference").val(dataJSON.slide_info.template);
@@ -1580,10 +1590,19 @@ function slide_selector(){
             $('.slide_view>a').attr('href', $('.slide_view').data('absolute-url')+'slideshow/?slide_id='+dataJSON.slide_info.id+'&template='+dataJSON.slide_info.template);
 
         }else if(typeof(dataJSON.slide_info) == 'undefined' && slide_selector_refresh == true){
-            console.log("SLIDE DEFINI INDEFINI");
+            console.log("SLIDE INDEFINI : "+$template );
+
+            if($template == 'meteo'){
+                $("#template_reference").val($template);
+                $('.nometeo').hide();
+            }else{
+                $("#template_reference").prop("selectedIndex", 0);
+                $('.nometeo').show();
+            }
+
             $("#annee_slide").prop("selectedIndex", 0);
             $("#mois_slide").prop("selectedIndex", 0);
-            $("#template_reference").prop("selectedIndex", 0);
+            
             $("#id_slide").prop("selectedIndex", 0);
 
             slide_selector_refresh = false;
