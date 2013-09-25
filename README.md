@@ -25,43 +25,45 @@ var slides = [
 ];
 
 
-slides = slides.sort(function(a,b){
-    valeur =
-        (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
-         (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
-          
-          (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
-           (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
-            
-            (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
-             (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
-              
-              (a.ref_target == 'nat' && b.ref_target == 'ord' ? -1 :
-               (a.ref_target == 'ord' && b.ref_target == 'nat' ? 1 :
-                
-                (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-                 (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-                  
-                  (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-                   (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
-                    
-                    (a.ref_target == 'loc' && b.ref_target == 'ord' ? -1 :
-                     (a.ref_target == 'ord' && b.ref_target == 'loc' ? 1 :
-                      
-                      (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
-                       (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
-                        
-                        (a.ref_target == 'grp' && b.ref_target == 'ord' ? -1 :
-                         (a.ref_target == 'ord' && b.ref_target == 'grp' ? 1 :
-                          
-                          (a.ref_target == 'ecr' && b.ref_target == 'ord' ? -1 :
-                           (a.ref_target == 'ord' && b.ref_target == 'ecr' ? 1 :
-                            (a.start <= b.start ? -1 : 
-                             (a > b.start ? 1 :
-                              (a.order <= b.order ? -1 : 0 )))))))))))))))))))))));
-    
-    return valeur;
-					});
+$slides = $slides.sort(function(a,b){
+valeur =
+ (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
+  (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
+
+   (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+    (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+
+     (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+      (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+					    
+       (a.ref_target == 'nat' && b.ref_target == 'seq' ? -1 :
+        (a.ref_target == 'seq' && b.ref_target == 'nat' ? 1 :
+					    
+         (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+          (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+					    
+           (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+            (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+					    
+             (a.ref_target == 'loc' && b.ref_target == 'seq' ? -1 :
+              (a.ref_target == 'seq' && b.ref_target == 'loc' ? 1 :
+					    
+               (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+                (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+					    
+                 (a.ref_target == 'grp' && b.ref_target == 'seq' ? -1 :
+                  (a.ref_target == 'seq' && b.ref_target == 'grp' ? 1 :
+					    
+                   (a.ref_target == 'ecr' && b.ref_target == 'seq' ? -1 :
+                    (a.ref_target == 'seq' && b.ref_target == 'ecr' ? 1 :
+
+                     (a.start < b.start ? -1 : 
+                      (a.start > b.start ? 1 :
+
+                       (parseInt(a.ordre) <= parseInt(b.ordre) ? -1 : 1 )))))))))))))))))))))));
+
+                        return valeur;
+});
 
 console.log(slides);
 
