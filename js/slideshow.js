@@ -3,18 +3,13 @@
  * @author Loic Horellou
  */
 
-// console.log("Date js    "+new Date());
-// console.log("Date mysql "+new mysql2jsTimestamp('2013-08-25 19:58:30'));
-// var d1 = Date.createFromMysql("2011-02-20");
-// var d2 = Date.createFromMysql("2011-02-20 17:16:00");
-// alert("d1 year = " + d1.getFullYear());
 
 /**
- * Initialisation du javascritp et la boucle
+ * Initialisation du javascript et la boucle
  */
 $(document).ready(function(){
-	//var actual_date_json	='<?php //echo $this->ecran->actual_date_json; ?>';
-	
+
+	// variables par defaut
 	$plasma_id			= getUrlVars().plasma_id;
 	$actual_data_date	= '0000-00-00 00:00:00';
 	$actual_item_id		= 'undefined';
@@ -317,12 +312,9 @@ function loop_slideshow(){
 						if(i == $slides.length-1){
 							$last_ordre = 0;	
 						}
-
 					}
-
 				}
 			}
-
 		}
 
 
