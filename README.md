@@ -14,14 +14,16 @@ dev-Beta-2 : intègre les modifications liées à l'utilisation de la timeline d
 fonction de tri des écrans en javascript (http://jsfiddle.net/WDzXc/) :
 ```javascript
 var slides = [
-    {ref_target:'ecr',start:123,order:0},
-    {ref_target:'ord',start:0,order:2},
-    {ref_target:'grp',start:56,order:0},
-    {ref_target:'ord',start:0,order:1},
-    {ref_target:'ecr',start:98,order:0},
-    {ref_target:'loc',start:23,order:0},
-    {ref_target:'nat',start:9,order:0},
-    {ref_target:'nat',start:10,order:0}
+    {ref_target:'ecr',start:123,ordre:0},
+    {ref_target:'seq',start:0,ordre:2},
+    {ref_target:'grp',start:56,ordre:0},
+    {ref_target:'seq',start:0,ordre:1},
+    {ref_target:'seq',start:0,ordre:4},
+    {ref_target:'seq',start:0,ordre:3},
+    {ref_target:'ecr',start:98,ordre:0},
+    {ref_target:'loc',start:23,ordre:0},
+    {ref_target:'nat',start:9,ordre:0},
+    {ref_target:'nat',start:10,ordre:0}
 ];
 
 
