@@ -70,12 +70,6 @@ $('document').ready(function(){
             monthNames : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
         });
     });
-    
-    // on vérifie la présence d'une balise de timeline
-    if($('#dateTimeline').length != 0){
-        drawTimeline();
-    }
-
     /**
      * ---------------------------------
      * POUR GERER LES BOUTONS DE LA PAGE
@@ -138,76 +132,85 @@ $('document').ready(function(){
     slide_preview();
 
 
+    /**
+     * CREATION DE LA TIMELINE
+     * on vérifie la présence d'une balise de timeline
+     */    
+    if($('#dateTimeline').length != 0){
+        drawTimeline();
+    }
 
 
     /**
      * GESTION DES ITEMS SEQUENTIELS
+     * on vérifie que la timeline par séquence existe bien
      */
-    
-    // Pour ajouter un item
-    $('#sequenceTimeline').dblclick(function(e){
+    if($('#sequenceTimeline').length != 0){
+        // Pour ajouter un item
+        $('#sequenceTimeline').dblclick(function(e){
 
-        var ordre = parseInt($('.sequence-item').length)+1;
+            var ordre = parseInt($('.sequence-item').length)+1;
 
-        $.ajax({
-            url         : "../ajax/data-sequence-item.php",
-            type        : "POST",
-            data        : {
-                id_groupe:  $id_groupe,
-                ordre:      ordre ,
-                titre :     'Nouveau',
-                action:     'create-item'
-            },
-            dataType    : 'json'
-        }).done(function ( dataJSON ) {
-
-            addSequenceSlide(dataJSON.id,'Nouveau',0,30*60,'default','unpublished default');
-        });
-    })
-    .click(function(e){
-        unselectSequenceItem();
-        seqItemSelected = undefined;
-    });
-
-    // GGestion du tri
-    $( "#sequenceContainer" ).sortable({
-        axis:   'x',
-        cancel: '.suppr-item',
-        update: function( event, ui ) {
             $.ajax({
                 url         : "../ajax/data-sequence-item.php",
                 type        : "POST",
                 data        : {
-                    action: 'sort-item',
-                    id_tab: JSON.stringify($( "#sequenceContainer" ).sortable( "toArray", { attribute : 'data-id' } )),
+                    id_groupe:  $id_groupe,
+                    ordre:      ordre ,
+                    titre :     'Nouveau',
+                    action:     'create-item'
                 },
                 dataType    : 'json'
             }).done(function ( dataJSON ) {
 
-                console.log('RETOUR TRI : ');
-                console.log(dataJSON.message);
+                addSequenceSlide(dataJSON.id,'Nouveau',0,30*60,'default','unpublished default');
             });
-        },
-        start: function( event, ui ) {
-            $('.suppr-item').remove();
-        }
-    });
-    //$('#sequenceContainer li' ).disableSelection();
-    $('#sequenceTimeline').disableSelection();
-    $('#sequenceContainer').disableSelection();
-
-
-    // chargement des items sequentiels
-    $.ajax({
-        url         : "../ajax/data-sequence.php",
-        type        : "GET",
-        data        : {cache : timestamp, id_groupe: $id_groupe},
-        dataType    : 'json'
-    }).done(function ( dataJSON ) {
-        $.each(dataJSON, function(item) {
-            addSequenceSlide( dataJSON[item].id, dataJSON[item].titre, dataJSON[item].id_slide, dataJSON[item].duree, dataJSON[item].template, dataJSON[item].class );
+        })
+        .click(function(e){
+            unselectSequenceItem();
+            seqItemSelected = undefined;
         });
-    });
+
+        // GGestion du tri
+        $( "#sequenceContainer" ).sortable({
+            axis:   'x',
+            cancel: '.suppr-item',
+            update: function( event, ui ) {
+                $.ajax({
+                    url         : "../ajax/data-sequence-item.php",
+                    type        : "POST",
+                    data        : {
+                        action: 'sort-item',
+                        id_tab: JSON.stringify($( "#sequenceContainer" ).sortable( "toArray", { attribute : 'data-id' } )),
+                    },
+                    dataType    : 'json'
+                }).done(function ( dataJSON ) {
+
+                    console.log('RETOUR TRI : ');
+                    console.log(dataJSON.message);
+                });
+            },
+            start: function( event, ui ) {
+                $('.suppr-item').remove();
+            }
+        });
+        //$('#sequenceContainer li' ).disableSelection();
+        $('#sequenceTimeline').disableSelection();
+        $('#sequenceContainer').disableSelection();
+
+
+        // chargement des items sequentiels
+        $.ajax({
+            url         : "../ajax/data-sequence.php",
+            type        : "GET",
+            data        : {cache : timestamp, id_groupe: $id_groupe},
+            dataType    : 'json'
+        }).done(function ( dataJSON ) {
+            $.each(dataJSON, function(item) {
+                addSequenceSlide( dataJSON[item].id, dataJSON[item].titre, dataJSON[item].id_slide, dataJSON[item].duree, dataJSON[item].template, dataJSON[item].class );
+            });
+        });
+    }
 });
 
 
@@ -1273,6 +1276,9 @@ function event_selector(){
     $(".fancybox-inner").prepend(event_selector);
 
     if( $('#myform input[name="session_id"]').val() > 0 ){
+
+        console.log('id_session '+$('#myform input[name="session_id"]').val());
+
         $.ajax({
             url     :"../ajax/api-event.php",
             type    : "GET",
@@ -1334,7 +1340,7 @@ function event_selector(){
 function refresh_event(){
     //console.log(data_event);
 
-    var id_session = $("#id_session option:selected").index();
+    var id_session = $("#id_session option:selected").val();
 
     $("#slide_title").val( data_event.sessions[id_session].titre );
 
@@ -1422,7 +1428,8 @@ function loadEventFromAPI(param){
             year        : p_year,
             month       : p_month,
             id_organisme: p_id_organisme,
-            lang        : "fr",
+            lang        : "fr"
+            //id_event    : p_id_event
         }
 
     }else{

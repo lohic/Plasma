@@ -9,14 +9,18 @@ month       : 9,
 id_organisme: 1,
 lang        : "fr"*/
 
-$param['lang']			= "fr";
-$param['year'] 			= !empty($_GET['year']) 	 	? $_GET['year'] 		: date('Y');
-$param['month'] 		= !empty($_GET['month']) 		? $_GET['month'] 		: date('m');
-$param['id_organisme']  = !empty($_GET['id_organisme']) ? $_GET['id_organisme'] : 1;
-$param['event']  		= !empty($_GET['id_event']) 	? $_GET['id_event'] 	: NULL;
-$param['session']  		= !empty($_GET['session']) 		? $_GET['session'] 		: NULL;
+if(empty($_GET['session'])){
+	$param['lang']			= "fr";
+	$param['year'] 			= !empty($_GET['year']) 	 	? $_GET['year'] 		: date('Y');
+	$param['month'] 		= !empty($_GET['month']) 		? $_GET['month'] 		: date('m');
+	$param['id_organisme']  = !empty($_GET['id_organisme']) ? $_GET['id_organisme'] : 1;
+	$param['event']  		= !empty($_GET['id_event']) 	? $_GET['id_event'] 	: NULL;
+}else{
+	$param['session']  		= !empty($_GET['session']) 		? $_GET['session'] 		: NULL;
+}
 
 $url = array();
+
 
 foreach ($param as $key => $value) {
 	if($value!=NULL && $value!='NULL'){
@@ -28,6 +32,8 @@ foreach ($param as $key => $value) {
 		$url[] = $key;
 	}
 }
+
+
 
 $req = '?' . implode('&',$url);
 
