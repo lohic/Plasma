@@ -1,12 +1,12 @@
 <?php
 include_once('../vars/config.php');
-include_once('../vars/statics_vars.php');
-include_once('../classe/classe_core.php');
-include_once('../classe/classe_playlist.php');
-include_once('../classe/classe_slide.php');
-include_once('../classe/classe_slideshow.php');
-include_once('../classe/classe_ecran.php');
-include_once('../classe/classe_fonctions.php');
+include_once(REAL_LOCAL_PATH.'vars/statics_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_core.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_playlist.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_slide.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_slideshow.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_ecran.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
 $core = new core();
 
@@ -66,16 +66,12 @@ $ecran 		= new Ecran($id_plasma);
     <!-- FANCYBOX -->
     <script type="text/javascript" src="../js/jquery.mousewheel-3.0.6.pack.js"></script>
     <script type="text/javascript" src="../js/jquery.fancybox.pack.js?v=2.1.5"></script>
-	<!--<script type="text/javascript" src="../js/json-minified.js"></script>-->
-	<!--<script type="text/javascript" src="../js/splitter.js"></script>-->
-	<script type="text/javascript" src="../js/fonctions.js"></script>
+
+	<!--<script type="text/javascript" src="../js/fonctions.js"></script>-->
 	<!-- UPLOADIFIVE -->
     <script type="text/javascript" src="../js/uploadifive-v1.1.2-standard/jquery.uploadifive.js"></script>
 	<!-- SLiDES -->
-	<!--<script type="text/javascript" src="../js/jquery.upload-1.0.2.min.js"></script>-->
-	<!--<script language="javascript" type="text/javascript" src="../js/slide.setInputs.js"></script>-->
-	<!--<script language="javascript" type="text/javascript" src="../js/slide.contentParser.js"></script>-->
-	<!--<script type="text/javascript" src="../js/slide.compteur-field.js"></script>-->
+
 
 	<script type="text/javascript" src="../js/script.js"></script>
 
@@ -107,69 +103,69 @@ $ecran 		= new Ecran($id_plasma);
 		// SI ON N'EST PAS EN MODE ADMIN
 	    // LE MENU D'IDENTIFICATION
 
-			include_once('../structure/header.php'); 
-			include_once('../structure/login.php');    
+			include_once(REAL_LOCAL_PATH.'structure/header.php'); 
+			include_once(REAL_LOCAL_PATH.'structure/login.php');    
 
 	    }else{
 
 		// SINON
 		// LE MENU GENERAL 
 
-			include_once('../structure/header.php');
-	    	include_once('../structure/menu.php');
+			include_once(REAL_LOCAL_PATH.'structure/header.php');
+	    	include_once(REAL_LOCAL_PATH.'structure/menu.php');
 
 			switch($_GET['page']){
 
 				case 'playlist_select' :
-					include_once('../structure/playlist-select.php');
+					include_once(REAL_LOCAL_PATH.'structure/playlist-select.php');
 				break;
 
 				case 'playlist_create' : case 'playlist_modif' : 
-					include_once('../structure/playlist-modif.php');
+					include_once(REAL_LOCAL_PATH.'structure/playlist-modif.php');
 				break;
 
 				case 'slides_select' :
-					include_once('../structure/slide-select.php');
+					include_once(REAL_LOCAL_PATH.'structure/slide-select.php');
 				break;
 
 				case 'slide_create' : case 'slide_modif' :
-					include_once('../structure/slide-modif.php');
+					include_once(REAL_LOCAL_PATH.'structure/slide-modif.php');
 				break;
 
 				case 'slide_template' :
-					include_once('../structure/slide-templates.php');
+					include_once(REAL_LOCAL_PATH.'structure/slide-templates.php');
 				break;
 
 				case 'ecrans' :
-					include_once('../structure/plasma-select.php');
+					include_once(REAL_LOCAL_PATH.'structure/plasma-select.php');
 				break;
 
 				case 'ecrans_modif' : case 'ecran_create' :
-					include_once('../structure/plasma-modif.php');
+					include_once(REAL_LOCAL_PATH.'structure/plasma-modif.php');
 				break;
 				
 				case 'ecrans_groupe_modif' : case 'ecrans_groupe_create' :
-					include_once('../structure/plasma-groupe-modif.php');
+					include_once(REAL_LOCAL_PATH.'structure/plasma-groupe-modif.php');
 				break;
 
 				case 'etablissements' :
-					include_once('../structure/etablissements.php');
+					include_once(REAL_LOCAL_PATH.'structure/etablissements.php');
 				break;
 				
 				case 'options' :
-					include_once('../structure/admin-options.php');
+					include_once(REAL_LOCAL_PATH.'structure/admin-options.php');
 				break;
 
 				case 'comptes' :
-					include_once('../structure/admin-comptes.php');
+					include_once(REAL_LOCAL_PATH.'structure/admin-comptes.php');
 				break;
 
 				case 'organismes' :
-					include_once('../structure/admin-organismes.php');
+					include_once(REAL_LOCAL_PATH.'structure/admin-organismes.php');
 				break;
 
 				default :
-					include_once('../structure/plasma-select.php');
+					include_once(REAL_LOCAL_PATH.'structure/plasma-select.php');
 				break;
 			}
 		?>

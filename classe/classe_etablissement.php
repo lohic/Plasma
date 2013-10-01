@@ -1,22 +1,22 @@
 <?php
 
-include_once('../vars/config.php');
-include_once('classe_connexion.php');
-include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('connexion_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
 
+/**
+ * 
+ */
 class Etablissement {
 	
 	var $news_db		= NULL;
 	var $id				= NULL;
 	
 	/**
-	* GESTION DES ORGANISMES
-	*
-	*
-	*/
+	 * GESTION DES ORGANISMES
+	 * @param  [type] $_id [description]
+	 * @return [type]      [description]
+	 */
 	function etablissement($_id=NULL){
 		global $connexion_info;
 		$this->news_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
@@ -62,8 +62,9 @@ class Etablissement {
 	}
 	
 	/**
-	* execution des fonctions de mise à jour
-	*/
+	 * execution des fonctions de mise à jour
+	 * @return [type] [description]
+	 */
 	private function updater(){
 		
 		if(isset($_POST['suppr_etablissement']) && $_POST['suppr_etablissement'] == 'ok'){
@@ -97,11 +98,10 @@ class Etablissement {
 
 	
 	
-	/*
-	@ RECUPERE LA LISTE DES ORGANISMES
-	@
-	@
-	*/
+	/**
+	 * RECUPERE LA LISTE DES ORGANISMES
+	 * @return [type] [description]
+	 */
 	function get_etablissement_edit_liste(){
 		$this->news_db->connect_db();
 
@@ -126,6 +126,10 @@ class Etablissement {
 		}
 	}
 	
+	/**
+	 * [get_etablissement_liste description]
+	 * @return [type] [description]
+	 */
 	function get_etablissement_liste(){
 		$this->news_db->connect_db();
 
@@ -151,9 +155,10 @@ class Etablissement {
 	
 	
 	/**
-	* SUPPRIME UN ETABLISSEMENT
-	* @param $id
-	*/
+	 * SUPPRIME UN ETABLISSEMENT
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
 	function suppr_etablissement($id=NULL){
 		if(isset($id)){
 			$this->news_db->connect_db();
@@ -165,7 +170,3 @@ class Etablissement {
 	}
 
 }
-	
-	
-
-?>

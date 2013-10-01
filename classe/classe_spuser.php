@@ -11,11 +11,14 @@ login
 password
 */
 
-
 include_once('../vars/config.php');
-include_once('classe_connexion.php');
-include_once('classe_fonctions.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
+
+/**
+ * 
+ */
 class Spuser {
 
 
@@ -35,6 +38,12 @@ class Spuser {
 	var $groupe;
 	var $userLevel;
 
+
+	/**
+	 * [spuser description]
+	 * @param  [type] $connexion [description]
+	 * @return [type]            [description]
+	 */
 	function spuser($connexion){
 
 		$this->isAdmin		= false;
@@ -121,11 +130,12 @@ class Spuser {
 		
 	}
 	
-	/*
-	@ On vérifie avant tout si il s'agit d'un compte LDAP
-	@
-	@
-	*/
+	/**
+	 * On vérifie avant tout si il s'agit d'un compte LDAP
+	 * @param  [type]  $login    [description]
+	 * @param  [type]  $password [description]
+	 * @return boolean           [description]
+	 */
 	function isLDAP($login=NULL,$password=NULL){
 				
 		if(IS_LDAP_SERVER){
@@ -190,11 +200,12 @@ class Spuser {
 		}
 	}
 		
-	/*
-	@ fonction de connexion au LDAP	
-	@
-	@
-	*/
+	/**
+	 * fonction de connexion au LDAP	
+	 * @param  [type] $login    [description]
+	 * @param  [type] $password [description]
+	 * @return [type]           [description]
+	 */
 	function connectLDAP($login=NULL,$password=NULL){
 		// Eléments d'authentification LDAP
 		
@@ -259,11 +270,12 @@ class Spuser {
 		return $retour;
 	}
 	
-	/*
-	@ Connecte un compte email
-	@
-	@
-	*/
+	/**
+	 * Connecte un compte email
+	 * @param  [type] $login    [description]
+	 * @param  [type] $password [description]
+	 * @return [type]           [description]
+	 */
 	function check_login($login=NULL,$password=NULL){
 		//$this->connexion->connect_db();
 		
@@ -323,11 +335,10 @@ class Spuser {
 		}
 	}
 
-	/*
-	@ LOGOUT DE L'ADMINISTRATION
-	@
-	@
-	*/
+	/**
+	 * LOGOUT DE L'ADMINISTRATION
+	 * @return [type] [description]
+	 */
 	function logout(){
 		$this->id			= NULL;
 		$this->login		= NULL;
@@ -347,11 +358,10 @@ class Spuser {
 		session_destroy();
 	}
 
-	/*
-	@ RECUPERATION DES INFORMATIONS D'UN UTILISATEUR
-	@
-	@
-	*/
+	/**
+	 * RECUPERATION DES INFORMATIONS D'UN UTILISATEUR
+	 * @return [type] [description]
+	 */
 	function get_user_info(){
 		if($this->isAdmin){
 			$retour = NULL;
@@ -379,11 +389,11 @@ class Spuser {
 		}
 	}
 	
-	/*
-	@ MISE A JOUR D'UN UTILISATEUR
-	@
-	@
-	*/
+	/**
+	 * MISE A JOUR D'UN UTILISATEUR
+	 * @param  [type] $_array_val [description]
+	 * @return [type]             [description]
+	 */
 	function modify_user($_array_val=NULL){
 		if($this->isAdmin){
 			
@@ -413,11 +423,10 @@ class Spuser {
 		}
 	}
 	
-	/*
-	@ CREE D'UN UTILISATEUR
-	@
-	@
-	*/
+	/**
+	 * CREE D'UN UTILISATEUR
+	 * @param [type] $_array_val [description]
+	 */
 	function add_user($_array_val=NULL){
 		if($this->isAdmin){
 					
@@ -439,11 +448,11 @@ class Spuser {
 		}
 	}
 	
-	/*
-	@ edition de destinataire
-	@
-	@
-	*/
+	/**
+	 * ajout d'un groupe d'utilisateurs
+	 * @param [type] $_id_user      [description]
+	 * @param [type] $_array_groupe [description]
+	 */
 	function add_groupe_user($_id_user=NULL, $_array_groupe=NULL){
 		if(!empty($_id_user) && !empty($_array_groupe)){
 			$this->clean_groupe($_id_user);
@@ -459,11 +468,11 @@ class Spuser {
 		}
 	}
 	
-	/*
-	@ supprime toutes les liaisons entre un utilisateur et un groupe
-	@
-	@
-	*/
+	/**
+	 * supprime toutes les liaisons entre un utilisateur et un groupe
+	 * @param  [type] $_id_user [description]
+	 * @return [type]           [description]
+	 */
 	function clean_groupe($_id_user=NULL){	
 		if(!empty($_id_user)){
 			$this->connexion->connect_db();
@@ -476,11 +485,11 @@ class Spuser {
 		}
 	}
 	
-	/*
-	@ supprime un compte utilisateur et ses liaisons aux groupes
-	@
-	@
-	*/
+	/**
+	 * supprime un compte utilisateur et ses liaisons aux groupes
+	 * @param  [type] $_id_user [description]
+	 * @return [type]           [description]
+	 */
 	function suppr_user($_id_user=NULL){	
 		if(!empty($_id_user)){
 			$this->connexion->connect_db();
@@ -496,11 +505,11 @@ class Spuser {
 	
 	
 	
-	/*
-	@ TYPE DE VARIABLES MYSQL ATTENDUES
-	@
-	@
-	*/
+	/**
+	 * TYPE DE VARIABLES MYSQL ATTENDUES
+	 * @param  [type] $tab [description]
+	 * @return [type]      [description]
+	 */
 	function get_post_value($tab){
 
 		$titre_item_attendu = array('password',	'type',	'nom',	'prenom',	'email',	'groupe',	'account_type');
@@ -519,11 +528,10 @@ class Spuser {
 		return $tab;
 	}
 
-	/*
-	@ RETOURNE LA LISTE DES GROUPES D'UTILISATEUR
-	@
-	@
-	*/
+	/**
+	 * RETOURNE LA LISTE DES GROUPES D'UTILISATEUR
+	 * @return [type] [description]
+	 */
 	function get_groups(){		
 		$query	= sprintf("SELECT g.id as id, g.libelle AS libelle, g.type AS type, g.id_organisme AS id_organisme
 							FROM ".TB."user_groupes_tb g, ".TB."user_tb u, ".TB."rel_user_groupe_tb r
@@ -568,11 +576,10 @@ class Spuser {
 		return $group;
 	}
 	
-	/*
-	@ RETOURNE LA LISTE DES UTILISATEURS POUR LES MODIFIER
-	@
-	@
-	*/
+	/**
+	 * RETOURNE LA LISTE DES UTILISATEURS POUR LES MODIFIER
+	 * @return [type] [description]
+	 */
 	function get_user_list(){
 		$sql_liste_user = 'SELECT * FROM '.TB.'user_tb ORDER BY account_type DESC, nom';
 		$sql_liste_user_query = mysql_query($sql_liste_user) or die(mysql_error());
@@ -604,20 +611,18 @@ class Spuser {
 		}
 	}
 	
-	/*
-	@ RECUPERATION DES GROUPES DE CONTACT
-	@
-	@
-	*/
+	/**	
+	 * RECUPERATION DES GROUPES DE CONTACT
+	 * @param  [type] $_id     [description]
+	 * @param  [type] $id_user [description]
+	 * @return [type]          [description]
+	 */
 	function get_groupe($_id=NULL,$id_user=NULL){
 		
 		$sql_liste_groupe	= 'SELECT * FROM '.TB.'user_groupes_tb ORDER BY libelle';
 		$sql_liste_groupe_query = mysql_query($sql_liste_groupe) or die(mysql_error());
 		
 	
-			
-		
-
 		while ($groupe = mysql_fetch_assoc($sql_liste_groupe_query)){
 
 			// instanciation
@@ -654,11 +659,10 @@ class Spuser {
 	}
 
 
-	/*
-	@ RECUPERATION DU NIVEAU D'ADMINISTRATION
-	@
-	@
-	*/
+	/**
+	 * RECUPERATION DU NIVEAU D'ADMINISTRATION
+	 * @return [type] [description]
+	 */
 	function get_admin_level(){
 		$sql_liste_level	= 'SELECT * FROM '.TB.'user_level_tb ORDER BY level';
 		$sql_liste_level_query = mysql_query($sql_liste_level) or die(mysql_error());
@@ -673,11 +677,9 @@ class Spuser {
 	}
 	
 	
-	/*
-	@ TESTE SI UTILISATEUR A BIEN LE DROIT D'ETRE SUR LA PLATEFORME 
-	@ ET RECUPERE SON NIVEAU D'ADMINISTRATEUR LE CAS ÉCHÉANT
-	@
-	*/
+	/**
+	 * TESTE SI UTILISATEUR A BIEN LE DROIT D'ETRE SUR LA PLATEFORME ET RECUPERE SON NIVEAU D'ADMINISTRATEUR LE CAS ÉCHÉANT
+	 */
 	function isAuthorised(){
 		
 		if($this->LDAP){

@@ -1,22 +1,26 @@
 <?php
 
 include_once('../vars/config.php');
-include_once('classe_connexion.php');
-include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('connexion_vars.php');
-//include_once('../vars/statics_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
+
+/**
+ * 
+ */
 class Slide {
 	
 	var $slide_db		= NULL;
 	var $id				= NULL;
 	var $func			= NULL;
 	
+
 	/**
 	 * GESTION DES TEMPLATE
-	 * LOIC
-	 * 18/07/2012
+	 * @param  [type] $_id [description]
+	 * @return [type]      [description]
+	 * @author Loïc Horellou
+	 * @since 18/07/2012
 	 */
 	function slide($_id=NULL){
 		global $connexion_info;
@@ -31,11 +35,11 @@ class Slide {
 		// une fonction statique n'a pas a être instanciée
 		$this->slide_update_data();
 	}
-	
+
+
 	/**
 	 * mise à jour des informations d'un slide
-	 * LOIC
-	 * 18/07/2012
+	 * @return [type] [description]
 	 */
 	function slide_update_data(){
 		
@@ -67,10 +71,9 @@ class Slide {
 	
 	/**
 	 * creation ou modification d'un slide
-	 * LOIC
-	 * 18/07/2012
-	 * mod Gildas 
-	 * 19/07/2012
+	 * @param  [type] $_array_val [description]
+	 * @param  [type] $_id        [description]
+	 * @return [type]             [description]
 	 */
 	function update_slide($_array_val,$_id=NULL){
 		$this->slide_db->connect_db();
@@ -91,9 +94,7 @@ class Slide {
 					// image
 					$data = '<img src=\\\\\\\\"'.$_POST[$field].'\\\\\\\\" />';
 				
-				/*} else if($field == 'K'){
-					// checkbox
-					*/
+
 				
 				} else {
 					// encodage normal
@@ -118,10 +119,8 @@ class Slide {
 	
 	/**
 	 * creation d'un slide
-	 * @author LOIC
-	 * 18/07/2012
-	 * mod Gildas 
-	 * 11/10/2012
+	 * @param  [type] $_array_val [description]
+	 * @return [type]             [description]
 	 */
 	function create_slide($_array_val){
 		$this->slide_db->connect_db();
@@ -161,9 +160,11 @@ class Slide {
 		
 	}
 	
+
+
 	/**
-	 * GILDAS
-	 * 11/10/2012
+	 * [create_slide_folders description]
+	 * @return [type] [description]
 	 */
 	function create_slide_folders(){
 		$this->slide_db->connect_db();
@@ -194,10 +195,8 @@ class Slide {
 	
 	/**
 	 * suprression d'un slide
-	 * @author LOIC
-	 * @date 18/07/2012
-	 * mod Gildas 
-	 * 11/10/2012
+	 * @param  [type] $_id [description]
+	 * @return [type]      [description]
 	 */
 	function suppr_slide($_id=NULL){
 		$this->slide_db->connect_db();
@@ -218,9 +217,10 @@ class Slide {
 	
 	/**
 	 * listage des slides existants
-	 * @author LOIC
-	 * mod GILDAS
-	 * @date 19/07/2012
+	 * @param  [type] $template [description]
+	 * @param  [type] $annee    [description]
+	 * @param  [type] $mois     [description]
+	 * @return [type]           [description]
 	 */
 	function get_slide_edit_liste($template=NULL,$annee=NULL,$mois=NULL){
 		
@@ -266,13 +266,15 @@ class Slide {
 		
 	}
 	
+
 	/**
 	 * get_slide_popup_liste listage des slides existants pour la selection dans la gestion ecran
+	 * @param type $template 
+	 * @param type $annee 
+	 * @param type $mois 
+	 * @param type $id_selected 
+	 * @return type
 	 * @author Loïc Horellou
-	 * @param $template
-	 * @param $annee
-	 * @param $mois
-	 * @param $id_selected
 	 */
 	function get_slide_popup_liste($template=NULL,$annee=NULL,$mois=NULL,$id_selected=NULL){
 		
@@ -317,8 +319,7 @@ class Slide {
 		
 		$retour .= '</ul>';
 		
-		return $retour;
-		
+		return $retour;		
 	}
 	
 	
@@ -344,9 +345,9 @@ class Slide {
 		$retour->json				= $slide_item['json'];
 		$retour->date				= $slide_item['date'];
 		$retour->icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/vignette.gif';
-		$retour->chemin				= LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/index.php';
-		$retour->css				= LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/style.css';
-		$retour->script				= LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/script.js';
+		$retour->chemin				= REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/index.php';
+		$retour->css				= REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/style.css';
+		$retour->script				= REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER.$slide_item['template'].'/script.js';
 		
 		// chemin vers le dossier d'images et pièces jointes : annee/mois/id
 		$retour->uploads			= str_replace('-', '/', substr($slide_item['date'], 0, 7)) . '/' . $slide_item['id'];
@@ -357,7 +358,8 @@ class Slide {
 	
 	/**
 	 * retourne la liste des slideshows
-	 * @param {$admin_groupe}
+	 * @param  [type] $admin_groupe [description]
+	 * @return [type]               [description]
 	 */
 	static function get_slide_template_list($admin_groupe=NULL){
 		//echo 'liste des slideshows';
@@ -374,9 +376,7 @@ class Slide {
 				}
 		}
 		
-		$array = $templateListe;
-		
-		
+		$array = $templateListe;	
 		
 		return $array;
 	}
@@ -384,8 +384,8 @@ class Slide {
 	
 	/**
 	 * creation du formulaire d'édition de slide
-	 * @author GILDAS
-	 * @date 19/07/2012
+	 * @author Gildas Paubert
+	 * @since 19/07/2012
 	 * MOD GILDAS
 	 * 11/10/2012
 	 */
@@ -545,6 +545,11 @@ class Slide {
 	
 	/**
 	 * récupération du flux d'événéments
+	 * @param type $id_organisme 
+	 * @param type $year 
+	 * @param type $month 
+	 * @param type $lang 
+	 * @return type
 	 */
 	function get_event_list($id_organisme=NULL,$year=NULL,$month=NULL,$lang='fr'){
 		
@@ -561,8 +566,9 @@ class Slide {
 	
 	/**
 	 * récupération d'un d'événément
-	 * LOIC
-	 *
+	 * @param  [type] $id   [description]
+	 * @param  string $lang [description]
+	 * @return [type]       [description]
 	 */
 	function get_event_data($id=NULL,$lang='fr'){
 		$this->slide_db->connect_db();
@@ -831,8 +837,6 @@ class Slide {
 	function get_timeline_items($id_groupe=NULL, $user_level=10){
 
 		if(!empty($id_groupe)){
-
-			//$query			= sprintf('SELECT * FROM '.TB.'timeline_item_tb'); //echo $sql_slide;	
 			
 			$query			= sprintf("SELECT E.code_postal
 										FROM 	sp_plasma_ecrans_groupes_tb AS G,
@@ -888,6 +892,7 @@ class Slide {
 
 			while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
 				$editable = false;
+
 				/*if($slide_item['ref_target'] == 'nat' && $user_level == 1){
 					$editable = true;
 				}else if($slide_item['ref_target'] == 'loc' && $user_level == 1){
@@ -1170,21 +1175,20 @@ class Slide {
 	 * @return [type]              [description]
 	 */
 	function alert_by_mail($id_target,$action = 'créée'){
-		$niveau = 1;
+		$user_level = 1;
 		
 		$sql			= sprintf("SELECT *
 									FROM ".TB."user_tb
-									WHERE type = %s", 	func::GetSQLValueString($niveau,'int'));
+									WHERE type <= %s", 	func::GetSQLValueString($user_level,'int'));
 																		
 		$sql_query		= mysql_query($sql) or die(mysql_error());							
 		$nbr			= mysql_num_rows($sql_query);
 				
-		$headers  	= 'MIME-Version: 1.0'."\r\n";
-		$headers	.= 'Content-type: text/html; charset=UTF-8'."\r\n";
+		$headers  	 = "MIME-Version: 1.0\r\n";
+		$headers	.= "Content-type: text/html; charset=UTF-8\r\n";
 		$headers	.= "From:noreply-plasma@sciencespo.fr\r\n";
-		//$headers	.= "Reply-To:".$mail_header->reply_to."\r\n";
 		
-		$url = ABSOLUTE_URL.'admin-new/?page=ecrans_groupe_modif&id_groupe='.$id_target ;
+		$url		= ABSOLUTE_URL.'admin-new/?page=ecrans_groupe_modif&id_groupe='.$id_target ;
 	
 		$message 	= 'Une alerte a été '.$action.'! <br/>Vous pouvez le consulter <a href="'.$url.'">en cliquand ici</a>' ;
 		$objet		= 'PLASMA - Alerte sur un groupe!';
@@ -1194,7 +1198,6 @@ class Slide {
 			$sentOk = mail($info['email'],$objet,$message,$headers);
 			
 		}
-		
 	}
 
 	/**
@@ -1262,8 +1265,6 @@ class Slide {
 			$template 	= $templates[0];
 		}
 
-		//echo $mois." ".$annee." ".$template;
-
 		$sql			= sprintf("SELECT id, nom 
 									FROM ".TB."timeline_slides_tb
 									WHERE MONTH(date)=%s 
@@ -1288,9 +1289,7 @@ class Slide {
 			$retour->liste_slides[$row['id']] = $temp;
 		}
 
-
 		echo json_encode($retour);
-
 	}
 
 
@@ -1306,13 +1305,9 @@ class Slide {
         //echo '<ol>';
         foreach($ffs as $ff){
             if($ff != '.' && $ff != '..' && substr($ff, 0, 1)!= '.' && $ff != 'default'){
-                //echo '<li>'.$ff;
-                //if(is_dir($dir.'/'.$ff) && $recursif ) listFolderFiles($dir.'/'.$ff);
-                //echo '</li>';
                 $temp[] = $ff;
             }
         }
-        //echo '</ol>';
         return json_encode($temp);
     }
 }

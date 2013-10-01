@@ -1,22 +1,25 @@
 <?php
 
+/**
+ * 
+ */
 class Func {
 	
 
-	/*
-	@ GESTION DES FONCTIONS
-	@
-	@
-	*/
+	/**
+	 * Classe de fonctions génériques
+	 */
 	function func(){
-		
+		// rien
 	}
 	
-	/*
-	@ CONVERSION DES CHAINES ENVOYEES PAR LES FORMULAIRES
-	@
-	@
-	*/
+	/**
+	 * CONVERSION DES CHAINES ENVOYEES PAR LES FORMULAIRES from dreamweaver
+	 * @param [type] $theValue           [description]
+	 * @param [type] $theType            [description]
+	 * @param string $theDefinedValue    [description]
+	 * @param string $theNotDefinedValue [description]
+	 */
 	static function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = ""){
 		if (PHP_VERSION < 6) {
 			$theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
@@ -52,11 +55,11 @@ class Func {
 	}
 	
 	
-	/*
-	@ CONVERSION DES URLs EN LIENS CLICABLES
-	@
-	@
-	*/
+	/**
+	 * CONVERSION DES URLs EN LIENS CLICABLES
+	 * @param  [type] $texte [description]
+	 * @return [type]        [description]
+	 */
 	static function formatage($texte){
 		
 		if (ereg("[\"|'][[:alpha:]]+://",$texte) == false){
@@ -69,11 +72,15 @@ class Func {
 	
 	
 	
-	/*
-	@ CREER UN ELEMENT DE FORMULAIRE COMBOBOX A PARTIR D'UN TABLEAU
-	@
-	@
-	*/
+	/**
+	 * CREER UN ELEMENT DE FORMULAIRE COMBOBOX A PARTIR D'UN TABLEAU php
+	 * @param  [type]  $array       [description]
+	 * @param  string  $name        [description]
+	 * @param  [type]  $id          [description]
+	 * @param  [type]  $additionnal [description]
+	 * @param  boolean $isnull      [description]
+	 * @return [type]               [description]
+	 */
 	static function createSelect($array, $name='', $id = NULL, $additionnal=NULL, $isnull=true){
 		
 		if(isset($additionnal)){$add = $additionnal; }else{ $add = '';};
@@ -98,11 +105,14 @@ class Func {
 		return $selectItem;
 	}
 	
-	/*
-	@ FONCTION POUR CREER UN COMBOBOX A PARTIR D'UN DOSSIER
-	@
-	@
-	*/
+	/**
+	 * FONCTION POUR CREER UN COMBOBOX A PARTIR D'UN DOSSIER
+	 * @param  [type] $_folder      [description]
+	 * @param  [type] $_name        [description]
+	 * @param  [type] $_id          [description]
+	 * @param  [type] $_selectValue [description]
+	 * @return [type]               [description]
+	 */
 	static function createFolderSelect($_folder=NULL,$_name=NULL,$_id=NULL,$_selectValue=NULL){
 		if(isset($_folder)){
 			
@@ -128,11 +138,13 @@ class Func {
 		}
 	}
 	
-	/*
-	@ CREER UN GROUPE DE CASE A COCHER
-	@
-	@
-	*/
+	/**
+	 * CREER UN GROUPE DE CASE A COCHER
+	 * @param  [type] $array [description]
+	 * @param  string $name  [description]
+	 * @param  [type] $id    [description]
+	 * @return [type]        [description]
+	 */
 	static function createCheckBox($array, $name='', $id=NULL){
 	
 		$selectItem = '';
@@ -146,12 +158,19 @@ class Func {
 	
 		return $selectItem ;
 	}
+
+
 	
-	/*
-	@ CREER UN ELEMENT DE FORMULAIRE SELECT
-	@ avec id différent de l'attribut name
-	@
-	*/
+	/**
+	 * CREER UN ELEMENT DE FORMULAIRE SELECT avec id différent de l'attribut name
+	 * @param  [type]  $array       [description]
+	 * @param  string  $name        [description]
+	 * @param  [type]  $id          [description]
+	 * @param  [type]  $selectValue [description]
+	 * @param  [type]  $additionnal [description]
+	 * @param  boolean $isnull      [description]
+	 * @return [type]               [description]
+	 */
 	static function createCombobox($array, $name='', $id = NULL, $selectValue=NULL, $additionnal=NULL, $isnull=true){
 		
 		if(isset($additionnal)){$add = $additionnal; }else{ $add = '';}
@@ -179,7 +198,11 @@ class Func {
 	
 	
 	
-	// TRANSFORMER UNE CHAINE EN IDENTIFIANT : PAS D'ACCENTS, PAS D'ESPACES
+	/**
+	 * TRANSFORMER UNE CHAINE EN IDENTIFIANT : PAS D'ACCENTS, PAS D'ESPACES
+	 * @param  [type] $valeur [description]
+	 * @return [type]         [description]
+	 */
 	static function makeIdentifier($valeur){
 		$valeur = strtr($valeur,'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ','AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 		$valeur = preg_replace('/([^.a-z0-9]+)/i', '_', $valeur);
@@ -187,11 +210,12 @@ class Func {
 		return $valeur;
 	}
 
-	/*
-	@ NETTOYAGE D'UNE CHAINE DE CARACTERES
-	@
-	@
-	*/
+
+	/**
+	 * NETTOYAGE D'UNE CHAINE DE CARACTERES
+	 * @param  [type] $valeur [description]
+	 * @return [type]         [description]
+	 */
 	static function clean($valeur){
 		return strtolower(	utf8_encode(strtr(utf8_decode($valeur),
 							utf8_decode("àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ'" ), 
@@ -200,11 +224,12 @@ class Func {
 	}
 	
 	
-	/*
-	@ UPLOADER UN FICHIER
-	@
-	@
-	*/
+	/**
+	 * UPLOADER UN FICHIER
+	 * @param  [type] $file       [description]
+	 * @param  [type] $repository [description]
+	 * @return [type]             [description]
+	 */
 	static function upload($file, $repository){
 		
 		
@@ -227,21 +252,22 @@ class Func {
 	}
 	
 	
-	/*
-	@ SUPPRIMER UN FICHIER
-	@
-	@
-	*/
+	/**
+	 * SUPPRIMER UN FICHIER
+	 * @param  [type] $name       [description]
+	 * @param  [type] $repository [description]
+	 * @return [type]             [description]
+	 */
 	static function delete($name, $repository){
 		unlink($repository.$name);
 	}
 	
 	
-	/*
-	@ SUPPRIMER UN DOSSIER
-	@ et son contenus de différents fichiers
-	@
-	*/
+	/**
+	 * SUPPRIMER UN DOSSIER et son contenus de différents fichiers
+	 * @param type $chemin 
+	 * @return type
+	 */
 	static function delete_dir($chemin) {
 		// vérifie si le nom du repertoire contient "/" à la fin
 		// place le pointeur en fin d'url
@@ -273,76 +299,87 @@ class Func {
 	
 
 	
-	/*
-	@ FONCTION POUR BIEN FERMER TOUS LES TAGS D'UNE CHAINE HTML
-	@
-	@
-	*/
+	/**
+	 * FONCTION POUR BIEN FERMER TOUS LES TAGS D'UNE CHAINE HTML
+	 * cf https://gist.github.com/supermethod/913378/raw/089317513b26e4f5a4a56ef9ee18179dfb6aae4a/gistfile1.php
+	 * @param  [type] $html [description]
+	 * @return [type]       [description]
+	 */
 	static function close_dangling_tags($html){
-	  #put all opened tags into an array
-	  preg_match_all("#<([a-z]+)( .*)?(?!/)>#iU",$html,$result);
-	  $openedtags=$result[1];
-	
-	  #put all closed tags into an array
-	  preg_match_all("#</([a-z]+)>#iU",$html,$result);
-	  $closedtags=$result[1];
-	  $len_opened = count($openedtags);
-	  # all tags are closed
-	  if(count($closedtags) == $len_opened){
-		return $html;
-	  }
-	
-	  $openedtags = array_reverse($openedtags);
-	  # close tags
-	  for($i=0;$i < $len_opened;$i++) {
-		if (!in_array($openedtags[$i],$closedtags)){
-		  $html .= '</'.$openedtags[$i].'>';
-		} else {
-		  unset($closedtags[array_search($openedtags[$i],$closedtags)]);
+		#put all opened tags into an array
+		preg_match_all("#<([a-z]+)( .*)?(?!/)>#iU",$html,$result);
+		$openedtags=$result[1];
+
+		#put all closed tags into an array
+		preg_match_all("#</([a-z]+)>#iU",$html,$result);
+		$closedtags=$result[1];
+		$len_opened = count($openedtags);
+		# all tags are closed
+		if(count($closedtags) == $len_opened){
+			return $html;
 		}
-	  }
-	  return $html;
+
+		$openedtags = array_reverse($openedtags);
+		# close tags
+		for($i=0;$i < $len_opened;$i++) {
+			if (!in_array($openedtags[$i],$closedtags)){
+				$html .= '</'.$openedtags[$i].'>';
+			} else {
+				unset($closedtags[array_search($openedtags[$i],$closedtags)]);
+			}
+		}
+		return $html;
 	}
 	
-	/*
-	@ CONVERTI LES CHAINES D'UN TABLEAU EN BAS DE CASSE
-	@
-	@
-	*/
+	/**
+	 * CONVERTI LES CHAINES D'UN TABLEAU EN BAS DE CASSE
+	 * @param  array   $array [description]
+	 * @param  integer $round [description]
+	 * @return [type]         [description]
+	 */
 	static function arraytolower(array $array, $round = 0){ 
-	  return unserialize(strtolower(serialize($array))); 
+		return unserialize(strtolower(serialize($array))); 
 	}
 	
-	/*
-	@ GENERE UN TIMESTAMP UNIX DEPUIS UNE DATE yyyy-mm-dd hh:mm:ss
-	@
-	@
-	*/
+	/**
+	 * GENERE UN TIMESTAMP UNIX DEPUIS UNE DATE yyyy-mm-dd hh:mm:ss
+	 * @param type $date 
+	 * @return type
+	 */
 	static function makeTime($date=NULL){
 		
+		//setlocale(LC_TIME, "fr_FR");
+		//	$retour->mois[$row['mois']] = strftime("%B",mktime(0, 0, 0, $row['mois'], 10));
 		if(!empty($date)){
 			$a = date_parse($date);
 			$timestamp = mktime($a['hour'], $a['minute'], $a['second'], $a['month'], $a['month'], $a['year']);
 			
 			return $timestamp;
 		}
-		
 	}
 	
+	/**
+	 * [time2sec description]
+	 * @param  string $duree au format hh:mm:ss
+	 * @return [type]        [description]
+	 */
 	static function time2sec($duree=NULL){
 		if(!empty($duree)){
 			
 			$d = explode (':', $duree);
 			
-			return $d[0]*3600+$d[1]*60+$d[2];
-			
+			return intval($d[0])*3600 + intval($d[1])*60 + intval($d[2]) ;	
 		}
 	}
 	
 	
 	
-	//// virer les sauts de ligne
-	// GILDAS 19/07/2012
+	/**
+	 * supprimer les sauts de ligne
+	 * @param  [type] $str [description]
+	 * @return [type]      [description]
+	 * @author Gildas Paubert
+	 */
 	static function nonl($str){
 		$str = str_replace("\n", "", $str);
 		$str = str_replace("\r\n", "", $str);
@@ -350,14 +387,24 @@ class Func {
 		return $str;
 	}
 	
-	//// <br /> -> newline
-	// GILDAS 19/07/2012
+	/**
+	 * <br /> -> newline
+	 * @param  [type] $str [description]
+	 * @return [type]      [description]
+	 * @author Gildas Paubert
+	 */
 	static function br2nl($str){
 		$str = preg_replace("#\<br\s*\/?\>#isU", '
 	', $str);
 		return $str;
 	}
 	
+
+	/**
+	 * Description
+	 * @param type $data 
+	 * @return type
+	 */
 	static function encodeAccentHTML($data = NULL){
 		if(isset($data)){
 			$trans = array(	'À'=>'&Agrave;',
@@ -421,5 +468,3 @@ class Func {
 	}
 
 }
-
-?>

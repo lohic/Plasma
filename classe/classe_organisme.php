@@ -1,32 +1,35 @@
 <?php
 
 include_once('../vars/config.php');
-include_once('classe_connexion.php');
-include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('connexion_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
 
+/**
+ * 
+ */
 class Organisme {
 	
 	var $news_db		= NULL;
 	var $id				= NULL;
 	
 	/**
-	* GESTION DES ORGANISMES
-	*
-	*
-	*/
+	 * GESTION DES ORGANISMES
+	 * @param  [type] $_id [description]
+	 * @return [type]      [description]
+	 */
 	function organisme($_id=NULL){
 		global $connexion_info;
 		$this->news_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 	}
 	
+
 	/**
-	* create_organisme creation ou modification d'un organisme
-	* @param $_array_val
-	* @param $_id
-	*/
+	 * create_organisme creation ou modification d'un organisme
+	 * @param type $_array_val 
+	 * @param type $_id 
+	 * @return type
+	 */
 	function create_organisme($_array_val,$_id=NULL){
 		$this->news_db->connect_db();
 
@@ -56,11 +59,12 @@ class Organisme {
 		}	
 	}
 	
-	/*
-	@ creation ou modification d'un groupe utilisateur
-	@
-	@
-	*/
+	/**
+	 * creation ou modification d'un groupe utilisateur
+	 * @param  [type] $_array_val [description]
+	 * @param  [type] $_id        [description]
+	 * @return [type]             [description]
+	 */
 	function create_user_groupe($_array_val,$_id=NULL){
 		$this->news_db->connect_db();
 
@@ -91,11 +95,10 @@ class Organisme {
 	}
 	
 	
-	/*
-	@ RECUPERE LA LISTE DES ORGANISMES
-	@
-	@
-	*/
+	/**
+	 * RECUPERE LA LISTE DES ORGANISMES
+	 * @return [type] [description]
+	 */
 	function get_organisme_edit_liste(){
 		$this->news_db->connect_db();
 
@@ -115,13 +118,18 @@ class Organisme {
 	
 			global $typeTab;
 			
-			include('../structure/admin-organisme-list-bloc.php');
+			include(REAL_LOCAL_PATH.'structure/admin-organisme-list-bloc.php');
 			
 			$i = ($i+1)%2;
 			
 		}
 	}
 	
+
+	/**
+	 * [get_organisme_liste description]
+	 * @return [type] [description]
+	 */
 	function get_organisme_liste(){
 		$this->news_db->connect_db();
 
@@ -144,11 +152,10 @@ class Organisme {
 	}
 	
 	
-	/*
-	@ RECUPERE LA LISTE DES GROUPES D'UTILISATEURS
-	@
-	@
-	*/
+	/**
+	 * RECUPERE LA LISTE DES GROUPES D'UTILISATEURS
+	 * @return [type] [description]
+	 */
 	function get_user_groupe_edit_liste(){
 		$this->news_db->connect_db();
 
@@ -169,44 +176,42 @@ class Organisme {
 			
 			global $typeTab;
 			
-			include('../structure/admin-user_groupe-list-bloc.php');
+			include(REAL_LOCAL_PATH.'structure/admin-user_groupe-list-bloc.php');
 			
 			$i = ($i+1)%2;
 			
 		}
 	}
 	
-	/*
-	@ SUPPRIME UN ORGANISME
-	@
-	@
-	*/
+	/**
+	 * SUPPRIME UN ORGANISME
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
 	function suppr_organisme($id=NULL){
 		if(isset($id)){
 			$this->news_db->connect_db();
 
-			$supprSQL		= sprintf("DELETE FROM ".TB."organisme_tb WHERE id=%s", func::GetSQLValueString($id,'int'));
-			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
-			
+			$supprSQL				= sprintf("DELETE FROM ".TB."organisme_tb WHERE id=%s", func::GetSQLValueString($id,'int'));
+			$suppr_query			= mysql_query($supprSQL) or die(mysql_error());
 			
 			$sql_user_groupe		= sprintf("SELECT * FROM ".TB."user_groupes_tb WHERE id_organisme=%s", func::GetSQLValueString($id,'int'));
-			$sql_user_groupe_query = mysql_query($sql_user_groupe) or die(mysql_error());
+			$sql_user_groupe_query  = mysql_query($sql_user_groupe) or die(mysql_error());
 
-	
 			while ($user_groupe_item = mysql_fetch_assoc($sql_user_groupe_query)){
 							
-				$id					= $user_groupe_item['id'];
-				
+				$id	 = $user_groupe_item['id'];
 				$this->suppr_user_groupe($id);
+
 			}
 		}
 	}
 	
-	/*
-	@ SUPPRIME UN USER_GROUPE
-	@
-	@
-	*/
+	/**
+	 * SUPPRIME UN USER_GROUPE
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
+	 */
 	function suppr_user_groupe($id=NULL){
 		if(isset($id)){
 			$this->news_db->connect_db();
@@ -229,11 +234,10 @@ class Organisme {
 	}
 	
 	
-	/*
-	@ RECUPERATION DU NIVEAU D'ADMINISTRATION
-	@
-	@
-	*/
+	/**
+	 * RECUPERATION DU NIVEAU D'ADMINISTRATION
+	 * @return [type] [description]
+	 */
 	function get_admin_level(){
 		$sql_liste_level	= 'SELECT * FROM '.TB.'user_level_tb ORDER BY level';
 		$sql_liste_level_query = mysql_query($sql_liste_level) or die(mysql_error());
@@ -248,7 +252,3 @@ class Organisme {
 	}
 
 }
-	
-	
-
-?>

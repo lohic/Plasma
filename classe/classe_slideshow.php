@@ -2,12 +2,13 @@
 
 
 include_once('../vars/config.php');
-include_once('classe_connexion.php');
-include_once('classe_slide.php');
-include_once('classe_fonctions.php');
-//include_once('../vars/statics_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_slide.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 		
-
+/**
+ * 
+ */
 class Slideshow {
 	
 	var $slide_db			= NULL;
@@ -19,12 +20,12 @@ class Slideshow {
 	private static $order_ASC		= true;
 	
 	/**
-	* slideshow constructeur de la fonction pour gérer l'affichage du slideshow d'un écran. Le slideshow est composé de slides ou de playlists
-	* @author Loïc Horellou
-	* @since v0.1
-	* @version v0.5 20/12/2012
-	* @param $_id_ecran id de l'écran que l'on souhaite afficher
-	*/
+	 * slideshow constructeur de la fonction pour gérer l'affichage du slideshow d'un écran. Le slideshow est composé de slides ou de playlists
+	 * @author Loïc Horellou
+	 * @since v0.1
+	 * @version v0.5 20/12/2012
+	 * @param $_id_ecran id de l'écran que l'on souhaite afficher
+	 */
 	function slideshow($_id_ecran=NULL){
 
 		global $connexion_info;
@@ -34,7 +35,6 @@ class Slideshow {
 		
 		if(!empty($_id_ecran)){
 			
-			//$this->id_ecran = $_id_ecran;
 
 			// instanciation des objets
 			if(empty($this->ecran)){ $this-> ecran = (object)array(); }
@@ -45,25 +45,22 @@ class Slideshow {
 			
 			$this->debugger = "";
 		
-			//var_dump($this->ecran);
-			//$this->publish_slideshow(1,NULL,NULL,NULL);
-			//var_dump($this->get_next_slide_id());
-			//var_dump($this->debugger);
 		}
 	}
 	
 	/**
-	* debug sert à aggréger les différents retours du mode debug
-	* @author Gildas Paubert
-	* @since v0.3
-	* @param $txt variable de texte à incrementer pour le retour du debug
-	*/
+	 * debug sert à aggréger les différents retours du mode debug
+	 * @author Gildas Paubert
+	 * @since v0.3
+	 * @param $txt variable de texte à incrementer pour le retour du debug
+	 */
 	function debug($txt=''){
 		//if($this->debugger == ""){ $this->debugger .= "<strong>Slideshow debugger</strong><br />"; }
 		$this->debugger .= $txt.'
 		<br />';
 	}
 	
+
 	/**
 	* sert à réiniitlaliser le debug
 	*/
@@ -578,22 +575,18 @@ class Slideshow {
 	 */
 	function get_templates(){
 
-		$dir = REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER;
-		$recursif=false;
-        $ffs = scandir($dir);
+		//$recursif=false;
+        $ffs = scandir(REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER);
 
         $temp =array();
         //echo '<ol>';
-        foreach($ffs as $ff){
-            if($ff != '.' && $ff != '..' && substr($ff, 0, 1)!= '.'){
-                //echo '<li>'.$ff;
-                //if(is_dir($dir.'/'.$ff) && $recursif ) listFolderFiles($dir.'/'.$ff);
-                //echo '</li>';
-                //$temp[] = '{"key":"'.$ff.'","value":"'.$ff.'"}';
+        foreach($ffs as $templateFolder){
 
-                if(isset($ff)){
-					echo '<script id="' . $ff . '" type="text/html">'."\n";
-					include_once( REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER . $ff . '/index.php');
+            if($templateFolder != '.' && $templateFolder != '..' && substr($templateFolder, 0, 1)!= '.'){
+
+                if(isset($templateFolder)){
+					echo '<script id="' . $templateFolder . '" type="text/html">'."\n";
+					include_once( REAL_LOCAL_PATH.SLIDE_TEMPLATE_FOLDER . $templateFolder . '/index.php');
 					echo "\n".'</script>'."\n"."\n";
 				}
             }

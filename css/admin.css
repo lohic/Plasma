@@ -635,6 +635,10 @@ a.btn span{
 form{
 }
 
+#modif_ecran_info_form{
+	clear:both;
+}
+
 .formulaire_large{
 	border-bottom:2px dashed #333333;
 	border-right:1px dotted #999999;

@@ -13,22 +13,26 @@ où Paris a pour zipcode "EUR|FR|FR012|PARIS|"
 // à vérifier : https://developer.forecast.io
 
 include_once('../vars/config.php');
-include_once('../vars/statics_vars.php');
-include_once('classe_connexion.php');
-include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('connexion_vars.php');
-//
+include_once(REAL_LOCAL_PATH.'vars/statics_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
+/**
+ * 
+ */
 class Meteo {
   
 	var $meteo_db		= NULL;
 	
 	/*
-	@ GESTION DE LA METEO
-	@ GILDAS
 	@ 26/07/2012
 	*/
+	/**
+	 * GESTION DE LA METEO
+	 * @param  [type] $zipcode [description]
+	 * @return [type]          [description]
+	 * @author Gildas Paubert
+	 */
 	function meteo($zipcode=NULL){
 	
 		global $connexion_info;
@@ -47,25 +51,21 @@ class Meteo {
 		
 	}
 	
-	/*
-	@ mise à jour (ou pas) des données météo stockées en dur
-	*/
+	
+	/**
+	 * mise à jour (ou pas) des données météo stockées en dur
+	 * @return [type] [description]
+	 */
 	function update_meteo(){		
 	
 		// si fichier en dur dépassé
-		
 		$file = $this->local_data;
 		
 		global $meteo_refresh_delay;
-		
-		if(isset($_GET['debug'])){
-			//echo ("Time : ".mktime().' - '.filemtime($file).' = '.(mktime()-filemtime($file)).' > '.$meteo_refresh_delay.' ? ');
-		}
+	
 		 
 		if(!file_exists($file) || @mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
-			
-			//if(isset($_GET['debug'])){ echo ' Refresh from accuweather'; }
-		
+					
 			// on liste les établissements
 			$villes = $this->get_etablissements();
 	
@@ -90,20 +90,23 @@ class Meteo {
 		}
 	}
 	
-	/*
-	@ obtenir le json prêt à l'intégration via jquery
-	*/
+	/**
+	 * obtenir le json prêt à l'intégration via jquery
+	 * @return [type] [description]
+	 */
 	function get_meteo(){
-	
+
 		$full_json = file_get_contents($this->local_data);
 		
 		return $full_json;
-	
 	}
 	
-	/*
-	@ lister les établissements depuis la bd sql
-	*/
+
+
+	/**
+	 * lister les établissements depuis la bd sql
+	 * @return type
+	 */
 	function get_etablissements(){
 		
 		$this->meteo_db->connect_db();
@@ -130,9 +133,11 @@ class Meteo {
 		
 	}
 	
-	/*
-	@ récupération sans traitement du flux XML
-	*/
+	/**
+	 * récupération sans traitement du flux XML
+	 * @param  [type] $zipcode [description]
+	 * @return [type]          [description]
+	 */
 	function get_meteo_accuweather($zipcode){
 	
 		$xml = file_get_contents("http://apple.accuweather.com/adcbin/apple/Apple_Weather_Data.asp?zipcode=".urlencode($zipcode));
@@ -140,9 +145,12 @@ class Meteo {
 		return $xml;
 	}
 	
-	/*
-	@ traitement du flux XML accuweather
-	*/
+	/**
+	 * traitement du flux XML accuweather
+	 * @param  [type] $xml [description]
+	 * @param  [type] $zip [description]
+	 * @return [type]      [description]
+	 */
 	function parse_meteo_accuweather($xml, $zip=NULL){
 		
 		global $meteo_cold_treshold;
@@ -253,78 +261,83 @@ class Meteo {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	/* /////////////////////////////////////////////////////////// */
-	
+	/**
+	 * [get_weather_icon description]
+	 * @param  [type] $num [description]
+	 * @return [type]      [description]
+	 */
 	function get_weather_icon($num){
 
 		// table de transcription obtenue à partir de weatherParser.js du widget apple
 	
 		$weatherIcons = array(
-		null,
-		"soleil", 					// 1 Sunny
-		"soleil",					// 2 Mostly Sunny
-		"peu_nuageux",				// 3 Partly Sunny
-		"peu_nuageux",				// 4 Intermittent Clouds
-		"brume",					// 5 Hazy Sunshine
-		"couvert",					// 6 Mostly Cloudy
-		"couvert",					// 7 Cloudy (am/pm)
-		"couvert",					// 8 Dreary (am/pm)
-		null,						// 9 retired
-		null,						// 10 retired
-		"brume",					// 11 fog (am/pm)
-		"pluvieux",					// 12 showers (am/pnm)
-		"pluvieux",					// 13 Mostly Cloudy with Showers
-		"variable",					// 14 Partly Sunny with Showers
-		"orage",					// 15 Thunderstorms (am/pm)
-		"orage",					// 16 Mostly Cloudy with Thunder Showers
-		"orage",					// 17 Partly Sunnty with Thunder Showers
-		"pluvieux",					// 18 Rain (am/pm)
-		"neige",					// 19 Flurries (am/pm)
-		"neige",					// 20 Mostly Cloudy with Flurries
-		"neige",					// 21 Partly Sunny with Flurries
-		"neige",					// 22 Snow (am/pm)
-		"neige",					// 23 Mostly Cloudy with Snow
-		"neige",					// 24 Ice (am/pm)
-		"neige",					// 25 Sleet (am/pm)
-		"neige",					// 26 Freezing Rain (am/pm)
-		null,						// 27 retired
-		null,						// 28 retired
-		"neige",					// 29 Rain and Snow Mixed (am/pm)
-		"soleil",					// 30 Hot (am/pm)
-		"soleil",					// 31 Cold (am/pm)
-		"wind",						// 32 Windy (am/pm)
-		// Night only Icons
-		"nuit",						// 33 Clear
-		"nuit",						// 34 Mostly Clear
-		"nuit",						// 35 Partly Cloudy
-		"nuit",						// 36 Intermittent Clouds
-		"nuit",						// 37 Hazy
-		"nuit",						// 38 Mostly Cloudy
-		"nuit",						// 39 Partly Cloudy with Showers
-		"nuit", 					// 40 Mostly Cloudy with Showers
-		"nuit",						// 41 Partly Cloudy with Thunder Showers
-		"nuit",						// 42 Mostly Cloudy with Thunder Showers
-		"nuit"						// 43 Mostly Cloudy with Flurries
-		
+			null,
+			"soleil", 			// 1 Sunny
+			"soleil",			// 2 Mostly Sunny
+			"peu_nuageux",		// 3 Partly Sunny
+			"peu_nuageux",		// 4 Intermittent Clouds
+			"brume",			// 5 Hazy Sunshine
+			"couvert",			// 6 Mostly Cloudy
+			"couvert",			// 7 Cloudy (am/pm)
+			"couvert",			// 8 Dreary (am/pm)
+			null,				// 9 retired
+			null,				// 10 retired
+			"brume",			// 11 fog (am/pm)
+			"pluvieux",			// 12 showers (am/pnm)
+			"pluvieux",			// 13 Mostly Cloudy with Showers
+			"variable",			// 14 Partly Sunny with Showers
+			"orage",			// 15 Thunderstorms (am/pm)
+			"orage",			// 16 Mostly Cloudy with Thunder Showers
+			"orage",			// 17 Partly Sunnty with Thunder Showers
+			"pluvieux",			// 18 Rain (am/pm)
+			"neige",			// 19 Flurries (am/pm)
+			"neige",			// 20 Mostly Cloudy with Flurries
+			"neige",			// 21 Partly Sunny with Flurries
+			"neige",			// 22 Snow (am/pm)
+			"neige",			// 23 Mostly Cloudy with Snow
+			"neige",			// 24 Ice (am/pm)
+			"neige",			// 25 Sleet (am/pm)
+			"neige",			// 26 Freezing Rain (am/pm)
+			null,				// 27 retired
+			null,				// 28 retired
+			"neige",			// 29 Rain and Snow Mixed (am/pm)
+			"soleil",			// 30 Hot (am/pm)
+			"soleil",			// 31 Cold (am/pm)
+			"wind",				// 32 Windy (am/pm)
+			// Night only Icon	
+			"nuit",				// 33 Clear
+			"nuit",				// 34 Mostly Clear
+			"nuit",				// 35 Partly Cloudy
+			"nuit",				// 36 Intermittent Clouds
+			"nuit",				// 37 Hazy
+			"nuit",				// 38 Mostly Cloudy
+			"nuit",				// 39 Partly Cloudy with Showers
+			"nuit", 			// 40 Mostly Cloudy with Showers
+			"nuit",				// 41 Partly Cloudy with Thunder Showers
+			"nuit",				// 42 Mostly Cloudy with Thunder Showers
+			"nuit"				// 43 Mostly Cloudy with Flurries
 		);
 	
 		return $weatherIcons[$num];
 	}
 	
+
+	/**
+	 * farhenheit to celsius
+	 * @param  [type] $fahrenheit [description]
+	 * @return [type]             [description]
+	 */
 	function toCelsius($fahrenheit){
-		// farhenheit to celsius
 		return round(($fahrenheit - 32) / 1.8);
 	}
 	
+
+	/**
+	 * à partir d'ue date au format Anglo-saxon 06/21/2012
+	 * @param type $date 
+	 * @return type
+	 */
 	function datefr($date) {
-		// à partir d'ue date au format Anglo-saxon 06/21/2012
 		$split = explode("/",$date);
 	   
 		$m = intval($split[0]);
@@ -343,7 +356,3 @@ class Meteo {
 	}
 	
 }
-	
-	
-
-?>

@@ -1,25 +1,28 @@
 <?php
 
 include_once('../vars/config.php');
-include_once('classe_connexion.php');
-include_once('classe_slide.php');
-include_once('classe_fonctions.php');
-//include_once('fonctions.php');
-//include_once('connexion_vars.php');
-//include_once('../vars/statics_vars.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_connexion.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_slide.php');
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 
 
+/**
+ * 
+ */
 class Playlist {
 	
 	var $slide_db		= NULL;
 	var $id_playlist	= NULL;
 	static $is_updated	= false;
 	
+
 	/**
-	* playlist constructeur de la classe playlist, pour gérer les playlists de slides
-	* @author Loïc Horellou
-	* @since v0.5 29/12/2012
-	*/
+	 * playlist constructeur de la classe playlist, pour gérer les playlists de slides
+	 * @param type $_id_playlist 
+	 * @return type
+	 * @author Loïc Horellou
+	 * @since v0.5 29/12/2012
+	 */
 	function playlist($_id_playlist=NULL){
 		
 		global $connexion_info;
@@ -39,10 +42,11 @@ class Playlist {
 	
 	
 	/**
-	* updater permet de mettre à jour les différents formulaires liés à un objet playlist au moment ou celui-ci est créé ou modifié
-	* @author Loïc Horellou
-	* @since v0.5 29/12/2012
-	*/
+	 * updater permet de mettre à jour les différents formulaires liés à un objet playlist au moment ou celui-ci est créé ou modifié
+	 * @return type
+	 * @author Loïc Horellou
+	 * @since v0.5 29/12/2012
+	 */
 	function updater(){
 		// on normalise les données
 		// si elles sont présentes tant mieux, sinon on aura un NULL
@@ -64,10 +68,10 @@ class Playlist {
 	}
 	
 	/**
-	* update_playlist sert a mettre à jour les informations générales d'une playlist
-	* @author Loïc Horellou
-	* @since v0.5 10/01/2012
-	*/
+	 * update_playlist sert a mettre à jour les informations générales d'une playlist
+	 * @author Loïc Horellou
+	 * @since v0.5 10/01/2012
+	 */
 	function update_playlist($_array_val,$_id=NULL){
 		$this->slide_db->connect_db();
 	
@@ -77,10 +81,10 @@ class Playlist {
 	}
 	
 	/**
-	* create_playlist sert a créer les informations générales d'une playlist
-	* @author Loïc Horellou
-	* @since v0.5 10/01/2012
-	*/
+	 * create_playlist sert a créer les informations générales d'une playlist
+	 * @author Loïc Horellou
+	 * @since v0.5 10/01/2012
+	 */
 	function create_playlist($_array_val){
 		$this->slide_db->connect_db();
 				
@@ -96,10 +100,10 @@ class Playlist {
 	
 	
 	/**
-	* get_playlist_category_list retourne la liste des playlists en fonction des droits d'administration
-	# @author Loïc Horellou
-	* @since v0.5 29/12/2012
-	*/
+	 * get_playlist_category_list retourne la liste des playlists en fonction des droits d'administration
+	 * @author Loïc Horellou
+	 * @since v0.5 29/12/2012
+	 */
 	function get_playlist_category_list($admin_groupe=NULL,$annee=NULL,$mois=NULL){
 		//echo 'liste des slideshows';
 		global $templateListe;
@@ -112,10 +116,10 @@ class Playlist {
 	}
 	
 	/**
-	* get_playlist_edit_liste retourne la liste des playlists en fonction des droits d'administration
-	# @author Loïc Horellou
-	* @since v0.5 29/12/2012
-	*/
+	 * get_playlist_edit_liste retourne la liste des playlists en fonction des droits d'administration
+	 * @author Loïc Horellou
+	 * @since v0.5 29/12/2012
+	 */
 	function get_playlist_edit_liste($annee=NULL,$mois=NULL){
 		$this->slide_db->connect_db();
 		
@@ -149,10 +153,9 @@ class Playlist {
 			$id					= $item['id'];
 			$nom				= $item['nom'];
 			$date				= $item['date'];
-			//$template			= $slide_item['template'];
-			//$icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$template.'/vignette.gif';
+
 				
-			include('../structure/playlist-list-bloc.php');
+			include(REAL_LOCAL_PATH.'structure/playlist-list-bloc.php');
 			
 			$i = ($i+1)%2;
 			
@@ -275,8 +278,8 @@ class Playlist {
 				}
 				
 				ob_start();
-				include('../structure/slide-playlist-list-bloc.php');
-				$slideForm = ob_get_contents();
+					include(REAL_LOCAL_PATH.'structure/slide-playlist-list-bloc.php');
+					$slideForm = ob_get_contents();
 				ob_end_clean();
 				
 				$slideForm = str_replace("\r",'',$slideForm);
@@ -289,13 +292,13 @@ class Playlist {
 	}
 	
 	/**
-	* METTRE A JOUR OU CREER UNE LIAISON SLIDE->ECRAN en mode freq ou date
-	* cf classe SLIDESHOW pour LIAISON SLIDE->SLIDESHOW
-	* @author Loïc Horellou
-	* @since v0.5 10/01/2012
-	* @param $_array_val tableaux des valeurs attendues (id_slide, id_target, type_target, date, duree, freq, type)
-	* @param $id_rel identifiant de liaison de l'élément de sp_plasma_rel_slide_tb à mettre à jour
-	*/
+	 * METTRE A JOUR OU CREER UNE LIAISON SLIDE->ECRAN en mode freq ou date
+	 * cf classe SLIDESHOW pour LIAISON SLIDE->SLIDESHOW
+	 * @author Loïc Horellou
+	 * @since v0.5 10/01/2012
+	 * @param $_array_val tableaux des valeurs attendues (id_slide, id_target, type_target, date, duree, freq, type)
+	 * @param $id_rel identifiant de liaison de l'élément de sp_plasma_rel_slide_tb à mettre à jour
+	 */
 	function update_rel_slide($_array_val=NULL,$id_rel = NULL){
 		//if(!empty($this->id)){
 			
@@ -353,8 +356,12 @@ class Playlist {
 	}
 	
 	/**
-	* envoi un message par mail quand une alerte a été publiée
-	*/
+	 * [alert_by_mail description]
+	 * @param  [type] $id_target   [description]
+	 * @param  [type] $type_target [description]
+	 * @param  string $action      [description]
+	 * @return [type]              [description]
+	 */
 	function alert_by_mail($id_target,$type_target,$action = 'créée'){
 		$niveau = 1;
 		
@@ -385,11 +392,11 @@ class Playlist {
 	
 	
 	/**
-	* permet de supprimer un slide relié à une playlist
-	# @author Loïc Horellou
-	* @since v0.5 23/01/2012
-	* @param $id_rel identifiant de la ligne sp_plasma_rel_slide_tb à supprimer
-	*/
+	 * permet de supprimer un slide relié à une playlist
+	 * @author Loïc Horellou
+	 * @since v0.5 23/01/2012
+	 * @param $id_rel identifiant de la ligne sp_plasma_rel_slide_tb à supprimer
+	 */
 	function del_rel_slide($id_rel=NULL){
 		if(!empty($id_rel)){
 			
