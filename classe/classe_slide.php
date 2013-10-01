@@ -13,7 +13,9 @@ class Slide {
 	var $slide_db		= NULL;
 	var $id				= NULL;
 	var $func			= NULL;
-	
+
+	private static $is_updated	= false;
+
 
 	/**
 	 * GESTION DES TEMPLATE
@@ -33,7 +35,9 @@ class Slide {
 		
 		// « self » sert à identifier la classe quand on est en statique
 		// une fonction statique n'a pas a être instanciée
-		$this->slide_update_data();
+		if(self::$is_updated == false){
+			$this->slide_update_data();
+		}
 	}
 
 
@@ -65,6 +69,8 @@ class Slide {
 		if(isset($_POST['suppr']) && $_POST['suppr'] == 'slide'){
 			$this->suppr_slide($id);
 		}
+
+		self::$is_updated = true;
 	}
 	
 	
@@ -127,37 +133,14 @@ class Slide {
 		
 		$nom			= func::GetSQLValueString($_POST['nom_slide'],'text');
 		$template 		= func::GetSQLValueString($_POST['template_slide'],'text');
-		$date 			= date('Y-m-d');
 
 		// REQUETE
-		$sql_slide			= sprintf("INSERT INTO ".TB."slides_tb (nom, template, date) VALUES (%s,%s,%s)",$nom,$template,$date);
+		$sql_slide			= sprintf("INSERT INTO ".TB."timeline_slides_tb (nom, template, date) VALUES (%s,%s,NOW())",$nom,$template);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
-		// création des dossiers d'upload pour le slide
-		$path = '../'.IMG_SLIDES;
-		
-		// année
-		$path .= date('Y').'/';
-		if(!is_dir($path)){
-			mkdir($path, 0777);
-		}
-		
-		// mois
-		$path .= date('m').'/';
-		if(!is_dir($path)){
-			mkdir($path, 0777);
-		}
-		
-		// id
 		$id = mysql_insert_id();
-		$path .= $id.'/';
-		if(!is_dir($path)){
-			mkdir($path, 0777);
-		}
-		
 		// redirection
-		header('Location: '.ABSOLUTE_URL.'admin-new/?page=slide_modif&id_slide='.$id);
-		
+		header('Location: '.ABSOLUTE_URL.'admin-new/?page=slides_select&id_slide='.$id);
 	}
 	
 
