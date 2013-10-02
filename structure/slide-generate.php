@@ -9,7 +9,7 @@
 
 	<script src="<?php echo ABSOLUTE_URL; ?>js/jquery-1.10.2.min.js" language="javascript"></script>
 	<script src="<?php echo ABSOLUTE_URL; ?>js/ICanHaz.min.js" ="javascript"></script>
-	<script src="<?php echo ABSOLUTE_URL; ?>js/slideshow.js" language="javascript"></script>
+	<script src="<?php echo ABSOLUTE_URL; ?>js/slideshow.js?v1.0beta" language="javascript"></script>
 
 </head>
 
@@ -20,7 +20,6 @@
 		<h1><?php //echo $this->ecran->nom; ?></h1>
 		<p class="date"><span id="now"></span></p>
 		<p class="date"><span id="end"></span></p>
-		<p class="date"><span id="start"></span><span id="end"></span><?php //echo $this->ecran->actual_date_json; ?></p>
 		<p class="info">Informations</p>
 		<p><button id="exit_button">TOGGLE EXIT</button> <button id="pause_button">TOGGLE PLAY/PAUSE</button></p>
 	</div>
