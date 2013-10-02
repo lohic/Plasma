@@ -35,17 +35,14 @@ $isGroup = true;
 	<p class="intro_modif"><?php echo isset($id_groupe) ? 'Modification' : 'Création'; ?> du groupe d'écrans :</p>
 	<h3><?php echo $data->nom;?></h3>
 	<?php if ( isset($id_groupe) ){ ?>
-	<div class="options">
-		<!--<a href="?page=ecrans_groupe_modif&id_groupe=<?php echo $data->id; ?>&publish=groupe">Publier le groupe</a>-->
-		<button type="button" id="group_publish" >Publier le groupe</button>
-	</div>
+	<!--<div class="options">
+		
+	</div>-->
 	<?php } ?>
 
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_groupe)?'update':'create';?>" value="groupe"/>
-		
-		<!--<p>info user : <?php echo $core->userLevel ?></p>-->
-		
+				
 		<fieldset>
 			<p class="legend">Informations :</p>
 			
@@ -69,25 +66,24 @@ $isGroup = true;
 
 	<?php if ( isset($id_groupe) ){ ?>
 
-	<!--<div class="reset"></div>
+	<div class="reset"></div>
 
-	<p>Le début d'un slide est prioritaire sur sa fin.</p>
-    
-    <div class="reset"></div>   
-	<p>
-		<button id="show_previous">Afficher les 10 jours précédents</button>
-		<button id="show_next">Afficher les 10 jours suivants</button>
-	</p>-->
+	<div class="info_publication">
+		<p>Ce groupe a été publié pour la dernière fois le : <span id="last_publication"><?php echo func::dateFormat($data->last_publication); ?></span> <button type="button" id="group_publish" >Publier le groupe</button></p>
+	</div>
+
+	<div class="reset"></div>
 	<h4>Ordre des priorités :</h4>
 	<p><em>Alerte locale</em> <strong>></strong> <em>Alerte nationale</em> <strong>></strong> <em>Écran</em> <strong>></strong> <em>Groupe</em> <strong>></strong> <em>Slides par séquence</em></p>
 	
 	<div class="reset"></div>
 
+	<h2 class="timelineTitle">Timeline événementielle</h2>
 	<div id="dateTimeline"></div>
 
+	<h2 class="timelineTitle">Timeline séquentielle</h2>
 	<div id="sequenceTimeline">
-		<div id="sequenceContainer">
-		</div>
+		<div id="sequenceContainer"></div>
 	</div>
 
 	<div class="child-screen">

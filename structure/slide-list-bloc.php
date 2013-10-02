@@ -25,7 +25,7 @@
         
     </div>
     <div class="poubelle">
-        <a href="#" onclick="supprSlide(<?php echo $id; ?>,'<?php echo $nom; ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>
+        <!--<a href="#" onclick="supprSlide(<?php echo $id; ?>,'<?php echo $nom; ?>')" title="supprimer"><img src="../graphisme/trash.png" alt="supprimer"/></a>-->
     
     </div>
 </div>

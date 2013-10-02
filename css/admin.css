@@ -1189,6 +1189,23 @@ ul#addslidefreqlist li img, ul#addslidedatelist li img, ul#addslideslideshowlist
 	z-index:601;
 }
 
+.info_publication{
+	background: yellow;
+	padding:20px;
+	font-style:italic;
+	text-align:right;
+}
+
+#last_publication{
+	color:red;
+	font-style:normal;
+	font-weight: bold;
+}
+
+#group_publish{
+	float:left;
+}
+
 
 /* TIMEPICKER */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }

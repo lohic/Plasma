@@ -126,7 +126,7 @@ class Slideshow {
 		
 		$contents ='';
 		ob_start();
-		include_once(LOCAL_PATH.'structure/slide-generate.php') ;
+		include_once(REAL_LOCAL_PATH.'structure/slide-generate.php') ;
 		$contents .= ob_get_contents();
 		ob_end_clean();
 		
@@ -225,7 +225,7 @@ class Slideshow {
 	
 			// js général pour tout slideshow 
 			ob_start();
-				include_once('../structure/slideshow-javascript.php');
+				include_once(REAL_LOCAL_PATH.'structure/slideshow-javascript.php');
 				$contents .= ob_get_contents();
 			ob_end_clean();	
 			
@@ -250,8 +250,8 @@ class Slideshow {
 			}
 		}else{
 			//echo 'pas de slide';
-			include_once ('../structure/slideshow-javascript.php');
-			include_once ('../structure/default-slide.php');
+			include_once (REAL_LOCAL_PATH.'structure/slideshow-javascript.php');
+			include_once (REAL_LOCAL_PATH.'structure/default-slide.php');
 			
 			// dans ce cas on affiche le nom de l'écran et on continue à scanner
 		}
@@ -368,6 +368,8 @@ class Slideshow {
 	 */
 	function publish_slideshow($update_ecran_id=NULL, $update_groupe_id=NULL, $update_etablissement_id=NULL, $update_all=false){
 		
+		$retour = new stdClass();
+
 		if(!empty($update_ecran_id) && $update_all != true){
 			// on arvhive l'écran dont l'id est spécifié
 			$this->archive_ecran($update_ecran_id);
@@ -383,8 +385,16 @@ class Slideshow {
 			while($info = mysql_fetch_assoc($sql_query)){				
 				$this->archive_ecran($info['id']);
 			}
-			
+
 			mysql_free_result($sql_query);
+
+			$sql = sprintf("SELECT last_publication
+							FROM ".TB."ecrans_groupes_tb
+							WHERE id=%s", func::GetSQLValueString($update_groupe_id,'int'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());
+			$info 			= mysql_fetch_assoc($sql_query);
+
+			$retour->last_publication = func::dateFormat($info['last_publication']);
 		}
 		
 		if(!empty($update_etablissement_id) && $update_all != true){
@@ -414,7 +424,8 @@ class Slideshow {
 			
 			mysql_free_result($sql_query);
 		}
-		
+
+		return json_encode($retour);
 	}
 	
 	/**
@@ -446,20 +457,6 @@ class Slideshow {
 
 			mysql_free_result($sql_query);
 
-			/*$sql = sprintf("SELECT * FROM ".TB."timeline_item_tb WHERE (ref_target='nat'
-																 	 OR ref_target='loc'
-																 	AND id_target=%s
-																 	 OR ref_target='grp'
-																 	AND id_target=%s
-																 	 OR ref_target='ecr'
-																 	AND id_target=%s)
-																	AND end >= %s
-																	AND published = %s
-																	ORDER BY start ASC",func::GetSQLValueString($json->code_postal, 'int'),
-																						func::GetSQLValueString($json->id_groupe, 'int'),
-																						func::GetSQLValueString($json->id_ecran, 'int'),
-																						func::GetSQLValueString($json->date_publication, 'text'),
-																						func::GetSQLValueString(1, 'int'));*/
 			$sql = sprintf("SELECT * FROM ".TB."timeline_item_tb WHERE
 												published = %s
 												AND (
@@ -514,7 +511,14 @@ class Slideshow {
 			$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
 							VALUES (%s,%s,NOW())",	func::GetSQLValueString( $_id_archive_ecran ,'int'),
 													func::GetSQLValueString( $json_data ,'text'));
-			$sql_query		= mysql_query($sql) or die(mysql_error());	
+			$sql_query		= mysql_query($sql) or die(mysql_error());
+
+
+			// ON MET A JOUR LA DATE DE PUBLICATION DU GROUPE DE L'ECRAN
+			$sql = sprintf("UPDATE ".TB."ecrans_groupes_tb
+							SET last_publication=NOW()
+							WHERE id=%s", func::GetSQLValueString($info['id_groupe'],'int') );
+			$sql_query		= mysql_query($sql) or die(mysql_error());							
 
 		}
 	}	

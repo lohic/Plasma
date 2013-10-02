@@ -28,7 +28,6 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
                 echo func::createSelect($templateListe, 'template_slide', NULL, NULL, false);
                 ?></p>
                 
-                
                 <input name="create" type="hidden" value="slide" />	
 			</fieldset>
             <input name="submit" type="submit" value="OK"  class="buttonenregistrer"/>

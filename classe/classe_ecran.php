@@ -85,7 +85,7 @@ class Ecran {
 		
 		
 		// PUBLICATION
-		if(isset($_GET['publish']) && $_GET['publish'] == 'ecran'){
+		/*if(isset($_GET['publish']) && $_GET['publish'] == 'ecran'){
 			$slideshow = new Slideshow();
 			$slideshow->publish_slideshow($_GET['id_plasma'],NULL,NULL,NULL);
 			
@@ -93,7 +93,7 @@ class Ecran {
 		if(isset($_GET['publish']) && $_GET['publish'] == 'groupe'){
 			$slideshow = new Slideshow();
 			$slideshow->publish_slideshow(NULL,$_GET['id_groupe'],NULL,NULL);
-		}
+		}*/
 		
 		self::$updated = true;
 	}
@@ -389,7 +389,8 @@ class Ecran {
 		$retour->nom					= NULL;
 		$retour->id_etablissement		= NULL;
 		$retour->id_playlist_locale		= NULL;
-		$retour->id_playlist_nationale	= NULL;	
+		$retour->id_playlist_nationale	= NULL;
+		$retour->last_publication	= NULL;	
 				
 		if(!empty($_id_groupe)){
 			
@@ -406,7 +407,8 @@ class Ecran {
 			$retour->nom					= $item['nom'];
 			$retour->id_etablissement		= $item['id_etablissement'];	
 			$retour->id_playlist_locale		= $item['id_playlist_locale'];	
-			$retour->id_playlist_nationale	= $item['id_playlist_nationale'];			
+			$retour->id_playlist_nationale	= $item['id_playlist_nationale'];
+			$retour->last_publication		= $item['last_publication'];			
 		}
 		
 		return $retour;

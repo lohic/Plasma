@@ -26,7 +26,6 @@ if(isset($_GET['id_slideshow'])){
 
 $playlist 	= new Playlist($id_playlist);
 
-
 $id_plasma	= !empty($_GET['id_plasma'])?$_GET['id_plasma']:NULL;
 $ecran 		= new Ecran($id_plasma);
 
@@ -46,6 +45,10 @@ $ecran 		= new Ecran($id_plasma);
 	<!-- JQUERY -->
 	<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="../js/jquery-migrate-1.2.1.min.js"></script>
+	<!-- MOUSEWHEEL -->
+	<script type="text/javascript" src="../js/jquery.mousewheel.js"></script>
+	<!-- HISTORIQUE -->
+	<script type="text/javascript" src="../js/jquery.history.js"></script>
     <!-- ICANHAZ -->
     <script type="text/javascript" src="../js/ICanHaz.min.js" ></script>
     <!-- TIMLINE -->
@@ -64,14 +67,13 @@ $ecran 		= new Ecran($id_plasma);
 	<script type="text/javascript" src="../js/tinymce/tinymce.min.js"></script>
 	<script type='text/javascript' src='../js/animatedcollapse.js'></script>
     <!-- FANCYBOX -->
-    <script type="text/javascript" src="../js/jquery.mousewheel-3.0.6.pack.js"></script>
+    <!--<script type="text/javascript" src="../js/jquery.mousewheel-3.0.6.pack.js"></script>-->
     <script type="text/javascript" src="../js/jquery.fancybox.pack.js?v=2.1.5"></script>
 
 	<!--<script type="text/javascript" src="../js/fonctions.js"></script>-->
 	<!-- UPLOADIFIVE -->
     <script type="text/javascript" src="../js/uploadifive-v1.1.2-standard/jquery.uploadifive.js"></script>
 	<!-- SLiDES -->
-
 
 	<script type="text/javascript" src="../js/script.js"></script>
 
@@ -176,6 +178,6 @@ $ecran 		= new Ecran($id_plasma);
 	    <?php }?>
 		
 	</div>
-<iframe id="preview_screen" style="width:384px;height:216px;border:0;" src=""></iframe>
+	<iframe id="preview_screen" style="width:384px;height:216px;border:0;" src=""></iframe>
 </body>
 </html>

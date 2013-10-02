@@ -372,6 +372,17 @@ class Func {
 		}
 	}
 	
+
+	/**
+	 * [dateFormat description]
+	 * @param  [type] $date [description]
+	 * @return [type]       [description]
+	 */
+	static function dateFormat($date,$format=NULL){
+		date_default_timezone_set("Europe/Paris");
+		setlocale(LC_TIME, 'fr_FR');
+		return strftime('%A %e %B %Y à %Hh%Mm%S',strtotime($date));
+	}
 	
 	
 	/**

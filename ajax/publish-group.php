@@ -5,7 +5,8 @@ include_once('../vars/config.php');
 include_once(REAL_LOCAL_PATH.'vars/statics_vars.php');
 include_once(REAL_LOCAL_PATH.'classe/classe_core.php');
 include_once(REAL_LOCAL_PATH.'classe/classe_ecran.php');
-include_once(REAL_LOCAL_PATH."classe/classe_fonctions.phpREAL_LOCAL_PATH."
+include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
+
 $core = new core();
 
 if($core->isAdmin){ 
@@ -21,4 +22,9 @@ if($core->isAdmin){
      */
     $ecran = new ecran();
     
+
+    if(isset($_GET['publish']) && $_GET['publish'] == 'groupe'){
+        $slideshow = new Slideshow();
+        echo $slideshow->publish_slideshow(NULL,$_GET['id_groupe'],NULL,NULL);
+    }
 }

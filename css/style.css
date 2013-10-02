@@ -11,7 +11,7 @@ body {
 
 
 div#sequenceTimeline{
-    margin: 2em 0;
+    margin: 1em 0;
     height: 60px;
     border: 1px solid #ddd;
     background: #fbf5f6;
@@ -24,6 +24,15 @@ div#sequenceContainer{
     height: 34px;
     padding: 5px;
     border-bottom: 1px solid #BEBEBE;
+}
+
+.timelineTitle{
+    text-transform: uppercase;
+    font-style:italic;
+    font-weight:normal;
+    text-align:left;
+    font-size:20px;
+    margin-top:40px;
 }
 
 
@@ -94,7 +103,7 @@ div.sequence-item-placeholder{
 */
 
 div#dateTimeline{
-    margin: 2em 0;
+    margin: 1em 0;
 }
 
 /*

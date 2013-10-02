@@ -225,7 +225,7 @@ class Slide {
 			$opt = "";
 		}
 		
-		$query = 'SELECT id,nom,template,date FROM '.TB.'timeline_slides_tb'.$opt.' ORDER BY date DESC';
+		$query = 'SELECT id,nom,template,date FROM '.TB.'timeline_slides_tb'.$opt.' ORDER BY date DESC, id DESC';
 		
 		$sql_slide		= sprintf($query); //echo $sql_slide;	
 		$sql_slide_query = mysql_query($sql_slide) or die(mysql_error());

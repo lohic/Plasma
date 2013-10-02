@@ -5,6 +5,8 @@
 // accents
 // http://www.pjb.com.au/comp/diacritics.html
 
+var GMTcorrection = 2;
+
 var timestamp = new Date().getTime();
 
 var timeline;
@@ -15,8 +17,38 @@ var seqItemNbr = 0;
 var seqItemSelected;
 
 var pixOneSecond=1/60;
+var sequencePixOneSecond=1/60;
+
+(function(window,undefined){
+
+    // Establish Variables
+    var
+        State = History.getState(),
+        $log = $('#log');
+
+    // Log Initial State
+    History.log('initial:', State.data, State.title, State.url);
+
+    // Bind to State Change
+    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+        // Log the State
+        var State = History.getState(); // Note: We are using History.getState() instead of event.state
+        //History.log('statechange:', State.data, State.title, State.url);
+        //History.log('statechange:', State.url);
+        //
+        //History.log(getUrlVars());
+        if( getUrlVars().id_slide > 0 ){
+            $item = $('.edit_slide[data-id-slide="'+getUrlVars().id_slide+'"]');
+            edit_slide($item.data('id-slide'), $item.data('template'), $item.data('title'),'slide');
+        }else if(getUrlVars().page == 'slides_select'){
+            $.fancybox.close();
+        }
+    });
+
+})(window);
 
 $('document').ready(function(){
+
 
     // GESTION DU MENU PRINCIPAL
     $('ul#menuDown > li').mouseover(function(){ $(this).children('a').addClass('menuDown-hover').siblings('ul').show(); });
@@ -84,7 +116,7 @@ $('document').ready(function(){
         console.log('id_groupe : '+getUrlVars().id_groupe);
         
         $.ajax({
-            url     :"../ajax/publish-screen.php",
+            url     :"../ajax/publish-group.php",
             type    : "GET",
             dataType:'json',
             data    : {
@@ -93,6 +125,7 @@ $('document').ready(function(){
             }
         }).done(function ( dataJSON ) {
             console.log(dataJSON);
+            $('#last_publication').text(dataJSON.last_publication);
         });
     });
 
@@ -118,6 +151,7 @@ $('document').ready(function(){
 
     });
 
+
     $(".child-screen .ecran").mouseleave(function(){
         $('#preview_screen').hide();
         $('#preview_screen').attr('src', "");
@@ -125,9 +159,19 @@ $('document').ready(function(){
 
     $(".edit_slide").click(function(e){
         //alert($(this).data('id'));
-        edit_slide($(this).data('id-slide'), $(this).data('template'), $(this).data('title'),'slide');
+        //edit_slide($(this).data('id-slide'), $(this).data('template'), $(this).data('title'),'slide');
+        
+        History.pushState(null, null, "?page=slides_select&id_slide="+$(this).data('id-slide'));
         e.preventDefault();
     });
+
+    //console.log('edit slide '+getUrlVars().id_slide);
+    if( getUrlVars().id_slide > 0 ){
+        $item = $('.edit_slide[data-id-slide="'+getUrlVars().id_slide+'"]');
+        edit_slide($item.data('id-slide'), $item.data('template'), $item.data('title'),'slide');
+    }
+
+    
 
     slide_preview();
 
@@ -211,6 +255,23 @@ $('document').ready(function(){
             });
         });
     }
+
+    // gestion du zoom sur les slides séquentiels :
+    $('#sequenceTimeline').mousewheel(function(event, delta, deltaX, deltaY){
+
+        //sequencePixOneSecond = pixelRange/timeRange*1000;
+        //
+        if(Math.abs(deltaY)>Math.abs(deltaX)){
+            sequencePixOneSecond = sequencePixOneSecond+deltaY/200;
+            if(sequencePixOneSecond<1/30){
+                sequencePixOneSecond = 1/30;
+            }
+            console.log(sequencePixOneSecond);
+            refreshSequenceSlide();
+
+            event.preventDefault();
+        }
+    })
 });
 
 
@@ -301,6 +362,20 @@ function sequenceSlideSupressing(){
             console.log(dataJSON);
             //seqItemSelected.remove();
             unselectSequenceItem();
+
+            $.ajax({
+                url         : "../ajax/data-sequence-item.php",
+                type        : "POST",
+                data        : {
+                    action: 'sort-item',
+                    id_tab: JSON.stringify($( "#sequenceContainer" ).sortable( "toArray", { attribute : 'data-id' } )),
+                },
+                dataType    : 'json'
+            }).done(function ( dataJSON ) {
+
+                console.log('RETOUR TRI : ');
+                console.log(dataJSON.message);
+            });
         });
     })
     .insertAfter(seqItemSelected);
@@ -314,7 +389,7 @@ function refreshSequenceSlide(){
 
     var largeur =0;
     $('.sequence-item').each(function(){
-        $(this).width(pixOneSecond*$(this).data('duree'));
+        $(this).width(sequencePixOneSecond*$(this).data('duree'));
 
         largeur += $(this).outerWidth(true);
     });
@@ -546,8 +621,8 @@ function drawTimeline() {
                     id_slide: dataTimeline[row].id_slide,
                     id_group: $id_groupe,
                     titre   : dataTimeline[row].content,
-                    start   : new Date( dataTimeline[row].start ).addHours(2),
-                    end     : new Date( dataTimeline[row].end   ).addHours(2),
+                    start   : new Date( dataTimeline[row].start ).addHours(GMTcorrection),
+                    end     : new Date( dataTimeline[row].end   ).addHours(GMTcorrection),
                     group   : dataTimeline[row].group,
                     template: dataTimeline[row].template,
                     action  : 'create-item'
@@ -601,8 +676,8 @@ function drawTimeline() {
                     id_slide: dataTimeline[row].id_slide,
                     id_group: $id_groupe,
                     titre   : dataTimeline[row].content,
-                    start   : new Date(dataTimeline[row].start).addHours(2),
-                    end     : new Date(dataTimeline[row].end).addHours(2),
+                    start   : new Date(dataTimeline[row].start).addHours(GMTcorrection),
+                    end     : new Date(dataTimeline[row].end).addHours(GMTcorrection),
                     group   : dataTimeline[row].group,
                     template: dataTimeline[row].template,
                     published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
@@ -716,7 +791,7 @@ function drawTimeline() {
         var timeRange = event.end-event.start;
         pixOneSecond = pixelRange/timeRange*1000;
 
-        refreshSequenceSlide();
+        //refreshSequenceSlide();
 
         //console.log( "1 seconde = "+ pixOneSecond +" pixels");
     }
@@ -886,8 +961,8 @@ function edit_item(ref){
                 id_slide: dataTimeline[ref].id_slide,
                 id_group: $id_groupe,
                 titre   : dataTimeline[ref].content,
-                start   : new Date(dataTimeline[ref].start).addHours(2),
-                end     : new Date(dataTimeline[ref].end).addHours(2),
+                start   : new Date(dataTimeline[ref].start).addHours(GMTcorrection),
+                end     : new Date(dataTimeline[ref].end).addHours(GMTcorrection),
                 group   : dataTimeline[ref].group,
                 template: dataTimeline[ref].template,
                 published : dataTimeline[ref].className.indexOf("unpublished") < 0 ? 1 : 0,
@@ -1003,6 +1078,11 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                 title: {
                     type: 'inside', 
                     position: 'top'
+                }
+            },
+            afterClose : function(){
+                if( edit_from != 'sequence' && edit_from != 'timeline'){
+                    History.pushState(null, null, "?page=slides_select");
                 }
             }
         });
@@ -1161,8 +1241,8 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                             id_slide: dataTimeline[row].id_slide,
                             id_group: $id_groupe,
                             titre   : dataTimeline[row].content,
-                            start   : new Date(dataTimeline[row].start).addHours(2),
-                            end     : new Date(dataTimeline[row].end).addHours(2),
+                            start   : new Date(dataTimeline[row].start).addHours(GMTcorrection),
+                            end     : new Date(dataTimeline[row].end).addHours(GMTcorrection),
                             group   : dataTimeline[row].group,
                             template: dataTimeline[row].template,
                             published : dataTimeline[row].className.indexOf("unpublished") < 0 ? 1 : 0,
