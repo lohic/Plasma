@@ -1,6 +1,7 @@
 /**
  * contient les différenets fonctions pour gérer le slideshows d'un écran 
  * @author Loic Horellou
+ * @version v1.0beta
  */
 
 
@@ -19,32 +20,33 @@ $(document).ready(function(){
 	$slide_loaded		= false;
 	$data_loaded		= false;
 
-	// ????
-	$data_slide_dates	= 'undefined';
-	// ????
-	$data_slide_ordered	= 'undefined';
 
-	$last_ordre			= 0;
-
-	$slides				= Array();
-
-	$now				= new Date();
-	$start				= new Date();
-	$end				= new Date();
-	$newStart			= new Date();
-	$newEnd				= new Date();
-	// ????
-	$duree				= 0;
-	// ????
-	$duree_restante		= 0;
-
-	$template			= 'default';
-	$slide_data			= {};
-	$slide_id 			= 0;
-
-	$nbr				= 0;
 	
 
+	$slides				= Array(); // liste des slides
+
+	$now				= new Date();
+
+	$start				= new Date();
+	$end				= new Date();
+	
+	$newStart			= new Date();
+	$newEnd				= new Date();
+	
+	$last_ordre			= 0;
+	
+	$isActualStillHere  = false;
+
+	$template			= 'default';
+	$slide_data			= {};	// données du slide actuel
+	$slide_id 			= 0;	// id du slide (contenu)
+	$actual_item_id		= 0;	// id de l'item (élément de la timeline ou séquentiel)
+
+	$nbr				= 0;	// nombre d'items
+	
+
+	// on vérifie si on doit juste afficher un slide ou le slideshow d'un écran
+	// si slide_id alors on affiche le slide
 	if(typeof(getUrlVars().slide_id)!='undefined' ){
 		console.log("on prévisualise un slide");
 
@@ -72,9 +74,9 @@ $(document).ready(function(){
 			load_slide($template,$slide_data);
 			$slide_loaded = true;
 		}
-
-
-	}else{
+	}
+	// sinon un slideshow
+	else{
 		// ON AMORCE LE RAFRAICHISSEMENT SUR UN INTERVAL DE TEMPS DONNÉ
 		console.log("on visualise un écran");
 		refresh();
@@ -83,144 +85,172 @@ $(document).ready(function(){
 		console.log('id ecran : '+$plasma_id);
 	}
 
+	// on prépare les boutons de la console de test (affichée si '&debug' est passé en paramètre dans l'url )
 	$('#exit_button').click(function(e){
 		$('body').toggleClass('exit');
-		
-
 		e.preventDefault();
 	});
 
 	$('#pause_button').click(function(e){
-
 		$('body').toggleClass('pause');
-
 		e.preventDefault();
 	})
 });
+
+
 
 /**
  * La fonction qui sert à rafraichir les données d'un écran
  * @return {null}
  */
 function refresh() {
+	// si on n'est pas en pause 
 	if(!$('body').hasClass('pause')){
 
-	$now 		= new Date();
+		$now 		= new Date();
 
-	$("#now").text($now);
-	$("#end").text($end);
-	$("title").text("LOOP | Écrans PLASMA : "+new Date());
-	
-	$.ajax({
-		type: "GET",
-		url: "../ajax/data-slideshow.php",
-		data: {plasma_id : $plasma_id, actual_data_date: $actual_data_date},
-		dataType: 'json',
-		error : function(jqXHR,textStatus,errorThrown){
-			$('.info').text('Il y a une erreur dans le chargement des données du slideshow : '+errorThrown);
-		},
-		success: function(json){
-			//countusers=json.countusers;
-			//$("#retour").text('ok : '+countusers);
-			if(json.update == true && json.nodata != true){
-				console.log(" ");
-				console.log('NEW DATA');
-				//console.log(json.screen_data.data);
+		// on met à jour la console
+		$("#now").text($now);
+		$("#end").text($end);
+		$("title").text("LOOP | Écrans PLASMA : "+new Date());
+		
+		$.ajax({
+			type: "GET",
+			url: "../ajax/data-slideshow.php",
+			data: {plasma_id : $plasma_id, actual_data_date: $actual_data_date},
+			dataType: 'json',
+			error : function(jqXHR,textStatus,errorThrown){
+				$('.info').text('Il y a une erreur dans le chargement des données du slideshow : '+errorThrown);
+			},
+			success: function(json){
+				//countusers=json.countusers;
+				//$("#retour").text('ok : '+countusers);
+				if(json.update == true){
+					console.log(" ");
+					console.log('NEW DATA');
+					//console.log(json.screen_data.data);
 
-				console.log( $actual_data_date + " " + json.screen_data.date_publication);
+					console.log( $actual_data_date + " " + json.screen_data.date_publication);
 
-				//console.log(json.screen_data.nom_ecran);
+					//console.log(json.screen_data.nom_ecran);
 
-				$actual_data_date	= json.screen_data.date_publication;				
-				$meteo_id			= json.screen_data.code_meteo;
-				$code_postal		= json.screen_data.code_postal;
+					$actual_data_date	= json.screen_data.date_publication;				
+					$meteo_id			= json.screen_data.code_meteo;
+					$code_postal		= json.screen_data.code_postal;
 
-				$slides				= json.screen_data.data;
+					$slides				= json.screen_data.data;
 
 
-				$nbr = $slides.length;
-				if( $nbr > 0){
+					$nbr = $slides.length;
 
-					// on trie les slides :
-					// alerte locale > alerte nationale > écran > groupe  > date de début croissante
-					 
-					$slides = $slides.sort(function(a,b){
-					    valeur =
-					    (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
-					     (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
-					    
-					      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
-					       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
-					    
-					        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
-					         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
-					    
-					          (a.ref_target == 'nat' && b.ref_target == 'seq' ? -1 :
-					           (a.ref_target == 'seq' && b.ref_target == 'nat' ? 1 :
-					    
-					            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-					             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-					    
-					              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-					               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
-					    
-					                (a.ref_target == 'loc' && b.ref_target == 'seq' ? -1 :
-					                 (a.ref_target == 'seq' && b.ref_target == 'loc' ? 1 :
-					    
-					                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
-					                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
-					    
-					                    (a.ref_target == 'grp' && b.ref_target == 'seq' ? -1 :
-					                     (a.ref_target == 'seq' && b.ref_target == 'grp' ? 1 :
-					    
-					                      (a.ref_target == 'ecr' && b.ref_target == 'seq' ? -1 :
-					                       (a.ref_target == 'seq' && b.ref_target == 'ecr' ? 1 :
+					console.log($nbr);
 
-					                        (a.start < b.start ? -1 : 
-					                         (a.start > b.start ? 1 :
+					if( $nbr > 0){
 
-					                          (parseInt(a.ordre) <= parseInt(b.ordre) ? -1 : 1 )))))))))))))))))))))));
+						// on trie les slides :
+						// alerte locale > alerte nationale > écran > groupe  > date de début croissante
+						 
+						$slides = $slides.sort(function(a,b){
+						    valeur =
+						    (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
+						     (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
+						    
+						      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+						       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+						    
+						        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+						         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+						    
+						          (a.ref_target == 'nat' && b.ref_target == 'seq' ? -1 :
+						           (a.ref_target == 'seq' && b.ref_target == 'nat' ? 1 :
+						    
+						            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+						             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+						    
+						              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+						               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+						    
+						                (a.ref_target == 'loc' && b.ref_target == 'seq' ? -1 :
+						                 (a.ref_target == 'seq' && b.ref_target == 'loc' ? 1 :
+						    
+						                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+						                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+						    
+						                    (a.ref_target == 'grp' && b.ref_target == 'seq' ? -1 :
+						                     (a.ref_target == 'seq' && b.ref_target == 'grp' ? 1 :
+						    
+						                      (a.ref_target == 'ecr' && b.ref_target == 'seq' ? -1 :
+						                       (a.ref_target == 'seq' && b.ref_target == 'ecr' ? 1 :
 
-										   return valeur;
-					});
-				}
-				//console.log('slides après tri :');
-				//nsole.log($slides);
-				//
-				$data_loaded = true;
-				
+						                        (a.start < b.start ? -1 : 
+						                         (a.start > b.start ? 1 :
 
-				if(!$slide_loaded){
-					$slide_data	= {"titre_ecran" : $('body').data('name')};
-					load_slide($template,$slide_data);
+						                          (parseInt(a.ordre) <= parseInt(b.ordre) ? -1 : 1 )))))))))))))))))))))));
 
-					$slide_loaded = true;
-				}
+											   return valeur;
+						});
+					}
 
-			}else if(json.nodata == true){
+					console.log($slides);
 
-				if($data_loaded == true){
-					$data_loaded = false;
-					$slide_loaded = false;
-				}
-				
-				if(!$slide_loaded){
-					$slide_data	= {"titre_ecran" : $('body').data('name')};
-					load_slide($template,$slide_data);
+					// POUR VERIFIER SI IL Y A UN CHANGEMENT D'HORAIRE OU QUE LE SLIDE N'EST PLUS PRESENT
+					// notamment pour les alertes
+					$isActualStillHere = false;
+					if($actual_item_id>0){
+						for(var i = 0 ; i < $nbr; i++){
 
-					$slide_loaded = true;
-				}
+							if($slides[i].id == $actual_item_id){
+								$isActualStillHere = true;
 
-				//console.log(" ");
-				//console.log('NO NEW DATA');
-				//console.log(json);
-			}	
-		}
-	});
+								// on vérifie que le slide n'a pas été décalé dans le temps et qu'il ne doive plus s'afficher
+								if( mysql2jsTimestamp($slides[i].start) > $now ){
+									console.log('attention le slide est décalé dans le futur'); 
+									$end = new Date($now).addSeconds(2);
+								}else if( $slides[i].end != '0000-00-00 00:00:00'){
+									$end = mysql2jsTimestamp( $slides[i].end );
 
-	
-	loop_slideshow();
-	//load_slide();
+									console.log('ON CHANGE L’HEURE DE FIN DU SLIDE ACTUEL : ' + $end);
+									break;
+								}
+							}
+						}
+					}else{
+						$isActualStillHere = true;
+					}
+			
+					
+
+					if(!$slide_loaded){
+						$slide_data	= {"titre_ecran" : $('body').data('name')};
+						load_slide($template,$slide_data);
+
+						$slide_loaded = true;
+					}
+
+					$data_loaded = true;
+
+				}else if(json.update == false){
+					//$data_loaded = false;
+
+					/*
+					if($data_loaded == true){
+						$data_loaded = false;
+						$slide_loaded = false;
+					}
+					
+					if(!$slide_loaded){
+						$slide_data	= {"titre_ecran" : $('body').data('name')};
+						load_slide($template,$slide_data);
+
+						$slide_loaded = true;
+					}
+					*/
+				}	
+			}
+		});
+
+		loop_slideshow();
+	}
 }
 	
 /**
@@ -235,17 +265,14 @@ function loop_slideshow(){
 	if($now > new Date($end).addSeconds(-2) && $template != 'default'){
 		console.log('exit');
 		$('body').addClass('exit');
+		$('#meteo2').addClass('exit');
 	}
 	
 	// on vérifie qu'il y a bien un slide dont end >  $now
 	// qu'il y a bien au moins un slide en attente
 	// et que $now et à moins de 2 secondes de la fin du slide actuel
-	/*if(typeof $slide != "undefined"  && $now > new Date($end).addSeconds(-3) && $nbr > 0 && $slide[$nbr-1].end<$now){
-		console.log('EXIT');
-		$('body').addClass('exit');
-	}*/
 
-	if($data_loaded){
+	if( $data_loaded ){
 
 		for(var i = 0 ; i< $nbr; i++){
 			//console.log ( mysql2jsTimestamp($slides[i].start) < new Date());
@@ -253,7 +280,7 @@ function loop_slideshow(){
 			$newEnd		= mysql2jsTimestamp($slides[i].end);
 
 			// on boucle pour vérifier si un écran est dans le bon interval de temps
-			if( $newStart < $now && $now < $newEnd){
+			if( ($newStart < $now && $now < $newEnd) || $isActualStillHere == false){
 
 				// si le slide détecté est différent du slide actuel
 				if($actual_item_id != $slides[i].id){
@@ -317,14 +344,13 @@ function loop_slideshow(){
 			}
 		}
 
-
-
 		// si $slide_loaded == false
 		// alors on charge un nouveau slide
 		// en allant chercher ses données
 		if(! $slide_loaded){
 
 			if($template != 'meteo'){
+
 				$.ajax({
 					type: "GET",
 					url: "../ajax/data-slide.php",
@@ -352,14 +378,13 @@ function loop_slideshow(){
 			}
 		}		
 
-		$('.info').html( 'template : <span class="red">' + $template + '</span><br/>id_slide : <span class="red">'+$slide_id +'</span>');
+		$('.info').html( 'template : <span class="red">' + $template + '</span><br/>id_slide : <span class="red">'+$slide_id +'</span><br/>slide toujours présent ? : <span class="red">'+$isActualStillHere +'</span>');
 
 	}else{
 		
 	}
 
     //load_slide('default',{"titre_ecran" : "test écran", "logo":true});
-    }
 }
 
 /**
@@ -369,6 +394,8 @@ function loop_slideshow(){
  * @return {null}	         remplace le html du div#template par le slide
  */
 function load_slide(template, data){
+	window.refreshMeteo = null;
+	window.remplissage = null;
 
 	//console.log("template : "+template+" data : "+data);
 	$('body').removeClass('exit');
