@@ -21,7 +21,7 @@ function remplissage(){
 	// 
 	// 
 	main_zip = $('body').data('code-meteo');
-	console.log('meteo : '+main_zip);
+	//console.log('meteo : '+main_zip);
 
 	var start = $start;
 	var end = $end;
@@ -30,13 +30,13 @@ function remplissage(){
 
 	console.log(alert_end+" "+end);
 
-	console.log( "moite : "+ (new Date($end) - new Date($start))/1000/2	 );
+	console.log( "METEO moiti√© : "+ (new Date($end) - new Date($start))/1000/2	 );
 
 	
-	// on a dÈj‡, en dur, 'json_data' et 'main_zip' (l'id de la ville principale)
-	// Ècrits via php au dÈbut du template
+	// on a d√©j√†, en dur, 'json_data' et 'main_zip' (l'id de la ville principale)
+	// √©crits via php au d√©but du template
 	
-	// on a aussi 'slide_duree' Ècrit en dur depuis la classe slideshow / generate_slide()
+	// on a aussi 'slide_duree' √©crit en dur depuis la classe slideshow / generate_slide()
 	$.ajax({
 		type: "GET",
 		url: "../vars/meteo_json.txt",
@@ -79,7 +79,7 @@ function remplissage(){
 			
 			//$('#meteo1').hide(); $('#meteo2').show();
 			
-			// les rÈsumÈs
+			// les r√©sum√©s
 			rank = 0;
 			for(i=0; i<meteo.length; i++){
 				if(i != main_id){
@@ -96,15 +96,15 @@ function remplissage(){
 
 			
 			
-			// timeout pour passer au 2Ëme slide
+			// timeout pour passer au 2√®me slide
 			// slide_duree est transmis par structure/slideshow-javascript.php
 
-			nextMeteoDelay = Math.round((slide_duree-2)/2)*1000;
+			nextMeteoDelay = Math.round((slide_duree-2)/2)*1000-1000;
 
 			
 			$('#meteo1').show();
 			$('#meteo2').hide();
-			rafraichissement = setInterval( refreshMeteo , nextMeteoDelay );
+			$rafraichissement = setInterval( refreshMeteo , nextMeteoDelay );
 		}
 	});
 }
@@ -113,6 +113,15 @@ function remplissage(){
 function refreshMeteo(){
 	console.log('refresh meteo is meteo1played :'+meteo1played);
 
-	$('#meteo1').slideUp(600);
-	$('#meteo2').show();
+	//$('#meteo1').slideUp(600);
+	//
+	$('#meteo1')
+	.addClass('exit')
+	.delay( 2000 )
+	.hide(0,function(){
+		$('#meteo2')
+		.show();
+	});
+	
+	clearInterval($rafraichissement);
 }

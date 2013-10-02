@@ -27,7 +27,8 @@ body.basse, .basse #template{
 	background:rgb(89,216,220);
 }
 
-.basse .colonne_gauche, .basse .footer, .basse .autre_campus, .basse .autre_jour{
+/*.basse .colonne_gauche,*/
+.basse .footer, .basse .autre_campus, .basse .autre_jour{
 	background:rgb(89,216,220);
 }
 
@@ -35,7 +36,8 @@ body.moyen_basse, .moyen_basse #template{
 	background:rgb(190,220,45);
 }
 
-.moyen_basse .colonne_gauche, .moyen_basse .footer, .moyen_basse .autre_campus, .moyen_basse .autre_jour{
+/*.moyen_basse .colonne_gauche,*/
+.moyen_basse .footer, .moyen_basse .autre_campus, .moyen_basse .autre_jour{
 	background:rgb(190,220,45);
 }
 
@@ -43,7 +45,8 @@ body.moyen_haute, .moyen_haute #template{
 	background:rgb(242,158,37);
 }
 
-.moyen_haute .colonne_gauche, .moyen_haute .footer, .moyen_haute .autre_campus, .moyen_haute .autre_jour{
+/*.moyen_haute .colonne_gauche,*/
+.moyen_haute .footer, .moyen_haute .autre_campus, .moyen_haute .autre_jour{
 	background:rgb(242,158,37);
 }
 
@@ -51,7 +54,8 @@ body.haute, .haute #template{
 	background:rgb(242,95,36);
 }
 
-.haute .colonne_gauche, .haute .footer, .haute .autre_campus, .haute .autre_jour{
+/*.haute .colonne_gauche, */
+.haute .footer, .haute .autre_campus, .haute .autre_jour{
 	background:rgb(242,95,36);
 }
 
@@ -69,6 +73,17 @@ body.haute, .haute #template{
 classes réservées pour le traitement JS : 
 .edit, .textfield, .textarea, .checkbox, .image, ...
 */
+
+#meteo1{
+	position: relative;
+	z-index: 2;
+	height: 100%;
+}
+#meteo2{
+	position: relative;
+	z-index: 1;
+	height: 100%;
+}
 
 #meteo1 .header {
 	width: 87.8%;
@@ -433,7 +448,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -170px);
+		-webkit-transform: translate(0px, -300px);
 	}
 }
 @-moz-keyframes moveHeaderExit{
@@ -441,7 +456,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -170px);
+		-moz-transform: translate(0px, -300px);
 	}
 }
 @keyframes moveHeaderExit{
@@ -449,7 +464,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -170px);
+		transform: translate(0px, -300px);
 	}
 }
 
