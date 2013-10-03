@@ -302,11 +302,11 @@ function addSequenceSlide(id,titre,id_slide,duree,template,className){
     .append($content)
     .addClass('sequence-item '+className)
     .attr('id','sequence-item'+id)
+    .attr('data-id', id)
     .data('duree', duree)
     .data('id_slide', id_slide)
     .data('template', template)
     .data('titre', titre)
-    .attr('data-id', id)
     .width(pixOneSecond*duree)
     .click(function(e){
         if (e.stopPropagation) {
@@ -373,8 +373,8 @@ function sequenceSlideSupressing(){
                 dataType    : 'json'
             }).done(function ( dataJSON ) {
 
-                console.log('RETOUR TRI : ');
-                console.log(dataJSON.message);
+                //console.log('RETOUR TRI : ');
+                //console.log(dataJSON.message);
             });
         });
     })
@@ -390,7 +390,6 @@ function refreshSequenceSlide(){
     var largeur =0;
     $('.sequence-item').each(function(){
         $(this).width(sequencePixOneSecond*$(this).data('duree'));
-
         largeur += $(this).outerWidth(true);
     });
 
@@ -407,7 +406,7 @@ function refreshSequenceSlide(){
  * @return {[type]} [description]
  */
 function edit_item_sequence(){
-    console.log('Edit item From Sequence');
+    //console.log('Edit item From Sequence');
 
     item_sequence_info = {
         slide_id:  seqItemSelected.data('id_slide'),
@@ -460,7 +459,7 @@ function edit_item_sequence(){
         var duree       = $('#duree').val();
         var id_slide    = $('#id_slide').val();
 
-        console.log('SAVE template '+template);
+        //console.log('SAVE template '+template);
 
         $('#item_title').text(titre_slide);
         $('.slide_view').data('id-slide',id_slide);
@@ -483,6 +482,7 @@ function edit_item_sequence(){
         classes = cleanArray(classes);
         classes = classes.join(' ');
 
+        // on met à jour l'item de la timeline
         seqItemSelected
         .attr('class',classes)
         .data('duree', duree)
@@ -508,7 +508,7 @@ function edit_item_sequence(){
         }).done(function ( dataJSON ) {
 
             //console.log('OK OK sequence : ');
-            console.log(dataJSON);
+            //console.log(dataJSON);
             refreshSequenceSlide();
         });
     });
@@ -516,7 +516,7 @@ function edit_item_sequence(){
     // gestion de l'édition de contenu
     $('#edit_slide_content').click(function(e){
 
-        console.log(">>> EDIT SLIDE CONTENT : "+ seqItemSelected.data('id') + " ID_SLIDE : "+ seqItemSelected.data('id_slide'));
+        //console.log(">>> EDIT SLIDE CONTENT : "+ seqItemSelected.data('id') + " ID_SLIDE : "+ seqItemSelected.data('id_slide'));
 
         edit_slide(seqItemSelected.data('id_slide'), $('#template_reference').val(), seqItemSelected.data('titre'), 'sequence',seqItemSelected.data('id'));     
         
@@ -635,14 +635,7 @@ function drawTimeline() {
                     'id': dataJSON
                 });
 
-                //console.log(' ');
-                //console.log('ONADD ref : ' + row + ' id : ' + dataTimeline[row].id + ' id_slide : ' + dataTimeline[row].id_slide);
-                //console.log('content  : ' + dataTimeline[row].content );
-                //console.log('start  : ' + dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
-                //console.log('groupe : ' + dataTimeline[row].group);
-                //console.log('class  : ' + dataTimeline[row].className);
-            });
-            
+            });            
         }
     }
     
@@ -661,11 +654,6 @@ function drawTimeline() {
         if (row != undefined) {
 
             var debut = new Date(dataTimeline[row].start);
-
-            //console.log(' ');
-            //console.log("ONCHANGE id : " + dataTimeline[row].id + " id_slide : "  + dataTimeline[row].id_slide);
-            //console.log('start : '+dataTimeline[row].start + ' end : ' + dataTimeline[row].end);
-            //console.log('groupe : ' + dataTimeline[row].group);
 
             $.ajax({
                 url     :"../ajax/data-timeline-item.php",
@@ -714,8 +702,6 @@ function drawTimeline() {
                 alert(dataJSON.message);
                 //console.log(dataJSON);
             });
-
-            //console.log(' ');
             //console.log('ONDELETE id : '+ dataTimeline[row].id + ' content : '+ dataTimeline[row].content);
         }
     }
@@ -782,16 +768,12 @@ function drawTimeline() {
 
     // MISE A JOUR LORS D'UN SCROLL OU UN ZOOM
     var onrangechange = function(event){           
-        /*for(var i = 0; i < screens.length ; i ++){
-            timeline.changeItem(screens[i], {'start' : new Date(event.start) });
-            //console.log("start : "+new Date(event.start));
-        }
-        timeline.setSelection();*/
-        var pixelRange = $('.timeline-axis').width();
+        // permettait d'asservir le zoom de la timeline sequentielle
+        /*var pixelRange = $('.timeline-axis').width();
         var timeRange = event.end-event.start;
         pixOneSecond = pixelRange/timeRange*1000;
 
-        //refreshSequenceSlide();
+        refreshSequenceSlide();*/
 
         //console.log( "1 seconde = "+ pixOneSecond +" pixels");
     }
@@ -802,7 +784,7 @@ function drawTimeline() {
     links.events.addListener(timeline, 'delete', ondelete);
     links.events.addListener(timeline, 'select', onselect);
     links.events.addListener(timeline, 'edit',   onedit);
-    links.events.addListener(timeline, 'rangechange', onrangechange);
+    //links.events.addListener(timeline, 'rangechange', onrangechange);
 }
     
 
@@ -819,8 +801,6 @@ function edit_item(ref){
     var date1 = new Date(dataTimeline[ref].start);
     var date2 = new Date(dataTimeline[ref].end);
     var duree = Math.round((date2-date1)/1000);
-
-    //var actionAfterClose;
     
     // on crée l'objet qui va récupérer les informations d'un item 
     slide_info = {
@@ -860,10 +840,7 @@ function edit_item(ref){
     $('#screen_reference').val(dataTimeline[ref].group);
     //$('#template_reference').val(dataTimeline[ref].template);
     $('#published').attr('checked', dataTimeline[ref].className.indexOf("unpublished") < 0 ? true : false);
-    /*if($('#template_reference').val() == 'meteo'){
-            $('#edit_slide_content').hide();
-    }*/
-    //$template = $('#template_reference').val();
+
     //alert( dataTimeline[ref].className.indexOf("unpublished") >= 0 ? 1 : 0) ;
     
     // ------------------------------------
@@ -873,18 +850,6 @@ function edit_item(ref){
     slide_selector_from = 'timeline';
     slide_selector();
 
-
-    /*
-    $('#template_reference').change(function(){
-        if($(this).val() == 'meteo'){
-            $('#edit_slide_content').hide();
-        }else{
-            $('#edit_slide_content').show();
-        }
-
-        //on mémorise le gabarit sélectionné
-        $template = $(this).val();
-    });*/
 
     // sauvegarde d'un item
     $('#save_item').click(function(e){
