@@ -189,7 +189,8 @@ classes réservées pour le traitement JS :
 	max-height:585px;
 	z-index:1;
 	position:relative;
-	width:768px;
+	/*width:768px;*/
+	width:100%;
 	min-height:768px;
 	max-height:768px;
 	float:left;
@@ -228,13 +229,13 @@ classes réservées pour le traitement JS :
 
 
 .footer {
-	height: 67px;
+	min-height: 67px;
 	width: 87.8%;
 	padding:23px 6.1% 0px;
 	position:absolute;
 	z-index:2;
 	left:0px;
-	bottom:35px;
+	bottom:0px;
 	box-shadow:rgba(0,0,0,0.2) 0px -15px 15px;
 	-webkit-animation: moveFooter 2s ease-in-out;
 	   -moz-animation: moveFooter 2s ease-in-out;
@@ -254,18 +255,20 @@ classes réservées pour le traitement JS :
 .footer .logo{
 	width:148px;
 	padding-right:50px;
-	border-right:2px solid #fff;
 	float:left;
 }
 
 .footer .coorganisateur{
 	float:left;
+	width:-webkit-calc(100% - 225px);
+	margin-bottom: 20px;
 }
 
 .footer .coorganisateur p{
 	font-family:"ITC Fenice Regular", "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
 	font-size:23px;
 	padding-left:11.3px;
+	border-left:2px solid #fff;
 }
 
 @-webkit-keyframes moveFooter{
@@ -463,7 +466,7 @@ classes réservées pour le traitement JS :
 		padding:40px 0px 40px 0px;
 		float:left;
 		width: 764px;
-		width: -webkit-calc(100% - 612px);
+		width: -webkit-calc(100% - 516px);
 		height:100%;
 		margin-left:516px;
 		
@@ -477,12 +480,13 @@ classes réservées pour le traitement JS :
 		/*height:768px;*/
 		height:100%;
 		/*width:764px;*/
+		width:-webkit-calc(100% - 516px);
 	}
 
 	.texte, .texte2, .header, .footer{
 		padding:0px 44px 0px 52px;
-		width:668px;
-		width:100%;
+		/*width:668px;*/
+		width:-webkit-calc(100% - 96px);
 		/*width:100%;*/
 		/*box-shadow:none;*/
 	}
@@ -494,6 +498,10 @@ classes réservées pour le traitement JS :
 	.header{
 		padding-bottom:20px;
 		/*border-bottom:1px solid #000;*/
+	}
+
+	.coorganisateur{
+		width:-webkit-calc(100% - 225px);
 	}
 
 	/*.texte{
@@ -515,6 +523,7 @@ classes réservées pour le traitement JS :
 	    padding-top: 30px;
 	    position: absolute;
 	    box-shadow:none;
+	    width:-webkit-calc(100% - 612px);
 	}
 
 }

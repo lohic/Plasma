@@ -23,7 +23,7 @@ $(document).ready(function(){
 	    "rencontres_metiers"                : {texte : "Rencontres métiers", couleur : '#1455a4'}
 	}
 
-	$('#A').text(type_event[type].texte);
+	$('#type_event').text(type_event[type].texte);
 
 	$('body, th, td, .header, .texte, .footer, .texte2, #template').css('background-color',type_event[type].couleur);
 
