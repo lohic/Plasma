@@ -32,7 +32,7 @@
             "type" : "text",
             "name" : "description",
             "id" : "description",
-            "caption" : "Description"
+            "caption" : "Description (si la vidéo ne s'affiche pas)"
         },
         {
             "type" : "file",
