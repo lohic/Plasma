@@ -1,9 +1,19 @@
-
 // Javascript
 
-function decompte(){
+$(document).ready(function(){
+
+	$('body, th, td, .header, .texte, .footer, .texte2, #template').removeAttr( 'style' );
+
+	console.log("compte à rebour");
 	
-	dateArray = $('#A').html().split('-');
+	if($(".header").data('date') != ''){
+		decompte();
+	}
+		
+});
+
+function decompte(){
+	dateArray = $(".header").data('date').split('-');
 	
 	today = new Date();
 	dateEvent = new Date(dateArray[0], dateArray[1]-1, dateArray[2]);
@@ -19,15 +29,3 @@ function decompte(){
 	setTimeout(decompte, 60010);
 	
 }
-
-$(document).ready(function(){
-
-	$('body, th, td, .header, .texte, .footer, .texte2, #template').removeAttr( 'style' );
-
-	console.log("compte à rebour");
-	
-	if($('#A').html() != ''){
-		decompte();
-	}
-		
-});

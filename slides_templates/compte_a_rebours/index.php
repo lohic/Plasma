@@ -4,14 +4,11 @@
 </div>
 <div class="colonne">
 
-	<div class="date invisible" id="A" title="Date de l'événement">{{date_decompte}}</div>
-
-    <div class="header">
+    <div class="header" data-date="{{date_decompte}}">
         <h1></h1>
     </div>
     
-    <div class="visuel edit image" id="I" title="I - image" style="background-image:url(<?php echo ABSOLUTE_URL.IMG_SLIDES; ?>{{image}})">
-        
+    <div class="image" style="background-image:url(<?php echo ABSOLUTE_URL.IMG_SLIDES; ?>{{image}})">
     </div>
 
     <div class="footer">
