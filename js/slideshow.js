@@ -278,9 +278,10 @@ function loop_slideshow(){
 			//console.log ( mysql2jsTimestamp($slides[i].start) < new Date());
 			$newStart 	= mysql2jsTimestamp($slides[i].start);
 			$newEnd		= mysql2jsTimestamp($slides[i].end);
+			$expire		= mysql2jsTimestamp($slides[i].expire);
 
-			// on boucle pour vérifier si un écran est dans le bon interval de temps
-			if( ($newStart < $now && $now < $newEnd) || $isActualStillHere == false){
+			// on boucle pour vérifier si un écran est dans le bon interval de temps et qu'on est bien inférieur à sa date d'expiration (si il y en a une)
+			if( ($newStart < $now && $now < $newEnd && ($now < $expire || $slides[i].expire=='0000-00-00 00:00:00')) || $isActualStillHere == false){
 
 				// si le slide détecté est différent du slide actuel
 				if($actual_item_id != $slides[i].id){
@@ -319,7 +320,7 @@ function loop_slideshow(){
 
 				for(var i = 0 ; i< $nbr; i++){
 
-					if($slides[i].ordre > $last_ordre){
+					if($slides[i].ordre > $last_ordre && ($now < $expire || $slides[i].expire=='0000-00-00 00:00:00')){
 						$start		= $now;
 						$end		= new Date($now).addSeconds(mysql2jsSecond($slides[i].duree));
 						$template 	= $slides[i].template;

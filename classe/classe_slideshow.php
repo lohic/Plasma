@@ -500,6 +500,7 @@ class Slideshow {
 				$data->titre		= $info_item['titre'];
 				$data->start		= $info_item['start'];
 				$data->end			= $info_item['end'];
+				$data->expire		= $info_item['expire'];
 				$data->duree		= $info_item['duree'];
 				$data->ordre		= $info_item['ordre'];
 
