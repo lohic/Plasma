@@ -320,6 +320,8 @@ function loop_slideshow(){
 
 				for(var i = 0 ; i< $nbr; i++){
 
+					$expire		= mysql2jsTimestamp($slides[i].expire);
+
 					if($slides[i].ordre > $last_ordre && ($now < $expire || $slides[i].expire=='0000-00-00 00:00:00')){
 						$start		= $now;
 						$end		= new Date($now).addSeconds(mysql2jsSecond($slides[i].duree));
