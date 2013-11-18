@@ -1416,6 +1416,7 @@ function refresh_event(){
     $('#myform input[name="organisateur"]').val(    data_event.organisateur);
     $('#myform input[name="qualite"]').val(         data_event.organisateur_qualite);
     $('#myform input[name="coorganisateur"]').val(  data_event.coorganisateur);
+    $('#myform input[name="expire"]').val(          data_event.sessions[id_session].date_fin+' '+data_event.sessions[id_session].horaire_fin);
 
     //$('#myform input[name="image"]').val();
     

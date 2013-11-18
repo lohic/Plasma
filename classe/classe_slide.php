@@ -582,10 +582,34 @@ class Slide {
 
         $info_target = $this->get_item_target_ref($_POST['group'], $_POST['id_group']);
 
+        $expire 	= func::GetSQLValueString( '0000-00-00 00:00:00', 'text');
+
+        // on vérifie la date d'expiration
+        if((isset($_POST['id_slide']) && $_POST['id_slide'] != 0) && ($_POST['template']=='evenements' || $_POST['template']=='compte_a_rebours')){
+
+			$sql 	= sprintf("SELECT json FROM ".TB."timeline_slides_tb WHERE id=%s",func::GetSQLValueString($_POST['id_slide'],'int'));
+			$query 	= mysql_query($sql) or die(mysql_error());
+			$slide_data = mysql_fetch_assoc($query);
+
+			$data = json_decode($slide_data['json']);
+
+        	if($_POST['template'] == 'evenements'){
+        		$expire = func::GetSQLValueString( $data->expire ,'text');
+        	}
+
+        	if($_POST['template'] == 'compte_a_rebours'){
+        		$val = !empty($data->date_decompte) ? $data->date_decompte.' 23:59:59' : '0000-00-00 00:00:00';
+
+        		$expire = func::GetSQLValueString( $val, 'text');
+        	}
+
+        }
+
+
 		if( !isset($id) ){
 			// création$
 			// 
-            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, type_target, published, template) VALUES (%s, %s, %s, %s, %s, %s, %s, %s,%s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$group,$published,$template);
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, start, end, expire,  type_target, published, template) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s)",$id_slide, $info_target->id_target, $info_target->ref_target, $titre,$start,$end,$expire,$group,$published,$template);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
@@ -595,7 +619,7 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, ref_target=%s, titre=%s, start=%s, end=%s, type_target=%s, published=%s, template=%s  WHERE id=%s",$id_slide, $info_target->id_target, $info_target->ref_target, $titre, $start,$end,$group,$published,$template,$id);
+            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, id_target=%s, ref_target=%s, titre=%s, start=%s, end=%s, expire=%s, type_target=%s, published=%s, template=%s  WHERE id=%s",$id_slide, $info_target->id_target, $info_target->ref_target, $titre, $start,$end,$expire,$group,$published,$template,$id);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			echo '{"id":"'+ $id +'"}';
@@ -607,6 +631,7 @@ class Slide {
 			echo '{"message":"supression de l’item «'. $_POST['titre'] .'»"}';
 		}
 	}
+
 
 
 	/**
@@ -631,10 +656,33 @@ class Slide {
 
         $ref 		= func::GetSQLValueString('seq','text');
 
+        $expire 	= func::GetSQLValueString( '0000-00-00 00:00:00', 'text');
+
+        // on vérifie la date d'expiration
+        if((isset($_POST['id_slide']) && $_POST['id_slide'] != 0) && ($_POST['template']=='evenements' || $_POST['template']=='compte_a_rebours')){
+
+			$sql 	= sprintf("SELECT json FROM ".TB."timeline_slides_tb WHERE id=%s",func::GetSQLValueString($_POST['id_slide'],'int'));
+			$query 	= mysql_query($sql) or die(mysql_error());
+			$slide_data = mysql_fetch_assoc($query);
+
+			$data = json_decode($slide_data['json']);
+
+        	if($_POST['template'] == 'evenements'){
+        		$expire = func::GetSQLValueString( $data->expire ,'text');
+        	}
+
+        	if($_POST['template'] == 'compte_a_rebours'){
+        		$val = !empty($data->date_decompte) ? $data->date_decompte.' 23:59:59' : '0000-00-00 00:00:00';
+
+        		$expire = func::GetSQLValueString( $val, 'text');
+        	}
+
+        }
+
 		if( !isset($id) ){
 			// création$
 			// 
-            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, published, template, ordre, duree) VALUES (%s, %s, %s, %s, %s,%s, %s, %s)",$id_slide, $id_groupe, $ref, $titre, $published,$template,$ordre, $duree);
+            $query			= sprintf("INSERT INTO ".TB."timeline_item_tb (id_slide, id_target, ref_target, titre, published, template, ordre, expire, duree) VALUES (%s, %s, %s, %s, %s,%s, %s, %s, %s)",$id_slide, $id_groupe, $ref, $titre, $published,$template,$ordre, $expire, $duree);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$item_id = mysql_insert_id();
@@ -647,7 +695,7 @@ class Slide {
 		}else if( !$delete ){
 			//mise à jour
 
-            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, titre=%s,  published=%s, template=%s, duree=%s  WHERE id=%s",$id_slide, $titre, $published, $template, $duree, $id);
+            $query			= sprintf("UPDATE ".TB."timeline_item_tb SET id_slide=%s, titre=%s,  published=%s, template=%s, expire=%s, duree=%s  WHERE id=%s",$id_slide, $titre, $published, $template, $expire, $duree, $id);
 			$sql_slide_query 	= mysql_query($query) or die(mysql_error());
 
 			$retour = new stdClass;

@@ -94,6 +94,11 @@
             "type" : "hidden",
             "name" : "session_id",
             "id" : "session_id"
+        },
+        {
+            "type" : "hidden",
+            "name" : "expire",
+            "id"   : "expire"
         }
     ]
 }
