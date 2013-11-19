@@ -18,6 +18,7 @@ class Slideshow {
 	
 	private static $order_slide_by	= 'date';
 	private static $order_ASC		= true;
+	private static $updated_screen  = array();
 	
 	/**
 	 * slideshow constructeur de la fonction pour gérer l'affichage du slideshow d'un écran. Le slideshow est composé de slides ou de playlists
@@ -485,6 +486,9 @@ class Slideshow {
 
 			$data = new stdClass();
 
+			$alerte_tab_loc = array();
+			$alerte_tab_nat = array();
+
 			while($info_item = mysql_fetch_assoc($sql_query)){
 
 				//echo "\n".$info_item['id'];
@@ -505,6 +509,17 @@ class Slideshow {
 				$data->ordre		= $info_item['ordre'];
 
 				$json->data[] = $data;
+
+				// si il y a une alerte locale
+				if($info_item['ref_target'] == 'loc'){
+					$alerte_tab_loc[] = $data;
+				}
+
+				// si il y a une alerte nationale
+				if($info_item['ref_target'] == 'nat'){
+					$alerte_tab_nat[] = $data;
+				}
+
 			}
 		
 			$json_data = json_encode($json);
@@ -519,10 +534,111 @@ class Slideshow {
 			$sql = sprintf("UPDATE ".TB."ecrans_groupes_tb
 							SET last_publication=NOW()
 							WHERE id=%s", func::GetSQLValueString($info['id_groupe'],'int') );
-			$sql_query		= mysql_query($sql) or die(mysql_error());							
+			$sql_query		= mysql_query($sql) or die(mysql_error());
+
+
+
+			// on met à jour les alertes locales sur les écrans de l'tablissement
+			if(count($alerte_tab_loc)>0){
+
+				$sql = sprintf("SELECT P.id
+								FROM ".TB."ecrans_tb AS P,
+								".TB."ecrans_groupes_tb AS G,
+								".TB."etablissements_tb AS E
+								WHERE P.id_groupe = G.id
+								AND G.id_etablissement = E.id
+								AND E.code_postal = %s
+								AND P.id_groupe <> %s",	func::GetSQLValueString($json->code_postal, 'int'),
+													func::GetSQLValueString($json->id_groupe, 'int') );
+				$query = mysql_query($sql) or die(mysql_error());
+
+				while($screen = mysql_fetch_assoc($query)){
+
+					$sql_json = sprintf("SELECT json_data
+									FROM ".TB."slideshows_tb
+									WHERE id_ecran=%s
+									ORDER BY date_publication DESC
+									LIMIT 0,1", func::GetSQLValueString($screen['id'],'int'));
+
+					$query_json = mysql_query($sql_json) or die(mysql_error());
+					$data = mysql_fetch_assoc($query_json);
+
+					$updated_json = json_encode( $this->update_alertes($data['json_data'], $alerte_tab_loc) );
+
+					if(!empty($updated_json) && $updated_json!= 'null'){
+
+						$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
+								VALUES (%s,%s,NOW())",	func::GetSQLValueString( $screen['id'] ,'int'),
+														func::GetSQLValueString( $updated_json ,'text'));
+						$sql_query		= mysql_query($sql) or die(mysql_error());
+					}
+				}
+
+			}	
+
+			// on met à jour les alertes nationales sur tous les écrans
+			if(count($alerte_tab_nat)>0){
+				
+				$sql = sprintf("SELECT P.id
+								FROM ".TB."ecrans_tb AS P
+								WHERE P.id_groupe <> %s",	func::GetSQLValueString($json->id_groupe, 'int') );
+				$query = mysql_query($sql) or die(mysql_error());
+
+				while($screen = mysql_fetch_assoc($query)){
+
+					$sql_json = sprintf("SELECT json_data
+									FROM ".TB."slideshows_tb
+									WHERE id_ecran=%s
+									ORDER BY date_publication DESC
+									LIMIT 0,1", func::GetSQLValueString($screen['id'],'int'));
+
+					$query_json = mysql_query($sql_json) or die(mysql_error());
+					$data = mysql_fetch_assoc($query_json);
+
+
+					$updated_json = json_encode( $this->update_alertes($data['json_data'], $alerte_tab_nat) );
+
+					if(!empty($updated_json) && $updated_json!= 'null'){
+
+						$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
+								VALUES (%s,%s,NOW())",	func::GetSQLValueString( $screen['id'] ,'int'),
+														func::GetSQLValueString( $updated_json ,'text'));
+						$sql_query		= mysql_query($sql) or die(mysql_error());
+					}
+				}
+
+			}		
 
 		}
-	}	
+	}
+
+	/**
+	 * [update_alertes description]
+	 * @param  [type] $json_screen [description]
+	 * @param  [type] $alertes_tab [description]
+	 * @return [type]              [description]
+	 */
+	function update_alertes($json_screen = null, $alertes_tab = null){
+
+		if( isset($json_screen) && isset($alertes_tab) ){
+
+			$json_screen = json_decode($json_screen);
+
+			foreach($json_screen->data as $key=>$slide_item){
+
+				foreach($alertes_tab as $new_item){
+
+					if($slide_item->id == $new_item->id ){
+						unset($json_screen->data[$key]);
+					}
+				}
+			}
+
+			$json_screen->data = array_merge($json_screen->data, $alertes_tab);
+
+			return $json_screen;
+		}
+	}
 	
 	
 	/**
