@@ -554,7 +554,7 @@ class Slideshow {
 
 				while($screen = mysql_fetch_assoc($query)){
 
-					$sql_json = sprintf("SELECT json_data
+					$sql_json = sprintf("SELECT id, json_data
 									FROM ".TB."slideshows_tb
 									WHERE id_ecran=%s
 									ORDER BY date_publication DESC
@@ -567,10 +567,19 @@ class Slideshow {
 
 					if(!empty($updated_json) && $updated_json!= 'null'){
 
-						$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
+						$sql = sprintf("UPDATE ".TB."slideshows_tb
+							SET id_ecran=%s, json_data=%s, date_publication=NOW()
+							WHERE id=%s",	func::GetSQLValueString($screen['id'],'int'),
+											func::GetSQLValueString($updated_json,'text'),
+											func::GetSQLValueString($data['id'],'int'));
+
+						/*$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
 								VALUES (%s,%s,NOW())",	func::GetSQLValueString( $screen['id'] ,'int'),
-														func::GetSQLValueString( $updated_json ,'text'));
+														func::GetSQLValueString( $updated_json ,'text'));*/
 						$sql_query		= mysql_query($sql) or die(mysql_error());
+
+
+
 					}
 				}
 
@@ -586,7 +595,7 @@ class Slideshow {
 
 				while($screen = mysql_fetch_assoc($query)){
 
-					$sql_json = sprintf("SELECT json_data
+					$sql_json = sprintf("SELECT id, json_data
 									FROM ".TB."slideshows_tb
 									WHERE id_ecran=%s
 									ORDER BY date_publication DESC
@@ -600,15 +609,18 @@ class Slideshow {
 
 					if(!empty($updated_json) && $updated_json!= 'null'){
 
-						$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
+						$sql = sprintf("UPDATE ".TB."slideshows_tb
+							SET id_ecran=%s, json_data=%s, date_publication=NOW()
+							WHERE id=%s",	func::GetSQLValueString($screen['id'],'int'),
+											func::GetSQLValueString($updated_json,'text'),
+											func::GetSQLValueString($data['id'],'int'));
+						/*$sql = sprintf("INSERT INTO ".TB."slideshows_tb (id_ecran, json_data, date_publication)
 								VALUES (%s,%s,NOW())",	func::GetSQLValueString( $screen['id'] ,'int'),
-														func::GetSQLValueString( $updated_json ,'text'));
+														func::GetSQLValueString( $updated_json ,'text'));*/
 						$sql_query		= mysql_query($sql) or die(mysql_error());
 					}
 				}
-
 			}		
-
 		}
 	}
 
