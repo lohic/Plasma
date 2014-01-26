@@ -4,6 +4,7 @@
 	<title>LOOP | Écrans PLASMA</title>
 
 	<link href="<?php echo ABSOLUTE_URL; ?>fonts/GoetheGothic.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo ABSOLUTE_URL; ?>fonts/Fenice.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo ABSOLUTE_URL; ?>css/slideshow.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo ABSOLUTE_URL; ?>css/slideshow.css" rel="stylesheet" type="text/css" name="slide_css" />
 
