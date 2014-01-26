@@ -5,8 +5,6 @@
 // accents
 // http://www.pjb.com.au/comp/diacritics.html
 
-var GMTcorrection = 2;
-
 var timestamp = new Date().getTime();
 
 var timeline;
@@ -1297,11 +1295,17 @@ var issetParam = false;
 function event_selector(){
     console.log('SELECTEUR D’ÉVENEMENT');
 
+    var d = new Date();
+    var n = d.getFullYear();
+
+    var yearArray = new Array();
+
+    for(i=n; i>= 2011; i--){
+        yearArray.push( {"key":i,"value":i} );
+    }
+
     var data_event_selector = {
-        "year_event" : [
-        {"key":2013,"value":2013},
-        {"key":2012,"value":2012},
-        {"key":2011,"value":2011}],
+        "year_event" : yearArray,
         "month_event" : [
         {"key":1,"value":"janvier"},
         {"key":2,"value":"février"},

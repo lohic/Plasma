@@ -91,6 +91,8 @@ $ecran 		= new Ecran($id_plasma);
         // id du slide > à supprimer à terme
         $slide_id = 1;
         $id_groupe = <?php echo !empty($_GET['id_groupe']) ? $_GET['id_groupe'] : 0; ?>;
+
+        var GMTcorrection = <?php echo GMTcorrection; ?>;
 	  		
 	</script>
 
