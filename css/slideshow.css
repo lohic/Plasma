@@ -8,8 +8,9 @@
 }
 
 html,body,#template{
-	height:100% !important;
-	width: 100% !important;
+	height:100%;
+	width: 100%;
+	overflow: hidden;
 }
 
 body,td,th {
@@ -63,7 +64,7 @@ body.debug, body.debug #template{
 	padding: 15px;
 	margin:15px; 
 	z-index: 999;
-	font-family: 'monaco';
+	font-family: 'monaco',monospace;
 	border: dashed 1px #FF0;
 }
 
@@ -94,14 +95,14 @@ body.debug, body.debug #template{
 
 /* dimensions #template */
 #template{
-	min-width:720px;
-	min-height:1270px;
+	min-width:600px;
+	min-height:1000px;
 }
 
 @media screen and (orientation:landscape){
 
 	#template{
-		min-width:1270px;
-		min-height:720px;
+		min-width:1000px;
+		min-height:600px;
 	}
 }
