@@ -1,0 +1,42 @@
+/* CSS Document */
+@charset "UTF-8";
+/*
+slide « MIRE »
+*/
+
+*{
+	border:none;
+	padding:0px;
+	margin:0px; 
+}
+
+body,td,th {
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
+	font-size: 10px;
+	background:rgb(203,02,26);
+	font-weight: bold;
+}
+#template{
+	width:1080px;
+	height:1920px;
+	overflow: hidden;
+	display:block;
+	position:relative;
+
+	background: url(mire-v.gif);
+}
+
+
+
+
+
+@media screen and (orientation:landscape){
+	#template{
+		width:1920px;
+		height:1080px;
+		padding:0px 0px;
+
+		background: url(mire-h.gif);
+	}
+}
+
