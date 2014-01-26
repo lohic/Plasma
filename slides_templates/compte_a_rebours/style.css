@@ -29,9 +29,10 @@ h1, h2, p{
 }
 
 #template{
-	width:720px;
-	height:1210px;
-	padding:35px 0px;
+	width:100%;
+	height:100%;
+	/*padding:35px 0px;*/
+	padding:0;
 	overflow: hidden;
 	display:block;
 	position:relative;
@@ -316,6 +317,8 @@ classes réservées pour le traitement JS :
 		height:100%;
 		width:764px;
 		width:-webkit-calc(100% - 516px);
+		   width:-moz-calc(100% - 516px);
+				width:calc(100% - 516px);
 	}
 
 	.image, .header, .footer{
