@@ -204,8 +204,8 @@ $('document').ready(function(){
                 },
                 dataType    : 'json'
             }).done(function ( dataJSON ) {
-
-                addSequenceSlide(dataJSON.id,'Nouveau',0,30*60,'default','unpublished default');
+                // duree par default 10secondes
+                addSequenceSlide(dataJSON.id,'Nouveau',0,10,'default','unpublished default');
             });
         })
         .click(function(e){
