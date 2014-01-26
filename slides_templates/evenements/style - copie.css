@@ -468,7 +468,7 @@ classes réservées pour le traitement JS :
 	}
 
 	.colonne{
-		padding:30px 0px 30px 0px;
+		padding:40px 0px 40px 0px;
 		float:left;
 		width: 764px;
 		width: -webkit-calc(100% - 516px);
@@ -494,7 +494,7 @@ classes réservées pour le traitement JS :
 	}
 
 	.texte, .texte2, .header, .footer{
-		padding:0px 44px 0px 42px;
+		padding:0px 44px 0px 52px;
 		/*width:668px;*/
 		width:-webkit-calc(100% - 96px);
 		   width:-moz-calc(100% - 96px);
