@@ -1,0 +1,510 @@
+/* CSS Document */
+@charset "UTF-8";
+/*
+slide ? sports ?
+*/
+
+$test : 24px;
+
+*{
+	border:none;
+	padding:0px;
+	margin:$test; 
+}
+
+body,td,th {
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
+	font-size: 10px;
+	font-weight:bold;
+}
+
+body, th, td, .header, .texte, .footer, .texte2, .sport, .classement, .detail_classement, .endbloc{
+	background:rgb(247,207,50);
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1, h2, p{
+	color:#000;
+}
+
+#template{
+	width:768px;
+	height:1210px;
+	padding:35px 0px;
+	overflow: hidden;
+	display:block;
+	position:relative;
+	background:rgb(247,207,50);
+}
+
+/* 
+classes r?serv?es pour le traitement JS : 
+.edit, .textfield, .textarea, .checkbox, .image, ...
+*/
+
+.header {
+	height: 30px;
+	width: 87.8%;
+	padding:0px 6.1% 19px;
+	float:left;
+	position:relative;
+	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
+	-webkit-animation: moveHeader 0.9s ease-in-out;
+	   -moz-animation: moveHeader 0.9s ease-in-out;
+		-ms-animation: moveHeader 0.9s ease-in-out;
+			animation: moveHeader 0.9s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+@-webkit-keyframes moveHeader{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+
+	100%{
+		-webkit-transform: translate(0px, 0px);
+	}
+
+}
+@-moz-keyframes moveHeader{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+	100%{
+		-moz-transform: translate(0px, 0px);
+	}
+}
+@keyframes moveHeader{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+	100%{
+		transform: translate(0px, 0px);
+	}
+}
+
+.header h1{
+	font-size:24.5px;
+	line-height:24.5px;
+	margin:0;
+	text-transform: uppercase;
+	margin-top:-3px;
+	color:#000;
+}
+
+.texte, .texte2, .sport, .classement, .detail_classement{
+	float:left;
+	width: 87.8%;
+	padding:30px 6.1% 24px;
+	position:relative;
+	z-index:2;
+	margin-top:2px;
+	box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
+	-webkit-animation: moveTexte 1.4s ease-in-out;
+	   -moz-animation: moveTexte 1.4s ease-in-out;
+		-ms-animation: moveTexte 1.4s ease-in-out;
+			animation: moveTexte 1.4s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.texte{
+	padding-bottom:27px;
+	padding-top:26px;
+}
+
+.texte2{
+	padding-top:26px;
+	padding-bottom:34px;
+}
+
+.sport{
+	z-index:1;
+	-webkit-animation: moveTexte 1.2s ease-in-out;
+	   -moz-animation: moveTexte 1.2s ease-in-out;
+		-ms-animation: moveTexte 1.2s ease-in-out;
+			animation: moveTexte 1.2s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.sport .le_sport{
+	position:absolute;
+	width:256px;
+	height:161px;
+	right:44px;
+	top:30px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.texte2{
+	z-index:3;
+	-webkit-animation: moveTexte 1.6s ease-in-out;
+	   -moz-animation: moveTexte 1.6s ease-in-out;
+		-ms-animation: moveTexte 1.6s ease-in-out;
+			animation: moveTexte 1.6s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.endbloc{
+	display: none;
+}
+
+.texte h3{
+	font-size:28px;
+	line-height:28px;	
+}
+
+.texte2 h3, .sport h2, .classement h3{
+	font-size:55px;
+	line-height:55px;
+}
+
+.sport h2{
+	padding-top:60px;
+}
+
+.detail_classement, .detail_classement p{
+	font-size:28px;
+	line-height:35px;
+}
+
+@-webkit-keyframes moveTexte{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveTexte{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveTexte{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.classement {
+	z-index:4;
+	padding-top:22px;
+	padding-bottom:35px;
+	-webkit-animation: moveFooter 1.8s ease-in-out;
+	   -moz-animation: moveFooter 1.8s ease-in-out;
+		-ms-animation: moveFooter 1.8s ease-in-out;
+			animation: moveFooter 1.8s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+@-webkit-keyframes moveFooter{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveFooter{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveFooter{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.detail_classement {
+	z-index:5;
+	padding-top:22px;
+	-webkit-animation: moveFooter 2s ease-in-out;
+	   -moz-animation: moveFooter 2s ease-in-out;
+		-ms-animation: moveFooter 2s ease-in-out;
+			animation: moveFooter 2s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+@-webkit-keyframes moveFooter{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveFooter{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveFooter{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+.exit .header{
+	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
+	   -moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
+		-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
+			animation: moveHeaderExit 0.4s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;	
+}
+
+@-webkit-keyframes moveHeaderExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -170px);
+	}
+}
+@-moz-keyframes moveHeaderExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -170px);
+	}
+}
+@keyframes moveHeaderExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -170px);
+	}
+}
+
+.exit .texte{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.4s;
+	   -moz-animation-delay: 0.4s;
+		-ms-animation-delay: 0.4s;
+			animation-delay: 0.4s;	
+}
+
+.exit .texte2{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.6s;
+	   -moz-animation-delay: 0.6s;
+		-ms-animation-delay: 0.6s;
+			animation-delay: 0.6s;	
+}
+
+.exit .sport{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.2s;
+	   -moz-animation-delay: 0.2s;
+		-ms-animation-delay: 0.2s;
+			animation-delay: 0.2s;	
+}
+
+@-webkit-keyframes moveTexteExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveTexteExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveTexteExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+.exit .classement{
+	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;	
+}
+
+.exit .detail_classement{
+	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 1.2s;
+	   -moz-animation-delay: 1.2s;
+		-ms-animation-delay: 1.2s;
+			animation-delay: 1.2s;	
+}
+
+@-webkit-keyframes moveFooterExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveFooterExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveFooterExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+@media screen and (orientation:landscape){
+	.colonne_gauche{
+		width:516px;
+		float:left;
+	}
+
+	#template{
+		/*width:1270px;*/
+		width:100%;
+		height:768px;
+		padding:0px 0px;
+	}
+
+	.classement{
+		padding:40px 44px 35px 64px;
+		float:left;
+		width: 646px;
+		box-shadow: none;
+	}
+
+	.detail_classement{
+		padding:31px 44px 40px 64px;
+		float:left;
+		width: 646px;
+		box-shadow: none;
+	}
+
+	.colonne_droite{
+		height:100%;
+		/*width:754px;*/
+		float:left;
+		position:relative;
+		z-index:6;
+		width:-webkit-calc(100% - 516px);
+	}	
+
+	#ombre{
+		position:absolute;
+		left:516px;
+		box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
+		z-index:100;
+		height:100%;
+		/*width:754px;*/
+		width:-webkit-calc(100% - 516px);
+	}
+
+	.header{
+		border: none;
+	    height: 25px;
+	    padding: 40px 0 24px 44px;
+	    width: 472px;
+	}
+
+	.texte{
+		padding-top:56px;
+		padding-bottom:57px;
+	}
+
+	.texte2{
+		padding-top:51px;
+		padding-bottom:60px;
+	}
+
+	.sport{
+		padding-bottom:60px;
+	}
+
+	.sport .le_sport {
+	    height: 155px;
+	    position: absolute;
+	    right: 0px;
+	    top: 40px;
+	    width: 196px;
+	}
+
+	.texte, .texte2, .sport, .header{
+    	box-shadow: -7px 15px 15px rgba(0, 0, 0, 0.2);
+	}
+
+	.endbloc{
+		display: block;
+		margin-top: 2px;
+		height: 50px;
+		float:left;
+		width:100%;
+		position: relative;
+		z-index: 4;
+		-webkit-animation: moveTexte 1.7s ease-in-out;
+		   -moz-animation: moveTexte 1.7s ease-in-out;
+			-ms-animation: moveTexte 1.7s ease-in-out;
+				animation: moveTexte 1.7s ease-in-out;
+		-webkit-animation-delay: 0s;
+		   -moz-animation-delay: 0s;
+			-ms-animation-delay: 0s;
+				animation-delay: 0s;
+	}
+
+	.exit .endbloc{
+		-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+		   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+			-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+				animation: moveTexteExit 0.8s ease-in-out forwards;
+		-webkit-animation-delay: 0.7s;
+		   -moz-animation-delay: 0.7s;
+			-ms-animation-delay: 0.7s;
+				animation-delay: 0.7s;	
+	}
+}
+
