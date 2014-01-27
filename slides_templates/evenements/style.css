@@ -257,7 +257,7 @@ classes réservées pour le traitement JS :
 
 .footer .logo{
 	width:148px;
-	padding-right:50px;
+	padding-right:11.3px;
 	float:left;
 }
 
@@ -270,8 +270,8 @@ classes réservées pour le traitement JS :
 }
 
 .footer .coorganisateur p{
-	font-family:"ITC Fenice Regular", "GoetheGothicBold", Arial, Helvetica, sans-serif !important;
-	font-size:23px;
+	font-family:"Fenice", serif;
+	font-size:24px;
 	padding-left:11.3px;
 	border-left:2px solid #fff;
 }

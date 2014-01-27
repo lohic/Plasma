@@ -64,19 +64,19 @@
             "type" : "text",
             "name" : "organisateur",
             "id" : "organisateur",
-            "caption" : "Organisateur"
+            "caption" : "Intervenant"
         },
         {
             "type" : "text",
             "name" : "qualite",
             "id" : "qualite",
-            "caption" : "Qualité de l'organisateur"
+            "caption" : "Qualité de l'intervenant"
         },
         {
             "type" : "text",
             "name" : "coorganisateur",
             "id" : "coorganisateur",
-            "caption" : "Co-organisateur"
+            "caption" : "Organisateur"
         },
         {
             "type" : "file",

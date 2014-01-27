@@ -1300,7 +1300,7 @@ function event_selector(){
 
     var yearArray = new Array();
 
-    for(i=n; i>= 2011; i--){
+    for(i=n; i>= 2014; i--){
         yearArray.push( {"key":i,"value":i} );
     }
 
@@ -1400,16 +1400,18 @@ function refresh_event(){
 
     var date_event = jours[d.getDay()]+" "+l[0]+" "+l[1];
     var start_event = data_event.sessions[id_session].horaire_debut;
-    var end_event = data_event.sessions[id_session].horaire_fin;
+    var end_event = data_event.sessions[id_session].horaire_fin !='undefined' ? data_event.sessions[id_session].horaire_fin : '';
 
     start_event = start_event.split(':');
     start_event = start_event[0]+"H"+start_event[1];
 
-    end_event = end_event.split(':');
-    end_event = end_event[0]+"H"+end_event[1];
+    if(end_event != ''){
+        end_event = end_event.split(':');
+        end_event = " - " + end_event[0]+"H"+end_event[1];
+    }
 
     //$('#myform input[name="type"]').val(            data_event);
-    $('#myform input[name="date_horaire"]').val(    date_event + ", " +start_event + " - " + end_event );
+    $('#myform input[name="date_horaire"]').val(    date_event + ", " +start_event + end_event );
     $('#myform input[name="lieu"]').val(            data_event.sessions[id_session].lieu);
     $('#myform input[name="code_batiment"]').val(   data_event.sessions[id_session].code_batiment);
     $('#myform input[name="adresse_nom"]').val(     data_event.sessions[id_session].adresse_nom);
@@ -1468,13 +1470,13 @@ function downloadEventImage(url,id,month,year){
  * parametres -> formulaire ou
  * formulaire -> parametres
  */
-function loadEventFromAPI(param){
+function loadEventFromAPI(form2param){
 
-    issetParam = typeof(param) != 'undefined' ? param : false;
+    issetParam = typeof(form2param) != 'undefined' ? form2param : false;
 
     if(typeof(p_year)!= 'undefined' && typeof(p_month)!= 'undefined' && typeof(p_id_organisme)!= 'undefined' && typeof(p_id_event)!= 'undefined' && typeof(p_id_session)!= 'id_session' && issetParam == true ){
 
-        var param = {
+        var paramObj = {
             year        : p_year,
             month       : p_month,
             id_organisme: p_id_organisme,
@@ -1484,7 +1486,7 @@ function loadEventFromAPI(param){
 
     }else{
 
-        var param = {
+        var paramObj = {
             year        : $("#year_event").val(),
             month       : $("#month_event").val(),
             id_organisme: $("#id_organisme").val(),
@@ -1498,7 +1500,7 @@ function loadEventFromAPI(param){
         url     :"../ajax/api-event.php",
         type    : "GET",
         dataType:'json',
-        data    : param
+        data    : paramObj
 
     }).done(function ( dataJSON ) {
         console.log('date event reçues');
@@ -1512,13 +1514,22 @@ function loadEventFromAPI(param){
 
             $("#id_organisme").empty();
             $.each(dataJSON.evenements.organismes, function(item) {
-                $("#id_organisme").append($("<option />").val( dataJSON.evenements.organismes[item].id ).text(dataJSON.evenements.organismes[item].nom));
+                $("#id_organisme")
+                .append($("<option />")
+                .val( dataJSON.evenements.organismes[item].id )
+                .text(dataJSON.evenements.organismes[item].nom));
                 $("#id_session").prop("selectedIndex", 0);
             });
 
             $("#id_event").empty();
             $.each(dataJSON.evenements.evenement, function(item) {
-                $("#id_event").append($("<option />").val( dataJSON.evenements.evenement[item].id ).text(dataJSON.evenements.evenement[item].titre));
+
+                var date_debut = dataJSON.evenements.evenement[item].date.split('-');
+                var jour = date_debut[2];
+
+                $("#id_event").append($("<option />")
+                .val( dataJSON.evenements.evenement[item].id )
+                .text(jour + ' ' +dataJSON.evenements.evenement[item].titre));
 
                 // si on se base sur les paramètres sauvegardés alors on sélectionne la session
                 if(issetParam){
@@ -1528,7 +1539,10 @@ function loadEventFromAPI(param){
                         $("#id_session").empty();
                         $.each(dataJSON.evenements.evenement[item].sessions, function(itemsession){
 
-                            $("#id_session").append($("<option />").val( dataJSON.evenements.evenement[item].sessions[itemsession].id ).text(dataJSON.evenements.evenement[item].sessions[itemsession].titre));
+                            $("#id_session")
+                            .append($("<option />")
+                            .val( dataJSON.evenements.evenement[item].sessions[itemsession].id )
+                            .text(dataJSON.evenements.evenement[item].sessions[itemsession].titre));
                         });
                         $("#year_event").val( p_year );
                         $("#month_event").val( p_month );
@@ -1543,6 +1557,38 @@ function loadEventFromAPI(param){
                     }
                 }
             });
+
+            var selectOptions = $("#id_event option");
+            var selectedOption = $('#id_event').val();
+            selectOptions.sort(function(a, b) {
+                if (a.text > b.text) {
+                    return 1;
+                }
+                else if (a.text < b.text) {
+                    return -1;
+                }
+                else {
+                    return 0
+                }
+            });
+            $("#id_event").empty().append(selectOptions);
+            $('#id_event').val(selectedOption);
+
+            console.log('issetParam ' + issetParam);
+
+            if(!issetParam && form2param != true){
+                console.log('form2param :');
+                console.log(form2param);
+                console.log('pas de paramètres');
+
+                $("#id_event").val($("#id_event option:first").val());
+
+                p_id_event = $('#id_event').val();
+
+                loadEventFromAPI(true);
+
+            }
+    
         }
 
         // détail d'un évéenement et des sessions attachées
