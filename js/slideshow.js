@@ -22,7 +22,6 @@ $(document).ready(function(){
 
 
 	
-
 	$slides				= Array(); // liste des slides
 
 	$now				= new Date();
@@ -262,9 +261,20 @@ function loop_slideshow(){
 
 	//console.log($now +" "+ new Date($end).addSeconds(-3));
 
+	// on vérifie si on est à moins de 2 secondes de la fin
+	// > on ajoute une classe « exit » à la balise body 
 	if($now > new Date($end).addSeconds(-2) && $template != 'default'){
 		console.log('exit');
 		$('body').addClass('exit');
+		$('#meteo2').addClass('exit');
+	}
+
+	// sert à indiquer la moitié du temps (utile notamment pour météo)
+	// > on ajoute une classe « half » à la balise body 
+	$half = ($end - $start)/2/1000;
+	if($now > new Date($end).addSeconds(-$half) && $template != 'default'){
+		console.log('moitié du temps');
+		$('body').addClass('half');
 		$('#meteo2').addClass('exit');
 	}
 	
