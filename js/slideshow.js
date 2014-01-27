@@ -332,7 +332,7 @@ function loop_slideshow(){
 
 					$expire		= mysql2jsTimestamp($slides[i].expire);
 
-					if($slides[i].ordre > $last_ordre && ($now < $expire || $slides[i].expire=='0000-00-00 00:00:00')){
+					if(parseInt($slides[i].ordre) > $last_ordre && ($now < $expire || $slides[i].expire=='0000-00-00 00:00:00')){
 						$start		= $now;
 						$end		= new Date($now).addSeconds(mysql2jsSecond($slides[i].duree));
 						$template 	= $slides[i].template;
@@ -341,7 +341,7 @@ function loop_slideshow(){
 
 						//console.log('duree : '+mysql2jsSecond($slides[i].duree));
 
-						$last_ordre = $slides[i].ordre;
+						$last_ordre = parseInt($slides[i].ordre);
 						console.log("dernier n° d'ordre : "+$last_ordre);
 
 						// on annonce qu'on est en attente d'un nouveau slide
