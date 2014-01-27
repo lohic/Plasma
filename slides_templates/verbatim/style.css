@@ -313,11 +313,12 @@ classes réservées pour le traitement JS :
 		height:100%;
 		/*width:976px;*/
 		width:-webkit-calc(100% - 294px);
+		width:-moz-calc(100% - 294px);
+		width:calc(100% - 294px);
 	}
 
 	#template{
-		/*width:1270px;*/
-		width:100%;
+		width:1280px;
 		height:720px;
 		padding:0px 0px;
 	}

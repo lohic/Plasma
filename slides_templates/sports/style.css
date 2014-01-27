@@ -29,7 +29,7 @@ h1, h2, p{
 }
 
 #template{
-	width:768px;
+	width:720px;
 	height:1210px;
 	padding:35px 0px;
 	overflow: hidden;
@@ -404,9 +404,8 @@ classes réservées pour le traitement JS :
 	}
 
 	#template{
-		/*width:1270px;*/
-		width:100%;
-		height:768px;
+		width:1280px;
+		height:720px;
 		padding:0px 0px;
 	}
 
@@ -431,6 +430,8 @@ classes réservées pour le traitement JS :
 		position:relative;
 		z-index:6;
 		width:-webkit-calc(100% - 516px);
+		width:-moz-calc(100% - 516px);
+		width:calc(100% - 516px);
 	}	
 
 	#ombre{
@@ -441,6 +442,8 @@ classes réservées pour le traitement JS :
 		height:100%;
 		/*width:754px;*/
 		width:-webkit-calc(100% - 516px);
+		width:-moz-calc(100% - 516px);
+		width:calc(100% - 516px);
 	}
 
 	.header{

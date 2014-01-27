@@ -61,8 +61,8 @@ body.haute, .haute #template{
 
 
 #template{
-	width:100%;
-	height:100%;
+	width:720px;
+	height:1210px;
 	padding:35px 0px;
 	overflow: hidden;
 	display:block;
@@ -952,6 +952,13 @@ classes réservées pour le traitement JS :
 }
 
 @media screen and (orientation:landscape){
+
+
+	#template{
+		width:1280px;
+		height:720px;
+		padding:0px 0px;
+	}
 	#ombre{
 		position:absolute;
 		left:544px;
@@ -961,12 +968,6 @@ classes réservées pour le traitement JS :
 		height:100%;
 		/*width:736px;*/
 		width:100%;
-	}
-
-	#template{
-		width:1280px;
-		height:768px;
-		padding:0px 0px;
 	}
 
 	#meteo1 .texte{
@@ -1154,8 +1155,8 @@ classes réservées pour le traitement JS :
 		height:100%;
 		width:736px;
 		width:-webkit-calc(100% - 544px);
-		   width:-moz-calc(100% - 544px);
-				width:calc(100% - 544px);
+		width:   -moz-calc(100% - 544px);
+		width:		  calc(100% - 544px);
 	}
 
 	#meteo2 .header{
@@ -1184,8 +1185,8 @@ classes réservées pour le traitement JS :
 		float:left;
 		width: 764px;
 		width:-webkit-calc(100% - 544px);
-		   width:-moz-calc(100% - 544px);
-				width:calc(100% - 544px);
+		width:   -moz-calc(100% - 544px);
+		width:		  calc(100% - 544px);
 		height:100%;
 		margin-top:-3px;
 	}

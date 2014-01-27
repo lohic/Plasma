@@ -26,7 +26,7 @@ h1, p{
 
 #template{
 	width:720px;
-	height:1270px;
+	height:1210px;
 	padding:35px 0px;
 	overflow: hidden;
 	display:block;
@@ -311,6 +311,13 @@ classes réservées pour le traitement JS :
 
 
 @media screen and (orientation:landscape){
+
+	#template{
+		width:1280px;
+		height:720px;
+		padding:0px 0px;
+	}
+	
 	#ombre{
 		position:absolute;
 		left:294px;
@@ -318,12 +325,6 @@ classes réservées pour le traitement JS :
 		z-index:100;
 		height:100%;
 		width:976px;
-	}
-
-	#template{
-		width:1270px;
-		height:720px;
-		padding:0px 0px;
 	}
 
 	.texte{
