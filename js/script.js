@@ -1087,7 +1087,9 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
             selector: "textarea",
             toolbar: " ",
             menubar : false,
-            entity_encoding : 'raw',    
+            entity_encoding : 'raw',
+            plugins: "paste",
+            paste_as_text: true,
         });
 
         // ACTIVATION DE UPLOADIFIVE
