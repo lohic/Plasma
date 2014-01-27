@@ -7,7 +7,7 @@
 	margin:0px; 
 }
 
-html,body,#template{
+html,body{
 	height:100%;
 	width: 100%;
 	overflow: hidden;
@@ -33,6 +33,7 @@ body.preview, body.preview #template{
 }
 body.debug, body.debug #template{
 	cursor:auto;
+	overflow: auto;
 }
 
 /* affichage miniature */
@@ -90,19 +91,4 @@ body.debug, body.debug #template{
 
 .pause .console #now{
 	text-decoration: line-through;
-}
-
-
-/* dimensions #template */
-#template{
-	min-width:600px;
-	min-height:1000px;
-}
-
-@media screen and (orientation:landscape){
-
-	#template{
-		min-width:1000px;
-		min-height:600px;
-	}
 }
