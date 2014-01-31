@@ -1,0 +1,151 @@
+/* CSS Document */
+@charset "UTF-8";
+/*
+slide « image »
+*/
+*{
+	border:none;
+	padding:0px;
+	margin:0px; 
+}
+
+body,td,th {
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
+	font-weight: bold;
+	font-size: 10px;
+	
+}
+
+body, th, td, .header, .texte, .footer, .texte2{
+	background:rgb(203,02,26);
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1, h2, p{
+	color:#fff;
+}
+
+#template{
+	width:720px;
+	height:1280px;
+	padding:0;
+	overflow: hidden;
+	display:block;
+	position:relative;
+	background:rgb(203,02,26);
+}
+
+.imageV {
+	display: block;
+	width: 720px;
+	height: 1280px;
+	position:absolute;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-webkit-animation: moveImage 0.9s ease-in-out;
+	   -moz-animation: moveImage 0.9s ease-in-out;
+		-ms-animation: moveImage 0.9s ease-in-out;
+			animation: moveImage 0.9s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+
+.imageH{
+	display: none;
+	width: 720px;
+	height: 1280px;
+	position:absolute;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-webkit-animation: moveImage 0.9s ease-in-out;
+	   -moz-animation: moveImage 0.9s ease-in-out;
+		-ms-animation: moveImage 0.9s ease-in-out;
+			animation: moveImage 0.9s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+@-webkit-keyframes moveImage{
+	0%{
+		-webkit-transform: translate(0px, 1280px);
+	}
+}
+@-moz-keyframes moveImage{
+	0%{
+		-moz-transform: translate(0px, 1280px);
+	}
+}
+@keyframes moveImage{
+	0%{
+		transform: translate(0px, 1280px);
+	}
+}
+
+
+
+
+.exit .imageV{
+	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
+		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
+			animation: moveTexteExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.4s;
+	   -moz-animation-delay: 0.4s;
+		-ms-animation-delay: 0.4s;
+			animation-delay: 0.4s;	
+}
+
+@-webkit-keyframes moveImageExit{
+	0%{
+		--transfowebkitrm: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1280px);
+	}
+}
+@-moz-keyframes moveImageExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1280px);
+	}
+}
+@keyframes moveImageExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1280px);
+	}
+}
+
+
+@media screen and (orientation:landscape){
+
+	#template{
+		width:1280px;
+		height:720px;
+		padding:0px 0px;
+		position:relative;
+	}
+
+	.imageV {
+		display: none;
+	}
+
+
+	.imageH{
+		display: block;
+	}
+
+}
+

@@ -1,0 +1,20 @@
+{
+    "action" : "index.html",
+    "method" : "post",
+    "title" : "Slide Texte",
+    "html" :
+    [
+        {
+            "type" : "textarea",
+            "name" : "chapeau",
+            "id" : "chapeau",
+            "caption" : "Chapeau"
+        },
+        {
+            "type" : "textarea",
+            "name" : "texte",
+            "id" : "texte",
+            "caption" : "Texte"
+        }
+    ]
+}

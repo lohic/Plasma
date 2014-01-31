@@ -1,0 +1,18 @@
+{
+    "action" : "index.html",
+    "method" : "post",
+    "title" : "Slide Image",
+    "html" :
+    [
+        {
+            "type" : "file",
+            "name": "imageV",
+            "caption" : "image Verticale"
+        },
+        {
+            "type" : "file",
+            "name": "imageH",
+            "caption" : "image Horizontale"
+        }
+    ]
+}
