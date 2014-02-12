@@ -38,7 +38,7 @@
             "type" : "file",
             "name" : "fichier_video",
             "id" : "fichier_video",
-            "caption" : "Fichier Vidéo"
+            "caption" : "Fichier Vidéo (mp4)"
         }
     ]
 }
