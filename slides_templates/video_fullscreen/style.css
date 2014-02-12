@@ -1,0 +1,135 @@
+/* CSS Document */
+@charset "UTF-8";
+/*
+slide « video »
+*/
+*{
+	border:none;
+	padding:0px;
+	margin:0px; 
+}
+
+body,td,th {
+	font-family: "GoetheGothic", Arial, Helvetica, sans-serif !important;
+	font-size: 10px;
+	font-weight:bold;
+}
+
+body, th, td, .header, .texte, .footer, .texte2{
+	background:rgb(203,02,26);
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1, h2, p{
+	color:#fff;
+}
+
+#template{
+	width:720px;
+	height:1280px;
+	padding:0px 0px;
+	overflow: hidden;
+	display:block;
+	position:relative;
+}
+
+/* 
+classes réservées pour le traitement JS : 
+.edit, .textfield, .textarea, .checkbox, .image, ...
+*/
+
+#videoContent{
+	position: absolute;
+}
+
+video{
+	/*width:768px;
+	height:1280px;*/
+	position: absolute;
+	z-index:3;
+	-webkit-animation: moveVideo 1.6s ease-in-out;
+	   -moz-animation: moveVideo 1.6s ease-in-out;
+		-ms-animation: moveVideo 1.6s ease-in-out;
+			animation: moveVideo 1.6s ease-in-out;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+
+@-webkit-keyframes moveVideo{
+	0%{
+		-webkit-transform: translate(0px, 1270px);
+	}
+}
+@-moz-keyframes moveVideo{
+	0%{
+		-moz-transform: translate(0px, 1270px);
+	}
+}
+@keyframes moveVideo{
+	0%{
+		transform: translate(0px, 1270px);
+	}
+}
+
+
+
+.exit video{
+	-webkit-animation: moveVideoExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveVideoExit 0.9s ease-in-out forwards;
+		-ms-animation: moveVideoExit 0.9s ease-in-out forwards;
+			animation: moveVideoExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
+}
+
+@-webkit-keyframes moveVideoExit{
+	0%{
+		-webkit-transform: translate(0px, 0px);
+	}
+	100%{
+		-webkit-transform: translate(0px, -1270px);
+	}
+}
+@-moz-keyframes moveVideoExit{
+	0%{
+		-moz-transform: translate(0px, 0px);
+	}
+	100%{
+		-moz-transform: translate(0px, -1270px);
+	}
+}
+@keyframes moveVideoExit{
+	0%{
+		transform: translate(0px, 0px);
+	}
+	100%{
+		transform: translate(0px, -1270px);
+	}
+}
+
+
+@media screen and (orientation:landscape){
+	video{
+		position:absolute;
+		left:0px;
+		top:0px;
+		/*width: 1280px;
+		height: 768px;*/
+	}
+
+	#template{
+		width:1280px;
+		height:720px;
+		padding:0px 0px;
+		position:relative;
+	}
+}
+

@@ -1,0 +1,20 @@
+{
+    "action" : "index.html",
+    "method" : "post",
+    "title" : "Slide Vidéo Plein écran",
+    "html" :
+    [
+        {
+            "type" : "text",
+            "name" : "description",
+            "id" : "description",
+            "caption" : "Description (si la vidéo ne s'affiche pas)"
+        },
+        {
+            "type" : "file",
+            "name" : "fichier_video",
+            "id" : "fichier_video",
+            "caption" : "Fichier Vidéo (mp4)"
+        }
+    ]
+}
