@@ -559,7 +559,7 @@ function drawTimeline() {
         'axisOnTop': true,
         'zoomMin' : 1000*60*60/5,
         'min' : new Date(2013, 7, 1),
-        'max' : new Date(2013, 11, 31),
+        'max' : new Date().addMonth(3),     // on peut afficher des évenements 3 mois après la date actuelle
         'start' : todayM3,
         'end' : todayP4,
         'editable': true,
@@ -1832,6 +1832,19 @@ function formToJSON( data ) {
     });
     return retour;
 }
+
+/**
+ * ajout d'une méthode addMonth à l'objet Date
+ * permet d'additionner des mois à une date donnée
+ * @param int m le nombre de mois à ajouter (peut être négatif)
+ * @return date copiedDate un objet Date
+ */
+Date.prototype.addMonth= function(m){
+    var copiedDate = new Date(this.getTime());
+    copiedDate.setMonth(copiedDate.getMonth()+m);
+    return copiedDate;
+}
+
 
 
 /**
