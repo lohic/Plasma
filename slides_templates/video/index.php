@@ -11,7 +11,7 @@
 
 	<div class="texte2">
 		<h2>
-			{{intervenant}},<br/>
+			{{intervenant}}{{#intervenant}}{{#qualite}},{{/qualite}}{{/intervenant}}<br/>
 			<span class="small" title="Qualité de l'intervenant">{{qualite}}</span>
 		</h2>
 	</div>
