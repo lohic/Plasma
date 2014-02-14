@@ -1393,24 +1393,24 @@ function refresh_event(){
 
     var id_session = $("#id_session option:selected").val();
 
+    $("#slide_title").val( data_event.sessions[id_session].titre );
+
     var jours = new Array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
 
     var d = new Date( data_event.sessions[id_session].date_debut );
     var l = d.toLocaleDateString().split(' ');
 
-    var date_event  = jours[d.getDay()]+" "+l[0]+" "+l[1];
+    var date_event = jours[d.getDay()]+" "+l[0]+" "+l[1];
     var start_event = data_event.sessions[id_session].horaire_debut;
-    var end_event   = data_event.sessions[id_session].horaire_fin !='undefined' ? data_event.sessions[id_session].horaire_fin : '';
+    var end_event = data_event.sessions[id_session].horaire_fin !='undefined' ? data_event.sessions[id_session].horaire_fin : '';
 
     start_event = start_event.split(':');
-    start_event = numLength(parseInt(start_event[0])+1,2)+"H"+start_event[1];
+    start_event = start_event[0]+"H"+start_event[1];
 
     if(end_event != ''){
         end_event = end_event.split(':');
-        end_event = " - " + numLength(parseInt(end_event[0])+1,2)+"H"+end_event[1];
+        end_event = " - " + end_event[0]+"H"+end_event[1];
     }
-
-    $("#slide_title").val( numLength(d.getDate(),2)+"/"+ numLength(d.getMonth()+1,2) +" "+data_event.sessions[id_session].titre );
 
     //$('#myform input[name="type"]').val(            data_event);
     $('#myform input[name="date_horaire"]').val(    date_event + ", " +start_event + end_event );
@@ -1936,25 +1936,6 @@ function second2HMS(duree){
     retour += duree < 10                ? "0"+duree+"s"                      : duree+'s';
 
     return retour;
-}
-
-/**
- * affiche des zéros devant certain nombres
- * @param  {[type]} nbr      [description]
- * @param  {[type]} longueur [description]
- * @return {[type]}          [description]
- */
-function numLength(nbr,longueur){
-
-    var zero = '';
-    for(i=0; i<longueur; i++){
-        zero += '0';
-    }
-
-    nbr = zero+nbr;
-
-    return nbr.substr(-longueur);
-
 }
 
 
