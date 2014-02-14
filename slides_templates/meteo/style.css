@@ -75,14 +75,20 @@ classes réservées pour le traitement JS :
 */
 
 #meteo1{
-	position: relative;
+	position: absolute;
+	top:0;
+	left:0;
+	width: 720px;
+	height: 1280px;
 	z-index: 2;
-	height: 100%;
 }
 #meteo2{
-	position: relative;
+	position: absolute;
+	top:0;
+	left:0;
+	width: 720px;
+	height: 1280px;
 	z-index: 1;
-	height: 100%;
 }
 
 #meteo1 .header {
@@ -433,7 +439,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo1.exit .header{
+.half #meteo1 .header{
 	-webkit-animation: moveHeaderExit 0.4s ease-in-out forwards;
 	   -moz-animation: moveHeaderExit 0.4s ease-in-out forwards;
 		-ms-animation: moveHeaderExit 0.4s ease-in-out forwards;
@@ -469,7 +475,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo1.exit .texte{
+.half #meteo1 .texte{
 	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
 	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
 		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
@@ -505,7 +511,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo1.exit .footer{
+.half #meteo1 .footer{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
 	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
 		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
@@ -593,20 +599,29 @@ classes réservées pour le traitement JS :
 }
 
 #meteo2 .header {
+    -webkit-transform: translate(0px, 1270px);
+       -moz-transform: translate(0px, 1270px);
+    		transform: translate(0px, 1270px);
+}
+
+.half #meteo2 .header {
 	-moz-box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 		 box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
     float: left;
     padding: 0 6.1% 27px;
     position: relative;
     width: 87.8%;
-	-webkit-animation: moveHeaderMeteo 0.9s ease-in-out;
-	   -moz-animation: moveHeaderMeteo 0.9s ease-in-out;
-		-ms-animation: moveHeaderMeteo 0.9s ease-in-out;
-			animation: moveHeaderMeteo 0.9s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+    -webkit-transform: translate(0px, 1270px);
+       -moz-transform: translate(0px, 1270px);
+    		transform: translate(0px, 1270px);
+	-webkit-animation: moveHeaderMeteo 0.9s ease-in-out forwards;
+	   -moz-animation: moveHeaderMeteo 0.9s ease-in-out forwards;
+		-ms-animation: moveHeaderMeteo 0.9s ease-in-out forwards;
+			animation: moveHeaderMeteo 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
 }
 
 @-webkit-keyframes moveHeaderMeteo{
@@ -725,7 +740,7 @@ classes réservées pour le traitement JS :
 #meteo2 .autre_campus{
 	-moz-box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 		 box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
-    float: left;
+    /*float: left;*/
     height: 196px;
     padding: 0 6.1%;
     position: relative;
@@ -773,85 +788,117 @@ classes réservées pour le traitement JS :
 	padding-top:5px;
 }
 
-#meteo2 .footer {
-	-webkit-animation: moveFooterMeteo 1.2s ease-in-out;
+.half #meteo2 .footer {
+	/*-webkit-animation: moveFooterMeteo 1.2s ease-in-out;
 	   -moz-animation: moveFooterMeteo 1.2s ease-in-out;
 		-ms-animation: moveFooterMeteo 1.2s ease-in-out;
 			animation: moveFooterMeteo 1.2s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);*/
     float: left;
     margin-top: 2px;
     position: relative;
-    width: 100%;
+    /*width: 100%;*/
 }
 
-#meteo2 .footer .autre_campus:first-child{
-	-webkit-animation: moveFooterMeteo 1.5s ease-in-out;
-	   -moz-animation: moveFooterMeteo 1.5s ease-in-out;
-		-ms-animation: moveFooterMeteo 1.5s ease-in-out;
-			animation: moveFooterMeteo 1.5s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+#meteo2 .footer .autre_campus:first-child,
+#meteo2 .footer .autre_campus + .autre_campus,
+#meteo2 .footer .autre_campus + .autre_campus + .autre_campus,
+#meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus,
+#meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus,
+#meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus {
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
 }
 
-#meteo2 .footer .autre_campus + .autre_campus{
-	-webkit-animation: moveFooterMeteo 1.8s ease-in-out;
-	   -moz-animation: moveFooterMeteo 1.8s ease-in-out;
-		-ms-animation: moveFooterMeteo 1.8s ease-in-out;
-			animation: moveFooterMeteo 1.8s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+.half #meteo2 .footer .autre_campus:first-child{
+	-webkit-animation: moveFooterMeteo 1.5s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteo 1.5s ease-in-out forwards;
+		-ms-animation: moveFooterMeteo 1.5s ease-in-out forwards;
+			animation: moveFooterMeteo 1.5s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
 }
 
-#meteo2 .footer .autre_campus + .autre_campus + .autre_campus{
-	-webkit-animation: moveFooterMeteo 2.1s ease-in-out;
-	   -moz-animation: moveFooterMeteo 2.1s ease-in-out;
-		-ms-animation: moveFooterMeteo 2.1s ease-in-out;
-			animation: moveFooterMeteo 2.1s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+.half #meteo2 .footer .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteo 1.8s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteo 1.8s ease-in-out forwards;
+		-ms-animation: moveFooterMeteo 1.8s ease-in-out forwards;
+			animation: moveFooterMeteo 1.8s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
 }
 
-#meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus{
-	-webkit-animation: moveFooterMeteo 2.4s ease-in-out;
-	   -moz-animation: moveFooterMeteo 2.4s ease-in-out;
-		-ms-animation: moveFooterMeteo 2.4s ease-in-out;
-			animation: moveFooterMeteo 2.4s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+.half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteo 2.1s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteo 2.1s ease-in-out forwards;
+		-ms-animation: moveFooterMeteo 2.1s ease-in-out forwards;
+			animation: moveFooterMeteo 2.1s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
 }
 
-#meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
-	-webkit-animation: moveFooterMeteo 2.7s ease-in-out;
-	   -moz-animation: moveFooterMeteo 2.7s ease-in-out;
-		-ms-animation: moveFooterMeteo 2.7s ease-in-out;
-			animation: moveFooterMeteo 2.7s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+.half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteo 2.4s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteo 2.4s ease-in-out forwards;
+		-ms-animation: moveFooterMeteo 2.4s ease-in-out forwards;
+			animation: moveFooterMeteo 2.4s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
 }
 
-#meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
-	-webkit-animation: moveFooterMeteo 3s ease-in-out;
-	   -moz-animation: moveFooterMeteo 3s ease-in-out;
-		-ms-animation: moveFooterMeteo 3s ease-in-out;
-			animation: moveFooterMeteo 3s ease-in-out;
-	-webkit-animation-delay: 0s;
-	   -moz-animation-delay: 0s;
-		-ms-animation-delay: 0s;
-			animation-delay: 0s;
+.half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteo 2.7s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteo 2.7s ease-in-out forwards;
+		-ms-animation: moveFooterMeteo 2.7s ease-in-out forwards;
+			animation: moveFooterMeteo 2.7s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
+}
+
+.half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteo 3s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteo 3s ease-in-out forwards;
+		-ms-animation: moveFooterMeteo 3s ease-in-out forwards;
+			animation: moveFooterMeteo 3s ease-in-out forwards;
+	-webkit-animation-delay: 1s;
+	   -moz-animation-delay: 1s;
+		-ms-animation-delay: 1s;
+			animation-delay: 1s;
+	-webkit-transform: translate(0px, 1270px);
+	   -moz-transform: translate(0px, 1270px);
+			transform: translate(0px, 1270px);
 }
 
 @-webkit-keyframes moveFooterMeteo{
@@ -879,7 +926,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo2.exit .header{
+.exit #meteo2 .header{
 	-webkit-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
 	   -moz-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
 		-ms-animation: moveHeaderMeteoExit 0.4s ease-in-out forwards;
@@ -915,7 +962,7 @@ classes réservées pour le traitement JS :
 	}
 }
 
-#meteo2.exit .footer{
+.exit #meteo2 .footer{
 	-webkit-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
 	   -moz-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
 		-ms-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
@@ -959,6 +1006,13 @@ classes réservées pour le traitement JS :
 		height:720px;
 		padding:0px 0px;
 	}
+
+	#meteo1, #meteo2{
+		width:1280px;
+		height:720px;
+	}
+
+
 	#ombre{
 		position:absolute;
 		left:544px;
@@ -1147,7 +1201,8 @@ classes réservées pour le traitement JS :
 	}
 
 	#ombre2{
-		position:absolute;
+		display:none;
+		/*position:absolute;
 		left:544px;
 		-moz-box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
 			 box-shadow:rgba(0,0,0,0.3) 0px -15px 15px;
@@ -1156,28 +1211,23 @@ classes réservées pour le traitement JS :
 		width:736px;
 		width:-webkit-calc(100% - 544px);
 		width:   -moz-calc(100% - 544px);
-		width:		  calc(100% - 544px);
+		width:		  calc(100% - 544px);*/
 	}
 
-	#meteo2 .header{
+	.half #meteo2 .header{
 		padding:40px 0px 0px 44px;
 		border:none;
 	}
 
-	#meteo2 .colonne_gauche{
+	.half #meteo2 .colonne_gauche{
 		width:544px;
 		float:left;
 	}
 
-	#meteo2 .header{
+	.half #meteo2 .header{
 		width:516px;
 		-moz-box-shadow: none;
 			 box-shadow: none;
-	}
-
-	#meteo2 .header h1 {
-		margin-bottom:60px;
-		margin-top:3px;
 	}
 
 	#meteo2 .footer{
@@ -1191,16 +1241,16 @@ classes réservées pour le traitement JS :
 		margin-top:-3px;
 	}
 
-	#meteo2 .footer .autre_campus:first-child{
+	.half #meteo2 .footer .autre_campus:first-child{
 		padding-top:0px;
 	}
 
-	#meteo2 .footer .autre_campus:last-child{
+	.half #meteo2 .footer .autre_campus:last-child{
 		padding-bottom:0px;
 		border-bottom:none;
 	}
 
-	#meteo2 .autre_campus {
+	.half #meteo2 .autre_campus {
 	    padding: 30px 44px 30px 64px;
 	    height:60px;
 	}

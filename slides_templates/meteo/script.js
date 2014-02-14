@@ -102,14 +102,14 @@ function remplissage(){
 			nextMeteoDelay = Math.round((slide_duree-2)/2)*1000-1000;
 
 			
-			$('#meteo1').show();
-			$('#meteo2').hide();
-			$rafraichissement = setInterval( refreshMeteo , nextMeteoDelay );
+			//$('#meteo1').show();
+			//$('#meteo2').hide();
+			//$rafraichissement = setInterval( refreshMeteo , nextMeteoDelay );
 		}
 	});
 }
 
-
+/*
 function refreshMeteo(){
 	console.log('refresh meteo is meteo1played :'+meteo1played);
 
@@ -124,4 +124,4 @@ function refreshMeteo(){
 	});
 	
 	clearInterval($rafraichissement);
-}
+}*/
