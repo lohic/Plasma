@@ -63,7 +63,9 @@ $(document).ready(function(){
 					console.log("DATA SLIDE CHARGEES "+json);
 					$slide_data	= json;
 
-					$('body').removeClass('exit');
+					$('body')
+					.removeClass('half')
+					.removeClass('exit');
 					load_slide($template,$slide_data);
 					$slide_loaded = true;
 				}
@@ -376,6 +378,7 @@ function loop_slideshow(){
 						$slide_data	= json;
 
 						$('body').removeClass('exit');
+						$('body').removeClass('half');
 						load_slide($template,$slide_data);
 						$slide_loaded = true;
 					}
@@ -386,6 +389,7 @@ function loop_slideshow(){
 				$slide_data = {};
 
 				$('body').removeClass('exit');
+				$('body').removeClass('half');
 				load_slide($template,$slide_data);
 				$slide_loaded = true;
 			}
