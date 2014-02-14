@@ -1061,6 +1061,9 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
             event_selector();
         }
 
+        // ON AJOUTE L'ALERTE DE SAUVEGARDE
+        $(".fancybox-inner #myform").append("<div class='save_valid'>Sauvegarde effectuée</div>");
+
         // ON AJOUTE LES BOUTONS
         $(".fancybox-inner #myform").append("<button id='save_slide'>Sauvegarde</button>");
 
@@ -1171,6 +1174,16 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                 }
             }).done(function ( dataJSON ) {
                 console.log("slide sauvegardé");
+
+                // affichage de la validation de sauvegarde
+                $(".save_valid")
+                .animate({
+                    opacity : 1
+                },'slow')
+                .delay(300)
+                .animate({
+                    opacity : 0
+                },'slow');
 
 
                 // SI ON EDITE DEPUIS DE LISTING DE SLIDES

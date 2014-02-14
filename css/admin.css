@@ -1007,6 +1007,18 @@ compteur-field
 }
 
 
+.save_valid{
+	padding: 10px;
+	background: #DD0000;
+	margin-top: 20px;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+	opacity: 0;
+	text-transform: uppercase;
+}
+
+
 /* LISTE DES ECRANS ENFANTS*/
 .child-screen{
 	margin-left: 1px ;
