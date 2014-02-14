@@ -23,6 +23,16 @@ h1, p{
 	color:#fff;
 }
 
+body, #template{
+	background:rgb(203,02,26);
+}
+
+/*.basse .colonne_gauche,*/
+.footer, .autre_campus, .autre_jour{
+	background:rgb(203,02,26);
+}
+
+
 body.basse, .basse #template{
 	background:rgb(89,216,220);
 }
@@ -942,7 +952,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -170px);
+		-webkit-transform: translate(0px, -270px);
 	}
 }
 @-moz-keyframes moveHeaderMeteoExit{
@@ -950,7 +960,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -170px);
+		-moz-transform: translate(0px, -270px);
 	}
 }
 @keyframes moveHeaderMeteoExit{
@@ -958,7 +968,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -170px);
+		transform: translate(0px, -270px);
 	}
 }
 
