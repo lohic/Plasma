@@ -380,7 +380,7 @@ class Func {
 	 */
 	static function dateFormat($date,$format=NULL){
 		date_default_timezone_set("Europe/Paris");
-		setlocale(LC_TIME, 'fr_FR');
+		setlocale(LC_TIME, 'fr_FR.UTF8');
 		return strftime('%A %e %B %Y à %Hh%Mm%S',strtotime($date));
 	}
 	
