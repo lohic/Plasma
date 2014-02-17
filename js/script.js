@@ -264,7 +264,7 @@ $('document').ready(function(){
             if(sequencePixOneSecond<1/30){
                 sequencePixOneSecond = 1/30;
             }
-            console.log(sequencePixOneSecond);
+            /*console.log(sequencePixOneSecond);*/
             refreshSequenceSlide();
 
             event.preventDefault();
@@ -1406,8 +1406,6 @@ function refresh_event(){
 
     var id_session = $("#id_session option:selected").val();
 
-    $("#slide_title").val( data_event.sessions[id_session].titre );
-
     var jours = new Array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
 
     var d = new Date( data_event.sessions[id_session].date_debut );
@@ -1424,6 +1422,8 @@ function refresh_event(){
         end_event = end_event.split(':');
         end_event = " - " + end_event[0]+"H"+end_event[1];
     }
+
+    $("#slide_title").val( addZeroToInt(d.getDate(),2) + '/'+ addZeroToInt((d.getMonth()+1),2) + ' ' + data_event.sessions[id_session].titre );
 
     //$('#myform input[name="type"]').val(            data_event);
     $('#myform input[name="date_horaire"]').val(    date_event + ", " +start_event + end_event );
@@ -1951,6 +1951,21 @@ function second2HMS(duree){
     return retour;
 }
 
+/**
+ * [addZeroToInt description]
+ * @param {[type]} nbr  [description]
+ * @param {[type]} rang [description]
+ */
+function addZeroToInt(nbr, rang){
+
+    nbr = parseInt(nbr);
+    var zero = '';
+    for(i=0; i<rang; i++){
+        zero += '0';
+    }
+    nbr = zero + nbr;
+    return nbr.substr(-rang);
+}
 
 
 //console.log = function() {};
