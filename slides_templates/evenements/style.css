@@ -191,8 +191,8 @@ classes réservées pour le traitement JS :
 	max-height:585px;*/
 	z-index:1;
 	position:relative;
-	width:768px;
-	max-height:720px;
+	width:720px;
+	height:720px;
 	float:left;
 	overflow:hidden;
 	-webkit-animation: moveImage 1.8s ease-in-out;
@@ -230,8 +230,10 @@ classes réservées pour le traitement JS :
 
 .footer {
 	min-height: 67px;
-	width: 87.8%;
-	padding:23px 6.1% 0px;
+	width: -webkit-calc(100% - 80px);
+	width: -moz-calc(100% - 80px);
+	width: -calc(100% - 80px);
+	padding:23px 40px 0px;
 	position:absolute;
 	z-index:2;
 	left:0px;
