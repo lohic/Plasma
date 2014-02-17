@@ -103,7 +103,7 @@ classes réservées pour le traitement JS :
 
 #meteo1 .header {
 	width: 87.8%;
-	padding:0px 6.1%;
+	padding: 40px 6.1% 0;
 	float:left;
 	position:relative;
 	margin-bottom:30px;
@@ -246,7 +246,7 @@ classes réservées pour le traitement JS :
 
 @-webkit-keyframes moveHeader{
 	0%{
-		-webkit-transform: translate(0px, 1270px);
+		-webkit-transform: translate(0px, 1280px);
 	}
 
 	100%{
@@ -256,7 +256,7 @@ classes réservées pour le traitement JS :
 }
 @-moz-keyframes moveHeader{
 	0%{
-		-moz-transform: translate(0px, 1270px);
+		-moz-transform: translate(0px, 1280px);
 	}
 	100%{
 		-moz-transform: translate(0px, 0px);
@@ -264,7 +264,7 @@ classes réservées pour le traitement JS :
 }
 @keyframes moveHeader{
 	0%{
-		transform: translate(0px, 1270px);
+		transform: translate(0px, 1280px);
 	}
 	100%{
 		transform: translate(0px, 0px);
@@ -327,24 +327,23 @@ classes réservées pour le traitement JS :
 
 @-webkit-keyframes moveTexte{
 	0%{
-		-webkit-transform: translate(0px, 1270px);
+		-webkit-transform: translate(0px, 1280px);
 	}
 }
 @-moz-keyframes moveTexte{
 	0%{
-		-moz-transform: translate(0px, 1270px);
+		-moz-transform: translate(0px, 1280px);
 	}
 }
 @keyframes moveTexte{
 	0%{
-		transform: translate(0px, 1270px);
+		transform: translate(0px, 1280px);
 	}
 }
 
 #meteo1 .footer {
 	width: 100%;
 	float:left;
-	padding-top:30px;
 	-webkit-animation: moveFooter 1.5s ease-in-out;
 	   -moz-animation: moveFooter 1.5s ease-in-out;
 		-ms-animation: moveFooter 1.5s ease-in-out;
@@ -426,7 +425,7 @@ classes réservées pour le traitement JS :
 
 @-webkit-keyframes moveFooter{
 	0%{
-		-webkit-transform: translate(0px, 1270px);
+		-webkit-transform: translate(0px, 1280px);
 	}
 	100%{
 		-webkit-transform: translate(0px, 0px);
@@ -434,7 +433,7 @@ classes réservées pour le traitement JS :
 }
 @-moz-keyframes moveFooter{
 	0%{
-		-moz-transform: translate(0px, 1270px);
+		-moz-transform: translate(0px, 1280px);
 	}
 	100%{
 		-moz-transform: translate(0px, 0px);
@@ -442,7 +441,7 @@ classes réservées pour le traitement JS :
 }
 @keyframes moveFooter{
 	0%{
-		transform: translate(0px, 1270px);
+		transform: translate(0px, 1280px);
 	}
 	100%{
 		transform: translate(0px, 0px);
@@ -465,7 +464,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -300px);
+		-webkit-transform: translate(0px, -400px);
 	}
 }
 @-moz-keyframes moveHeaderExit{
@@ -473,7 +472,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -300px);
+		-moz-transform: translate(0px, -400px);
 	}
 }
 @keyframes moveHeaderExit{
@@ -481,7 +480,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -300px);
+		transform: translate(0px, -400px);
 	}
 }
 
@@ -501,7 +500,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -1270px);
+		-webkit-transform: translate(0px, -1280px);
 	}
 }
 @-moz-keyframes moveTexteExit{
@@ -509,7 +508,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -1270px);
+		-moz-transform: translate(0px, -1280px);
 	}
 }
 @keyframes moveTexteExit{
@@ -517,7 +516,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -1270px);
+		transform: translate(0px, -1280px);
 	}
 }
 
@@ -537,7 +536,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -1270px);
+		-webkit-transform: translate(0px, -1280px);
 	}
 }
 @-moz-keyframes moveFooterExit{
@@ -545,7 +544,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -1270px);
+		-moz-transform: translate(0px, -1280px);
 	}
 }
 @keyframes moveFooterExit{
@@ -553,7 +552,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -1270px);
+		transform: translate(0px, -1280px);
 	}
 }
 
@@ -609,21 +608,21 @@ classes réservées pour le traitement JS :
 }
 
 #meteo2 .header {
-    -webkit-transform: translate(0px, 1270px);
-       -moz-transform: translate(0px, 1270px);
-    		transform: translate(0px, 1270px);
+    -webkit-transform: translate(0px, 1280px);
+       -moz-transform: translate(0px, 1280px);
+    		transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .header {
 	-moz-box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 		 box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
     float: left;
-    padding: 0 6.1% 27px;
+    padding: 40px 6.1% 27px;
     position: relative;
     width: 87.8%;
-    -webkit-transform: translate(0px, 1270px);
-       -moz-transform: translate(0px, 1270px);
-    		transform: translate(0px, 1270px);
+    -webkit-transform: translate(0px, 1280px);
+       -moz-transform: translate(0px, 1280px);
+    		transform: translate(0px, 1280px);
 	-webkit-animation: moveHeaderMeteo 0.9s ease-in-out forwards;
 	   -moz-animation: moveHeaderMeteo 0.9s ease-in-out forwards;
 		-ms-animation: moveHeaderMeteo 0.9s ease-in-out forwards;
@@ -636,7 +635,7 @@ classes réservées pour le traitement JS :
 
 @-webkit-keyframes moveHeaderMeteo{
 	0%{
-		-webkit-transform: translate(0px, 1270px);
+		-webkit-transform: translate(0px, 1280px);
 	}
 
 	100%{
@@ -646,7 +645,7 @@ classes réservées pour le traitement JS :
 }
 @-moz-keyframes moveHeaderMeteo{
 	0%{
-		-moz-transform: translate(0px, 1270px);
+		-moz-transform: translate(0px, 1280px);
 	}
 	100%{
 		-moz-transform: translate(0px, 0px);
@@ -654,7 +653,7 @@ classes réservées pour le traitement JS :
 }
 @keyframes moveHeaderMeteo{
 	0%{
-		transform: translate(0px, 1270px);
+		transform: translate(0px, 1280px);
 	}
 	100%{
 		transform: translate(0px, 0px);
@@ -807,13 +806,13 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);*/
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);*/
     float: left;
     margin-top: 2px;
     position: relative;
-    /*width: 100%;*/
+    width: 100%;
 }
 
 #meteo2 .footer .autre_campus:first-child,
@@ -822,9 +821,9 @@ classes réservées pour le traitement JS :
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus,
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus,
 #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus {
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .footer .autre_campus:first-child{
@@ -836,9 +835,9 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .footer .autre_campus + .autre_campus{
@@ -850,9 +849,9 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus{
@@ -864,9 +863,9 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus{
@@ -878,9 +877,9 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
@@ -892,9 +891,9 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 .half #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
@@ -906,14 +905,14 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 1s;
 		-ms-animation-delay: 1s;
 			animation-delay: 1s;
-	-webkit-transform: translate(0px, 1270px);
-	   -moz-transform: translate(0px, 1270px);
-			transform: translate(0px, 1270px);
+	-webkit-transform: translate(0px, 1280px);
+	   -moz-transform: translate(0px, 1280px);
+			transform: translate(0px, 1280px);
 }
 
 @-webkit-keyframes moveFooterMeteo{
 	0%{
-		-webkit-transform: translate(0px, 1270px);
+		-webkit-transform: translate(0px, 1280px);
 	}
 	100%{
 		-webkit-transform: translate(0px, 0px);
@@ -921,7 +920,7 @@ classes réservées pour le traitement JS :
 }
 @-moz-keyframes moveFooterMeteo{
 	0%{
-		-moz-transform: translate(0px, 1270px);
+		-moz-transform: translate(0px, 1280px);
 	}
 	100%{
 		-moz-transform: translate(0px, 0px);
@@ -929,7 +928,7 @@ classes réservées pour le traitement JS :
 }
 @keyframes moveFooterMeteo{
 	0%{
-		transform: translate(0px, 1270px);
+		transform: translate(0px, 1280px);
 	}
 	100%{
 		transform: translate(0px, 0px);
@@ -988,7 +987,7 @@ classes réservées pour le traitement JS :
 		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
-		-webkit-transform: translate(0px, -1270px);
+		-webkit-transform: translate(0px, -1280px);
 	}
 }
 @-moz-keyframes moveFooterMeteoExit{
@@ -996,7 +995,7 @@ classes réservées pour le traitement JS :
 		-moz-transform: translate(0px, 0px);
 	}
 	100%{
-		-moz-transform: translate(0px, -1270px);
+		-moz-transform: translate(0px, -1280px);
 	}
 }
 @keyframes moveFooterMeteoExit{
@@ -1004,7 +1003,7 @@ classes réservées pour le traitement JS :
 		transform: translate(0px, 0px);
 	}
 	100%{
-		transform: translate(0px, -1270px);
+		transform: translate(0px, -1280px);
 	}
 }
 
@@ -1192,7 +1191,7 @@ classes réservées pour le traitement JS :
 	#meteo1 .vent{
 		position:absolute;
 		left:44px;
-		bottom:-40px;
+		bottom:40px;
 		margin-top: 0px;
 	}
 
@@ -1240,7 +1239,7 @@ classes réservées pour le traitement JS :
 			 box-shadow: none;
 	}
 
-	#meteo2 .footer{
+	.half #meteo2 .footer{
 		padding:40px 0px 40px;
 		float:left;
 		width: 764px;
