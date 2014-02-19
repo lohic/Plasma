@@ -45,7 +45,7 @@ classes réservées pour le traitement JS :
 
 .header {
 	width: 87.8%;
-	padding:0px 6.1%;
+	padding:35px 6.1%;
 	float:left;
 	padding-bottom:10px;
 	position:relative;
@@ -319,7 +319,7 @@ classes réservées pour le traitement JS :
 	}
 
 	.image, .header, .footer{
-		padding:0px 44px 30px 52px;
+		padding:0px 44px 0px 52px;
 		width:416px;
 		box-shadow:none;
 	}
