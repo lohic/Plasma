@@ -1114,7 +1114,7 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                     console.log(this);
                     
                     // on affiche une vignette ou un texte si on trouve un média image ou vidéo
-                    $('input[type="file"]').each(function(){
+                    //$('input[type="file"]').each(function(){
                         if( $(this).data('file') != undefined ) {
 
                             var temp = $(this).data('file').split('.');
@@ -1125,7 +1125,7 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
 
                             preview_media($(this), $(this).data('file'), ext);
                         }
-                    });
+                    //});
 
                     var nom = $(this).attr('name');
                     $(this).attr('name', nom + "-old");
