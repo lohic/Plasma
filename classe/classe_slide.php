@@ -1159,6 +1159,7 @@ class Slide {
 
 		        if( isset($line->name) ){
 		            $name = $line->name;
+		            // permet de créer un id équivalent à l'attribut name du champ (utile pour uploadifive)
 		            $line->id = $line->name;
 		            if (isset($data->$name) ){
 		                if($line->type == 'file'){
