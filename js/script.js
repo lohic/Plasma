@@ -1109,6 +1109,9 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                 'removeCompleted'   : true,
                 'uploadScript'      : '../ajax/uploadifive.php',
                 'onInit'            : function(){
+
+                    console.log('uploadifive INIT :');
+                    console.log(this);
                     
                     // on affiche une vignette ou un texte si on trouve un média image ou vidéo
                     $('input[type="file"]').each(function(){
@@ -1117,7 +1120,6 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                             var temp = $(this).data('file').split('.');
                             var ext = temp[temp.length-1].toLowerCase();
                             
-
                             $(this).before("<p>"+ $(this).data('file') + "</p>");
                             $(this).parent().before("<div class='preview'></div>")
 
@@ -1125,13 +1127,16 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                         }
                     });
 
-                    var attr = $(this).attr('name');
-                    $(this).attr('name', attr + "-old");
-                    $(this).data('old-name', attr);
-                    $(this).after( "<input type='hidden' name='" + attr + "' value='"+ $(this).data('file') +"'/>" );
+                    var nom = $(this).attr('name');
+                    $(this).attr('name', nom + "-old");
+                    $(this).data('old-name', nom);
+                    $(this).after( "<input type='hidden' name='" + nom + "' value='"+ $(this).data('file') +"'/>" );
 
                 },
                 'onUploadComplete'  : function(file,data) {
+
+                    console.log('uploadifive COMPLETE :');
+                    console.log(this);
 
                     info = JSON.parse(data);
                     if(!info.error){
@@ -1141,6 +1146,7 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
 
                         //console.log("upload finished : "+info.file +" / type : "+info.ext);
                     }else{
+
                         alert( info.message );
                     }
                 }
@@ -1407,11 +1413,11 @@ function refresh_event(){
     var id_session = $("#id_session option:selected").val();
 
     var jours = new Array('Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi');
+    var mois  = new Array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
 
     var d = new Date( data_event.sessions[id_session].date_debut );
-    var l = d.toLocaleDateString().split(' ');
 
-    var date_event = jours[d.getDay()]+" "+l[0]+" "+l[1];
+    var date_event = jours[d.getDay()]+" "+ d.getDate() +" "+mois[d.getMonth()];
     var start_event = data_event.sessions[id_session].horaire_debut;
     var end_event = data_event.sessions[id_session].horaire_fin !='undefined' ? data_event.sessions[id_session].horaire_fin : '';
 

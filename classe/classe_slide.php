@@ -1124,9 +1124,10 @@ class Slide {
 	}
 
 	/**
-	 * récupération des différents éléments item de la timeline
-	 * @param int		$id_groupe	 	id du groupe dont il faut récupérer les items
-	 * @return string 					retourne une chaine JSON contenant le descriptif des items de la timeline
+	 * [get_timeline_slide_data description]
+	 * @param  [type] $id_slide [description]
+	 * @param  [type] $template [description]
+	 * @return [type]           [description]
 	 */
 	function get_timeline_slide_data($id_slide=NULL,$template=NULL){
 
@@ -1158,6 +1159,7 @@ class Slide {
 
 		        if( isset($line->name) ){
 		            $name = $line->name;
+		            $line->id = $line->name;
 		            if (isset($data->$name) ){
 		                if($line->type == 'file'){
 		                    $attr = 'data-file';
