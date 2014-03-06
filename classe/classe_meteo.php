@@ -63,8 +63,12 @@ class Meteo {
 		
 		global $meteo_refresh_delay;
 	
-		 
-		if(!file_exists($file) || @mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
+		
+		//echo $meteo_refresh_delay;
+		// @maketime -> suppression des codes d'erreur
+		// if(!file_exists($file) || @mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
+
+		if(!file_exists($file) || mktime()-filemtime($file) > $meteo_refresh_delay){ // statics_vars.php
 					
 			// on liste les établissements
 			$villes = $this->get_etablissements();
@@ -333,26 +337,30 @@ class Meteo {
 	
 
 	/**
-	 * à partir d'ue date au format Anglo-saxon 06/21/2012
+	 * à partir d'une date au format Anglo-saxon 06/21/2012
 	 * @param type $date 
 	 * @return type
 	 */
 	function datefr($date) {
+
 		$split = explode("/",$date);
+
+		if(count($split)>=3){
 	   
-		$m = intval($split[0]);
-		$j = intval($split[1]);
-		$a = $split[2];
-	
-		$jours = array("Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
-		$mois = array("","Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
-	
-		// jour de la semaine
-		$timestamp = mktime(0, 0, 0, $m, $j, $a);
-		$wd = date("w", $timestamp);
-		$jsem = $jours[$wd];
-	   
-		return $jsem." ".$j." ".$mois[$m]." ".$a;
+			$m = intval($split[0]);
+			$j = intval($split[1]);
+			$a = $split[2];
+		
+			$jours = array("Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi");
+			$mois = array("","Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre");
+		
+			// jour de la semaine
+			$timestamp = mktime(0, 0, 0, $m, $j, $a);
+			$wd = date("w", $timestamp);
+			$jsem = $jours[$wd];
+		   
+			return $jsem." ".$j." ".$mois[$m]." ".$a;
+		}
 	}
 	
 }

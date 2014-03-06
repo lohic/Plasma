@@ -38,6 +38,7 @@ function remplissage(){
 				if(meteo[i].zipcode == main_zip){
 					main_id = i; // l'id de la ville principale
 					main_nom = meteo[i].ville;
+					console.log("VILLE : "+main_nom);
 				}
 			}
 			
