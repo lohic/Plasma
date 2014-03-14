@@ -26,7 +26,7 @@ function remplissage(){
 	$.ajax({
 		type: "GET",
 		url: "../vars/meteo_json.txt",
-		data: {cache : $now},
+		data: {cache : new Date()},
 		dataType: 'json',
 		//async:false,
 		success: function(json_data){
