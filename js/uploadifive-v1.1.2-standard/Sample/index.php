@@ -14,18 +14,13 @@ body {
 	float: left;
 	margin-right: 10px;
 }
-#queue,#queue2 {
+#queue {
 	border: 1px solid #E5E5E5;
 	height: 177px;
 	overflow: auto;
 	margin-bottom: 10px;
 	padding: 0 3px 3px;
 	width: 300px;
-}
-.reset{
-	clear: both;
-	height: 40px;
-	width: 100%;
 }
 </style>
 </head>
@@ -34,15 +29,8 @@ body {
 	<h1>UploadiFive Demo</h1>
 	<form>
 		<div id="queue"></div>
-		<input id="file_upload" name="file_upload" type="file" multiple="false">
+		<input id="file_upload" name="file_upload" type="file" multiple="true">
 		<a style="position: relative; top: 8px;" href="javascript:$('#file_upload').uploadifive('upload')">Upload Files</a>
-		<div class="reset"><div/>
-		<div id="queue2"></div>
-		<input id="file_upload2" name="file_upload2" type="file" multiple="false">
-		<a style="position: relative; top: 8px;" href="javascript:$('#file_upload2').uploadifive('upload')">Upload Files</a>
-
-
-		<a style="position: relative; top: 8px;" href="javascript:$('#file_upload2').uploadifive('upload');javascript:$('#file_upload').uploadifive('upload')">UPLOAD</a>
 	</form>
 
 	<script type="text/javascript">
@@ -56,18 +44,6 @@ body {
 									   'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
 				                     },
 				'queueID'          : 'queue',
-				'uploadScript'     : 'uploadifive.php',
-				'onUploadComplete' : function(file, data) { console.log(data); }
-			});
-
-			$('#file_upload2').uploadifive({
-				'auto'             : false,
-				'checkScript'      : 'check-exists.php',
-				'formData'         : {
-									   'timestamp' : '<?php echo $timestamp;?>',
-									   'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
-				                     },
-				'queueID'          : 'queue2',
 				'uploadScript'     : 'uploadifive.php',
 				'onUploadComplete' : function(file, data) { console.log(data); }
 			});

@@ -1,5 +1,5 @@
 /*
-UploadiFive 1.1.2
+UploadiFive 1.2.2
 Copyright (c) 2012 Reactive Apps, Ronnie Garcia
 Released under the UploadiFive Standard License <http://www.uploadify.com/uploadifive-standard-license>
 */
@@ -45,7 +45,7 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     'dropTarget'      : false,              // Selector for the drop target
                     'fileObjName'     : 'Filedata',         // The name of the file object to use in your server-side script
                     'fileSizeLimit'   : 0,                  // Maximum allowed size of files to upload
-                    'fileType'        : false,              // Type of files allowed (image, etc)
+                    'fileType'        : false,              // Type of files allowed (image, etc), separate with a pipe character |
                     'formData'        : {},                 // Additional data to send to the upload script
                     'height'          : 30,                 // The height of the button
                     'itemTemplate'    : false,              // The HTML markup for the item in the queue
@@ -116,6 +116,10 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     // Set the multiple attribute
                     if (settings.multi) {
                         input.attr('multiple', true);
+                    }
+                    // Set the accept attribute on the input
+                    if (settings.fileType) {
+                        input.attr('accept', settings.fileType);
                     }
                     // Set the onchange event for the input
                     input.bind('change', function() {
@@ -284,24 +288,6 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
                     // Trigger the addQueueItem event
                     if (typeof settings.onAddQueueItem === 'function') {
                         settings.onAddQueueItem.call($this, file);
-                    }
-                    // Check the filetype
-                    if (settings.fileType) {
-                        if ($.isArray(settings.fileType)) {
-                            var isValidFileType = false;
-                            for (var n = 0; n < settings.fileType.length; n++) {
-                                if (file.type.indexOf(settings.fileType[n]) > -1) {
-                                    isValidFileType = true;
-                                }
-                            }
-                            if (!isValidFileType) {
-                                $data.error('FORBIDDEN_FILE_TYPE', file);
-                            }
-                        } else {
-                            if (file.type.indexOf(settings.fileType) < 0) {
-                                $data.error('FORBIDDEN_FILE_TYPE', file);
-                            }
-                        }
                     }
                     // Check the filesize
                     if (file.size > settings.fileSizeLimit && settings.fileSizeLimit != 0) {
@@ -883,5 +869,3 @@ Released under the UploadiFive Standard License <http://www.uploadify.com/upload
     }
 
 })(jQuery);
-
-/* I gave the queueItems IDs and they each have a reference to the file held in the 'data' obj. */
