@@ -58,8 +58,8 @@ h1, h2, p{
 
 .imageH{
 	display: none;
-	width: 720px;
-	height: 1280px;
+	width: 1280px;
+	height: 720px;
 	position:absolute;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
@@ -92,16 +92,18 @@ h1, h2, p{
 
 
 
-.exit .imageV{
-	-webkit-animation: moveTexteExit 0.8s ease-in-out forwards;
-	   -moz-animation: moveTexteExit 0.8s ease-in-out forwards;
-		-ms-animation: moveTexteExit 0.8s ease-in-out forwards;
-			animation: moveTexteExit 0.8s ease-in-out forwards;
+.exit .imageV, .exit .imageH{
+	-webkit-animation: moveImageExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveImageExit 0.8s ease-in-out forwards;
+		-ms-animation: moveImageExit 0.8s ease-in-out forwards;
+			animation: moveImageExit 0.8s ease-in-out forwards;
 	-webkit-animation-delay: 0.4s;
 	   -moz-animation-delay: 0.4s;
 		-ms-animation-delay: 0.4s;
 			animation-delay: 0.4s;	
 }
+
+
 
 @-webkit-keyframes moveImageExit{
 	0%{
