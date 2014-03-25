@@ -43,6 +43,7 @@ h1, h2, p{
 	width: 720px;
 	height: 1280px;
 	position:absolute;
+	background-position: center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-webkit-animation: moveImage 0.9s ease-in-out;
@@ -61,6 +62,7 @@ h1, h2, p{
 	width: 1280px;
 	height: 720px;
 	position:absolute;
+	background-position: center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-webkit-animation: moveImage 0.9s ease-in-out;

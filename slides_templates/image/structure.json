@@ -7,12 +7,16 @@
         {
             "type" : "file",
             "name": "imageV",
-            "caption" : "image Verticale"
+            "caption" : "image Verticale<br>(720 x 1280 px)"
         },
         {
             "type" : "file",
             "name": "imageH",
-            "caption" : "image Horizontale"
+            "caption" : "image Horizontale<br>(1280 x 720 px)"
+        },
+        {
+            "type" : "p",
+            "html" : "<br>Les images aux dimensions inférieures ou avec un ratio différent de 16/9 seront recadrées automatiquement."
         }
     ]
 }
