@@ -383,6 +383,26 @@ class Func {
 		setlocale(LC_TIME, 'fr_FR.UTF8');
 		return strftime('%A %e %B %Y à %Hh%Mm%S',strtotime($date));
 	}
+
+
+	/**
+	 * [rangNbr description]
+	 * @param  [type]  $int      [description]
+	 * @param  integer $longueur [description]
+	 * @return [type]            [description]
+	 */
+	static function rangNbr($int, $longueur=0){
+
+		$zero = '';
+		for($i=0;$i<$longueur;$i++){
+			$zero.='0';
+		}
+
+		$int = $zero . $int;
+		$int = substr($int, -$longueur);
+
+		return $int;
+	}
 	
 	
 	/**

@@ -897,7 +897,7 @@ class Slide {
 			while ($ecran = mysql_fetch_assoc($result)){
 				$liste_ecrans[] = $ecran['id'];
 				$id++;
-				$liste_groupes[$ecran['id']] = $id.'-'.$ecran['nom'];
+				$liste_groupes[$ecran['id']] = func::rangNbr($id,2).'-'.$ecran['nom'];
 			}
 			$liste_ecrans = implode(',', $liste_ecrans);
 
@@ -950,11 +950,11 @@ class Slide {
 				
 
 				if($slide_item['ref_target'] == 'loc'){
-					$group = '1-alerte locale';
+					$group = '01-alerte locale';
 				}else if($slide_item['ref_target'] == 'nat'){
-					$group = '2-alerte nationale';
+					$group = '02-alerte nationale';
 				}else if($slide_item['ref_target'] == 'grp'){
-					$group = '3-groupe';
+					$group = '03-groupe';
 				}else if($slide_item['ref_target'] == 'ecr'){
 					$group = $liste_groupes[ $slide_item['id_target'] ];
 				}
@@ -1000,26 +1000,26 @@ class Slide {
 
 			$temp[] = '{
 	"start" : new Date(2013, 7, 1),
-    "group" : "1-alerte locale",
+    "group" : "01-alerte locale",
     "editable" : false,
-	"content":"1-alerte locale",
+	"content":"01-alerte locale",
     "type" : "screen",
     "className" : "screen"
 }';
 
 			$temp[] = '{
 	"start" : new Date(2013, 7, 1),
-    "group" : "2-alerte nationale",
+    "group" : "02-alerte nationale",
     "editable" : false,
-	"content":"2-alerte nationale",
+	"content":"02-alerte nationale",
     "type" : "screen",
     "className" : "screen"
 }';
 			$temp[] = '{
 	"start" : new Date(2013, 7, 1),
-    "group" : "3-groupe",
+    "group" : "03-groupe",
     "editable" : false,
-	"content":"3-groupe",
+	"content":"03-groupe",
     "type" : "screen",
     "className" : "screen"
 }';
@@ -1032,11 +1032,13 @@ class Slide {
 
 				$i++;
 
+				$rang = func::rangNbr($i,2);
+
 				$temp[] = '{
     "start" : new Date(2013, 7, 1),
-    "group" : "'. $i.'-'.$item['nom'] .'",
+    "group" : "'. $rang.'-'.$item['nom'] .'",
     "editable" : false,
-	"content":"'. $i.'-'.$item['nom'] .'",
+	"content":"'. $rang.'-'.$item['nom'] .'",
     "type" : "screen",
     "className" : "screen"
 }';
