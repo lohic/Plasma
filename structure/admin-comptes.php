@@ -81,7 +81,7 @@ if(isset($_POST['add_user'])){
             <input type="text" id="user_email" name="email" value="" class="inputField" /></p>
             
             <p><label for="user_type">type : </label>
-            <?php echo func::createCombobox($typeTab, 'type', 'user_type'	, $type, '', false);?></p>
+            <?php echo func::createCombobox($user->get_admin_level(), 'type', 'user_type'	, $type, '', false);?></p>
             
             <p><label for="user_account_type">type de compte: </label>
             <?php echo func::createCombobox($accountTypeTab, 'account_type', 'user_account_type' 	, $account_type, '', false);?></p>

@@ -90,7 +90,7 @@ if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
             <input type="text" id="organisme_GA" name="google_analytics_id" value="" class="inputField" /></p>
             
             <p><label for="organisme_type">type : </label>
-            <?php echo func::createCombobox($typeTab, 'type', 'organisme_type'	, $type, '', false);?></p>
+            <?php echo func::createCombobox($organisme->get_admin_level(), 'type', 'organisme_type'	, $type, '', false);?></p>
            
             
         </fieldset>
@@ -108,7 +108,7 @@ if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
             <input type="text" id="user_nom" name="nom" value="" class="inputField" /></p>
             
             <p><label for="user_type">type : </label>
-            <?php echo func::createCombobox($typeTab, 'type', 'user_type', $type, '', false);?></p>
+            <?php echo func::createCombobox($organisme->get_admin_level(), 'type', 'user_type', $type, '', false);?></p>
             
             <p><label for="user_account_type">organisme : </label>
             <?php echo func::createCombobox($organisme->get_organisme_liste(), 'id_organisme', 'user_account_type' 	, $id_organisme, '', false);?></p>
