@@ -158,6 +158,26 @@ class Ecran {
 
 	}
 	
+	/**
+	 * Supprime un écran et ses données associées
+	 * @param  [type] $_id [description]
+	 * @return [type]      [description]
+	 */
+	function suppr_ecran($_id){
+
+		if(!empty($_id)){
+		$this->slide_db->connect_db();
+			
+			$sql		= sprintf("DELETE FROM ".TB."ecrans_tb WHERE id=%s", func::GetSQLValueString($_id,'int'));
+			$query 		= mysql_query($sql) or die(mysql_error());
+
+			$sql		= sprintf("DELETE FROM ".TB."slideshows_tb WHERE id_ecran=%s", func::GetSQLValueString($_id,'int'));
+			$query 		= mysql_query($sql) or die(mysql_error());
+
+			$sql		= sprintf("DELETE FROM ".TB."timeline_item_tb WHERE id_target=%s AND ref_target=%s", func::GetSQLValueString($_id,'int'), func::GetSQLValueString('ecr','text'));
+			$query 		= mysql_query($sql) or die(mysql_error());
+		}
+	}
 	
 	/**
 	 * mise à jour d'un groupe d'ecrans

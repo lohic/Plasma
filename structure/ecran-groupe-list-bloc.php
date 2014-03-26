@@ -1,3 +1,4 @@
+<!-- ecran-groupe-list-bloc.php -->
 <div class="<?php echo $class_groupe; ?>">
     <div class="infos">
         <p class="jour"><img src="../graphisme/monitor-group.png" alt="ecran"/>&nbsp;</p>
@@ -25,3 +26,4 @@
 <div class="child-screen">
 <?php echo $ecrans;?>
 </div>
+<!-- FIN ecran-groupe-list-bloc.php -->

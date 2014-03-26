@@ -1783,6 +1783,32 @@ function slide_selector(){
  */
 
 
+function supprEcran(id, nom){
+
+    if(confirm("Attention vous allez suprimer l'écran « "+nom+" », cette action est irréversible et entrainera la suppression des données associées. Souhaitez vous continuer ?")){
+
+        $DOM_suppr_ecran = $(event.target).parents('.ecran');
+
+        $.ajax({
+            url     :"../ajax/ecran-suppr.php",
+            type    : "POST",
+            dataType:'json',
+            data    : {
+                id          : id,
+                suppr_ecran : 'true'
+            }
+        }).done(function ( dataJSON ) {
+
+            alert('Écran supprimé!');
+
+            $DOM_suppr_ecran.remove();
+        });
+    }
+
+    event.preventDefault();
+}
+
+
 /**
  * fonction pour créer la preview d'un média (image ou vidéo)
  * au chargement ou au rafraichissement
