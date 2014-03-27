@@ -4,6 +4,7 @@
 
 $(document).ready(function(){
 
+
 	$('body, th, td, .header, .texte, .footer, .texte2, #template').removeAttr( 'style' );
 
 	remplissage();
@@ -22,6 +23,8 @@ function remplissage(){
 	// écrits via php au début du template
 	
 	// on a aussi 'slide_duree' écrit en dur depuis la classe slideshow / generate_slide()
+	// 
+	
 
 	$.ajax({
 		type: "GET",
@@ -81,6 +84,9 @@ function remplissage(){
 					rank++;
 				}
 			}
+
+
+			$('h1,h2,p').show();
 		}
 	});
 }
