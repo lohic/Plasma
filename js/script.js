@@ -1542,6 +1542,12 @@ function loadEventFromAPI(form2param){
                 $("#id_session").prop("selectedIndex", 0);
             });
 
+              
+            //console.log('ID organisme : ' + paramObj.id_organisme + ' ' +p_id_organisme);
+            if(paramObj.id_organisme != null){
+                $("#id_organisme").val( paramObj.id_organisme );
+            }
+
             $("#id_event").empty();
             $.each(dataJSON.evenements.evenement, function(item) {
 
