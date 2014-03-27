@@ -1491,13 +1491,14 @@ function downloadEventImage(url,id,month,year){
  * parametres -> formulaire ou
  * formulaire -> parametres
  */
-function loadEventFromAPI(form2param){
+function loadEventFromAPI(issetSessionEvenement){
 
-    issetParam = typeof(form2param) != 'undefined' ? form2param : false;
+    issetParam = typeof(issetSessionEvenement) != 'undefined' ? issetSessionEvenement : false;
 
     if(typeof(p_year)!= 'undefined' && typeof(p_month)!= 'undefined' && typeof(p_id_organisme)!= 'undefined' && typeof(p_id_event)!= 'undefined' && typeof(p_id_session)!= 'id_session' && issetParam == true ){
 
         var paramObj = {
+            paramInitiaux : true,
             year        : p_year,
             month       : p_month,
             id_organisme: p_id_organisme,
@@ -1508,6 +1509,7 @@ function loadEventFromAPI(form2param){
     }else{
 
         var paramObj = {
+            paramInitiaux : false,
             year        : $("#year_event").val(),
             month       : $("#month_event").val(),
             id_organisme: $("#id_organisme").val(),
@@ -1515,6 +1517,9 @@ function loadEventFromAPI(form2param){
             id_event    : $("#id_event").val()
         }
     }
+
+    console.log('PARAM EVENT :');
+    console.log(paramObj);
 
 
     $.ajax({
@@ -1542,12 +1547,13 @@ function loadEventFromAPI(form2param){
                 $("#id_session").prop("selectedIndex", 0);
             });
 
-              
-            //console.log('ID organisme : ' + paramObj.id_organisme + ' ' +p_id_organisme);
+            // si un id d'organisme existe on le sélectionne              
             if(paramObj.id_organisme != null){
                 $("#id_organisme").val( paramObj.id_organisme );
             }
 
+
+            // pour chaque événement de la liste
             $("#id_event").empty();
             $.each(dataJSON.evenements.evenement, function(item) {
 
@@ -1573,14 +1579,14 @@ function loadEventFromAPI(form2param){
                         });
                         $("#year_event").val( p_year );
                         $("#month_event").val( p_month );
-                        $("#id_organisme").val( p_id_organisme );
+                        //$("#id_organisme").val( p_id_organisme );
                         $("#id_event").val(p_id_event);
 
                         $("#refresh_event").show();
 
                         $("#id_session").val(p_id_session);
 
-                        loadEventFromAPI();
+                        //loadEventFromAPI();
                     }
                 }
             });
@@ -1603,23 +1609,33 @@ function loadEventFromAPI(form2param){
 
             console.log('issetParam ' + issetParam);
 
-            if(!issetParam && form2param != true){
-                console.log('form2param :');
-                console.log(form2param);
+            if(!issetParam && issetSessionEvenement != true){
+                console.log('issetSessionEvenement :');
+                console.log(issetSessionEvenement);
                 console.log('pas de paramètres');
 
                 $("#id_event").val($("#id_event option:first").val());
 
                 p_id_event = $('#id_event').val();
 
-                loadEventFromAPI(true);
-
+                
             }
+
+
+            /*if( $('#myform input[name="session_id"]').val() == '' ){
+                loadEventFromAPI();
+            }else{
+                loadEventFromAPI();
+            }*/
+
+            loadEventFromAPI();
     
         }
 
         // détail d'un évéenement et des sessions attachées
         if(typeof(dataJSON.evenement) != 'undefined'){
+
+            console.log('détail événement + session');
 
             $("#id_session").empty();
             $.each(dataJSON.evenement.sessions, function(item) {
