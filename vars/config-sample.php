@@ -35,3 +35,5 @@ define ('EVENEMENT_DATA_URL',	'http://www.sciencespo.fr/evenements/api/');
 define ('METEO_DATA_URL',		'vars/meteo_json.txt');
 
 define ('GMTcorrection',		0);
+
+define ('DEBUG',				false);
