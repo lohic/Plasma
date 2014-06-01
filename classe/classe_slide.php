@@ -1024,9 +1024,9 @@ class Slide {
     "className" : "screen"
 }';
 			
-			if($user_level <= 2) $tab[] = '{"key" : "1-alerte locale", "value" : "1-alerte locale"}';
-			if($user_level <= 1) $tab[] = '{"key" : "2-alerte nationale", "value" : "2-alerte nationale"}';
-			$tab[] = '{"key" : "3-groupe", "value" : "3-groupe"}';
+			if($user_level <= 2) $tab[] = '{"key" : "01-alerte locale", "value" : "01-alerte locale"}';
+			if($user_level <= 1) $tab[] = '{"key" : "02-alerte nationale", "value" : "02-alerte nationale"}';
+			$tab[] = '{"key" : "03-groupe", "value" : "03-groupe"}';
 
 			while ($item = mysql_fetch_assoc($sql_slide_query)){
 
@@ -1042,7 +1042,7 @@ class Slide {
     "type" : "screen",
     "className" : "screen"
 }';
-				$tab[] = '{"key" : "'.$i.'-'.$item['nom'].'", "value" : "'.$i.'-'.$item['nom'].'"}';					
+				$tab[] = '{"key" : "'.$rang.'-'.$item['nom'].'", "value" : "'.$rang.'-'.$item['nom'].'"}';					
 			}
 
 			$retour->json 	= implode(",\n", $temp);
