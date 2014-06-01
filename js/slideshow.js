@@ -87,6 +87,11 @@ $(document).ready(function(){
 	}
 
 	// on prépare les boutons de la console de test (affichée si '&debug' est passé en paramètre dans l'url )
+	$('#half_button').click(function(e){
+		$('body').toggleClass('half');
+		e.preventDefault();
+	});
+
 	$('#exit_button').click(function(e){
 		$('body').toggleClass('exit');
 		e.preventDefault();
