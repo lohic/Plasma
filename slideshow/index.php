@@ -6,18 +6,18 @@ include_once("../classe/classe_slideshow.php");
 include_once("../classe/classe_fonctions.php");
 
 
-$isdebug	= isset($_GET['debug'])?true:false;
-$ispreview	= isset($_GET['preview'])?true:false;
-$istiny		= isset($_GET['tiny'])?true:false;
+$isdebug	= isset($_GET['debug'])?	true:false;
+$ispreview	= isset($_GET['preview'])?	true:false;
+$istiny		= isset($_GET['tiny'])?		true:false;
 
 /* */
 if(isset($_GET['plasma_id']) || isset($_GET['slide_id'])){
 /* */	
 		
 	if(isset($_GET['slide_id'])){
-		$id_ecran = $_GET['slide_id'];
-	}
-	if(isset($_GET['plasma_id'])){
+		//$id_ecran = $_GET['slide_id'];
+		$id_ecran = 0;
+	}else if(isset($_GET['plasma_id'])){
 		$id_ecran = $_GET['plasma_id'];
 	}
 	

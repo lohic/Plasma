@@ -7,7 +7,7 @@ include_once(REAL_LOCAL_PATH.'classe/classe_slide.php');
 include_once(REAL_LOCAL_PATH.'classe/classe_fonctions.php');
 		
 /**
- * 
+ * Classe slideshow
  */
 class Slideshow {
 	
@@ -33,17 +33,17 @@ class Slideshow {
 		date_default_timezone_set('Europe/Paris');
 		$this->slide_db		= new connexion($connexion_info['server'],$connexion_info['user'],$connexion_info['password'],$connexion_info['db']);
 	
-		
-		if(!empty($_id_ecran)){
+		if( !empty($_id_ecran) || $_id_ecran==0 ){
 			
-
 			// instanciation des objets
-			if(empty($this->ecran)){ $this-> ecran = (object)array(); }
+			if(empty($this->ecran)){
+				$this->ecran = (object)array();
+			}
 
 			$this->ecran->id = $_id_ecran;
 			
 			$this->ecran = $this->get_ecran_info();
-			
+
 			$this->debugger = "";
 		
 		}
@@ -75,8 +75,9 @@ class Slideshow {
 	 * @author Loïc Horellou
 	 * @since v0.1
 	 * @see Slideshow::generate_slide_page
-	 * @param $ispreview sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
-	 * @param $isdebug précise si on doit afficher le mode debug ou pas (false par defaut / true) 
+	 * @param $ispreview	sert a afficher si on est en mode preview ou lecture (si lecture le curseur souris est masqué)
+	 * @param $isdebug		précise si on doit afficher le mode debug ou pas (false par defaut / true)
+	 * @param $istiny 		sert à afficher le player en petite taille pour les aperçus 
 	 */
 	function run($ispreview=false,$isdebug =false,$istiny =false){
 		//$this->slide_db->connect_db();
@@ -94,7 +95,7 @@ class Slideshow {
 	
 	
 	/**
-	 * récupère le code HTML provenant du prochain slide (récupère en cahce le résultat de generate_slide)
+	 * récupère le code HTML provenant du prochain slide (récupère en cache le résultat de generate_slide)
 	 * @author Loïc Horellou
 	 * @since v0.1
 	 * @see Slideshow::generate_slide
@@ -111,23 +112,26 @@ class Slideshow {
 		//
 		$ecran = new stdClass();
 		/*$ecran->id					= $this->ecran->id;
-		$ecran->nom					= $this->ecran->nom;
-		$ecran->id_etablissement	= $this->ecran->id_etablissement;
-		$ecran->id_groupe			= $this->ecran->id_groupe;
-		$ecran->code_postal			= $this->ecran->code_postal;
-		$ecran->code_meteo			= $this->ecran->code_meteo;*/
+		$ecran->nom						= $this->ecran->nom;
+		$ecran->id_etablissement		= $this->ecran->id_etablissement;
+		$ecran->id_groupe				= $this->ecran->id_groupe;
+		$ecran->code_postal				= $this->ecran->code_postal;
+		$ecran->code_meteo				= $this->ecran->code_meteo;*/
 		$ecran = $this->ecran;
+
 
 		//
 		$class = array();
 		if($ispreview) $class[] = 'preview';
-		if($isdebug) $class[] = 'debug';
-		if($istiny) $class[] = 'tiny';
+		if($isdebug)   $class[] = 'debug';
+		if($istiny)    $class[] = 'tiny';
 		$class = implode(' ', $class);
 		
 		$contents ='';
 		ob_start();
-		include_once(REAL_LOCAL_PATH.'structure/slide-generate.php') ;
+		if(!DEBUG){
+			include_once(REAL_LOCAL_PATH.'structure/slide-generate.php') ;
+		}
 		$contents .= ob_get_contents();
 		ob_end_clean();
 		
@@ -283,8 +287,8 @@ class Slideshow {
 	 * @return un objet contenant id_groupe, id_last_slide, id_last_slideshow, order_last_slide, code_meteo
 	 */
 	function get_ecran_info(){
-		
-		if(!empty($this->ecran->id)){
+
+		if(!empty($this->ecran->id) && $this->ecran->id != 0){
 			
 			$sql = sprintf("SELECT	P.nom,
 									P.id_etablissement,
@@ -331,9 +335,28 @@ class Slideshow {
 			$retour->json							= $info['json'];
 			$retour->actual_date_json				= $info['actual_date_json'];
 			
-			return $retour;
+		}else{
+			$retour = (object)array();
+
+			$retour->id								= 0;
+			$retour->nom							= 'écran test';
+			$retour->id_etablissement				= 0;
+			$retour->id_groupe						= 0;
+			$retour->id_last_slide					= 0;
+			$retour->order_last_slide				= 0;
+			$retour->code_postal					= '75000';
+			$retour->code_meteo						= 'EUR|FR|FR012|PARIS|';
+			$retour->id_ecran_playlist_locale		= 0;
+			$retour->id_ecran_playlist_nationale	= 0;
+			$retour->id_groupe_playlist_locale		= 0;
+			$retour->id_groupe_playlist_nationale	= 0;
+			$retour->id_groupe_playlist 			= 0;
+			$retour->json							= '';
+			$retour->actual_date_json				= '';
 		}
-		
+
+		return $retour;
+
 	}
 	
 	/**
@@ -372,7 +395,7 @@ class Slideshow {
 		$retour = new stdClass();
 
 		if(!empty($update_ecran_id) && $update_all != true){
-			// on arvhive l'écran dont l'id est spécifié
+			// on archive l'écran dont l'id est spécifié
 			$this->archive_ecran($update_ecran_id);
 		}
 		
