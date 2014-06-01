@@ -109,7 +109,7 @@ h1, h2, p{
 
 @-webkit-keyframes moveImageExit{
 	0%{
-		--transfowebkitrm: translate(0px, 0px);
+		-webkit-transform: translate(0px, 0px);
 	}
 	100%{
 		-webkit-transform: translate(0px, -1280px);
