@@ -6,7 +6,7 @@
         </a>
         </p>
         <p class="titre">
-            <a href="?page=ecran_create&id_groupe=<?php echo $id_groupe; ?>" title="ajouter un écran au groupe" id="edit-<?php echo $id;?>" class="modif_plasma">Ajouter un écran</a>
+            <a href="?page=ecran_create&id_groupe=<?php echo $id_groupe; ?>" title="ajouter un écran au groupe" id="add" class="modif_plasma">Ajouter un écran</a>
         </p>
     </div>
 </div>
