@@ -28,44 +28,58 @@ body, #template{
 }
 
 /*.basse .colonne_gauche,*/
-.footer, .autre_campus, .autre_jour{
+.footer,
+.autre_campus,
+.autre_jour{
 	background:rgb(203,02,26);
 }
 
 
-body.basse, .basse #template{
+body.basse,
+.basse #template{
 	background:rgb(89,216,220);
 }
 
 /*.basse .colonne_gauche,*/
-.basse .footer, .basse .autre_campus, .basse .autre_jour{
+.basse .footer,
+.basse .autre_campus,
+.basse .autre_jour{
 	background:rgb(89,216,220);
 }
 
-body.moyen_basse, .moyen_basse #template{
+body.moyen_basse,
+.moyen_basse #template{
 	background:rgb(190,220,45);
 }
 
 /*.moyen_basse .colonne_gauche,*/
-.moyen_basse .footer, .moyen_basse .autre_campus, .moyen_basse .autre_jour{
+.moyen_basse .footer,
+.moyen_basse .autre_campus,
+.moyen_basse .autre_jour{
 	background:rgb(190,220,45);
 }
 
-body.moyen_haute, .moyen_haute #template{
+body.moyen_haute,
+.moyen_haute #template{
 	background:rgb(242,158,37);
 }
 
 /*.moyen_haute .colonne_gauche,*/
-.moyen_haute .footer, .moyen_haute .autre_campus, .moyen_haute .autre_jour{
+.moyen_haute .footer,
+.moyen_haute .autre_campus,
+.moyen_haute .autre_jour{
 	background:rgb(242,158,37);
 }
 
-body.haute, .haute #template{
+body.haute,
+.haute #template{
 	background:rgb(242,95,36);
 }
 
 /*.haute .colonne_gauche, */
-.haute .footer, .haute .autre_campus, .haute .autre_jour{
+.haute .footer,
+.haute .autre_campus,
+.haute .autre_jour{
 	background:rgb(242,95,36);
 }
 
@@ -84,6 +98,7 @@ classes réservées pour le traitement JS :
 .edit, .textfield, .textarea, .checkbox, .image, ...
 */
 
+
 #meteo1{
 	position: absolute;
 	top:0;
@@ -92,6 +107,7 @@ classes réservées pour le traitement JS :
 	height: 1280px;
 	z-index: 2;
 }
+
 #meteo2{
 	position: absolute;
 	top:0;
@@ -413,10 +429,10 @@ classes réservées pour le traitement JS :
 }
 
 #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour{
-	-webkit-animation: moveFooter 3s ease-in-out;
-	   -moz-animation: moveFooter 3s ease-in-out;
-		-ms-animation: moveFooter 3s ease-in-out;
-			animation: moveFooter 3s ease-in-out;
+	-webkit-animation: moveFooter 3.0s ease-in-out;
+	   -moz-animation: moveFooter 3.0s ease-in-out;
+		-ms-animation: moveFooter 3.0s ease-in-out;
+			animation: moveFooter 3.0s ease-in-out;
 	-webkit-animation-delay: 0s;
 	   -moz-animation-delay: 0s;
 		-ms-animation-delay: 0s;
@@ -521,6 +537,69 @@ classes réservées pour le traitement JS :
 }
 
 .half #meteo1 .footer{
+	/*-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
+			animation: moveFooterExit 0.9s ease-in-out forwards;*/
+	-webkit-animation: moveFooterExit 0s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0s ease-in-out forwards;
+			animation: moveFooterExit 0s ease-in-out forwards;
+	/*-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;*/
+	-webkit-animation-delay: 1.8s;
+	   -moz-animation-delay: 1.8s;
+		-ms-animation-delay: 1.8s;
+			animation-delay: 1.8s;
+}
+
+.half #meteo1 .footer .autre_jour:first-child{
+	-webkit-animation: moveFooterExit 0.5s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.5s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.5s ease-in-out forwards;
+			animation: moveFooterExit 0.5s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
+
+}
+.half #meteo1 .footer .autre_jour + .autre_jour{
+	-webkit-animation: moveFooterExit 0.6s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.6s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.6s ease-in-out forwards;
+			animation: moveFooterExit 0.6s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
+	
+}
+.half #meteo1 .footer .autre_jour + .autre_jour + .autre_jour{
+	-webkit-animation: moveFooterExit 0.7s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.7s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.7s ease-in-out forwards;
+			animation: moveFooterExit 0.7s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
+	
+}
+.half #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour{
+	-webkit-animation: moveFooterExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 0.8s ease-in-out forwards;
+		-ms-animation: moveFooterExit 0.8s ease-in-out forwards;
+			animation: moveFooterExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
+	
+}
+.half #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour{
 	-webkit-animation: moveFooterExit 0.9s ease-in-out forwards;
 	   -moz-animation: moveFooterExit 0.9s ease-in-out forwards;
 		-ms-animation: moveFooterExit 0.9s ease-in-out forwards;
@@ -529,7 +608,21 @@ classes réservées pour le traitement JS :
 	   -moz-animation-delay: 0.8s;
 		-ms-animation-delay: 0.8s;
 			animation-delay: 0.8s;	
+	
 }
+.half #meteo1 .footer .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour + .autre_jour{
+	-webkit-animation: moveFooterExit 1.0s ease-in-out forwards;
+	   -moz-animation: moveFooterExit 1.0s ease-in-out forwards;
+		-ms-animation: moveFooterExit 1.0s ease-in-out forwards;
+			animation: moveFooterExit 1.0s ease-in-out forwards;
+	-webkit-animation-delay: 0.8s;
+	   -moz-animation-delay: 0.8s;
+		-ms-animation-delay: 0.8s;
+			animation-delay: 0.8s;	
+	
+}
+
+
 
 @-webkit-keyframes moveFooterExit{
 	0%{
@@ -933,6 +1026,73 @@ classes réservées pour le traitement JS :
 	100%{
 		transform: translate(0px, 0px);
 	}
+}
+
+
+.exit #meteo2 .footer .autre_campus:first-child{
+	-webkit-animation: moveFooterMeteoExit 0.5s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 0.5s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 0.5s ease-in-out forwards;
+			animation: moveFooterMeteoExit 0.5s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.exit #meteo2 .footer .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteoExit 0.6s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 0.6s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 0.6s ease-in-out forwards;
+			animation: moveFooterMeteoExit 0.6s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.exit #meteo2 .footer .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteoExit 0.7s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 0.7s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 0.7s ease-in-out forwards;
+			animation: moveFooterMeteoExit 0.7s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.exit #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteoExit 0.8s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 0.8s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 0.8s ease-in-out forwards;
+			animation: moveFooterMeteoExit 0.8s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.exit #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+			animation: moveFooterMeteoExit 0.9s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
+}
+
+.exit #meteo2 .footer .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus + .autre_campus{
+	-webkit-animation: moveFooterMeteoExit 1.0s ease-in-out forwards;
+	   -moz-animation: moveFooterMeteoExit 1.0s ease-in-out forwards;
+		-ms-animation: moveFooterMeteoExit 1.0s ease-in-out forwards;
+			animation: moveFooterMeteoExit 1.0s ease-in-out forwards;
+	-webkit-animation-delay: 0s;
+	   -moz-animation-delay: 0s;
+		-ms-animation-delay: 0s;
+			animation-delay: 0s;
 }
 
 .exit #meteo2 .header{
