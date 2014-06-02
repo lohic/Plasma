@@ -123,7 +123,11 @@ function refresh() {
 		$.ajax({
 			type: "GET",
 			url: "../ajax/data-slideshow.php",
-			data: {plasma_id : $plasma_id, actual_data_date: $actual_data_date},
+			data: {
+				plasma_id : $plasma_id,
+				actual_data_date: $actual_data_date,
+				no_cache : new Date()
+			},
 			dataType: 'json',
 			error : function(jqXHR,textStatus,errorThrown){
 				$('.info').text('Il y a une erreur dans le chargement des données du slideshow : '+errorThrown);
