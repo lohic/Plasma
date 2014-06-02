@@ -1245,7 +1245,7 @@ class Slide {
 
 		$retour = new stdClass();
 
-		$sql			= sprintf("SELECT DISTINCT YEAR(date) AS annee FROM ".TB."timeline_slides_tb ORDER BY annee DESC");																
+		$sql			= sprintf("SELECT DISTINCT YEAR(date) AS annee FROM ".TB."timeline_slides_tb ORDER BY annee DESC");												
 		$sql_query		= mysql_query($sql) or die(mysql_error());	
 
 		while($row = mysql_fetch_assoc($sql_query)){
@@ -1253,7 +1253,7 @@ class Slide {
 		}
 
 
-		$sql			= sprintf("SELECT DISTINCT MONTH(date) AS mois FROM ".TB."timeline_slides_tb ORDER BY mois ASC");																
+		$sql			= sprintf("SELECT DISTINCT MONTH(date) AS mois FROM ".TB."timeline_slides_tb ORDER BY mois ASC");
 		$sql_query		= mysql_query($sql) or die(mysql_error());	
 
 		while($row = mysql_fetch_assoc($sql_query)){
