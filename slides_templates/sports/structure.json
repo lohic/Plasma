@@ -78,7 +78,7 @@
             "type" : "text",
             "name" : "type_resultat",
             "id" : "type_resultat",
-            "caption" : "Type de résultat"
+            "caption" : "Titre du résultat"
         },
         {
             "type" : "textarea",

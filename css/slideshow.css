@@ -26,6 +26,15 @@ body, #template{
      cursor: none;
 }
 
+.ombre{
+	opacity: 0;
+	-webkit-transition: opacity 1000ms linear;
+	   -moz-transition: opacity 1000ms linear;
+	    -ms-transition: opacity 1000ms linear;
+	     -o-transition: opacity 1000ms linear;
+	   	 	transition: opacity 1000ms linear;
+}
+
 body.preview, body.preview #template{
 	cursor:auto;
 }

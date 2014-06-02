@@ -38,6 +38,13 @@ h1, h2, p{
 	background:rgb(203,02,26);
 }
 
+.ombre{
+	opacity: 1;
+}
+
+.exit .ombre{
+	opacity: 0;
+}
 /* 
 classes réservées pour le traitement JS : 
 .edit, .textfield, .textarea, .checkbox, .image, ...
@@ -114,6 +121,8 @@ classes réservées pour le traitement JS :
 	background-position: center;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
 	z-index:1;
 	margin-top:1px;
 	-webkit-animation: moveTexte 1.2s ease-in-out;

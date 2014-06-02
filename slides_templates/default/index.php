@@ -1,5 +1,5 @@
 <!-- SLIDE DEFAULT -->
-<div id="ombre"></div>
+<div id="ombre" class="ombre"></div>
 
 <div class="header">
 	<h1>Écran {{titre_ecran}}</h1>

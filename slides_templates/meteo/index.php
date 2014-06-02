@@ -7,7 +7,7 @@ $meteo = new meteo(); // normalement on doit injecter un zipcode dans meteo()...
 
 
 <div id="meteo1" class="meteo1">
-	<div id="ombre"></div>
+	<div id="ombre" class="ombre"></div>
 	<div class="colonne_gauche">
 		<div class="header">
 			<h1 style='display:none'>Lundi 5 septembre 2011</h1>
@@ -28,9 +28,7 @@ $meteo = new meteo(); // normalement on doit injecter un zipcode dans meteo()...
 			<div class="temperature_max">
 				<p style='display:none'>max:<span>18</span>°</p>	
 			</div>
-			<div class="vent">
-
-			</div>
+			<div class="vent"></div>
 		</div>
 	</div>
 
@@ -132,7 +130,7 @@ $meteo = new meteo(); // normalement on doit injecter un zipcode dans meteo()...
 
 
 <div id="meteo2" class="meteo2">
-	<div id="ombre2"></div>
+	<div id="ombre2" class="ombre"></div>
 	<div class="colonne_gauche">
 		<div class="header">
 			<h1 style='display:none'>Dans les autres campus</h1>

@@ -1,4 +1,4 @@
-	<div id="ombre">
+	<div id="ombre" class="ombre">
 
 	</div>
     <div class="colonne_gauche"> 

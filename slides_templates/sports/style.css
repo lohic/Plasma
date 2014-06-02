@@ -28,6 +28,14 @@ h1, h2, p{
 	color:#000;
 }
 
+.ombre{
+	opacity: 1;
+}
+
+.exit .ombre{
+	opacity: 0;
+}
+
 #template{
 	width:720px;
 	height:1210px;

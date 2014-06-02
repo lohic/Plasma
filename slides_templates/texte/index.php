@@ -1,4 +1,4 @@
-<div id="ombre"></div>
+<div id="ombre" class="ombre"></div>
 <div class="header">
 	<h1>{{{chapeau}}}</h1>
 </div>

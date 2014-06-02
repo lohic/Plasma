@@ -5,6 +5,12 @@
     "html" :
     [
         {
+            "type" : "text",
+            "name" : "titre",
+            "id" : "titre",
+            "caption" : "Titre de l'événement"
+        },
+        {
             "type" : "select",
             "name" : "type",
             "id" : "type",
@@ -37,28 +43,20 @@
             "caption" : "Code du batiment"
         },
         {
-            "type" : "text",
+            "type" : "hidden",
             "name" : "adresse_nom",
-            "id" : "adresse_nom",
-            "caption" : "Nom de l'adresse"
+            "id" : "adresse_nom"
         },
         {
-            "type" : "text",
+            "type" : "hidden",
             "name" : "adresse",
-            "id" : "adresse",
-            "caption" : "Adresse"
+            "id" : "adresse"
         },
         {
             "type" : "text",
             "name" : "langue",
             "id" : "langue",
             "caption" : "Langue de l'événement"
-        },
-        {
-            "type" : "text",
-            "name" : "titre",
-            "id" : "titre",
-            "caption" : "Titre de l'événement"
         },
         {
             "type" : "text",

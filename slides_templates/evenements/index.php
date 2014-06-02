@@ -1,12 +1,12 @@
 <!-- SLIDE EVENEMENT -->
-<div id="ombre">
+<div id="ombre" class="ombre">
 
 </div>
 <div class="colonne {{type}}" data-type="{{type}}">
     <div class="header">
         <h2><span id="type_event">{{type}}</span><br/>
 			{{date_horaire}}<br/>
-			{{lieu}}{{#lieu}}{{#code_batiment}},{{/code_batiment}}{{/lieu}}{{code_batiment}}
+			{{lieu}}{{#lieu}}{{#code_batiment}}, {{/code_batiment}}{{/lieu}}{{code_batiment}}
         </h2>
         <p class="langue">{{langue}}</p>
     </div>
@@ -16,7 +16,7 @@
     </div>
 
     <div class="texte2">
-        <h1>{{organisateur}}</span>{{#qualite}},{{/qualite}}<br/>{{qualite}}</h1>
+        <h2>{{organisateur}}{{#qualite}},{{/qualite}}<br/><span>{{qualite}}</span></h2>
     </div>
 
     <div class="visuel">
@@ -28,9 +28,11 @@
         <div class="inscription">
             <p>{{inscription}}</p>
         </div>
+        {{^coorganisateur}}
         <div class="logo" alt="Logo Sciences Po.">
             <img src="<?php echo ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.'evenements/'; ?>logo.png" alt="Sciences Po"/>
         </div>
+        {{/coorganisateur}}
         <div class="coorganisateur">
             {{#coorganisateur}}
             <p>{{coorganisateur}}</p>

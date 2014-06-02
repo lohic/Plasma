@@ -28,6 +28,14 @@ h1, h2, p{
 	color:#fff;
 }
 
+.ombre{
+	opacity: 1;
+}
+
+.exit .ombre{
+	opacity: 0;
+}
+
 #template{
 	width:720px;
 	height:1280px;
@@ -46,6 +54,7 @@ h1, h2, p{
 	background-position: center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
+	background-size: cover;
 	-webkit-animation: moveImage 0.9s ease-in-out;
 	   -moz-animation: moveImage 0.9s ease-in-out;
 		-ms-animation: moveImage 0.9s ease-in-out;
@@ -65,6 +74,7 @@ h1, h2, p{
 	background-position: center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
+	background-size: cover;
 	-webkit-animation: moveImage 0.9s ease-in-out;
 	   -moz-animation: moveImage 0.9s ease-in-out;
 		-ms-animation: moveImage 0.9s ease-in-out;

@@ -23,61 +23,59 @@ h1, p{
 	color:#fff;
 }
 
-body, #template{
-	background:rgb(203,02,26);
+.ombre{
+	opacity: 1;
 }
 
+.exit .ombre{
+	opacity: 0;
+}
+
+
 /*.basse .colonne_gauche,*/
-.footer,
+body,
+#template,
+/*.footer,*/
 .autre_campus,
 .autre_jour{
 	background:rgb(203,02,26);
 }
 
 
-body.basse,
-.basse #template{
-	background:rgb(89,216,220);
-}
 
 /*.basse .colonne_gauche,*/
-.basse .footer,
+body.basse,
+.basse #template,
+/*.basse .footer,*/
 .basse .autre_campus,
 .basse .autre_jour{
 	background:rgb(89,216,220);
 }
 
-body.moyen_basse,
-.moyen_basse #template{
-	background:rgb(190,220,45);
-}
 
 /*.moyen_basse .colonne_gauche,*/
-.moyen_basse .footer,
+body.moyen_basse,
+.moyen_basse #template,
+/*.moyen_basse .footer,*/
 .moyen_basse .autre_campus,
 .moyen_basse .autre_jour{
 	background:rgb(190,220,45);
 }
 
-body.moyen_haute,
-.moyen_haute #template{
-	background:rgb(242,158,37);
-}
-
 /*.moyen_haute .colonne_gauche,*/
-.moyen_haute .footer,
+body.moyen_haute,
+.moyen_haute #template,
+/*.moyen_haute .footer,*/
 .moyen_haute .autre_campus,
 .moyen_haute .autre_jour{
 	background:rgb(242,158,37);
 }
 
-body.haute,
-.haute #template{
-	background:rgb(242,95,36);
-}
 
 /*.haute .colonne_gauche, */
-.haute .footer,
+body.haute,
+.haute #template,
+/*.haute .footer,*/
 .haute .autre_campus,
 .haute .autre_jour{
 	background:rgb(242,95,36);
@@ -93,10 +91,16 @@ body.haute,
 	position:relative;
 }
 
-/* 
-classes réservées pour le traitement JS : 
-.edit, .textfield, .textarea, .checkbox, .image, ...
-*/
+
+
+
+
+/**
+ * -------------------------------------------
+ *					METEO 1
+ * ------------------------------------------- 
+ */
+
 
 
 #meteo1{
@@ -700,6 +704,19 @@ classes réservées pour le traitement JS :
 	padding-top:5px;
 }
 
+
+
+
+
+
+
+
+/**
+ * -------------------------------------------
+ *					METEO 2
+ * ------------------------------------------- 
+ */
+
 #meteo2 .header {
     -webkit-transform: translate(0px, 1280px);
        -moz-transform: translate(0px, 1280px);
@@ -842,7 +859,6 @@ classes réservées pour le traitement JS :
 #meteo2 .autre_campus{
 	-moz-box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
 		 box-shadow:rgba(0,0,0,0.2) 0px 15px 15px;
-    /*float: left;*/
     height: 196px;
     padding: 0 6.1%;
     position: relative;
