@@ -24,6 +24,7 @@
 		<p class="info">Informations</p>
 		<p><button id="half_button">HALF</button> <button id="exit_button">EXIT</button> <button id="pause_button">PLAY/PAUSE</button></p>
 	</div>
+	<div class="frame"></div>
 
 	<div id="template"></div>
 

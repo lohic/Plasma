@@ -28,7 +28,6 @@ h1, p{
 .ombre{
 	opacity: 1;
 }
-
 .exit .ombre{
 	opacity: 0;
 }
@@ -321,8 +320,8 @@ classes réservées pour le traitement JS :
 		height:100%;
 		/*width:976px;*/
 		width:-webkit-calc(100% - 394px);
-		width:-moz-calc(100% - 394px);
-		width:calc(100% - 394px);
+		widows:  -moz-calc(100% - 394px);
+		widows: 	  calc(100% - 394px);
 	}
 
 	#template{

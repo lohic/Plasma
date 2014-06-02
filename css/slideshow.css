@@ -59,6 +59,10 @@ body.debug, body.debug #template{
 	display : block;
 }
 
+.debug .frame{
+	display: block;
+}
+
 .console{
 	display : none;
 	position : fixed;
@@ -74,6 +78,29 @@ body.debug, body.debug #template{
 	z-index: 999;
 	font-family: 'monaco',monospace;
 	border: dashed 1px #FF0;
+}
+
+.frame{
+	display:none;
+	position: fixed;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+    		box-sizing: border-box;
+	top:0;
+	left:0;
+	width: 720px;
+	height: 1280px;
+	border: dashed #FF0 2px;
+	z-index: 998;
+}
+
+.tiny .frame{
+	-webkit-transform:scale(0.3,0.3);
+	   -moz-transform:scale(0.3,0.3);
+	   		transform:scale(0.3,0.3);
+	-webkit-transform-origin:0 0;
+	   -moz-transform-origin:0 0;
+			transform-origin:0 0;
 }
 
 .console:hover{
@@ -98,4 +125,11 @@ body.debug, body.debug #template{
 
 .pause .console #now{
 	text-decoration: line-through;
+}
+
+@media screen and (orientation:landscape){
+	.frame{
+		width: 1280px;
+		height: 720px;
+	}
 }
