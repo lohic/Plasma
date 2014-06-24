@@ -19,7 +19,7 @@
         {
             "type" : "file",
             "name": "image",
-            "caption" : "image"
+            "caption" : "Image<br>(720x720px minimum)"
         }
     ]
 }
