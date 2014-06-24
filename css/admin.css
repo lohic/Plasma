@@ -439,8 +439,6 @@ li span.handler{
 	margin:10px;
 }
 
-
-
 .slides{
 	width:320px;
 	float:right;
@@ -521,9 +519,27 @@ a.btn span{
 	margin:10px;
 }
 
+.listing_container>div{
+	float:left;
+	width:970px;
+	padding-left:10px;
+	position:relative;
+	margin:0;
+	background:#F9E5E8;
+}
+
+.listing_container>div:nth-child(even){
+	background:#FFFFFF;
+}
+
+.listing_container>div.hidden{
+	opacity:0.3;
+}
+
 .listing_container button{
 	background: none;
 	border:none;
+	cursor:pointer;
 }
 
 .listItemRubrique1, .listItemRubrique2{
@@ -566,7 +582,7 @@ a.btn span{
 .titre_heure{
 	float:left;
 	padding-left:10px;
-	width:505px;
+	width:495px;
 }
 
 .infos img{

@@ -13,6 +13,7 @@ class Slide {
 	var $slide_db		= NULL;
 	var $id				= NULL;
 	var $func			= NULL;
+	var $error			= NULL;
 
 	private static $is_updated	= false;
 
@@ -67,7 +68,8 @@ class Slide {
 		}
 		
 		if(isset($_POST['suppr']) && $_POST['suppr'] == 'slide'){
-			$this->suppr_slide($id);
+			//$this->suppr_slide($id);
+			$this->update_timeline_slide($id, true);
 		}
 
 		self::$is_updated = true;
@@ -81,7 +83,7 @@ class Slide {
 	 * @param  [type] $_id        [description]
 	 * @return [type]             [description]
 	 */
-	function update_slide($_array_val,$_id=NULL){
+	/*function update_slide($_array_val,$_id=NULL){
 		$this->slide_db->connect_db();
 		
 		$id							= func::GetSQLValueString($_POST['id_slide'],'int');
@@ -121,7 +123,7 @@ class Slide {
 		$sql_slide			= sprintf("UPDATE ".TB."slides_tb SET json='".$json."', nom=".$nom.", date=".$date." WHERE id=".$id);
 		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		
-	}
+	}*/
 	
 	/**
 	 * creation d'un slide
@@ -129,18 +131,28 @@ class Slide {
 	 * @return [type]             [description]
 	 */
 	function create_slide($_array_val){
-		$this->slide_db->connect_db();
-		
-		$nom			= func::GetSQLValueString($_POST['nom_slide'],'text');
-		$template 		= func::GetSQLValueString($_POST['template_slide'],'text');
+		if(empty($_POST['nom_slide'])){
 
-		// REQUETE
-		$sql_slide			= sprintf("INSERT INTO ".TB."timeline_slides_tb (nom, template, date) VALUES (%s,%s,NOW())",$nom,$template);
-		$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			$this->error = "Vous devez obligatoirement donner un nom au slide.";
+
+		}else{
+
+			$this->slide_db->connect_db();
 		
-		$id = mysql_insert_id();
-		// redirection
-		header('Location: '.ABSOLUTE_URL.'admin-new/?page=slides_select&id_slide='.$id);
+			$nom			= func::GetSQLValueString($_POST['nom_slide'],'text');
+			$template 		= func::GetSQLValueString($_POST['template_slide'],'text');
+
+			// REQUETE
+			$sql_slide			= sprintf("INSERT INTO ".TB."timeline_slides_tb (nom, template, date) VALUES (%s,%s,NOW())",$nom,$template);
+			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
+			
+			$id = mysql_insert_id();
+			// redirection
+			header('Location: '.ABSOLUTE_URL.'admin-new/?page=slides_select&id_slide='.$id);
+
+		}
+
+		
 	}
 	
 
@@ -192,7 +204,8 @@ class Slide {
 		// REQUETE
 		if(isset($_POST['id_slide']) && isset($_POST['suppr']) && $_POST['suppr'] == 'slide'){ // pour éviter des erreurs...
 			$id					= func::GetSQLValueString($_POST['id_slide'],'int');
-			$sql_slide			= sprintf("DELETE FROM ".TB."slides_tb WHERE id=".$id);
+			//$sql_slide			= sprintf("DELETE FROM ".TB."slides_tb WHERE id=".$id);
+			$sql_slide			= sprintf("UPDATE ".TB."timeline_slides_tb SET json='".$json."', nom=".$nom.", date=".$date." WHERE id=".$id);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 		}
 	}
@@ -218,6 +231,11 @@ class Slide {
 		$optListe[] = "MONTH(date)=".$mois;
 		$optListe[] = "template<>'meteo'";
 		$optListe[] = "template<>'default'";
+		// si on n'est pas super admin on n'affiche pas les slides cachés
+		global $core;
+		if($core->userLevel>1){ 
+			$optListe[] = "cache=0";
+		}
 		
 		if(count($optListe)>0){
 			$opt = " WHERE ".implode(" AND ", $optListe);
@@ -225,20 +243,26 @@ class Slide {
 			$opt = "";
 		}
 		
-		$query = 'SELECT id,nom,template,date FROM '.TB.'timeline_slides_tb'.$opt.' ORDER BY date DESC, id DESC';
+		$query = 'SELECT id,nom,template,date,cache FROM '.TB.'timeline_slides_tb'.$opt.' ORDER BY date DESC, id DESC';
 		
 		$sql_slide		= sprintf($query); //echo $sql_slide;	
 		$sql_slide_query = mysql_query($sql_slide) or die(mysql_error());
 		
 		$i = 0;
 
+		global $core;
+
 		while ($slide_item = mysql_fetch_assoc($sql_slide_query)){
 						
-			$class				= 'listItemRubrique'.($i+1);
+			//$class				= 'listItemRubrique'.($i+1);
 			$id					= $slide_item['id'];
 			$nom				= $slide_item['nom'];
 			$date				= $slide_item['date'];
 			$template			= $slide_item['template'];
+			$class				= "";
+			if($slide_item['cache'] == 1){
+				$class= "hidden";
+			}
 			$icone				= ABSOLUTE_URL.SLIDE_TEMPLATE_FOLDER.$template.'/vignette.gif';
 				
 			include('../structure/slide-list-bloc.php');
@@ -350,10 +374,12 @@ class Slide {
 
 		$templateListe = array();
 		foreach(glob("{".LOCAL_PATH.SLIDE_TEMPLATE_FOLDER."*}",GLOB_BRACE) as $folder){
+
+				$excludeTemplate = array('default','meteo','mire');
+
 		    	if(is_dir($folder)){
 			    	$folder = str_replace(LOCAL_PATH.SLIDE_TEMPLATE_FOLDER,'',$folder);
-			        if($folder!='meteo' && $folder!='default'){
-			        	//$dossier = str_replace(LOCAL_PATH.SLIDE_TEMPLATE_FOLDER,'',$folder);
+			    	if(!in_array($folder, $excludeTemplate )){
 			      		$templateListe[$folder] = $folder ;
 					}
 				}
@@ -363,6 +389,7 @@ class Slide {
 		
 		return $array;
 	}
+
 	
 	
 	/**
@@ -372,7 +399,7 @@ class Slide {
 	 * MOD GILDAS
 	 * 11/10/2012
 	 */
-	function create_slide_editor(){
+	/*function create_slide_editor(){
 	
 		// créa des dossiers d'upload s'ils n'existent pas
 		$this->create_slide_folders();
@@ -513,17 +540,17 @@ class Slide {
 		
 		
 		return $code;
-	}
+	}*/
 	
 	/**
 	 * upload et traitement des images
 	 * @author Gildas Paubert
 	 */
-	function upload_image($file=NULL){
+	/*function upload_image($file=NULL){
 		if($file){
 			
 		}
-	}
+	}*/
 	
 	
 	/**
@@ -753,8 +780,8 @@ class Slide {
 		if(!empty($type_target) && !empty($id_groupe)){
 
 			$query			= sprintf("SELECT E.code_postal
-										FROM 	sp_plasma_ecrans_groupes_tb AS G,
-												sp_plasma_etablissements_tb AS E
+										FROM 	".TB."ecrans_groupes_tb AS G,
+												".TB."etablissements_tb AS E
 										WHERE G.id_etablissement = E.id
 										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
 			$result 		= mysql_query($query) or die(mysql_error());
@@ -765,8 +792,8 @@ class Slide {
 			//--------------
 
 			$query			= sprintf("SELECT P.nom, P.id
-										FROM 	sp_plasma_ecrans_groupes_tb AS G,
-												sp_plasma_ecrans_tb AS P 
+										FROM 	".TB."ecrans_groupes_tb AS G,
+												".TB."ecrans_tb AS P 
 										WHERE P.id_groupe = G.id
 										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
 
@@ -814,7 +841,7 @@ class Slide {
 	function get_sequence_items($id_groupe=NULL, $user_level=10){
 		if(!empty($id_groupe)){
 
-			$query = sprintf("SELECT * FROM sp_plasma_timeline_item_tb
+			$query = sprintf("SELECT * FROM ".TB."timeline_item_tb
 							WHERE ref_target='seq'
 							AND id_target=%s
 							ORDER BY ordre ASC", func::GetSQLValueString($id_groupe,'int') );
@@ -870,8 +897,8 @@ class Slide {
 		if(!empty($id_groupe)){
 			
 			$query			= sprintf("SELECT E.code_postal
-										FROM 	sp_plasma_ecrans_groupes_tb AS G,
-												sp_plasma_etablissements_tb AS E
+										FROM 	".TB."ecrans_groupes_tb AS G,
+												".TB."etablissements_tb AS E
 										WHERE G.id_etablissement = E.id
 										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
 			$result 		= mysql_query($query) or die(mysql_error());
@@ -882,8 +909,8 @@ class Slide {
 			// ----------------------
 
 			$query			= sprintf("SELECT P.id, P.nom
-										FROM 	sp_plasma_ecrans_groupes_tb AS G,
-												sp_plasma_ecrans_tb AS P
+										FROM 	".TB."ecrans_groupes_tb AS G,
+												".TB."ecrans_tb AS P
 										WHERE G.id = P.id_groupe
 										AND G.id = %s",func::GetSQLValueString($id_groupe,'int'));
 			$result 		= mysql_query($query) or die(mysql_error());
@@ -904,7 +931,7 @@ class Slide {
 
 			// ----------------------
 
-			$query = sprintf("SELECT * FROM sp_plasma_timeline_item_tb
+			$query = sprintf("SELECT * FROM ".TB."timeline_item_tb
 							WHERE ref_target='nat'
 							OR ref_target='loc'
 							AND id_target=%s
@@ -1083,6 +1110,10 @@ class Slide {
         $json    	= isset($_POST['json'])?		func::GetSQLValueString( $_POST['json'] , 'text') : func::GetSQLValueString('{}', 'text');
         $date		= func::GetSQLValueString( date('Y-m-d H:i:s'), 'text');
 
+        if($delete){
+        	$cache = isset($_POST['cache']) ? func::GetSQLValueString( $_POST['cache'], 'int' ) : func::GetSQLValueString(0, 'int');
+        }
+
 		if( !isset($id) ){
 			// création$
 			// 
@@ -1118,10 +1149,12 @@ class Slide {
 			echo json_encode($retour);
 
 		}else{
-			$sql_slide			= sprintf("DELETE FROM ".TB."timeline_slides_tb WHERE id=%s",$id);
+			//$sql_slide			= sprintf("DELETE FROM ".TB."timeline_slides_tb WHERE id=%s",$id);
+			$sql_slide			= sprintf("UPDATE ".TB."timeline_slides_tb SET cache=%s  WHERE id=%s",	$cache,
+            																							$id);
 			$sql_slide_query 	= mysql_query($sql_slide) or die(mysql_error());
 
-			echo '{"message":"supression du slide «'. $_POST['titre'] .'»"}';
+			//echo '{"message":"masquage du slide «'. $_POST['titre'] .'»"}';
 		}
 	}
 

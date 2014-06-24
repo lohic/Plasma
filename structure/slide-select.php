@@ -27,7 +27,7 @@ $mois			= !empty($_GET['mois'])?$_GET['mois']:date('m');
 
 <form id="myform" style="width:500px"></form>
 
-<div id="news_listing" class="listing_container">
+<div id="slide_listing" class="listing_container">
 
 	<?php 
 	$slide->get_slide_edit_liste($id_template, $annee, $mois);
@@ -37,6 +37,7 @@ $mois			= !empty($_GET['mois'])?$_GET['mois']:date('m');
 
 
 <form id="suppr_slide_form" method="post">
+    <input type="hidden" name="cache" value="" id="cache_slide">
     <input type="hidden" name="id_slide" id="id_suppr_slide" value="" />
     <input type="hidden" name="suppr" id="suppr_slide" value="slide" />
 </form>
@@ -79,42 +80,46 @@ EVENT SELECTOR
 
 <script type="text/javascript" language="javascript">
 
-function supprSlide(id, nom){ 
-	// GILDAS 19/07/2012
-	if(confirm("Etes-vous sûr de supprimer le slide \""+nom+"\" ?"+id)){
+function supprSlide(id, nom){
+
+    console.log($(this));
+
+	/*if(confirm("Etes-vous sûr de supprimer le slide \""+nom+"\" ?"+id)){
+
 		$('#id_suppr_slide').val(id);
 		$('#suppr_slide_form').submit();
-	}
+	}*/
 	return false;
 }
 
-$(document).ready(function() {
+$(document).ready(function(){
 
-	// ACTIVATION DU DRAG&DROP
-	
-	$(function() {
-		$(".sort").sortable({
-			connectWith: '.sort',
-			helper :			function (evt, ui) { return $(ui).clone().appendTo('body').show(); },
-			placeholder: "ui-state-highlight",
-			//handle : 'span.handler',
-			/*stop: function() {
-				var order = '';
-				$('.news_list').each( function () {
-					order += $(this).attr('id') +':'+ $(this).sortable('toArray')+'|';
-				});
-				//alert(order);
-				var valeur = document.getElementById("save_value");
-				valeur.value = order;
-				
-				$('#return_refresh').text('état : Sauvegarde en cours !');
-				$('#refresh_form').submit();
-			}*/
-		});
-		
-		//$(".sort_list").disableSelection();
-	});
+    $('.slide-list-elem .poubelle a').click(function(event){
+        event.preventDefault();
+
+        //console.log( $(this).data('nom') );
+
+        var isHidden = $(this).parent().parent().hasClass('hidden');
+
+
+        if(isHidden){
+            var message = "Vous allez réafficher le slide « "+ $(this).data('nom') + "» !";
+            $('#cache_slide').val(0);
+        }else{
+            var message = "Êtes vous sure de vouloir supprimer le slide « "+ $(this).data('nom') + "» ?";
+            $('#cache_slide').val(1);
+        }
+
+        if(confirm(message)){
+            $('#id_suppr_slide').val($(this).data('id'));
+            $('#suppr_slide_form').submit();
+        }
+        return false;
+
+    });
 
 });
+
+
 
 </script>

@@ -20,12 +20,15 @@ $mois 			= isset($_GET['mois']) ? $_GET['mois'] : date('m');
 			<fieldset>
             	<p class="legend">Informations :</p>
                 
+				<?php if(!empty($slide->error)){?>
+                <p class="error"><?php echo $slide->error;?></p>
+                <?php } ?>
                 <p><label for="nom_slide">Nom du slide :</label><input name="nom_slide" type="text" value="" /></p>
                 
                 <p><label>Choix du template :</label>
                 <?php
-                global $templateListe;
-                echo func::createSelect($templateListe, 'template_slide', NULL, NULL, false);
+                //global $templateListe;
+                echo func::createSelect(slide::get_slide_template_list(), 'template_slide', NULL, NULL, false);
                 ?></p>
                 
                 <input name="create" type="hidden" value="slide" />	
