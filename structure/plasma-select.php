@@ -61,11 +61,16 @@ $(document).ready(function(){
 			.css('opacity',0)
 			.animate({opacity:1},'slow');
 		});
-		//alert($(this).parent().parent().next().tagName()+" "+$(this).parent().parent().next().attr('class'));
-		//$(this).parent().parent().next().slideToggle();
 	});
 	
+
+	// lors de la mise à jour du input range
+    $("input[type=range]").on('change', function () {
+        var valof = $(this).val();
+        $(this).parent().find('output span').text(valof);
+    });
 });
+
 
 
 	
@@ -76,12 +81,4 @@ function supprPlasma(id, nom){
 	}
 }
 
-/*$(function() {
-	$(".date_slide").datepicker({
-		dateFormat: 'yy-mm-dd',
-		firstDay: 1,
-		dayNamesMin : ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
-		monthNames : ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre']
-	});
-});*/
 </script>
