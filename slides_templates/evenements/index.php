@@ -12,7 +12,7 @@
     </div>
     
     <div class="texte">
-        <h1>« {{titre}} »</h1>
+        <h1>«&nbsp;{{titre}}&nbsp;»</h1>
     </div>
 
     <div class="texte2">
