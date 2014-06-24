@@ -237,23 +237,36 @@ div.timeline-event.timeline-event-range.default, div.sequence-item.default{
     background-color: rgb(203,02,26);
 }
 div.timeline-event.timeline-event-range.compte_a_rebours, div.sequence-item.compte_a_rebours{
-    background-color: rgb(203,02,26);
+    background-color: #cb011b;
 }
 div.timeline-event.timeline-event-range.evenements, div.sequence-item.evenements{
-    background-color: #4670be;
+    background-color: #ffb400;
+}
+div.timeline-event.timeline-event-range.image, div.sequence-item.image{
+    background-color: #0055fe;
 }
 div.timeline-event.timeline-event-range.meteo, div.sequence-item.meteo{
-    background-color: #f1a000;
+    background-color: #bfdc4c;
+}
+div.timeline-event.timeline-event-range.mire, div.sequence-item.mire{
+    background-color: rgb(128,128,128);
 }
 div.timeline-event.timeline-event-range.sports, div.sequence-item.sports{
-    background-color: rgb(247,207,50);
+    background-color: #f8d033;
+}
+div.timeline-event.timeline-event-range.texte, div.sequence-item.texte{
+    background-color: #cb011b;
 }
 div.timeline-event.timeline-event-range.verbatim, div.sequence-item.verbatim{
-    background-color: rgb(203,02,26);
+    background-color: #ff00c6;
 }
 div.timeline-event.timeline-event-range.video, div.sequence-item.video{
-    background-color: rgb(203,02,26);
+    background-color: #00ccff;
 }
+div.timeline-event.timeline-event-range.video_fullscreen, div.sequence-item.video_fullscreen{
+    background-color: #00ccff;
+}
+
 
 
 

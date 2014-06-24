@@ -921,7 +921,7 @@ p.intro_modif {
 span>label{
 	float:none;
 	display:inline-block;
-	width:215px;
+	width:220px;
 }
 span>select{
 	
@@ -1042,7 +1042,7 @@ compteur-field
 
 .child-screen .ecran{
 	width:141px;
-	height:150px;
+	height:300px;
 	float:left;
 	margin:5px 5px;
 	padding:5px;
@@ -1076,6 +1076,16 @@ compteur-field
 .child-screen .ecran .meta{
 	padding-bottom:5px;
 	margin-top:10px;
+}
+
+.child-screen .ecran .regles{
+	position: absolute;
+	bottom: 20px;
+	border-top:solid 1px #666;
+	padding: 20px 0;
+	margin:5px;
+	left:0;
+	right:0;
 }
 
 .child-screen .ecran .ecrans-liens{
@@ -1242,3 +1252,34 @@ ul#addslidefreqlist li img, ul#addslidedatelist li img, ul#addslideslideshowlist
 .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
 .ui-timepicker-div td { font-size: 90%; }
 .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+
+
+/* ruler */
+.regle {
+    width:120px;
+}
+
+output {
+    display:block;
+    text-align:center;
+    width:100%;
+}
+input[type="range"] {
+    position: relative;
+    margin-left: 1em;
+    width:100%;
+}
+input[type="range"]:after, input[type="range"]:before {
+    position: absolute;
+    top: 1em;
+    color: #aaa;
+}
+input[type="range"]:before {
+    left:0em;
+    content: attr(min);
+}
+input[type="range"]:after {
+    right: 0em;
+    content: attr(max);
+}
