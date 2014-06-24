@@ -213,7 +213,7 @@ $('document').ready(function(){
             seqItemSelected = undefined;
         });
 
-        // GGestion du tri
+        // Gestion du tri
         $( "#sequenceContainer" ).sortable({
             axis:   'x',
             cancel: '.suppr-item',
@@ -310,7 +310,7 @@ function addSequenceSlide(id,titre,id_slide,duree,template,className){
         if (e.stopPropagation) {
             e.stopPropagation();
         }
-        console.log(this);
+        //console.log(this);
         e.cancelBubble = true;
         unselectSequenceItem();
         // on séléctionne l'item
@@ -508,6 +508,8 @@ function edit_item_sequence(){
             //console.log('OK OK sequence : ');
             //console.log(dataJSON);
             refreshSequenceSlide();
+
+            $.fancybox.close();
         });
     });
 
@@ -786,12 +788,14 @@ function drawTimeline() {
 }
     
 
-/*
+
+/**
  * fonction pour éditer les informations d'un item de la timeline
  * normalise les données dans un objet
  * affiche les données dans un formulaire généré avec iCanHaz
  * affiche ce formulaire dans une fenêtre fancybox
- * @param {ref} la référence de l'item timeline sélecctionné
+ * @param  {[type]} ref la référence de l'item timeline sélectionné
+ * @return {[type]}     [description]
  */
 function edit_item(ref){
     console.log('Edit item From Timeline');
@@ -936,6 +940,7 @@ function edit_item(ref){
             /*timeline.changeItem(ref, {
                 'id': dataJSON
             });*/
+            $.fancybox.close();
         });
     });
 
@@ -1015,6 +1020,12 @@ function slide_preview(){
  * génère un formulaire avec le plugin jquery dform
  * affiche le formulaire dans une fancybox
  * si un champ FILE est trouvé utilise uploadifive
+ * @param  {[type]} id_slide  [description]
+ * @param  {[type]} template  [description]
+ * @param  {[type]} titre     [description]
+ * @param  {[type]} edit_from [description]
+ * @param  {[type]} ref_item  [description]
+ * @return {[type]}           [description]
  */
 function edit_slide(id_slide,template,titre,edit_from,ref_item){
     
@@ -1199,6 +1210,8 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                     $('#titre-slide-'+id_slide).text( $("#slide_title").val() );
 
                     $('.edit_slide[data-id-slide="'+id_slide+'"]').data('title',$("#slide_title").val() );
+
+                    $.fancybox.close();
                 }
 
                 // SI ON EDITE DEPUIS LA TIMELINE
@@ -1234,6 +1247,8 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                         }
                     }).done(function ( dataJSON ) {
                         //console.log(dataJSON);
+                        //
+                        $.fancybox.close();
                     });
                 }
 
@@ -1275,6 +1290,8 @@ function edit_slide(id_slide,template,titre,edit_from,ref_item){
                         //console.log('sequence : ');
                         //console.log(dataJSON);
                         refreshSequenceSlide();
+
+                        $.fancybox.close();
                     });
                 }
             });
@@ -1429,6 +1446,8 @@ function refresh_event(){
         end_event = " - " + end_event[0]+"H"+end_event[1];
     }
 
+    console.log(data_event);
+
     $("#slide_title").val( addZeroToInt(d.getDate(),2) + '/'+ addZeroToInt((d.getMonth()+1),2) + ' ' + data_event.sessions[id_session].titre );
 
     //$('#myform input[name="type"]').val(            data_event);
@@ -1443,6 +1462,8 @@ function refresh_event(){
     $('#myform input[name="organisateur"]').val(    data_event.organisateur);
     $('#myform input[name="qualite"]').val(         data_event.organisateur_qualite);
     $('#myform input[name="coorganisateur"]').val(  data_event.coorganisateur);
+    $('#myform input[name="rubrique"]').val(        data_event.rubrique);
+    $('#myform input[name="couleur"]').val(         data_event.couleur);
     $('#myform input[name="expire"]').val(          data_event.sessions[id_session].date_fin+' '+data_event.sessions[id_session].horaire_fin);
 
     //$('#myform input[name="image"]').val();
@@ -1452,7 +1473,7 @@ function refresh_event(){
 
     downloadEventImage(data_event.url_image, data_event.id, date_folder[1], date_folder[0]);
 
-    $('#myform input[name="inscription"]').val(     data_event.sessions[id_session].type_inscription);
+    $('#myform input[name="inscription"]').val(     data_event.sessions[id_session].type_inscription == 1 ? "Entrée Libre":"Inscription obligatoire");
 
 }
 

@@ -11,18 +11,10 @@
             "caption" : "Titre de l'événement"
         },
         {
-            "type" : "select",
-            "name" : "type",
-            "id" : "type",
-            "caption" : "Type d'événement",
-            "options" : {
-                "vie_associative"                   : "Vie associative",
-                "expositions"                       : "Expositions",
-                "conferences_recherches_debats"     : "Conférences, recherches et débats",
-                "art_culture"                       : "Art et culture",
-                "vie_citoyenne"                     : "Vie citoyenne",
-                "rencontres_metiers"                : "Rencontres métiers"
-            }
+            "type" : "text",
+            "name" : "rubrique",
+            "id" : "rubrique",
+            "caption" : "Rubrique"
         },
         {
             "type" : "text",
@@ -80,7 +72,7 @@
             "type" : "file",
             "name": "image",
             "id": "image",
-            "caption" : "Image"
+            "caption" : "Image<br>(720 x 720px minimum)"
         },
         {
             "type" : "text",
@@ -97,6 +89,11 @@
             "type" : "hidden",
             "name" : "expire",
             "id"   : "expire"
+        },
+        {
+            "type" : "hidden",
+            "name" : "couleur",
+            "id"   : "couleur"
         }
     ]
 }

@@ -2,9 +2,9 @@
 <div id="ombre" class="ombre">
 
 </div>
-<div class="colonne {{type}}" data-type="{{type}}">
+<div class="colonne {{type}}" data-type="{{type}}" data-couleur="{{couleur}}">
     <div class="header">
-        <h2><span id="type_event">{{type}}</span><br/>
+        <h2><span id="type_event">{{rubrique}}</span><br/>
 			{{date_horaire}}<br/>
 			{{lieu}}{{#lieu}}{{#code_batiment}}, {{/code_batiment}}{{/lieu}}{{code_batiment}}
         </h2>
