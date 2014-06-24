@@ -60,4 +60,3 @@ if(empty($data->id_groupe)){
 	
 	
 </div>
-

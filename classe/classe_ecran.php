@@ -518,9 +518,7 @@ class Ecran {
 	
 	/**
 	 * liste des slides
-	 * @author LOIC
-	 * 24/07/2012
-	 *
+	 * @return array [description]
 	 */
 	function get_slides_list(){		
 			
@@ -542,25 +540,59 @@ class Ecran {
 			return $retour;
 	}
 	
+	
 	/**
 	 * liste des groupes d'écrans pour administration
-	 * @author LOIC
-	 * 24/07/2012
-	 *
+	 * echo HTML
+	 * @return void
 	 */
-	function get_admin_ecran_groupe_list(){		
+	function get_admin_ecran_groupe_list(){
+
+
+			global $core;
 			
+
+			$add = "";
+
+			if($core->userLevel > 1){
+
+				$add = ' AND G.id IN (-1)';
+
+				if(count($core->groups_id)>0){
+
+					//echo implode(',',$core->groups_id);
+
+					$sql		= sprintf("	SELECT DISTINCT id_ecrans_groupe
+											FROM ".TB."rel_ecrans_groupe_user_groupe_tb
+											WHERE id_user_groupe IN (".implode(',', $core->groups_id).")");
+					$sql_query	= mysql_query($sql) or die(mysql_error());
+
+					$groupes_ecrans = array();
+
+					while($item = mysql_fetch_assoc($sql_query)){
+						$groupes_ecrans[] = $item['id_ecrans_groupe'];
+					}
+
+					if(implode(',',$groupes_ecrans) != ""){
+						$add = ' AND G.id IN ('.implode(',',$groupes_ecrans).')';
+					}
+				}
+			}
+
+
 			if(empty($_GET['code_postal'])){
 				$code_postal = '75000';
 			}else{
 				$code_postal = $_GET['code_postal'];
 			}
 
+
+
 			$this->slide_db->connect_db();
 			
 			$sql		= sprintf("SELECT G.id, G.nom FROM ".TB."ecrans_groupes_tb G, ".TB."etablissements_tb E
 									WHERE E.id = G.id_etablissement
-									AND E.code_postal=%s", func::GetSQLValueString($code_postal,'int'));
+									AND E.code_postal=%s".$add, func::GetSQLValueString($code_postal,'int'));
 		
 			
 			$sql_query	= mysql_query($sql) or die(mysql_error());
@@ -590,11 +622,14 @@ class Ecran {
 			}
 	}
 	
+
+
+
 	/**
 	 * liste des écrans pour administration (par groupe d'écran)
-	 * @author Loïc Horellou
-	 * @param $id_groupe
-	 * @return HTML de la liste des écrans
+	 * echo HTML de la liste des écrans
+	 * @param  [type] $id_groupe [description]
+	 * @return void
 	 */
 	function get_admin_ecran_list($id_groupe=NULL){		
 		$retour = new stdClass();
@@ -610,13 +645,13 @@ class Ecran {
 			$sql_query	= mysql_query($sql) or die(mysql_error());
 			
 			
-			
-			
 			$i = 1;
 			
 			ob_start();
 			
 			$groupe = $id_groupe;
+
+			global $core;
 
 			include('../structure/ecran-list-add-bloc.php');
 			
@@ -657,7 +692,6 @@ class Ecran {
 		
 			$ladate = date("Y-m-d");	
 		
-				
 		}
 		
 	}
@@ -686,31 +720,45 @@ class Ecran {
 			$alerte		= 0;
 			
 			if(!empty($id_rel)){
-				$sql		= sprintf("UPDATE ".TB."rel_slide_tb SET id_slide=%s, id_target=%s, type_target=%s, date=%s, duree=%s, freq=%s, status=%s, type=%s, ordre=%s, alerte=%s   WHERE id=%s",
-																																					func::GetSQLValueString($id_slide,'int'),
-																																					func::GetSQLValueString($id_target,'int'),
-																																					func::GetSQLValueString($type_target,'text'),
-																																					func::GetSQLValueString($date,'text'),
-																																					func::GetSQLValueString($duree,'text'),
-																																					func::GetSQLValueString($freq,'text'),
-																																					func::GetSQLValueString($status,'text'),
-																																					func::GetSQLValueString($type,'text'),
-																																					func::GetSQLValueString($ordre,'int'),
-																																					func::GetSQLValueString($alerte,'int'),
-																																					func::GetSQLValueString($id_rel,'int'));
+
+				$sql		= sprintf("	UPDATE ".TB."rel_slide_tb
+										SET 	id_slide=%s,
+												id_target=%s,
+												type_target=%s,
+												date=%s,
+												duree=%s,
+												freq=%s,
+												status=%s,
+												type=%s,
+												ordre=%s,
+												alerte=%s   
+										WHERE id=%s",
+												func::GetSQLValueString($id_slide,		'int'),
+												func::GetSQLValueString($id_target,		'int'),
+												func::GetSQLValueString($type_target,	'text'),
+												func::GetSQLValueString($date,			'text'),
+												func::GetSQLValueString($duree,			'text'),
+												func::GetSQLValueString($freq,			'text'),
+												func::GetSQLValueString($status,		'text'),
+												func::GetSQLValueString($type,			'text'),
+												func::GetSQLValueString($ordre,			'int'),
+												func::GetSQLValueString($alerte,		'int'),
+												func::GetSQLValueString($id_rel,		'int'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 			}else{
-				$sql		= sprintf("INSERT INTO ".TB."rel_slide_tb (id_slide, id_target, type_target, date, duree, freq, status, type,ordre, alerte) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
-																																					func::GetSQLValueString($id_slide,'int'),
-																																					func::GetSQLValueString($id_target,'int'),
-																																					func::GetSQLValueString($type_target,'text'),
-																																					func::GetSQLValueString($date,'text'),
-																																					func::GetSQLValueString($duree,'text'),
-																																					func::GetSQLValueString($freq,'text'),
-																																					func::GetSQLValueString($status,'text'),
-																																					func::GetSQLValueString($type,'text'),
-																																					func::GetSQLValueString($ordre,'int'),
-																																					func::GetSQLValueString($alerte,'int'));
+
+				$sql		= sprintf("	INSERT INTO ".TB."rel_slide_tb (id_slide, id_target, type_target, date, duree, freq, status, type,ordre, alerte)
+												VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+												func::GetSQLValueString($id_slide,		'int'),
+												func::GetSQLValueString($id_target,		'int'),
+												func::GetSQLValueString($type_target,	'text'),
+												func::GetSQLValueString($date,			'text'),
+												func::GetSQLValueString($duree,			'text'),
+												func::GetSQLValueString($freq,			'text'),
+												func::GetSQLValueString($status,		'text'),
+												func::GetSQLValueString($type,			'text'),
+												func::GetSQLValueString($ordre,			'int'),
+												func::GetSQLValueString($alerte,		'int'));
 				$sqlquery 	= mysql_query($sql) or die(mysql_error());
 				
 				return mysql_insert_id();

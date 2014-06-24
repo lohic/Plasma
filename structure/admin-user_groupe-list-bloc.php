@@ -42,6 +42,9 @@
             <?php echo func::createCombobox($organismes, 'id_organisme', 'user_account_type-'.$id 	, $id_organisme, '', false);?></p>
             
         </fieldset>
+        <fieldset>
+            <?php echo $groupe_plasma; ?>
+        </fieldset>
         <input type="submit" name="edit_user_groupe" class="buttonenregistrer" id="edit_user_groupe" value="Modifier" />
 	</form>
 </div>

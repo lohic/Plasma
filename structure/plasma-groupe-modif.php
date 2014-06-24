@@ -40,6 +40,7 @@ $isGroup = true;
 	</div>-->
 	<?php } ?>
 
+	<?php if($core->userLevel <= 3 ){?>
 	<form action="" method="post" id="modif_ecran_info_form">
 		<input type="hidden" name="<?php echo isset($id_groupe)?'update':'create';?>" value="groupe"/>
 				
@@ -61,6 +62,7 @@ $isGroup = true;
 
 		<input type="submit" name="edit_groupe" class="buttonenregistrer" id="edit_groupe" value="<?php echo isset($id_groupe) ? 'Modifier' : 'Créer' ; ?>" />
 	</form>
+	<?php } ?>
 
 	<div class="reset"></div>
 
@@ -69,7 +71,11 @@ $isGroup = true;
 	<div class="reset"></div>
 
 	<div class="info_publication">
-		<p>Ce groupe a été publié pour la dernière fois le : <span id="last_publication"><?php echo func::dateFormat($data->last_publication); ?></span> <button type="button" id="group_publish" >Publier le groupe</button></p>
+		<p>Ce groupe a été publié pour la dernière fois le : <span id="last_publication"><?php echo func::dateFormat($data->last_publication); ?></span>
+		<?php if($core->userLevel <= 3 ){?>
+		<button type="button" id="group_publish" >Publier le groupe</button>
+		<?php } ?>
+		</p>
 	</div>
 
 	<div class="reset"></div>
@@ -286,3 +292,16 @@ EVENT SELECTOR
 
 
 <?php } ?>
+
+<script>
+$(document).ready(function () {
+    // lors de la mise à jour du input range
+    $("input[type=range]").on('change', function () {
+        var valof = $(this).val();
+        $(this).parent().find('output span').text(valof);
+    });
+    
+});
+</script>
+
+

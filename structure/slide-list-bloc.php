@@ -25,8 +25,8 @@
     </div>
     <div class="poubelle">
         <?php
-        //if($core->userLevel<=1){ ?>
+        if($core->userLevel<=3){ ?>
         <a href="#" title="supprimer" data-nom="<?php echo $nom; ?>" data-id="<?php echo $id; ?>"><img src="../graphisme/trash.png" alt="supprimer"/></a>
-        <?php //} ?>
+        <?php } ?>
     </div>
 </div>

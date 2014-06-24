@@ -1,6 +1,6 @@
   <?php
 
-if($core->isAdmin && $core->userLevel<=3){
+if($core->isAdmin && $core->userLevel<=7){
 	
 $selectClass = '';
 
@@ -35,10 +35,12 @@ admin
   <ul id="menuDown">
   		
         <li id=""><a href="./?page=ecrans" class="<?php selectClass('ecrans'); ?>"><span>Groupes d'écrans</span></a>
+           <?php if($core->isAdmin && $core->userLevel<=3){ ?>
         	<ul>
             	<!--<li id=""><a href="./?page=ecran_create" class="<?php selectClass('ecran_create'); ?>"><span>Créer un écran</span></a></li>-->
 				      <li id=""><a href="./?page=ecrans_groupe_modif" class="<?php selectClass('ecrans_groupe_create'); ?>"><span>Créer un groupe</span></a></li>
             </ul>
+            <?php } ?>
   		</li>
         <!--<li id=""><a href="./?page=playlist_select" class="<?php selectClass('playlist_select'); ?>"><span>Playlist</span></a>
             <ul>

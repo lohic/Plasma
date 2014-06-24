@@ -37,7 +37,7 @@ class Organisme {
 			//MODIFICATION
 			$updateSQL 		= sprintf("UPDATE ".TB."organisme_tb SET nom=%s, type=%s, google_analytics_id=%s WHERE id=%s",
 													func::GetSQLValueString($_array_val['nom'],					"text"),
-													func::GetSQLValueString($_array_val['type'],					"text"),
+													func::GetSQLValueString($_array_val['type'],				"text"),
 													func::GetSQLValueString($_array_val['google_analytics_id'],	"text"),
 													func::GetSQLValueString($_id,"int"));
 																										
@@ -78,6 +78,7 @@ class Organisme {
 																										
 			$update_query	= mysql_query($updateSQL) or die(mysql_error());
 			
+			$this->add_groupe_plasma($_id, $_array_val['groupe_plasma']);
 			
 		}else{
 			//CREATION
@@ -173,6 +174,8 @@ class Organisme {
 			$id_organisme		= $user_groupe_item['id_organisme'];
 			$organismes			= $this->get_organisme_liste();
 			$user_level			= $this->get_admin_level();
+
+			$groupe_plasma		= $this->get_groupe_ecrans($user_groupe_item['id'],$user_groupe_item['id']);
 			
 			global $typeTab;
 			
@@ -249,6 +252,93 @@ class Organisme {
 		}
 		
 		return $retour;
+	}
+
+	/**	
+	 * RECUPERATION DES GROUPES DE CONTACT
+	 * @param  [type] $id_user_groupe [description]
+	 * @return [type]          [description]
+	 */
+	function get_groupe_ecrans($_id=NULL,$id_user_groupe=NULL){
+		
+		$sql_liste_groupe	=  'SELECT G.id AS id, G.nom AS nom, E.ville AS ville
+								FROM '.TB.'ecrans_groupes_tb AS G, '.TB.'etablissements_tb AS E
+								WHERE G.id_etablissement = E.id
+								ORDER BY E.ville, G.nom';
+		$sql_liste_groupe_query = mysql_query($sql_liste_groupe) or die(mysql_error());
+		
+		$groupes = array();
+	
+		while ($groupe = mysql_fetch_assoc($sql_liste_groupe_query)){
+
+			// instanciation
+			$temp = (object)array();
+			
+			$temp->label	= '<strong>'.$groupe['ville'].':</strong> '.$groupe['nom'];
+			$temp->select	= '';
+			$temp->value	= $groupe['id'];
+			$temp->classe	= 'inline';
+			
+
+			if(isset($id_user_groupe)){
+				$sql_liste_plasma	= "SELECT * FROM ".TB."rel_ecrans_groupe_user_groupe_tb WHERE id_user_groupe=".$id_user_groupe;
+				$sql_liste_plasma_query = mysql_query($sql_liste_plasma) or die(mysql_error());
+				
+				while ($plasma = mysql_fetch_assoc($sql_liste_plasma_query)){
+					if($plasma['id_ecrans_groupe']==$groupe['id']){
+						$temp->select	= 'ok';
+					}
+				}
+			}
+		
+			$groupes[]	= $temp;
+			$temp 		= NULL;
+		}
+
+		if($_id){
+			$id ='user_groupe_'.$_id;
+		}else{
+			$id = 'user_groupe';	
+		}
+		
+		if(isset($groupes))
+			return func::createCheckBox($groupes,'groupe_plasma[]',$id);
+	}
+
+	/**
+	 * ajout des groupes d'écrans
+	 * @param [type] $_id_user      [description]
+	 * @param [type] $_array_groupe [description]
+	 */
+	function add_groupe_plasma($_id_groupe=NULL, $_array_plasma=NULL){
+
+		if(!empty($_id_groupe) && !empty($_array_plasma)){
+
+			$this->clean_groupe_plasma($_id_groupe);
+			
+			foreach($_array_plasma as $_id_groupe_plasma){
+				$insertSQL 		= sprintf("INSERT INTO ".TB."rel_ecrans_groupe_user_groupe_tb (id_user_groupe,id_ecrans_groupe) VALUES (%s,%s)",
+														func::GetSQLValueString($_id_groupe, "int"),
+														func::GetSQLValueString($_id_groupe_plasma, "int"));
+				$insert_query	= mysql_query($insertSQL) or die(mysql_error());
+			}
+		}
+	}
+	
+	/**
+	 * supprime toutes les liaisons entre un groupe d'utilisateur et des groupes d'écrans
+	 * @param  [type] $_id_user [description]
+	 * @return [type]           [description]
+	 */
+	function clean_groupe_plasma($_id_groupe=NULL){	
+
+		if(!empty($_id_groupe)){
+
+			$supprSQL		= sprintf("DELETE FROM ".TB."rel_ecrans_groupe_user_groupe_tb WHERE id_user_groupe=%s", func::GetSQLValueString($_id_groupe,'int'));
+			
+			$suppr_query	= mysql_query($supprSQL) or die(mysql_error());
+			
+		}
 	}
 
 }
