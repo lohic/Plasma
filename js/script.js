@@ -204,8 +204,8 @@ $('document').ready(function(){
                 },
                 dataType    : 'json'
             }).done(function ( dataJSON ) {
-                // duree par default 10secondes
-                addSequenceSlide(dataJSON.id,'Nouveau',0,10,'default','unpublished default');
+                // duree par default 30 secondes
+                addSequenceSlide(dataJSON.id,'Nouveau',0,30,'default','unpublished default');
             });
         })
         .click(function(e){
@@ -429,7 +429,7 @@ function edit_item_sequence(){
 
     $( "#duree" )
     .spinner({
-        min: 60,
+        min: 30,
         step: 30,
         spin: function(){
             $('#dureeHMS').text( second2HMS( parseInt($( "#duree" ).val()) ) );
@@ -1768,8 +1768,16 @@ function slide_selector(){
             }
 
             $("#annee_slide").prop("selectedIndex", 0);
-            $("#mois_slide").prop("selectedIndex", 0);
-            
+
+            var thevalue = new Date().getMonth()+1;
+            var exists = 0 != $('#mois_slide option[value='+thevalue+']').length;
+
+            if(exists){
+                $("#mois_slide").val(thevalue);
+            }else{
+                $("#mois_slide").prop("selectedIndex", 0);
+            }
+
             $("#id_slide").prop("selectedIndex", 0);
 
             slide_selector_refresh = false;
