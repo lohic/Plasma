@@ -58,7 +58,8 @@ if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
 	$val['nom']					= $_POST['nom'];
 	$val['type']				= $_POST['type'];
 	$val['id_organisme']		= $_POST['id_organisme'];
-	
+
+	$val['groupe_plasma']		= $_POST['groupe_plasma'];	
 
 	$organisme->create_user_groupe($val,$val['id']);	
 }
@@ -86,7 +87,7 @@ if(isset($_POST['modif_user_groupe']) && $_POST['modif_user_groupe'] == 'ok'){
             <p><label for="organisme_nom">nom : </label>
             <input type="text" id="organisme_nom" name="nom" value="" class="inputField" /></p>
             
-            <p><label for="organisme_GA-<?php echo $id; ?>">ID google analytics : </label>
+            <p><label for="organisme_GA">ID google analytics : </label>
             <input type="text" id="organisme_GA" name="google_analytics_id" value="" class="inputField" /></p>
             
             <p><label for="organisme_type">type : </label>
