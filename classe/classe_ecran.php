@@ -51,6 +51,10 @@ class Ecran {
 		$_array_val['id_playlist_nationale']= !empty($_POST['id_playlist_nationale'])?	func::GetSQLValueString($_POST['id_playlist_nationale'],'text'):0;
 		$_array_val['id_groupe']			= !empty($_POST['id_groupe'])?				func::GetSQLValueString($_POST['id_groupe'],'int'):NULL;
 		$_array_val['id_groupe_user']		= !empty($_SESSION['id_actual_group'])?		func::GetSQLValueString($_SESSION['id_actual_group'], "int"):NULL;
+
+		$_array_val['decalX']				= !empty($_POST['decalX'])?					func::GetSQLValueString($_POST['decalX'], "int"):0;
+		$_array_val['decalY']				= !empty($_POST['decalY'])?					func::GetSQLValueString($_POST['decalY'], "int"):0;
+		$_array_val['scale']				= !empty($_POST['scale'])?					func::GetSQLValueString($_POST['scale'], "int"):100;
 		
 		// dans les formulaires de slide, il faudra
 		// prévoir un champ caché update, creat ou suppr suivant le cas de figure
@@ -82,6 +86,11 @@ class Ecran {
 		if(isset($_POST['update']) && $_POST['update'] == 'groupe'){
 			$this->update_groupe_ecran($_array_val,$id_groupe);
 		}
+
+
+		if(isset($_POST['update']) && $_POST['update'] == 'position'){
+			$this->update_position($_array_val);
+		}
 		
 		
 		// PUBLICATION
@@ -97,6 +106,7 @@ class Ecran {
 		
 		self::$updated = true;
 	}
+	
 	
 	
 	/**
@@ -637,7 +647,12 @@ class Ecran {
 		if(isset($id_groupe)){	
 			$this->slide_db->connect_db();
 		
-			$sql		= sprintf("	SELECT E.id AS id, E.nom AS nom, Et.ville AS ville
+			$sql		= sprintf("	SELECT  E.id AS id,
+											E.nom AS nom,
+											Et.ville AS ville,
+											E.style_translateX AS decalX,
+											E.style_translateY AS decalY,
+											E.style_scale AS scale
 									FROM ".TB."ecrans_tb AS E, ".TB."etablissements_tb AS Et
 									WHERE E.id_groupe=%s
 									AND E.id_etablissement=Et.id",func::GetSQLValueString($id_groupe,'int'));
@@ -657,11 +672,14 @@ class Ecran {
 			
 			while($item = mysql_fetch_assoc($sql_query)){
 					
-				$id = $item['id'];
-				$nom = $item['nom'];
-				$ville = $item['ville'];
-				$class = 'item-'.($i+1);
-				$icone = "../graphisme/monitor-48.png";
+				$id 	= $item['id'];
+				$nom 	= $item['nom'];
+				$ville 	= $item['ville'];
+				$decalX = $item['decalX'];
+				$decalY = $item['decalY'];
+				$scale 	= $item['scale'];
+				$class 	= 'item-'.($i+1);
+				$icone 	= "../graphisme/monitor-48.png";
 				
 				$i = ($i+1)%2;
 				
@@ -784,6 +802,25 @@ class Ecran {
 			$sqlquery 	= mysql_query($sql) or die(mysql_error());
 		}
 		
+	}
+
+
+	/**
+	 * [update_position description]
+	 * @param  [type] $_array_val [description]
+	 * @return [type]             [description]
+	 */
+	function update_position($_array_val){
+		$sql		= sprintf("	UPDATE ".TB."ecrans_tb
+										SET 	style_translateX=%s,
+												style_translateY=%s,
+												style_scale=%s 
+										WHERE id=%s",
+												$_array_val['decalX'],
+												$_array_val['decalY'],
+												$_array_val['scale'],
+												func::GetSQLValueString($this->id,'int'));
+		$sqlquery 	= mysql_query($sql) or die(mysql_error());
 	}
 	
 	// fin de classe

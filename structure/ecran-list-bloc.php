@@ -19,18 +19,18 @@
     </div>
 
     <?php if($core->userLevel <= 1 ){?>
-    <div class="regles">
+    <div class="regles" data-id="<?php echo $id;?>">
         <div class="regle">
-            <input id="decalX" type="range" min="-100" max="100" step="1" value="0" />
-            <output>X <span>0</span>px</output>
+            <input id="decalX" name="decalX" type="range" min="-100" max="100" step="1" value="<?php echo $decalX; ?>" />
+            <output>X <span><?php echo $decalX; ?></span>px</output>
         </div>
         <div class="regle">
-            <input id="decalY" type="range" min="-100" max="100" step="1" value="0" />
-            <output>Y <span>0</span>px</output>
+            <input id="decalY" name="decalY" type="range" min="-100" max="100" step="1" value="<?php echo $decalY; ?>" />
+            <output>Y <span><?php echo $decalY; ?></span>px</output>
         </div>
         <div class="regle">
-            <input id="scale" type="range" min="50" max="150" step="1" value="100" />
-            <output><span>0</span>%</output>
+            <input id="scale" name="scale" type="range" min="50" max="150" step="1" value="<?php echo $scale; ?>" />
+            <output><span><?php echo $scale; ?></span>%</output>
         </div>
     </div>
     <?php } ?>

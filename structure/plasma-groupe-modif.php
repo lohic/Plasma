@@ -298,7 +298,26 @@ $(document).ready(function () {
     // lors de la mise à jour du input range
     $("input[type=range]").on('change', function () {
         var valof = $(this).val();
+        if(valof<1 && valof >-1){
+        	valof = 0;
+        	$(this).val(valof);
+        }
         $(this).parent().find('output span').text(valof);
+
+        var ref = $(this).parent().parent();
+        console.log(ref.data("id")+" "+ref.find("#decalX").val()+" "+ref.find("#decalY").val()+" "+ref.find("#scale").val());
+
+        $.ajax({
+        	type: "POST",
+			url: '../ajax/data-ecran-position.php',
+			data: {
+				decalX: 	ref.find("#decalX").val(),
+				decalY: 	ref.find("#decalY").val(),
+				scale: 		ref.find("#scale").val(),
+				id: 		ref.data("id"),
+				update:		'position'
+			}
+		});
     });
     
 });
