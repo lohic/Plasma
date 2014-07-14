@@ -1,0 +1,127 @@
+{
+    "action" : "index.html",
+    "method" : "post",
+    "title" : "Slide Planning",
+    "html" :[
+    	{
+            "type" : "text",
+            "name" : "date_planning",
+            "caption" : "Date d'occupation",
+            "datepicker" : {
+                "minDate" : "+1",
+                "dateFormat": "d MM yy",
+                "firstDay": 1,
+                "dayNamesMin" : ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+                "monthNames" :  ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"]
+            }
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "salle1",
+            "id" 	  : "salle1",
+            "caption" : "Salle 1"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "horaire1",
+            "id" 	  : "horaire1",
+            "caption" : "Horaire 1"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "cours1",
+            "id" 	  : "cours1",
+            "caption" : "Cours 1"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "salle2",
+            "id" 	  : "salle2",
+            "caption" : "Salle 2"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "horaire2",
+            "id" 	  : "horaire2",
+            "caption" : "Horaire 2"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "cours2",
+            "id" 	  : "cours2",
+            "caption" : "Salle 2"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "salle3",
+            "id" 	  : "salle3",
+            "caption" : "Salle 3"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "horaire3",
+            "id" 	  : "horaire3",
+            "caption" : "Horaire 3"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "cours3",
+            "id" 	  : "cours3",
+            "caption" : "Cours 3"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "salle4",
+            "id" 	  : "salle4",
+            "caption" : "Salle 4"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "horaire4",
+            "id" 	  : "horaire4",
+            "caption" : "Horaire 4"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "cours4",
+            "id" 	  : "cours4",
+            "caption" : "Cours 4"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "salle5",
+            "id" 	  : "salle5",
+            "caption" : "Salle 5"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "horaire5",
+            "id" 	  : "horaire5",
+            "caption" : "Horaire 5"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "cours5",
+            "id" 	  : "cours5",
+            "caption" : "Cours 5"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "salle6",
+            "id" 	  : "salle6",
+            "caption" : "Salle 6"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "horaire6",
+            "id" 	  : "horaire6",
+            "caption" : "Horaire 6"
+        },
+    	{
+            "type" 	  : "text",
+            "name" 	  : "cours6",
+            "id" 	  : "cours6",
+            "caption" : "Cours 6"
+        }
+    ]
+}
