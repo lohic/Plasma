@@ -694,19 +694,45 @@ class Slideshow {
 									
 			$sql_query		= mysql_query($sql) or die(mysql_error());							
 			$info 			= mysql_fetch_assoc($sql_query);
-				
-			$date_json = $info['date_json'];
+
+
+			$sql = sprintf("		SELECT 	style_translateX AS X,
+											style_translateY AS Y,
+											style_scale AS scale,
+											date_publication AS date_ecran
+									FROM ".TB."ecrans_tb WHERE id = %s",
+									func::GetSQLValueString($this->ecran->id,'int'));
+			$sql_query		= mysql_query($sql) or die(mysql_error());							
+			$info_ecran		= mysql_fetch_assoc($sql_query);
+
+			$json_ecran = new stdClass();
+			$json_ecran->X 			 = $info_ecran['X'];
+			$json_ecran->Y 			 = $info_ecran['Y'];
+			$json_ecran->scale 		 = $info_ecran['scale'];
+			$json_ecran->date_update = $info_ecran['date_ecran'];
+
+			$date_json 		= $info['date_json'];
+			$date_pos_json  = $info_ecran['date_ecran'];
 			
-			if($date_json>$actual_date_json){
+			// date_publication
+
+			if($date_json>$actual_date_json || $date_pos_json>$actual_date_json){
 				// instanciation des objets
-				if(empty($this->ecran)){ $this-> ecran = (object)array(); }
+				if(empty($this->ecran)){ $this->ecran = (object)array(); }
 	
 				//$retour->id								= $this->ecran->id;
-				$retour->screen_data		= json_decode($info['json']);
+				if($date_json 	  > $actual_date_json){
+					$retour->screen_data	= json_decode($info['json']);
+				}
+
+				if($date_pos_json > $actual_date_json){
+					$retour->screen_pos		= $json_ecran;
+				}
+
 				$retour->update				= true;			
 			}else if(empty($date_json)){
 				$retour->update				= false;
-				$retour->nodata = true;
+				$retour->nodata 			= true;
 			}else{
 				$retour->update				= false;
 			}

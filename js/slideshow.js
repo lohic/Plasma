@@ -42,6 +42,10 @@ $(document).ready(function(){
 	$actual_item_id		= 0;	// id de l'item (élément de la timeline ou séquentiel)
 
 	$nbr				= 0;	// nombre d'items
+
+	$decalX				= 0;
+	$decalY				= 0;
+	$scale				= 1;
 	
 
 	// on vérifie si on doit juste afficher un slide ou le slideshow d'un écran
@@ -136,108 +140,149 @@ function refresh() {
 				//countusers=json.countusers;
 				//$("#retour").text('ok : '+countusers);
 				if(json.update == true){
+					// if json.update == true
+
 					console.log(" ");
 					console.log('NEW DATA');
 					//console.log(json.screen_data.data);
-
-					console.log( $actual_data_date + " " + json.screen_data.date_publication);
-
-					//console.log(json.screen_data.nom_ecran);
-
-					$actual_data_date	= json.screen_data.date_publication;				
-					$meteo_id			= json.screen_data.code_meteo;
-					$code_postal		= json.screen_data.code_postal;
-
-					$slides				= json.screen_data.data;
-
-
-					$nbr = $slides.length;
-
-					console.log($nbr);
-
-					if( $nbr > 0){
-
-						// on trie les slides :
-						// alerte locale > alerte nationale > écran > groupe  > date de début croissante
-						 
-						$slides = $slides.sort(function(a,b){
-						    valeur =
-						    (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
-						     (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
-						    
-						      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
-						       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
-						    
-						        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
-						         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
-						    
-						          (a.ref_target == 'nat' && b.ref_target == 'seq' ? -1 :
-						           (a.ref_target == 'seq' && b.ref_target == 'nat' ? 1 :
-						    
-						            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
-						             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
-						    
-						              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
-						               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
-						    
-						                (a.ref_target == 'loc' && b.ref_target == 'seq' ? -1 :
-						                 (a.ref_target == 'seq' && b.ref_target == 'loc' ? 1 :
-						    
-						                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
-						                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
-						    
-						                    (a.ref_target == 'grp' && b.ref_target == 'seq' ? -1 :
-						                     (a.ref_target == 'seq' && b.ref_target == 'grp' ? 1 :
-						    
-						                      (a.ref_target == 'ecr' && b.ref_target == 'seq' ? -1 :
-						                       (a.ref_target == 'seq' && b.ref_target == 'ecr' ? 1 :
-
-						                        (a.start < b.start ? -1 : 
-						                         (a.start > b.start ? 1 :
-
-						                          (parseInt(a.ordre) <= parseInt(b.ordre) ? -1 : 1 )))))))))))))))))))))));
-
-											   return valeur;
-						});
-					}
-
-					console.log($slides);
-
-					// POUR VERIFIER SI IL Y A UN CHANGEMENT D'HORAIRE OU QUE LE SLIDE N'EST PLUS PRESENT
-					// notamment pour les alertes
-					$isActualStillHere = false;
-					if($actual_item_id>0){
-						for(var i = 0 ; i < $nbr; i++){
-
-							if($slides[i].id == $actual_item_id){
-								$isActualStillHere = true;
-
-								// on vérifie que le slide n'a pas été décalé dans le temps et qu'il ne doive plus s'afficher
-								if( mysql2jsTimestamp($slides[i].start) > $now ){
-									console.log('attention le slide est décalé dans le futur'); 
-									$end = new Date($now).addSeconds(2);
-								}else if( $slides[i].end != '0000-00-00 00:00:00'){
-									$end = mysql2jsTimestamp( $slides[i].end );
-
-									console.log('ON CHANGE L’HEURE DE FIN DU SLIDE ACTUEL : ' + $end);
-									break;
-								}
-							}
-						}
-					}else{
-						$isActualStillHere = true;
-					}
-			
+					//
+					//
 					
 
-					if(!$slide_loaded){
-						$slide_data	= {"titre_ecran" : $('body').data('name')};
-						load_slide($template,$slide_data);
+					// update screen pos
+					if(typeof json.screen_pos.date_update != undefined){
 
-						$slide_loaded = true;
+						console.log("update screen pos");
+
+						$decalX  = json.screen_pos.X;
+						$decalY  = json.screen_pos.Y;
+						$scale 	 = parseInt(json.screen_pos.scale)/100;
+
+						$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px)');
+						$('body').css('transform', 'scale('+$scale+')');
+
+						$actual_data_date	= json.screen_pos.date_update;
+
+					}
+					// end update screen pos
+
+
+					// update slideshow data
+					if(typeof json.screen_data.date_publication != undefined){
+
+						console.log("update slideshow data");
+
+						console.log( $actual_data_date + " " + json.screen_data.date_publication);
+
+						//console.log(json.screen_data.nom_ecran);
+
+						$actual_data_date	= json.screen_data.date_publication;				
+						$meteo_id			= json.screen_data.code_meteo;
+						$code_postal		= json.screen_data.code_postal;
+
+						$slides				= json.screen_data.data;
+
+
+						$nbr = $slides.length;
+
+						console.log($nbr);
+
+						if( $nbr > 0){
+
+							// on trie les slides :
+							// alerte locale > alerte nationale > écran > groupe  > date de début croissante
+							 
+							$slides = $slides.sort(function(a,b){
+							    valeur =
+							    (a.ref_target == 'loc' && b.ref_target == 'nat' ? -1 :
+							     (a.ref_target == 'nat' && b.ref_target == 'loc' ? 1 :
+							    
+							      (a.ref_target == 'nat' && b.ref_target == 'grp' ? -1 :
+							       (a.ref_target == 'grp' && b.ref_target == 'nat' ? 1 :
+							    
+							        (a.ref_target == 'nat' && b.ref_target == 'ecr' ? -1 :
+							         (a.ref_target == 'ecr' && b.ref_target == 'nat' ? 1 :
+							    
+							          (a.ref_target == 'nat' && b.ref_target == 'seq' ? -1 :
+							           (a.ref_target == 'seq' && b.ref_target == 'nat' ? 1 :
+							    
+							            (a.ref_target == 'loc' && b.ref_target == 'grp' ? -1 :
+							             (a.ref_target == 'grp' && b.ref_target == 'loc' ? 1 :
+							    
+							              (a.ref_target == 'loc' && b.ref_target == 'ecr' ? -1 :
+							               (a.ref_target == 'ecr' && b.ref_target == 'loc' ? 1 :
+							    
+							                (a.ref_target == 'loc' && b.ref_target == 'seq' ? -1 :
+							                 (a.ref_target == 'seq' && b.ref_target == 'loc' ? 1 :
+							    
+							                  (a.ref_target == 'ecr' && b.ref_target == 'grp' ? -1 :
+							                   (a.ref_target == 'grp' && b.ref_target == 'ecr' ? 1 :
+							    
+							                    (a.ref_target == 'grp' && b.ref_target == 'seq' ? -1 :
+							                     (a.ref_target == 'seq' && b.ref_target == 'grp' ? 1 :
+							    
+							                      (a.ref_target == 'ecr' && b.ref_target == 'seq' ? -1 :
+							                       (a.ref_target == 'seq' && b.ref_target == 'ecr' ? 1 :
+
+							                        (a.start < b.start ? -1 : 
+							                         (a.start > b.start ? 1 :
+
+							                          (parseInt(a.ordre) <= parseInt(b.ordre) ? -1 : 1 )))))))))))))))))))))));
+
+												   return valeur;
+							});
+						}
+
+						console.log($slides);
+
+						// POUR VERIFIER SI IL Y A UN CHANGEMENT D'HORAIRE OU QUE LE SLIDE N'EST PLUS PRESENT
+						// notamment pour les alertes
+						$isActualStillHere = false;
+						if($actual_item_id>0){
+							for(var i = 0 ; i < $nbr; i++){
+
+								if($slides[i].id == $actual_item_id){
+									$isActualStillHere = true;
+
+									// on vérifie que le slide n'a pas été décalé dans le temps et qu'il ne doive plus s'afficher
+									if( mysql2jsTimestamp($slides[i].start) > $now ){
+										console.log('attention le slide est décalé dans le futur'); 
+										$end = new Date($now).addSeconds(2);
+									}else if( $slides[i].end != '0000-00-00 00:00:00'){
+										$end = mysql2jsTimestamp( $slides[i].end );
+
+										console.log('ON CHANGE L’HEURE DE FIN DU SLIDE ACTUEL : ' + $end);
+										break;
+									}
+								}
+							}
+						}else{
+							$isActualStillHere = true;
+						}
+				
+						
+
+						if(!$slide_loaded){
+							$slide_data	= {"titre_ecran" : $('body').data('name')};
+							load_slide($template,$slide_data);
+
+							$slide_loaded = true;
+						}
+
+						$data_loaded = true;
+					}
+					// end update slideshow data
+
+
+					if(typeof json.screen_pos.date_update != undefined && typeof json.screen_data.date_publication != undefined){
+						if(json.screen_pos.date_update > json.screen_data.date_publication){
+							$actual_data_date	= json.screen_pos.date_update;
+						}else{
+							$actual_data_date	= json.screen_data.date_publication;
+						}
 					}
 
-					$data_loaded = true;
+					// end if json.update == true
 
 				}else if(json.update == false){
 					//$data_loaded = false;
@@ -400,6 +445,10 @@ function loop_slideshow(){
 				$('body').removeClass('exit');
 				$('body').removeClass('half');
 				load_slide($template,$slide_data);
+
+				$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px)');
+				$('body').css('transform', 'scale('+$scale+')');
+
 				$slide_loaded = true;
 			}
 		}		
@@ -431,7 +480,6 @@ function load_slide(template, data){
 	$("#template").empty();
     $('link[name="slide_css"]').attr('href','../slides_templates/'+template+'/style.css?cache='+$now);
     dynamicLoadJS('../slides_templates/'+template+'/script.js?cache='+$now);
-
 
     $("#template").html(slide);
 }
