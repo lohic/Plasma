@@ -158,8 +158,7 @@ function refresh() {
 						$decalY  = json.screen_pos.Y;
 						$scale 	 = parseInt(json.screen_pos.scale)/100;
 
-						$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px)');
-						$('body').css('transform', 'scale('+$scale+')');
+						$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px) scale('+$scale+')');
 
 						$actual_data_date	= json.screen_pos.date_update;
 
@@ -311,7 +310,7 @@ function refresh() {
 /**
  * La boucle qui est appelée toutes les secondes pour vérifier
  * le chargement des slides en fonction du fichier de données d'écran chargé
- * @return {null} 
+ * @return void 
  */
 function loop_slideshow(){
 
@@ -404,7 +403,7 @@ function loop_slideshow(){
 						$slide_loaded = false;
 
 						break;
-					}else{
+					} else {
 						if(i == $slides.length-1){
 							$last_ordre = 0;	
 						}
@@ -446,8 +445,7 @@ function loop_slideshow(){
 				$('body').removeClass('half');
 				load_slide($template,$slide_data);
 
-				$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px)');
-				$('body').css('transform', 'scale('+$scale+')');
+				$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px) scale('+$scale+')');
 
 				$slide_loaded = true;
 			}
@@ -464,9 +462,9 @@ function loop_slideshow(){
 
 /**
  * permet de charger un slide, sa feuille de style et son fichier javascript
- * @param  {string} template le nom du template à charger (nom du dossier)
- * @param  {json} 	data     les données json qui vont servir à iCanHaz à générer le slide 
- * @return {null}	         remplace le html du div#template par le slide
+ * @param  string	 	template le nom du template à charger (nom du dossier)
+ * @param  json 		data     les données json qui vont servir à iCanHaz à générer le slide 
+ * @return void	        remplace le html du div#template par le slide
  */
 function load_slide(template, data){
 	window.refreshMeteo = null;
@@ -513,8 +511,8 @@ function mysql2jsTimestamp(timestamp){
 
 /**
  * sert à convertir un timestamp mysql en objet date javascript
- * @param  {string} 		timestamp le timestamp mysql
- * @return {Date}           un objet Date javascript 
+ * @param  string 			timestamp le timestamp mysql
+ * @return Date           	un objet Date javascript 
  */
 function mysql2jsSecond(timestamp){
 
@@ -525,7 +523,7 @@ function mysql2jsSecond(timestamp){
 
 /**
  * sert à récupérer les variables GET en javascript
- * @return {[type]} [description]
+ * @return array 		un tableau associatif avec en clef les paramètres GET et leur valeur
  */
 function getUrlVars() {
     var vars = {};
@@ -539,8 +537,8 @@ function getUrlVars() {
  * ajout d'une méthode addHours à l'objet Date
  * permet d'additionner des heures à une date donnée
  * notamment pour corriger les Date avec des décalages horaire
- * @param {h} le nombre d'heures à ajouter
- * @return {copiedDate} un objet Date
+ * @param int s 		le nombre de secondes à ajouter
+ * @return Date 		un objet Date
  */
 Date.prototype.addSeconds= function(s){
     var copiedDate = new Date(this.getTime());

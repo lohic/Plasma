@@ -44,17 +44,32 @@ body.debug, body.debug #template{
 }
 
 /* affichage miniature */
+body.tiny{
+	-webkit-transform:scale(1) !important;
+	   -moz-transform:scale(1) !important;
+	   		transform:scale(1) !important;
+	-webkit-transform:translate(0,0) !important;
+	   -moz-transform:translate(0,0) !important;
+			transform:translate(0,0) !important;
+}
+
 .tiny #template{
-	-webkit-transform:scale(0.3,0.3);
-	   -moz-transform:scale(0.3,0.3);
-	   		transform:scale(0.3,0.3);
+	-webkit-transform:scale(0.3) !important;
+	   -moz-transform:scale(0.3) !important;
+	   		transform:scale(0.3) !important;
 	-webkit-transform-origin:0 0;
 	   -moz-transform-origin:0 0;
 			transform-origin:0 0;
 
 }
 
-/* console */
+/**
+ *************************************************************
+ *
+ *							CONSOLE
+ * 
+ *************************************************************
+ */
 .debug .console{
 	display : block;
 }

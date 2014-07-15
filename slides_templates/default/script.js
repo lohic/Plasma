@@ -7,6 +7,5 @@ console.log("SLIDE « default » CHARGÉ")
 $(document).ready(function(){
 	$('body, th, td, .header, .texte, .footer, .texte2, #template').removeAttr( 'style' );
 
-	$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px)');
-	$('body').css('transform', 'scale('+$scale+')');
+	$('body').css('transform', 'translate('+$decalX+'px, '+$decalY+'px) scale('+$scale+')');
 });
